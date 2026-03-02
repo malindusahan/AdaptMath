@@ -1,0 +1,73 @@
+# ============================================================
+# Secrets
+# ============================================================
+.env
+.env.*
+!.env.example
+
+# ============================================================
+# Python
+# ============================================================
+.venv/
+.venv-*/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ============================================================
+# Node
+# ============================================================
+node_modules/
+dist/
+build/
+
+# ============================================================
+# Runtime logs / local state
+# ============================================================
+_local_runtime_logs/
+_local_runtime_state/
+_forensics/
+_integration_backups/
+_local_generated/
+
+*.log
+*.pid
+
+# ============================================================
+# Databases
+# ============================================================
+*.db
+*.sqlite
+*.sqlite3
+*.sqlite3-wal
+*.sqlite3-shm
+
+# ============================================================
+# Adaptive demo runtime state
+# ============================================================
+**/runtime/adaptive_demo/
+
+# Passive self-improvement observations are local research data. Keep the
+# versioned schema/manifest in source control, never the learner records.
+packages/move-selection/results/md_self_improvement_turn_data_v1/*.jsonl
+packages/move-selection/results/md_self_improvement_turn_data_v1/*.lock
+packages/move-selection/results/md_self_improvement_turn_data_v1/pending_actions/
+
+# ============================================================
+# IDE / OS
+# ============================================================
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# ============================================================
+# Temporary files
+# ============================================================
+*.tmp
+tmp/
+temp/
+generate_history.sh
