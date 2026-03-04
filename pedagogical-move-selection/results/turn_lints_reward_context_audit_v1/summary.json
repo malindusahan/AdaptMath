@@ -1,0 +1,1157 @@
+{
+  "schema_version": "turn_lints_reward_context_audit_v1",
+  "source": "pedagogical-move-selection/results/md_self_improvement_turn_data_v1/turn_outcomes.jsonl",
+  "source_row_count": 98,
+  "usable_reward_count": 96,
+  "attempt_count": 14,
+  "learner_count": 3,
+  "skill_count": 12,
+  "action_counts": {
+    "generic": 28,
+    "probing": 33,
+    "focus": 35,
+    "telling": 0
+  },
+  "rewards": {
+    "R_RAW": {
+      "count": 96,
+      "min": -0.1710836699786672,
+      "q1": -0.027793628931319384,
+      "median": 0.022657459335950647,
+      "mean": 0.02345428632150126,
+      "q3": 0.06540517689883124,
+      "max": 0.5565306848534494,
+      "std": 0.09238932326911196
+    },
+    "R_HEADROOM": {
+      "count": 96,
+      "min": -0.26215185494826826,
+      "q1": -0.04567246692913205,
+      "median": 0.16736850323294858,
+      "mean": 0.1358265700207615,
+      "q3": 0.2406105193125695,
+      "max": 0.7005239752859275,
+      "std": 0.20746420350298006
+    }
+  },
+  "reward_correlations": {
+    "abs_raw_vs_mastery": {
+      "n": 96,
+      "rho": -0.7034749846587679,
+      "p_value": 1.3247459428835487e-15
+    },
+    "abs_headroom_vs_mastery": {
+      "n": 96,
+      "rho": -0.02577328327905243,
+      "p_value": 0.8031604373636329
+    },
+    "abs_raw_vs_turn_index": {
+      "n": 96,
+      "rho": 0.039086934419842914,
+      "p_value": 0.7053563251273832
+    },
+    "abs_headroom_vs_turn_index": {
+      "n": 96,
+      "rho": 0.011017518713521912,
+      "p_value": 0.9151552428347292
+    },
+    "abs_raw_vs_relative_position": {
+      "n": 96,
+      "rho": -0.05435035139615053,
+      "p_value": 0.5989328674703376
+    },
+    "abs_headroom_vs_relative_position": {
+      "n": 96,
+      "rho": 0.16175327732676079,
+      "p_value": 0.115376845430932
+    }
+  },
+  "reward_by_mastery_band": [
+    {
+      "reward": "r_raw",
+      "mastery_band": "[0,.2)",
+      "count": 1,
+      "min": 0.5565306848534494,
+      "q1": 0.5565306848534494,
+      "median": 0.5565306848534494,
+      "mean": 0.5565306848534494,
+      "q3": 0.5565306848534494,
+      "max": 0.5565306848534494,
+      "std": null,
+      "absolute_mean": 0.5565306848534494,
+      "absolute_median": 0.5565306848534494
+    },
+    {
+      "reward": "r_raw",
+      "mastery_band": "[.2,.4)",
+      "count": 3,
+      "min": 0.10619456954326456,
+      "q1": 0.11705073888532885,
+      "median": 0.12790690822739315,
+      "mean": 0.13817553788260303,
+      "q3": 0.15416602205227228,
+      "max": 0.18042513587715142,
+      "std": 0.038165793726965595,
+      "absolute_mean": 0.13817553788260303,
+      "absolute_median": 0.12790690822739315
+    },
+    {
+      "reward": "r_raw",
+      "mastery_band": "[.4,.6)",
+      "count": 16,
+      "min": -0.1549093972095324,
+      "q1": -0.031069872565859386,
+      "median": 0.08541046019401846,
+      "mean": 0.051165236707758965,
+      "q3": 0.11295981260788734,
+      "max": 0.17710046200543128,
+      "std": 0.09952029384888544,
+      "absolute_mean": 0.10134960288650943,
+      "absolute_median": 0.0954546430779836
+    },
+    {
+      "reward": "r_raw",
+      "mastery_band": "[.6,.8)",
+      "count": 41,
+      "min": -0.13840553953494755,
+      "q1": -0.04041929710863523,
+      "median": 0.036351916190221156,
+      "mean": 0.008980395266912728,
+      "q3": 0.06112563424122075,
+      "max": 0.21034632888316085,
+      "std": 0.07470571702117819,
+      "absolute_mean": 0.06402300182349957,
+      "absolute_median": 0.05553350861322515
+    },
+    {
+      "reward": "r_raw",
+      "mastery_band": "[.8,1]",
+      "count": 35,
+      "min": -0.1710836699786672,
+      "q1": -0.006144808829980197,
+      "median": 0.012941259402848737,
+      "mean": 0.0026775484312941966,
+      "q3": 0.025656666809828255,
+      "max": 0.06599124873048245,
+      "std": 0.0474487152139812,
+      "absolute_mean": 0.031086753766968973,
+      "absolute_median": 0.018871587353022856
+    },
+    {
+      "reward": "r_headroom",
+      "mastery_band": "[0,.2)",
+      "count": 1,
+      "min": 0.5627442380650807,
+      "q1": 0.5627442380650807,
+      "median": 0.5627442380650807,
+      "mean": 0.5627442380650807,
+      "q3": 0.5627442380650807,
+      "max": 0.5627442380650807,
+      "std": null,
+      "absolute_mean": 0.5627442380650807,
+      "absolute_median": 0.5627442380650807
+    },
+    {
+      "reward": "r_headroom",
+      "mastery_band": "[.2,.4)",
+      "count": 3,
+      "min": 0.1342836711832905,
+      "q1": 0.16055526012173918,
+      "median": 0.18682684906018787,
+      "mean": 0.19557034437119722,
+      "q3": 0.22621368096515057,
+      "max": 0.26560051287011327,
+      "std": 0.06609360604733827,
+      "absolute_mean": 0.19557034437119722,
+      "absolute_median": 0.18682684906018787
+    },
+    {
+      "reward": "r_headroom",
+      "mastery_band": "[.4,.6)",
+      "count": 16,
+      "min": -0.26215185494826826,
+      "q1": -0.06137619443079855,
+      "median": 0.17179218316856937,
+      "mean": 0.11249608970473653,
+      "q3": 0.23082361183670452,
+      "max": 0.4111310214037905,
+      "std": 0.2062705099749588,
+      "absolute_mean": 0.21224219410999628,
+      "absolute_median": 0.2065725782267176
+    },
+    {
+      "reward": "r_headroom",
+      "mastery_band": "[.6,.8)",
+      "count": 41,
+      "min": -0.22555363452622032,
+      "q1": -0.059142740657672735,
+      "median": 0.14367015926892016,
+      "mean": 0.08322965467020736,
+      "q3": 0.18868786559329412,
+      "max": 0.6906813355947353,
+      "std": 0.18434871425228988,
+      "absolute_mean": 0.1631309158178666,
+      "absolute_median": 0.1635571816935109
+    },
+    {
+      "reward": "r_headroom",
+      "mastery_band": "[.8,1]",
+      "count": 35,
+      "min": -0.18887241843279817,
+      "q1": -0.0062876182033367815,
+      "median": 0.18821451167281608,
+      "mean": 0.19078691925886135,
+      "q3": 0.3144505804237401,
+      "max": 0.7005239752859275,
+      "std": 0.2210791175193448,
+      "absolute_mean": 0.22261006927249555,
+      "absolute_median": 0.1882332127245297
+    }
+  ],
+  "reward_by_turn_position": [
+    {
+      "reward": "r_raw",
+      "position_band": "early",
+      "count": 22,
+      "min": -0.12250213021842593,
+      "q1": -0.032300005641337864,
+      "median": 0.020418333836078273,
+      "mean": 0.03808669288081923,
+      "q3": 0.06561988104203881,
+      "max": 0.5565306848534494,
+      "std": 0.13329995804403,
+      "absolute_mean": 0.07998618760506201,
+      "absolute_median": 0.05525278871513095
+    },
+    {
+      "reward": "r_raw",
+      "position_band": "middle",
+      "count": 34,
+      "min": -0.1710836699786672,
+      "q1": -0.034635149504430016,
+      "median": 0.011839249961359877,
+      "mean": 0.002308120613481344,
+      "q3": 0.04631036621868473,
+      "max": 0.21034632888316085,
+      "std": 0.08690549199595929,
+      "absolute_mean": 0.0658740544859528,
+      "absolute_median": 0.041475764712774726
+    },
+    {
+      "reward": "r_raw",
+      "position_band": "late",
+      "count": 40,
+      "min": -0.09515838274512489,
+      "q1": -0.0031669612819508475,
+      "median": 0.033449953621565776,
+      "mean": 0.033380703565693295,
+      "q3": 0.07229519858975911,
+      "max": 0.18042513587715142,
+      "std": 0.06497800866178029,
+      "absolute_mean": 0.05765541053647616,
+      "absolute_median": 0.04993622632786637
+    },
+    {
+      "reward": "r_headroom",
+      "position_band": "early",
+      "count": 22,
+      "min": -0.1700599133071078,
+      "q1": -0.04947897702266243,
+      "median": 0.12449464681870645,
+      "mean": 0.10645888994046476,
+      "q3": 0.21185805977098382,
+      "max": 0.5627442380650807,
+      "std": 0.18036260685241434,
+      "absolute_mean": 0.16546956485343325,
+      "absolute_median": 0.1562380938644194
+    },
+    {
+      "reward": "r_headroom",
+      "position_band": "middle",
+      "count": 34,
+      "min": -0.26215185494826826,
+      "q1": -0.05728167286936569,
+      "median": 0.12077240164895862,
+      "mean": 0.11174890824683549,
+      "q3": 0.2287183863121285,
+      "max": 0.7005239752859275,
+      "std": 0.24039051602609465,
+      "absolute_mean": 0.20608752595172092,
+      "absolute_median": 0.18635208410862958
+    },
+    {
+      "reward": "r_headroom",
+      "position_band": "late",
+      "count": 40,
+      "min": -0.20257838567244074,
+      "q1": -0.0032396504155643635,
+      "median": 0.1834866257771685,
+      "mean": 0.17244480657276187,
+      "q3": 0.25491549070683694,
+      "max": 0.6728334527560889,
+      "std": 0.18990394511835337,
+      "absolute_mean": 0.20944360102186108,
+      "absolute_median": 0.1860931428868004
+    }
+  ],
+  "reward_breakdowns": {
+    "pedagogical_move": [
+      {
+        "reward": "r_raw",
+        "pedagogical_move": "focus",
+        "count": 35,
+        "min": -0.1549093972095324,
+        "q1": 0.00893539309320468,
+        "median": 0.032355347925816735,
+        "mean": 0.03668935901899017,
+        "q3": 0.07830380914283469,
+        "max": 0.21034632888316085,
+        "std": 0.07048585552308177,
+        "absolute_mean": 0.0604530893182695,
+        "absolute_median": 0.05445503652772832
+      },
+      {
+        "reward": "r_raw",
+        "pedagogical_move": "generic",
+        "count": 28,
+        "min": -0.08226332237219236,
+        "q1": -0.030672930878449772,
+        "median": 0.013068235503733316,
+        "mean": 0.026924768521962027,
+        "q3": 0.05247279833579496,
+        "max": 0.5565306848534494,
+        "std": 0.11416429118596566,
+        "absolute_mean": 0.058544202557719985,
+        "absolute_median": 0.038174288427381964
+      },
+      {
+        "reward": "r_raw",
+        "pedagogical_move": "probing",
+        "count": 33,
+        "min": -0.1710836699786672,
+        "q1": -0.05594138530742976,
+        "median": 0.02478328045601441,
+        "mean": 0.006472436441955401,
+        "q3": 0.05497206881703676,
+        "max": 0.18042513587715142,
+        "std": 0.09254901253502583,
+        "absolute_mean": 0.07728892737991558,
+        "absolute_median": 0.05553350861322515
+      },
+      {
+        "reward": "r_headroom",
+        "pedagogical_move": "focus",
+        "count": 35,
+        "min": -0.26215185494826826,
+        "q1": 0.15014048461387597,
+        "median": 0.18821451167281608,
+        "mean": 0.20395481146813724,
+        "q3": 0.24058161537475092,
+        "max": 0.7005239752859275,
+        "std": 0.22594408041085703,
+        "absolute_mean": 0.24363107486856816,
+        "absolute_median": 0.1914621058069142
+      },
+      {
+        "reward": "r_headroom",
+        "pedagogical_move": "generic",
+        "count": 28,
+        "min": -0.11453665054479155,
+        "q1": -0.04567246692913205,
+        "median": 0.07567828940357062,
+        "mean": 0.10755947750650484,
+        "q3": 0.2244364536823559,
+        "max": 0.5627442380650807,
+        "std": 0.1732859629455728,
+        "absolute_mean": 0.1497709792772603,
+        "absolute_median": 0.11416584094039536
+      },
+      {
+        "reward": "r_headroom",
+        "pedagogical_move": "probing",
+        "count": 33,
+        "min": -0.20257838567244074,
+        "q1": -0.07030267533054911,
+        "median": 0.15366711092047308,
+        "mean": 0.08755354395230809,
+        "q3": 0.25302233954543135,
+        "max": 0.4042452666719689,
+        "std": 0.20005686512395812,
+        "absolute_mean": 0.19104167605591857,
+        "absolute_median": 0.1770304025685018
+      }
+    ],
+    "learner_id": [
+      {
+        "reward": "r_raw",
+        "learner_id": "psn_9a081eb5df240169b9f3c83b",
+        "count": 17,
+        "min": -0.08226332237219236,
+        "q1": 0.02478328045601441,
+        "median": 0.04958851970065303,
+        "mean": 0.045920576538089765,
+        "q3": 0.07980927927325687,
+        "max": 0.12790690822739315,
+        "std": 0.05608042338365604,
+        "absolute_mean": 0.06185438056210917,
+        "absolute_median": 0.0505626973700678
+      },
+      {
+        "reward": "r_raw",
+        "learner_id": "psn_b94f4a505b4ee07be23867fc",
+        "count": 22,
+        "min": -0.1710836699786672,
+        "q1": 0.01300135801629071,
+        "median": 0.02120806833797173,
+        "mean": 0.014072859955131144,
+        "q3": 0.037264719166657745,
+        "max": 0.09392519136062616,
+        "std": 0.056671151303680334,
+        "absolute_mean": 0.042772358440118986,
+        "absolute_median": 0.030927773737160602
+      },
+      {
+        "reward": "r_raw",
+        "learner_id": "psn_f78c0817d43053e5bd31da20",
+        "count": 57,
+        "min": -0.1549093972095324,
+        "q1": -0.04041929710863523,
+        "median": 0.007024604359649134,
+        "mean": 0.02037471520532823,
+        "q3": 0.07116099405207954,
+        "max": 0.5565306848534494,
+        "std": 0.11036289487662083,
+        "absolute_mean": 0.07566866747463741,
+        "absolute_median": 0.05997218360955492
+      },
+      {
+        "reward": "r_headroom",
+        "learner_id": "psn_9a081eb5df240169b9f3c83b",
+        "count": 17,
+        "min": -0.11379503133599918,
+        "q1": 0.1342836711832905,
+        "median": 0.1635571816935109,
+        "mean": 0.15171545902982914,
+        "q3": 0.21807218001263648,
+        "max": 0.3778989370767397,
+        "std": 0.12882609553421903,
+        "absolute_mean": 0.1747759037026719,
+        "absolute_median": 0.1635571816935109
+      },
+      {
+        "reward": "r_headroom",
+        "learner_id": "psn_b94f4a505b4ee07be23867fc",
+        "count": 22,
+        "min": -0.18887241843279817,
+        "q1": 0.09458467489661374,
+        "median": 0.1870459154149437,
+        "mean": 0.17506101254136314,
+        "q3": 0.28321302058484266,
+        "max": 0.40107678316541195,
+        "std": 0.15703936248112446,
+        "absolute_mean": 0.20871658633399698,
+        "absolute_median": 0.18822386219867288
+      },
+      {
+        "reward": "r_headroom",
+        "learner_id": "psn_f78c0817d43053e5bd31da20",
+        "count": 57,
+        "min": -0.26215185494826826,
+        "q1": -0.056779344958690775,
+        "median": 0.14356479150256304,
+        "mean": 0.11594466039607053,
+        "q3": 0.23572547721557102,
+        "max": 0.7005239752859275,
+        "std": 0.24071384066704649,
+        "absolute_mean": 0.20108938750377423,
+        "absolute_median": 0.174702347326106
+      }
+    ],
+    "skill": [
+      {
+        "reward": "r_raw",
+        "skill": "Addition and Subtraction Integers",
+        "count": 2,
+        "min": 0.013181653856616626,
+        "q1": 0.017261290279588587,
+        "median": 0.021340926702560548,
+        "mean": 0.021340926702560548,
+        "q3": 0.025420563125532508,
+        "max": 0.02950019954850447,
+        "std": 0.011538954317836414,
+        "absolute_mean": 0.021340926702560548,
+        "absolute_median": 0.021340926702560548
+      },
+      {
+        "reward": "r_raw",
+        "skill": "Complementary and Supplementary Angles",
+        "count": 9,
+        "min": -0.13976188360302422,
+        "q1": -0.05594138530742976,
+        "median": -0.04790032279014167,
+        "mean": -0.010809544964464747,
+        "q3": 0.03998716139038372,
+        "max": 0.17710046200543128,
+        "std": 0.0961982302713992,
+        "absolute_mean": 0.078835202325935,
+        "absolute_median": 0.05594138530742976
+      },
+      {
+        "reward": "r_raw",
+        "skill": "Conversion of Fraction Decimals Percents",
+        "count": 10,
+        "min": -0.1549093972095324,
+        "q1": -0.021951183242731154,
+        "median": 0.05775284611139003,
+        "mean": 0.010704891282816565,
+        "q3": 0.06969520174586652,
+        "max": 0.08096977427432944,
+        "std": 0.08870373743473142,
+        "absolute_mean": 0.07574769309383393,
+        "absolute_median": 0.0682294094396535
+      },
+      {
+        "reward": "r_raw",
+        "skill": "Equation Solving Two or Fewer Steps",
+        "count": 23,
+        "min": -0.13840553953494755,
+        "q1": -0.032612511757840024,
+        "median": 0.0060176392857084204,
+        "mean": 0.006762406487286871,
+        "q3": 0.06291033744109276,
+        "max": 0.09935852058825301,
+        "std": 0.06470057441851484,
+        "absolute_mean": 0.050397908620061126,
+        "absolute_median": 0.042964368035165734
+      },
+      {
+        "reward": "r_raw",
+        "skill": "Interior Angles Triangle",
+        "count": 5,
+        "min": -0.04945243061107418,
+        "q1": 0.026530053163642098,
+        "median": 0.03756898682546994,
+        "mean": 0.025758388730626434,
+        "q3": 0.04841810116145173,
+        "max": 0.06572723311364259,
+        "std": 0.044462692586500235,
+        "absolute_mean": 0.045539360975056106,
+        "absolute_median": 0.04841810116145173
+      },
+      {
+        "reward": "r_raw",
+        "skill": "Multiplication Whole Numbers",
+        "count": 7,
+        "min": -0.10647752449450332,
+        "q1": -0.0882480617212742,
+        "median": -0.029859393497005726,
+        "mean": 0.0015937878235518749,
+        "q3": 0.07178221016088457,
+        "max": 0.18042513587715142,
+        "std": 0.12267477755473201,
+        "absolute_mean": 0.09871895415978464,
+        "absolute_median": 0.09502752255463648
+      },
+      {
+        "reward": "r_raw",
+        "skill": "Multiplication and Division Integers",
+        "count": 9,
+        "min": 0.00996837764287617,
+        "q1": 0.012941259402848737,
+        "median": 0.0154998074563506,
+        "mean": 0.019328393991042175,
+        "q3": 0.023544549322920605,
+        "max": 0.036351916190221156,
+        "std": 0.009537314945055015,
+        "absolute_mean": 0.019328393991042175,
+        "absolute_median": 0.0154998074563506
+      },
+      {
+        "reward": "r_raw",
+        "skill": "Multiplication and Division Positive Decimals",
+        "count": 6,
+        "min": -0.1710836699786672,
+        "q1": -0.06706732621681408,
+        "median": 0.027908030188483257,
+        "mean": -0.005971070660791278,
+        "q3": 0.07015833701830085,
+        "max": 0.09392519136062616,
+        "std": 0.10509795850960034,
+        "absolute_mean": 0.08277628024713941,
+        "absolute_median": 0.08729978419103895
+      },
+      {
+        "reward": "r_raw",
+        "skill": "Perimeter of a Polygon",
+        "count": 2,
+        "min": 0.02478328045601441,
+        "q1": 0.02696411447051214,
+        "median": 0.02914494848500987,
+        "mean": 0.02914494848500987,
+        "q3": 0.0313257824995076,
+        "max": 0.03350661651400533,
+        "std": 0.0061683300811745025,
+        "absolute_mean": 0.02914494848500987,
+        "absolute_median": 0.02914494848500987
+      },
+      {
+        "reward": "r_raw",
+        "skill": "Polynomial Factors",
+        "count": 5,
+        "min": 0.07980927927325687,
+        "q1": 0.10619456954326456,
+        "median": 0.110144616456612,
+        "mean": 0.10909215491244799,
+        "q3": 0.12140540106171338,
+        "max": 0.12790690822739315,
+        "std": 0.018524318172395856,
+        "absolute_mean": 0.10909215491244799,
+        "absolute_median": 0.110144616456612
+      },
+      {
+        "reward": "r_raw",
+        "skill": "Pythagorean Theorem",
+        "count": 10,
+        "min": -0.08226332237219236,
+        "q1": -0.011045424067191667,
+        "median": 0.039578633539020025,
+        "mean": 0.01768991296152663,
+        "q3": 0.05031915295271411,
+        "max": 0.06205620069482831,
+        "std": 0.04763726810762888,
+        "absolute_mean": 0.044777379802359615,
+        "absolute_median": 0.045673039542033
+      },
+      {
+        "reward": "r_raw",
+        "skill": "Simplifying Expressions positive exponents",
+        "count": 8,
+        "min": -0.0041448032690865055,
+        "q1": 0.005584029447494698,
+        "median": 0.04388080903973157,
+        "mean": 0.12311298682290818,
+        "q3": 0.14849565622081484,
+        "max": 0.5565306848534494,
+        "std": 0.1904808955429225,
+        "absolute_mean": 0.124491964600335,
+        "absolute_median": 0.04388080903973157
+      },
+      {
+        "reward": "r_headroom",
+        "skill": "Addition and Subtraction Integers",
+        "count": 2,
+        "min": 0.08787769237744417,
+        "q1": 0.11981222365041033,
+        "median": 0.1517467549233765,
+        "mean": 0.1517467549233765,
+        "q3": 0.18368128619634266,
+        "max": 0.21561581746930883,
+        "std": 0.09032449446851298,
+        "absolute_mean": 0.1517467549233765,
+        "absolute_median": 0.1517467549233765
+      },
+      {
+        "reward": "r_headroom",
+        "skill": "Complementary and Supplementary Angles",
+        "count": 9,
+        "min": -0.16086854274997237,
+        "q1": -0.07030267533054911,
+        "median": -0.056779344958690775,
+        "mean": 0.049413121008313035,
+        "q3": 0.15366711092047308,
+        "max": 0.4111310214037905,
+        "std": 0.2204533179323594,
+        "absolute_mean": 0.16592985654640527,
+        "absolute_median": 0.11453665054479155
+      },
+      {
+        "reward": "r_headroom",
+        "skill": "Conversion of Fraction Decimals Percents",
+        "count": 10,
+        "min": -0.26215185494826826,
+        "q1": -0.025776148199127304,
+        "median": 0.15014048461387597,
+        "mean": 0.059055396346362185,
+        "q3": 0.17362235858767883,
+        "max": 0.18868786559329412,
+        "std": 0.16520087871466946,
+        "absolute_mean": 0.15830013773502738,
+        "absolute_median": 0.17254236984925161
+      },
+      {
+        "reward": "r_headroom",
+        "skill": "Equation Solving Two or Fewer Steps",
+        "count": 23,
+        "min": -0.22555363452622032,
+        "q1": -0.044205369196626,
+        "median": 0.16888201901103272,
+        "mean": 0.08902286021484014,
+        "q3": 0.22784557883954404,
+        "max": 0.28833436673130924,
+        "std": 0.16205335406495197,
+        "absolute_mean": 0.15345874317364974,
+        "absolute_median": 0.20616794628514562
+      },
+      {
+        "reward": "r_headroom",
+        "skill": "Interior Angles Triangle",
+        "count": 5,
+        "min": -0.051824550392512436,
+        "q1": 0.35252405554198746,
+        "median": 0.36693297434765476,
+        "mean": 0.2926479429107668,
+        "q3": 0.3945304518912924,
+        "max": 0.40107678316541195,
+        "std": 0.19358562216569575,
+        "absolute_mean": 0.3133777630677718,
+        "absolute_median": 0.36693297434765476
+      },
+      {
+        "reward": "r_headroom",
+        "skill": "Multiplication Whole Numbers",
+        "count": 7,
+        "min": -0.20257838567244074,
+        "q1": -0.17996839218349114,
+        "median": -0.051698469504444546,
+        "mean": -0.007387123303770536,
+        "q3": 0.11020100349450326,
+        "max": 0.3421017694284674,
+        "std": 0.22285097639105328,
+        "absolute_mean": 0.18101634681765072,
+        "absolute_median": 0.19113075590706372
+      },
+      {
+        "reward": "r_headroom",
+        "skill": "Multiplication and Division Integers",
+        "count": 9,
+        "min": 0.06347888642969707,
+        "q1": 0.1770304025685018,
+        "median": 0.18397177410078475,
+        "mean": 0.15935840711076044,
+        "q3": 0.18821451167281608,
+        "max": 0.1914621058069142,
+        "std": 0.051884130868999796,
+        "absolute_mean": 0.15935840711076044,
+        "absolute_median": 0.18397177410078475
+      },
+      {
+        "reward": "r_headroom",
+        "skill": "Multiplication and Division Positive Decimals",
+        "count": 6,
+        "min": -0.18887241843279817,
+        "q1": -0.06845935155671551,
+        "median": 0.18765028332258804,
+        "mean": 0.108397231252093,
+        "q3": 0.28321302058484266,
+        "max": 0.3027172028110693,
+        "std": 0.21871842755293402,
+        "absolute_mean": 0.2145261516942462,
+        "absolute_median": 0.22473368131192592
+      },
+      {
+        "reward": "r_headroom",
+        "skill": "Perimeter of a Polygon",
+        "count": 2,
+        "min": 0.3381487814647079,
+        "q1": 0.34808632036771586,
+        "median": 0.3580238592707238,
+        "mean": 0.3580238592707238,
+        "q3": 0.36796139817373175,
+        "max": 0.3778989370767397,
+        "std": 0.0281076045864882,
+        "absolute_mean": 0.3580238592707238,
+        "absolute_median": 0.3580238592707238
+      },
+      {
+        "reward": "r_headroom",
+        "skill": "Polynomial Factors",
+        "count": 5,
+        "min": 0.1342836711832905,
+        "q1": 0.18682684906018787,
+        "median": 0.21807218001263648,
+        "mean": 0.20752855866709535,
+        "q3": 0.24543775353393082,
+        "max": 0.25302233954543135,
+        "std": 0.04850601361764298,
+        "absolute_mean": 0.20752855866709535,
+        "absolute_median": 0.21807218001263648
+      },
+      {
+        "reward": "r_headroom",
+        "skill": "Pythagorean Theorem",
+        "count": 10,
+        "min": -0.11379503133599918,
+        "q1": -0.008546855763744188,
+        "median": 0.14899355757994703,
+        "mean": 0.08254722916301704,
+        "q3": 0.16173122248554925,
+        "max": 0.17808202229442702,
+        "std": 0.10893064698900268,
+        "absolute_mean": 0.12174998510684976,
+        "absolute_median": 0.14899355757994703
+      },
+      {
+        "reward": "r_headroom",
+        "skill": "Simplifying Expressions positive exponents",
+        "count": 8,
+        "min": -0.004265128733469587,
+        "q1": 0.22144566900587714,
+        "median": 0.6118234964957867,
+        "mean": 0.4472197085278315,
+        "q3": 0.6772954234657504,
+        "max": 0.7005239752859275,
+        "std": 0.30738093781273557,
+        "absolute_mean": 0.44863243509121375,
+        "absolute_median": 0.6118234964957867
+      }
+    ]
+  },
+  "student_signals": {
+    "signals": {
+      "previous_reasoning_probability": {
+        "count": 1,
+        "min": 0.8193757420806969,
+        "q1": 0.8193757420806969,
+        "median": 0.8193757420806969,
+        "mean": 0.8193757420806969,
+        "q3": 0.8193757420806969,
+        "max": 0.8193757420806969,
+        "std": null,
+        "missing_count": 95,
+        "threshold_for_component_diagnostic_only": 0.3,
+        "present_count": 1,
+        "near_constant": null
+      },
+      "previous_uncertainty_probability": {
+        "count": 1,
+        "min": 0.7083188267930226,
+        "q1": 0.7083188267930226,
+        "median": 0.7083188267930226,
+        "mean": 0.7083188267930226,
+        "q3": 0.7083188267930226,
+        "max": 0.7083188267930226,
+        "std": null,
+        "missing_count": 95,
+        "threshold_for_component_diagnostic_only": 0.25,
+        "present_count": 1,
+        "near_constant": null
+      },
+      "previous_clarification_probability": {
+        "count": 1,
+        "min": 0.7225436554296158,
+        "q1": 0.7225436554296158,
+        "median": 0.7225436554296158,
+        "mean": 0.7225436554296158,
+        "q3": 0.7225436554296158,
+        "max": 0.7225436554296158,
+        "std": null,
+        "missing_count": 95,
+        "threshold_for_component_diagnostic_only": 0.4,
+        "present_count": 1,
+        "near_constant": null
+      }
+    },
+    "head_to_head_spearman": {},
+    "complete_previous_signal_rows": 1,
+    "usable_reward_rows": 96,
+    "thresholded_features_excluded_from_context": true,
+    "temporal_status": "PASS: only resolved learner-response probabilities from t-1 feed action t."
+  },
+  "mrb1": {
+    "usable_count": 96,
+    "complete_four_head_count": 96,
+    "distributions": {
+      "Mistake_Identification": {
+        "count": 96,
+        "min": 0.0915231853723526,
+        "q1": 0.42777784913778305,
+        "median": 0.7483004033565521,
+        "mean": 0.6644258601590991,
+        "q3": 0.9077750146389008,
+        "max": 0.9735565781593323,
+        "std": 0.26359448522987444,
+        "missing_count": 0,
+        "availability_rate": 1.0
+      },
+      "Mistake_Location": {
+        "count": 96,
+        "min": 0.062339041382074356,
+        "q1": 0.3226361870765686,
+        "median": 0.6897086501121521,
+        "mean": 0.5694504945616549,
+        "q3": 0.8143698275089264,
+        "max": 0.9276031851768494,
+        "std": 0.2788998350916898,
+        "missing_count": 0,
+        "availability_rate": 1.0
+      },
+      "Providing_Guidance": {
+        "count": 96,
+        "min": 0.11657527834177017,
+        "q1": 0.5082832276821136,
+        "median": 0.7388816773891449,
+        "mean": 0.6429912214322636,
+        "q3": 0.8510961085557938,
+        "max": 0.9214996695518494,
+        "std": 0.2626601437249652,
+        "missing_count": 0,
+        "availability_rate": 1.0
+      },
+      "Actionability": {
+        "count": 96,
+        "min": 0.08848422765731812,
+        "q1": 0.7513111382722855,
+        "median": 0.89870885014534,
+        "mean": 0.7511326108748714,
+        "q3": 0.9341197460889816,
+        "max": 0.9616187810897827,
+        "std": 0.2844254269499842,
+        "missing_count": 0,
+        "availability_rate": 1.0
+      }
+    },
+    "head_to_head_spearman": {
+      "Mistake_Identification__Mistake_Location": {
+        "n": 96,
+        "rho": 0.966266632235617,
+        "p_value": 3.538364070704899e-57
+      },
+      "Mistake_Identification__Providing_Guidance": {
+        "n": 96,
+        "rho": 0.9500387349307527,
+        "p_value": 2.5339384253166945e-49
+      },
+      "Mistake_Identification__Actionability": {
+        "n": 96,
+        "rho": 0.7489025102953368,
+        "p_value": 1.7333897628792967e-18
+      },
+      "Mistake_Location__Providing_Guidance": {
+        "n": 96,
+        "rho": 0.9376163746823055,
+        "p_value": 6.478599503391873e-45
+      },
+      "Mistake_Location__Actionability": {
+        "n": 96,
+        "rho": 0.7550865080120146,
+        "p_value": 6.287891266110745e-19
+      },
+      "Providing_Guidance__Actionability": {
+        "n": 96,
+        "rho": 0.7974502901722005,
+        "p_value": 2.4312203898678827e-22
+      }
+    },
+    "current_reward_spearman": {
+      "Mistake_Identification": {
+        "r_raw": {
+          "n": 96,
+          "rho": -0.03806596632869874,
+          "p_value": 0.7127117549629769
+        },
+        "r_headroom": {
+          "n": 96,
+          "rho": 0.07626771281194965,
+          "p_value": 0.4601768059743512
+        }
+      },
+      "Mistake_Location": {
+        "r_raw": {
+          "n": 96,
+          "rho": -0.02071326257693238,
+          "p_value": 0.8412376292678624
+        },
+        "r_headroom": {
+          "n": 96,
+          "rho": 0.07934992232028375,
+          "p_value": 0.442192734124741
+        }
+      },
+      "Providing_Guidance": {
+        "r_raw": {
+          "n": 96,
+          "rho": 0.001093030244144908,
+          "p_value": 0.9915671729225726
+        },
+        "r_headroom": {
+          "n": 96,
+          "rho": 0.09811473967939259,
+          "p_value": 0.34158994077511584
+        }
+      },
+      "Actionability": {
+        "r_raw": {
+          "n": 96,
+          "rho": -0.0439588250362626,
+          "p_value": 0.6706395747474517
+        },
+        "r_headroom": {
+          "n": 96,
+          "rho": -0.039362666804671896,
+          "p_value": 0.7033744521471392
+        }
+      }
+    },
+    "next_reward_spearman": {
+      "Mistake_Identification": {
+        "r_raw": {
+          "n": 82,
+          "rho": -0.08959220808553209,
+          "p_value": 0.42345094293934826
+        },
+        "r_headroom": {
+          "n": 82,
+          "rho": -0.05937568529527841,
+          "p_value": 0.5961928455288423
+        }
+      },
+      "Mistake_Location": {
+        "r_raw": {
+          "n": 82,
+          "rho": -0.037945063431772376,
+          "p_value": 0.7350210419339385
+        },
+        "r_headroom": {
+          "n": 82,
+          "rho": -0.0023436336218991844,
+          "p_value": 0.9833280411262029
+        }
+      },
+      "Providing_Guidance": {
+        "r_raw": {
+          "n": 82,
+          "rho": -0.07287065470881883,
+          "p_value": 0.5152999935494321
+        },
+        "r_headroom": {
+          "n": 82,
+          "rho": -0.01612201919436695,
+          "p_value": 0.8856906484321887
+        }
+      },
+      "Actionability": {
+        "r_raw": {
+          "n": 82,
+          "rho": 0.040299597675168775,
+          "p_value": 0.7192419369230576
+        },
+        "r_headroom": {
+          "n": 82,
+          "rho": 0.06029133750104367,
+          "p_value": 0.5905289951233967
+        }
+      }
+    },
+    "disagreements": {
+      "high_quality_negative_raw": 16,
+      "low_quality_positive_raw": 31,
+      "quality_median": 0.7691866382956505
+    },
+    "scoring": {
+      "labels": {
+        "No": 0.0,
+        "To some extent": 0.5,
+        "Yes": 1.0
+      },
+      "stored_value": "continuous expected score: 0.5 * P(To some extent) + P(Yes)"
+    },
+    "interpretation_constraint": "MRB1 is a noisy auxiliary critic, not ground truth or the scalar reward."
+  },
+  "selector_integrity": {
+    "active_default": "MD7-R2-TELL-C1 Epoch 2",
+    "normal_mode": "ordinary-md7-r2-tell-c1-v1",
+    "expected_sha256": "ad770256a71efcce7485705099511494e41806b2e29bc3829f9ba8aeaf731cd5",
+    "actual_sha256": "ad770256a71efcce7485705099511494e41806b2e29bc3829f9ba8aeaf731cd5",
+    "label_order": [
+      "generic",
+      "probing",
+      "focus",
+      "telling"
+    ],
+    "source_checks": {
+      "normal_mode_declared": true,
+      "normal_mode_is_default": true,
+      "normal_loader_points_to_promoted_directory": true,
+      "runtime_enforces_promoted_weight_hash": true
+    },
+    "runtime_selector_mode": "ordinary-md7-r2-tell-c1-v1",
+    "runtime_turn_lints_mode": "SHADOW",
+    "integrity_pass": true,
+    "rollback_md7_r1_available": true,
+    "rollback_md7_r1_expected_sha256": "d32d37f7f664d038f80fefb92f874804b49e5ac3d848985636ae64e6a2a60a13",
+    "rollback_md7_r1_sha256": "d32d37f7f664d038f80fefb92f874804b49e5ac3d848985636ae64e6a2a60a13",
+    "rollback_md7_r1_integrity_pass": true
+  },
+  "shadow_integrity": {
+    "mode": "SHADOW",
+    "event_count": 2,
+    "event_checks": [
+      {
+        "action_event_id": "1958c0b4-0217-4276-ace4-ea58b9766eaa:1:action:1",
+        "passive_linked": true,
+        "resolver_linked": true,
+        "actual_equals_md7_argmax": true,
+        "selected_arm_is_null": true,
+        "hypothetical_arm_present": true,
+        "posterior_update_false": true
+      },
+      {
+        "action_event_id": "1958c0b4-0217-4276-ace4-ea58b9766eaa:1:action:2",
+        "passive_linked": true,
+        "resolver_linked": true,
+        "actual_equals_md7_argmax": true,
+        "selected_arm_is_null": true,
+        "hypothetical_arm_present": true,
+        "posterior_update_false": true
+      }
+    ],
+    "md7_controls_actual_action": true,
+    "hypothetical_never_controls_action": true,
+    "policy_update_count": 0,
+    "arm_update_counts": {
+      "generic": 0,
+      "probing": 0,
+      "focus": 0,
+      "telling": 0
+    },
+    "A_is_initial_ridge_identity": true,
+    "b_is_zero": true,
+    "linked_event_count": 2,
+    "linked_resolver_count": 2,
+    "sequential_context_checks": [
+      {
+        "previous_action_event_id": "1958c0b4-0217-4276-ace4-ea58b9766eaa:1:action:1",
+        "current_action_event_id": "1958c0b4-0217-4276-ace4-ea58b9766eaa:1:action:2",
+        "previous_delta_matches": true,
+        "previous_learner_signals_match": true,
+        "previous_mrb1_matches": true,
+        "previous_move_matches": true,
+        "only_previous_quality_named_in_context": true
+      }
+    ],
+    "sequential_context_integrity": true,
+    "censored_or_failed_count": 2,
+    "censored_have_no_fake_reward": true,
+    "formal_assessment_action_rewards": 0,
+    "limitation": "Only 2 real SHADOW events from one attempt are available; source/tests provide the broader lifecycle evidence."
+  },
+  "validation": {
+    "split": "5-fold GroupKFold by attempt",
+    "model": "StandardScaler + Ridge(alpha=1.0), direct action-by-context interactions",
+    "random_turn_split": false
+  },
+  "decisions": {
+    "reward": "HEADROOM_NORMALIZED",
+    "context": "INCONCLUSIVE",
+    "readiness": "C. CONTEXT NEEDS MORE EVIDENCE",
+    "rationale": "HEADROOM_NORMALIZED removes the observed mechanical mastery dependence without non-finite values, boundary explosions, clipping, or added turn-index dependence; its wider but bounded scale and similar normalized predictive difficulty were considered explicitly. Context remains inconclusive because complete L values exist on only 1 usable row(s), telling has zero historical observations, and every available grouped model has unstable negative mean R2. More causally complete, action-covered attempts are required."
+  },
+  "safety": {
+    "training": 0,
+    "turn_lints_live_updates": 0,
+    "protected_mathdial_test_use": 0,
+    "mrbench_v3_test_use": 0,
+    "authoritative_historical_data_rewrites": 0,
+    "external_tutor_api_calls": 0
+  }
+}

@@ -9,13 +9,10 @@ persistence.
 
 from __future__ import annotations
 
-from collections.abc import Mapping, MutableMapping
+from collections.abc import Mapping, MutableMapping, Sequence
 from dataclasses import dataclass, field
 from math import isclose
 from typing import Protocol, runtime_checkable
-
-from src.self_improvement.adaptive_tutor_pipeline import AdaptiveTutorPipeline
-
 
 _OUTCOME_FIELDS = (
     "skill",
@@ -37,6 +34,32 @@ class StudentModelAdaptivePipeline(Protocol):
         attempt_id: str,
         attempt_skill: str | None = None,
     ) -> object: ...
+
+
+@runtime_checkable
+class AdaptivePolicyPipeline(Protocol):
+    """Lifecycle implemented by both legacy and direct Turn-LinTS pipelines."""
+
+    @property
+    def active_attempt_id(self) -> str | int | None: ...
+
+    def start_attempt(self, memory: object) -> Mapping[str, object]: ...
+
+    def restore_attempt(
+        self,
+        memory: object,
+        completed_turns: Sequence[Mapping[str, object]],
+    ) -> Mapping[str, object]: ...
+
+    def finish_attempt(
+        self,
+        memory: object,
+        learning_outcome: Mapping[str, object],
+        *,
+        diagnostics: Mapping[str, object] | None = None,
+    ) -> Mapping[str, object]: ...
+
+    def abort_attempt(self, memory: object | None = None) -> None: ...
 
 
 @dataclass(frozen=True, slots=True)
@@ -75,15 +98,15 @@ class StudentModelFrozenV3Bridge:
         self,
         *,
         student_model_pipeline: StudentModelAdaptivePipeline,
-        adaptive_pipeline: AdaptiveTutorPipeline,
+        adaptive_pipeline: AdaptivePolicyPipeline,
     ) -> None:
         if not isinstance(student_model_pipeline, StudentModelAdaptivePipeline):
             raise TypeError(
                 "student_model_pipeline must expose start_attempt()."
             )
-        if not isinstance(adaptive_pipeline, AdaptiveTutorPipeline):
+        if not isinstance(adaptive_pipeline, AdaptivePolicyPipeline):
             raise TypeError(
-                "adaptive_pipeline must be an AdaptiveTutorPipeline."
+                "adaptive_pipeline must implement the adaptive policy lifecycle."
             )
         self.student_model_pipeline = student_model_pipeline
         self.adaptive_pipeline = adaptive_pipeline
@@ -188,6 +211,41 @@ class StudentModelFrozenV3Bridge:
         )
         return self._active
 
+    def restore_attempt(
+        self,
+        *,
+        student_id: str,
+        attempt_id: str,
+        target_skill: str,
+        mastery_before: float,
+        student_model_context: object,
+        completed_turns: Sequence[Mapping[str, object]],
+        adaptive_memory: MutableMapping[str, object],
+    ) -> ActiveCrossRepositoryAttempt:
+        """Rehydrate a controlled attempt from validated durable turn records."""
+
+        if self._active is not None:
+            raise RuntimeError("A cross-repository attempt is already active.")
+        student = _identifier(student_id, "student_id")
+        shared_id = _identifier(attempt_id, "attempt_id")
+        skill = _identifier(target_skill, "target_skill")
+        if adaptive_memory.get("attempt_id", _MISSING) != shared_id:
+            raise ValueError("adaptive_memory.attempt_id must equal the shared attempt_id.")
+        adaptive_memory["mastery_before"] = mastery_before
+        started = self.adaptive_pipeline.restore_attempt(
+            adaptive_memory,
+            completed_turns,
+        )
+        restored_mastery = float(started["mastery_before"])
+        self._active = ActiveCrossRepositoryAttempt(
+            student_id=student,
+            attempt_id=shared_id,
+            target_skill=skill,
+            mastery_before=restored_mastery,
+            student_model_context=student_model_context,
+        )
+        return self._active
+
     def finish_attempt(
         self,
         *,
@@ -254,8 +312,32 @@ class StudentModelFrozenV3Bridge:
         self._active = None
         return result
 
+    def abort_attempt(
+        self,
+        *,
+        adaptive_memory: MutableMapping[str, object],
+    ) -> None:
+        """Abort only the adaptive-policy side and clear the shared identity."""
+
+        active = self._active
+        if active is None:
+            raise RuntimeError("No cross-repository attempt is active.")
+        if not isinstance(adaptive_memory, MutableMapping):
+            raise TypeError("adaptive_memory must be a mutable mapping.")
+        if adaptive_memory.get("attempt_id", _MISSING) != active.attempt_id:
+            raise ValueError(
+                "adaptive_memory.attempt_id does not match the active attempt."
+            )
+        if self.adaptive_pipeline.active_attempt_id != active.attempt_id:
+            raise RuntimeError(
+                "Frozen v3 active attempt differs from the bridge attempt."
+            )
+        self.adaptive_pipeline.abort_attempt(adaptive_memory)
+        self._active = None
+
 
 __all__ = (
+    "AdaptivePolicyPipeline",
     "ActiveCrossRepositoryAttempt",
     "StudentModelAdaptivePipeline",
     "StudentModelFrozenV3Bridge",

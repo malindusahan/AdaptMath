@@ -158,8 +158,19 @@ class GeminiChatCompletions:
 class GeminiChatCompatibilityClient:
     """Gemini client with the narrow chat interface required by Tutor."""
 
-    def __init__(self, *, api_key: str, max_retries: int = 2) -> None:
-        client = genai.Client(api_key=api_key)
+    def __init__(
+        self,
+        *,
+        api_key: str,
+        max_retries: int = 2,
+        timeout_seconds: float = 30.0,
+    ) -> None:
+        client = genai.Client(
+            api_key=api_key,
+            http_options=types.HttpOptions(
+                timeout=int(timeout_seconds * 1000),
+            ),
+        )
         self.chat = SimpleNamespace(
             completions=GeminiChatCompletions(
                 client,

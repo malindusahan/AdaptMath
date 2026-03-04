@@ -46,10 +46,13 @@ services:
       MEMORY_DATABASE_URL: postgresql+psycopg://memory_app:${MEMORY_POSTGRES_PASSWORD:-memory-local-dev-only}@postgres:5432/adaptmath_memory_integration
       MEMORY_DATABASE_SCHEMA: student_memory
       MEMORY_AUTH_ENABLED: "true"
+      AUTH_SESSION_PERSISTENCE: ${AUTH_SESSION_PERSISTENCE:-postgres}
+      AUTH_SESSION_TTL_SECONDS: ${AUTH_SESSION_TTL_SECONDS:-43200}
+      AUTH_DATABASE_SCHEMA: ${AUTH_DATABASE_SCHEMA:-auth}
       MEMORY_SERVICE_API_KEY: ${MEMORY_SERVICE_API_KEY:-replace-for-local-integration}
       PORT: 8000
     ports:
-      - "8000:8000"
+      - "${ADAPTMATH_MEMORY_HOST_PORT:-8000}:8000"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
       interval: 15s
@@ -71,6 +74,7 @@ services:
       MEMORY_DATABASE_URL: postgresql+psycopg://memory_app:${MEMORY_POSTGRES_PASSWORD:-memory-local-dev-only}@postgres:5432/adaptmath_memory_integration
       MEMORY_DATABASE_SCHEMA: student_memory
       MEMORY_AUTH_ENABLED: "false"
+      AUTH_DATABASE_SCHEMA: ${AUTH_DATABASE_SCHEMA:-auth}
       BKT_SKILLS_PATH: /integration-fixtures/bkt_params.json
     volumes:
       - ../student-modeling/models/bkt_params.json:/integration-fixtures/bkt_params.json:ro

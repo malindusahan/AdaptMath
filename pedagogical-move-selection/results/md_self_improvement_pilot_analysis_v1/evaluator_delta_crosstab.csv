@@ -1,0 +1,16 @@
+correctness,delta_sign,count,row_percent
+correct,positive,27,100.0
+correct,zero,0,0.0
+correct,negative,0,0.0
+partial,positive,2,100.0
+partial,zero,0,0.0
+partial,negative,0,0.0
+incorrect,positive,1,9.090909090909092
+incorrect,zero,0,0.0
+incorrect,negative,10,90.9090909090909
+unknown,positive,0,0.0
+unknown,zero,0,0.0
+unknown,negative,17,100.0
+<missing>,positive,0,0.0
+<missing>,zero,0,0.0
+<missing>,negative,0,0.0

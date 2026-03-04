@@ -1,0 +1,25 @@
+case_id,expert_move,expert_confidence,expert_reason
+REV-E4908423,telling,3,The learner has received multiple scaffolds and explicitly asks for a direct worked explanation.
+REV-6BE163F8,telling,3,"The same sign misconception persists after two focused prompts, so explicit explanation is warranted."
+REV-608EB56C,focus,3,"This is a first specific misconception, so attention should be directed to the slope-as-differences relationship."
+REV-E13F202A,telling,3,"After two scaffolds the learner is still unable to execute the narrowed division step, so direct instruction is appropriate."
+REV-5DCC1708,probing,3,"The learner has recovered to the correct comparison, so asking them to explain why tests and consolidates the reasoning."
+REV-55EA762E,probing,3,"The learner has corrected the setup and identified the next step, so prompting them to complete it is appropriate."
+REV-ED5B6D23,generic,3,"The learner has corrected the formula and produced the correct circumference, so neutral confirmation or transition is sufficient."
+REV-35CA67D8,probing,2,"This is the learner's first uncertainty, so a diagnostic question about how scientific notation is structured is preferable to telling."
+REV-0BE1E545,generic,3,The learner has corrected the misconception and completed the surface-area calculation correctly.
+REV-4039535B,telling,3,Multiple scaffolds have been given and the learner explicitly requests a direct explanation of the method.
+REV-AB15237E,focus,2,"The specific difficulty is what to do with the two middle values, so the next move should narrow attention to that sub-step."
+REV-5955DA8C,focus,3,"This is a first identifiable ratio misconception, so the tutor should focus attention on the multiplicative relationship."
+REV-CFBE414D,probing,2,"The learner has only expressed an initial recall failure, so a question designed to retrieve the relevant relationship is appropriate."
+REV-C5538A73,probing,3,"The learner has corrected the first vertex and understands the transformation rule, so prompting application to the remaining vertices is appropriate."
+REV-558A51C4,telling,3,After repeated scaffolding the learner explicitly asks for a direct explanation of the quotient rule and cancellation.
+REV-12688678,probing,3,"The learner has corrected the coefficient signs and begun the formula correctly, so prompting continuation preserves productive reasoning."
+REV-879EAEE6,generic,3,"The learner has corrected the method and reached the correct frequency density, so neutral confirmation or transition is sufficient."
+REV-ECFE7D85,telling,3,"The additive misconception persists after two distinct scaffolds, so an explicit explanation of multiplicative equivalence is warranted."
+REV-43048B98,focus,3,"This is a first clear order-of-operations error, so attention should be directed to the parenthesized multiplication step."
+REV-D242EB3D,generic,3,"The learner has used the scaffold correctly and reached the correct area, so neutral confirmation is appropriate."
+REV-2A284558,focus,3,"This is a first specific discount misconception, so the tutor should focus attention on what a percentage discount means."
+REV-DD8A8138,telling,3,After multiple scaffolds the learner explicitly requests a direct worked explanation of the scale-factor method.
+REV-0BDDAA6E,generic,3,"The learner has corrected the method and obtained the correct midpoint, so neutral confirmation or transition is sufficient."
+REV-8349FE64,telling,3,"The learner remains confused after multiple focused hints about the factor pair, so explicit explanation of how the pair forms the factors is appropriate."

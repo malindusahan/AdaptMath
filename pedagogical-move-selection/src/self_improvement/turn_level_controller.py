@@ -20,11 +20,12 @@ persistence, model inference, simulation, or scientific ablation.
 
 from __future__ import annotations
 
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from math import fsum, isclose, isfinite
 from numbers import Real
 from types import MappingProxyType
+from uuid import uuid4
 
 from .conservative_overlay import (
     DEFAULT_GAP_THRESHOLD,
@@ -49,6 +50,8 @@ from .turn_context_builder import (
 class TurnDecision:
     """Immutable record returned when one tutor turn is selected."""
 
+    action_event_id: str
+    action_turn_index: int
     turn_index: int
     context: tuple[float, ...]
     md6_probabilities: Mapping[str, float]
@@ -142,6 +145,7 @@ class TurnLevelAttemptController:
         self.number_of_weighted_turn_updates = 0
 
         self._active = False
+        self._attempt_id: str | None = None
         self._mastery_before: float | None = None
         self._running_quality: RunningTutorQuality | None = None
         self._completed_turns: list[CompletedTurn] = []
@@ -184,25 +188,126 @@ class TurnLevelAttemptController:
 
     def _clear_active_attempt(self) -> None:
         self._active = False
+        self._attempt_id = None
         self._mastery_before = None
         self._running_quality = None
         self._completed_turns = []
         self._pending_turn = None
         self._policy_updates_at_start = None
 
-    def start_attempt(self, mastery_before: float) -> None:
+    def start_attempt(
+        self,
+        mastery_before: float,
+        attempt_id: str | int | None = None,
+    ) -> None:
         """Start an empty attempt without selecting or updating the policy."""
 
         if self._active:
             raise RuntimeError("Cannot start a second attempt while one is active.")
 
         mastery = validate_mastery_probability(mastery_before)
+        if attempt_id is None:
+            canonical_attempt_id = f"anonymous-{uuid4().hex}"
+        elif isinstance(attempt_id, bool) or not isinstance(attempt_id, (str, int)):
+            raise TypeError("attempt_id must be a string or integer when supplied.")
+        else:
+            canonical_attempt_id = str(attempt_id).strip()
+            if not canonical_attempt_id:
+                raise ValueError("attempt_id cannot be empty or whitespace.")
         self._active = True
+        self._attempt_id = canonical_attempt_id
         self._mastery_before = mastery
         self._running_quality = RunningTutorQuality()
         self._completed_turns = []
         self._pending_turn = None
         self._policy_updates_at_start = self.policy.total_updates
+
+    def restore_completed_turns(
+        self,
+        records: Sequence[Mapping[str, object]],
+    ) -> None:
+        """Restore exact completed-turn records after a controlled restart.
+
+        The caller must supply the original immutable decisions and MRB1 scores
+        in consecutive action order. This method performs no Thompson draws and
+        no policy updates; it only reconstructs the active attempt's causal
+        running-quality state and action index.
+        """
+
+        self._require_active()
+        if self._pending_turn is not None or self._completed_turns:
+            raise RuntimeError("Completed turns can only restore into a fresh attempt.")
+        if self._attempt_id is None or self._running_quality is None:
+            raise RuntimeError("Active attempt state is incomplete.")
+
+        restored: list[CompletedTurn] = []
+        for expected_index, record in enumerate(records, start=1):
+            if not isinstance(record, Mapping):
+                raise TypeError("Each restored turn must be a mapping.")
+            raw_decision = record.get("decision")
+            raw_scores = record.get("mrb1_scores")
+            if not isinstance(raw_decision, Mapping):
+                raise TypeError("Restored turn decision must be a mapping.")
+            if not isinstance(raw_scores, Mapping):
+                raise TypeError("Restored turn MRB1 scores must be a mapping.")
+
+            action_index = raw_decision.get("action_turn_index")
+            action_event_id = raw_decision.get("action_event_id")
+            expected_event_id = f"{self._attempt_id}:action:{expected_index}"
+            if action_index != expected_index or action_event_id != expected_event_id:
+                raise ValueError("Restored turn identities are not consecutive.")
+
+            context = tuple(float(value) for value in raw_decision["context"])
+            if len(context) != len(TURN_FEATURE_NAMES):
+                raise ValueError("Restored turn context has the wrong dimension.")
+            md6_probabilities = _immutable_float_mapping(
+                raw_decision["md6_probabilities"],
+                MOVE_ORDER,
+            )
+            sampled_scores = _immutable_float_mapping(
+                raw_decision["sampled_scores"],
+                ARMS,
+            )
+            validated_scores = validate_mrb1_scores(raw_scores)
+            decision = TurnDecision(
+                action_event_id=str(action_event_id),
+                action_turn_index=expected_index,
+                turn_index=expected_index,
+                context=context,
+                md6_probabilities=md6_probabilities,
+                eligible_arms=tuple(str(value) for value in raw_decision["eligible_arms"]),
+                sampled_scores=sampled_scores,
+                selected_arm=str(raw_decision["selected_arm"]),
+                base_move=str(raw_decision["base_move"]),
+                final_move=str(raw_decision["final_move"]),
+                target_move=(
+                    None
+                    if raw_decision.get("target_move") is None
+                    else str(raw_decision["target_move"])
+                ),
+                overridden=bool(raw_decision["overridden"]),
+                gap=float(raw_decision["gap"]),
+                gap_threshold=float(raw_decision["gap_threshold"]),
+                base_probability=float(raw_decision["base_probability"]),
+                target_probability=(
+                    None
+                    if raw_decision.get("target_probability") is None
+                    else float(raw_decision["target_probability"])
+                ),
+            )
+            self._running_quality.add_scores(validated_scores)
+            restored.append(
+                CompletedTurn(
+                    decision=decision,
+                    mrb1_scores=_immutable_float_mapping(
+                        validated_scores,
+                        MRB1_TASKS,
+                    ),
+                )
+            )
+
+        self._completed_turns = restored
+        self._assert_no_within_attempt_updates()
 
     def select_turn(
         self,
@@ -219,6 +324,8 @@ class TurnLevelAttemptController:
 
         if self._mastery_before is None or self._running_quality is None:
             raise RuntimeError("Active attempt state is incomplete.")
+        if self._attempt_id is None:
+            raise RuntimeError("Active attempt is missing its explicit identity.")
 
         context = build_turn_context(
             md6_probabilities=md6_probabilities,
@@ -252,8 +359,15 @@ class TurnLevelAttemptController:
             ARMS,
         )
 
+        action_turn_index = len(self._completed_turns) + 1
         decision = TurnDecision(
-            turn_index=len(self._completed_turns) + 1,
+            action_event_id=(
+                f"{self._attempt_id}:action:{action_turn_index}"
+            ),
+            action_turn_index=action_turn_index,
+            # Backwards-compatible alias. Scientific joins use
+            # action_event_id/action_turn_index, never a host thread counter.
+            turn_index=action_turn_index,
             context=tuple(float(value) for value in context),
             md6_probabilities=_immutable_float_mapping(
                 canonical_probabilities,

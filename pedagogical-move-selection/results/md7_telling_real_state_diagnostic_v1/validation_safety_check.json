@@ -1,0 +1,39 @@
+{
+  "status": "PASS",
+  "scope": "existing MathDial validation only",
+  "validation_rows": 1850,
+  "validation_path": "pedagogical-move-selection/data/processed/mathdial/validation.jsonl",
+  "validation_sha256": "225e6b8f671bf1e335af175343722aa9ac2a603a96d67bcb5220be1e92c0b2b6",
+  "baseline_model_path": "pedagogical-move-selection/models/candidates/md7r1_epoch3",
+  "baseline_model_sha256": "d32d37f7f664d038f80fefb92f874804b49e5ac3d848985636ae64e6a2a60a13",
+  "metrics": {
+    "accuracy": 0.5162162162162162,
+    "macro_f1": 0.4611286390258053,
+    "per_class_f1": {
+      "generic": 0.6105263157894737,
+      "probing": 0.3333333333333333,
+      "focus": 0.6004672897196262,
+      "telling": 0.300187617260788
+    }
+  },
+  "runtime": {
+    "device": "cpu",
+    "torch": "2.6.0+cu124",
+    "transformers": "4.56.2",
+    "tokenizer_class": "RobertaTokenizerFast",
+    "tokenizer_is_fast": true
+  },
+  "contract": {
+    "sequence_a_prefix": "Problem:\n",
+    "sequence_b_prefix": "Conversation:\n",
+    "history_turn_format": "{user}: {text}",
+    "suffix": "\n\nNext teacher pedagogical move:",
+    "truncation_side": "left",
+    "truncation": "only_second",
+    "max_length": 512,
+    "label_order": ["generic", "probing", "focus", "telling"]
+  },
+  "protected_test_opened": false,
+  "candidate_scored_during_gate": false,
+  "writes_during_gate": 0
+}

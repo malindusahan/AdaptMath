@@ -108,14 +108,20 @@ def login_user(
     summary="Get Current User Profile & Identity",
 )
 def get_current_user_profile(
-    current_user: dict[str, Any] = Depends(get_current_user_required),
+    current_user: dict[str, Any] = Depends(require_student_user),
 ) -> UserMeResponse:
     """Return profile of currently authenticated user."""
+    student_id = current_user.get("student_id")
+    if not student_id:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Authenticated student account is not linked to a student identity.",
+        )
     return UserMeResponse(
         user_id=current_user["user_id"],
         username=current_user["username"],
         role=current_user["role"],
-        student_id=current_user.get("student_id"),
+        student_id=student_id,
         age=current_user.get("age"),
     )
 

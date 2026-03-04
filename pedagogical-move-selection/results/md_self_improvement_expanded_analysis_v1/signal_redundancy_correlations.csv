@@ -1,0 +1,16 @@
+group,association,n,pearson,spearman
+all,delta_mastery_vs_mastery_before,87,-0.45471155869272684,-0.357002259969381
+all,delta_mastery_vs_headroom,87,0.4547115586927268,0.357002259969381
+all,delta_mastery_vs_update_confidence,87,0.15593687288315614,0.12689444019659937
+correct,delta_mastery_vs_mastery_before,50,-0.7681214421552939,-0.9058823529411764
+correct,delta_mastery_vs_headroom,50,0.7681214421552939,0.9058823529411764
+correct,delta_mastery_vs_update_confidence,50,0.17700038457441386,0.23475170736403653
+partial,delta_mastery_vs_mastery_before,6,-0.5263878333210525,-0.6
+partial,delta_mastery_vs_headroom,6,0.5263878333210528,0.6
+partial,delta_mastery_vs_update_confidence,6,0.2337405886757374,0.2571428571428572
+incorrect,delta_mastery_vs_mastery_before,13,0.03844844275629907,0.07692307692307691
+incorrect,delta_mastery_vs_headroom,13,-0.03844844275629896,-0.07692307692307691
+incorrect,delta_mastery_vs_update_confidence,13,-0.12460630491551351,-0.016506205436421884
+unknown,delta_mastery_vs_mastery_before,18,0.44795015926621606,0.3085655314757482
+unknown,delta_mastery_vs_headroom,18,-0.4479501592662162,-0.3085655314757482
+unknown,delta_mastery_vs_update_confidence,18,-0.22768226081574147,-0.17503999009157364

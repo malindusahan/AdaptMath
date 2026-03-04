@@ -1,0 +1,9 @@
+{
+  "mode": "real",
+  "runtime_kind": "interactive-human-tutoring",
+  "student_model_source": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\student-modeling",
+  "student_model_state": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\adaptive-math-tutor\\backend\\runtime\\adaptive_live_real_v1\\student_model\\data\\meta_agent.db",
+  "checkpoint_db": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\adaptive-math-tutor\\backend\\runtime\\adaptive_live_real_v1\\checkpoints.sqlite3",
+  "policy_state": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\adaptive-math-tutor\\backend\\runtime\\adaptive_live_real_v1\\policy_state.json",
+  "experience_log": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\adaptive-math-tutor\\backend\\runtime\\adaptive_live_real_v1\\attempts.jsonl"
+}

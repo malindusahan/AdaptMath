@@ -1,0 +1,66 @@
+{
+  "LIVE_rows_exported": 21,
+  "architecture_manifest_path": "pedagogical-move-selection/results/turn_lints_final_architecture_skl_freeze_v1/FINAL_ARCHITECTURE.json",
+  "censored_rows": 1,
+  "current_state_update_count": 518,
+  "derived_real_LIVE_update_count": 18,
+  "lineage_manifest_path": "adaptive-math-tutor/backend/runtime/turn_lints_live_skl_final_v1/lineage_manifest.json",
+  "move_counts": {
+    "focus": 5,
+    "generic": 2,
+    "probing": 9,
+    "telling": 5
+  },
+  "observed_updates": 18,
+  "passive_enrichment_path": "pedagogical-move-selection/results/md_self_improvement_turn_data_v1/turn_outcomes.jsonl",
+  "policy_state_path": "adaptive-math-tutor/backend/runtime/turn_lints_live_skl_final_v1/policy_state.json",
+  "policy_state_sha256": "ce2c02451e6a7521d2a07b8ea210c86716f2a99687c3cc7a45dcc9b2d1562d7f",
+  "processing_failed_rows": 0,
+  "real_LIVE_updates_by_arm": {
+    "focus": 4,
+    "generic": 2,
+    "probing": 9,
+    "telling": 3
+  },
+  "regeneration_script_path": "pedagogical-move-selection/results/move_selector_architecture_io_view_v1/build_move_selector_io_view.py",
+  "resolved_no_updates": 2,
+  "schema_version": "adaptmath_move_selector_architecture_io_view_v1",
+  "sheets": [
+    "Summary",
+    "Decision_Only",
+    "LIVE_Turn_IO",
+    "Field_Guide",
+    "Architecture_Flow",
+    "Posterior_State",
+    "LIVE_Update_Audit"
+  ],
+  "source_event_log_path": "adaptive-math-tutor/backend/runtime/turn_lints_live_skl_final_v1/turn_events.jsonl",
+  "source_hashes": {
+    "architecture_manifest": "a860d385797eaaced4788463fb789197c614bef7d7934f8006705276fdb57dfa",
+    "event_log": "7c86363ccf584c1b15aa54517997dd2526238993f7c7b040f0780fe5299926a7",
+    "lineage_manifest": "99b40d36d496da8aaebb42fd4949a8c85a3064a92ae01d9213724743ca01c1e1",
+    "passive_turns": "ae18106577c2cc11adbb2d18bcf0caf70b8dd58c04f1818843a0e04df49c8e5a",
+    "policy_state": "ce2c02451e6a7521d2a07b8ea210c86716f2a99687c3cc7a45dcc9b2d1562d7f"
+  },
+  "source_runtime_lineage": "adaptive-math-tutor/backend/runtime/turn_lints_live_skl_final_v1",
+  "state_log_accounting": "CONSISTENT",
+  "state_log_discrepancy": null,
+  "synthetic_effective_sample_size": 10.0,
+  "synthetic_initialization_count": 500,
+  "validation": {
+    "current_mrb1_excluded_from_policy_context": true,
+    "duplicate_action_event_ids": 0,
+    "eligibility_matches_posterior_updates": true,
+    "feature_order_matches_frozen_architecture": true,
+    "four_scores_present": true,
+    "mastery_after_excluded_from_pre_action_context": true,
+    "policy_context_feature_count": 11,
+    "primary_live_rows": 21,
+    "probabilities_finite_and_sum_to_one": true,
+    "reward_recomputation_matches": true,
+    "selected_arms_valid": true,
+    "source_hashes_unchanged_during_generation": true,
+    "workbook_reopens_successfully": true
+  },
+  "workbook_path": "pedagogical-move-selection/results/move_selector_architecture_io_view_v1/move_selector_architecture_io_view.xlsx"
+}

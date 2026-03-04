@@ -174,13 +174,16 @@ def _install_graph_observer() -> None:
                 "local_diagnostic component=adaptive_turn event=completed "
                 "thread_id=%s attempt_id=%s target_skill=%s turn_index=%s "
                 "final_move=%s tutor_generation_success=%s "
+                "tutor_generation_fallback_used=%s "
                 "mrb1_scoring_success=%s mrb1_scores=%s",
                 thread_id,
                 diagnostic_attempt,
                 target_skill,
                 diagnostics.get("turn_index", "unknown"),
                 _identifier(diagnostics.get("pedagogical_move")),
-                bool(result.get("tutor_response")),
+                bool(result.get("tutor_response"))
+                and not bool(diagnostics.get("tutor_generation_fallback_used")),
+                bool(diagnostics.get("tutor_generation_fallback_used")),
                 isinstance(diagnostics.get("mrb1_scores"), Mapping),
                 _safe_numeric_scores(diagnostics.get("mrb1_scores")),
             )

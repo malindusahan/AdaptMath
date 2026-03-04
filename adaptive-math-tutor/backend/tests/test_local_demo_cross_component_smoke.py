@@ -325,6 +325,10 @@ def test_real_cross_component_two_attempt_smoke(tmp_path: Path) -> None:
                 return_value=SimpleNamespace(
                     status="continue_teaching",
                     reason="The learner should take another conversational turn.",
+                    latest_response_correctness="partial",
+                    correctness_confidence=0.7,
+                    correctness_reason="The operation is useful but incomplete.",
+                    latest_response_evidence_category="mathematical_evidence",
                 ),
             ):
                 state.update(workflow.teaching_progress_node(state))
@@ -352,6 +356,22 @@ def test_real_cross_component_two_attempt_smoke(tmp_path: Path) -> None:
             "conversation_history"
         ][2]["content"]
         _append_student_response(state, "That gives x equals three.")
+        with (
+            patch.object(workflow, "adaptive_coordinator", coordinator),
+            patch.object(
+                workflow.progress_agent,
+                "judge",
+                return_value=SimpleNamespace(
+                    status="ready_for_assessment",
+                    reason="The learner completed the equation step.",
+                    latest_response_correctness="correct",
+                    correctness_confidence=0.95,
+                    correctness_reason="The response gives the correct solution.",
+                    latest_response_evidence_category="mathematical_evidence",
+                ),
+            ),
+        ):
+            state.update(workflow.teaching_progress_node(state))
 
         first_assessment = _assessment(
             state,
@@ -377,6 +397,24 @@ def test_real_cross_component_two_attempt_smoke(tmp_path: Path) -> None:
         reteaching_turn = coordinator.run_tutor_turn(state, tutor_agent=tutor)
         state.update(reteaching_turn)
         _append_student_response(state, "I corrected the equation.")
+        with (
+            patch.object(workflow, "adaptive_coordinator", coordinator),
+            patch.object(
+                workflow.progress_agent,
+                "judge",
+                return_value=SimpleNamespace(
+                    status="ready_for_assessment",
+                    reason="The learner reports applying the correction.",
+                    latest_response_correctness="unknown",
+                    correctness_confidence=0.0,
+                    correctness_reason=(
+                        "The response contains no checkable mathematics."
+                    ),
+                    latest_response_evidence_category="unclear_no_evidence",
+                ),
+            ),
+        ):
+            state.update(workflow.teaching_progress_node(state))
         second_assessment = _assessment(
             state,
             is_correct=True,
@@ -425,7 +463,10 @@ def test_real_cross_component_two_attempt_smoke(tmp_path: Path) -> None:
                 "SELECT COUNT(*) FROM attempts WHERE student_id = ?",
                 ("synthetic-demo-student",),
             ).fetchone()[0]
-        assert observation_count == 6
+        # Two evaluator-backed mathematical dialogue turns and six formal
+        # assessment answers. The unclear self-report is intentionally not
+        # written as knowledge evidence.
+        assert observation_count == 8
         assert policy.total_updates == 3
         records = [
             json.loads(line)

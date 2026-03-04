@@ -31,7 +31,9 @@ def auth_test_env(monkeypatch):
     factory = sessionmaker(bind=engine)
 
     monkeypatch.setattr(postgres_session, "get_session_factory", lambda: factory)
-    auth_svc = AuthService(session_factory=factory)
+    # This unit fixture intentionally exercises the reversible in-memory
+    # adapter; PostgreSQL session durability has its own live verification.
+    auth_svc = AuthService(session_factory=factory, session_persistence="memory")
     set_auth_service(auth_svc)
 
     client = TestClient(app, raise_server_exceptions=False)
@@ -103,7 +105,7 @@ def test_student_signup_success(auth_test_env):
 
 
 def test_signup_validation_rejections(auth_test_env):
-    """Verify signup rejects duplicate username, mismatched password, and future DOB."""
+    """Verify signup rejects duplicate, short/mismatched passwords, and future DOB."""
     client = auth_test_env["client"]
 
     # 1. Successful first signup
@@ -132,7 +134,16 @@ def test_signup_validation_rejections(auth_test_env):
     })
     assert res_mismatch.status_code == 422
 
-    # 4. Future DOB
+    # 4. Password shorter than the shared eight-character prototype minimum
+    res_short = client.post("/auth/signup", json={
+        "username": "short_password_user",
+        "date_of_birth": "2007-01-01",
+        "password": "short7",
+        "confirm_password": "short7",
+    })
+    assert res_short.status_code == 422
+
+    # 5. Future DOB
     tomorrow = (date.today() + timedelta(days=1)).isoformat()
     res_future = client.post("/auth/signup", json={
         "username": "future_user",
@@ -172,6 +183,7 @@ def test_login_me_logout_lifecycle(auth_test_env):
     res_me = client.get("/auth/me", headers={"Authorization": f"Bearer {token}"})
     assert res_me.status_code == 200
     me_data = res_me.json()
+    assert me_data["user_id"]
     assert me_data["username"] == "login_user"
     assert me_data["student_id"] == "login_user"
 

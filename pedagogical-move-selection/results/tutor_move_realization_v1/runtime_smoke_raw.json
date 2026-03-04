@@ -1,0 +1,237 @@
+{
+  "schema_version": "tutor_move_realization_runtime_smoke_v1",
+  "generation_path": "TutorAgent.teach_turn -> finalizer -> TeachingResponseVerifier",
+  "response_count": 12,
+  "external_api": "Gemini Developer API",
+  "logical_completion_calls": 34,
+  "generate_content_attempts": 34,
+  "logical_calls_by_schema": {
+    "adaptmath_atomic_teacher_turn": 17,
+    "adaptmath_teaching_response_audit": 17
+  },
+  "recovered_failed_attempt": {
+    "case_group": "rectangle_factor",
+    "selected_move": "telling",
+    "logical_completion_calls": 6,
+    "generate_content_attempts": 6,
+    "result": "correct response rejected by contextual-formula verification"
+  },
+  "records": [
+    {
+      "case_group": "negative_product",
+      "problem": "Simplify (-3)(-5) + 2.",
+      "history": [
+        {
+          "role": "teacher",
+          "content": "Show me how you simplified the expression."
+        },
+        {
+          "role": "student",
+          "content": "Negative times negative is negative, so I got -13."
+        }
+      ],
+      "selected_move": "generic",
+      "tutor_response": "Thanks for sharing your steps.",
+      "logical_completion_calls": 2,
+      "generate_content_attempts": 2
+    },
+    {
+      "case_group": "negative_product",
+      "problem": "Simplify (-3)(-5) + 2.",
+      "history": [
+        {
+          "role": "teacher",
+          "content": "Show me how you simplified the expression."
+        },
+        {
+          "role": "student",
+          "content": "Negative times negative is negative, so I got -13."
+        }
+      ],
+      "selected_move": "probing",
+      "tutor_response": "What happens when you multiply a negative number by another negative number?",
+      "logical_completion_calls": 2,
+      "generate_content_attempts": 2
+    },
+    {
+      "case_group": "negative_product",
+      "problem": "Simplify (-3)(-5) + 2.",
+      "history": [
+        {
+          "role": "teacher",
+          "content": "Show me how you simplified the expression."
+        },
+        {
+          "role": "student",
+          "content": "Negative times negative is negative, so I got -13."
+        }
+      ],
+      "selected_move": "focus",
+      "tutor_response": "You're right to start with the multiplication. Take another look at the rule for multiplying two negative numbers.",
+      "logical_completion_calls": 2,
+      "generate_content_attempts": 2
+    },
+    {
+      "case_group": "negative_product",
+      "problem": "Simplify (-3)(-5) + 2.",
+      "history": [
+        {
+          "role": "teacher",
+          "content": "Show me how you simplified the expression."
+        },
+        {
+          "role": "student",
+          "content": "Negative times negative is negative, so I got -13."
+        }
+      ],
+      "selected_move": "telling",
+      "tutor_response": "When you multiply two negative numbers, the result is a positive number. So, (-3)(-5) would be positive 15. Can you take it from there?",
+      "logical_completion_calls": 2,
+      "generate_content_attempts": 2
+    },
+    {
+      "case_group": "rectangle_factor",
+      "problem": "A rectangle has area 48 square units and width 6 units. Find its length.",
+      "history": [
+        {
+          "role": "teacher",
+          "content": "How would you find the missing length?"
+        },
+        {
+          "role": "student",
+          "content": "I think I should add 48 and 6."
+        }
+      ],
+      "selected_move": "generic",
+      "tutor_response": "Thanks for sharing your idea.",
+      "logical_completion_calls": 2,
+      "generate_content_attempts": 2
+    },
+    {
+      "case_group": "rectangle_factor",
+      "problem": "A rectangle has area 48 square units and width 6 units. Find its length.",
+      "history": [
+        {
+          "role": "teacher",
+          "content": "How would you find the missing length?"
+        },
+        {
+          "role": "student",
+          "content": "I think I should add 48 and 6."
+        }
+      ],
+      "selected_move": "probing",
+      "tutor_response": "What is the formula for the area of a rectangle?",
+      "logical_completion_calls": 2,
+      "generate_content_attempts": 2
+    },
+    {
+      "case_group": "rectangle_factor",
+      "problem": "A rectangle has area 48 square units and width 6 units. Find its length.",
+      "history": [
+        {
+          "role": "teacher",
+          "content": "How would you find the missing length?"
+        },
+        {
+          "role": "student",
+          "content": "I think I should add 48 and 6."
+        }
+      ],
+      "selected_move": "focus",
+      "tutor_response": "Remember that the area of a rectangle is found by multiplying its length and width. You know the area is 48 and the width is 6.",
+      "logical_completion_calls": 2,
+      "generate_content_attempts": 2
+    },
+    {
+      "case_group": "rectangle_factor",
+      "problem": "A rectangle has area 48 square units and width 6 units. Find its length.",
+      "history": [
+        {
+          "role": "teacher",
+          "content": "How would you find the missing length?"
+        },
+        {
+          "role": "student",
+          "content": "I think I should add 48 and 6."
+        }
+      ],
+      "selected_move": "telling",
+      "tutor_response": "Adding the area and width won't give you the length. To find the length of a rectangle, you need to divide the area by the width. What do you get when you divide 48 by 6?",
+      "logical_completion_calls": 6,
+      "generate_content_attempts": 6
+    },
+    {
+      "case_group": "equation_first_step",
+      "problem": "Solve 2(x - 3) = 10.",
+      "history": [
+        {
+          "role": "teacher",
+          "content": "Try the first step."
+        },
+        {
+          "role": "student",
+          "content": "I do not know how to begin. Please help me with the first step."
+        }
+      ],
+      "selected_move": "generic",
+      "tutor_response": "It's completely normal to feel a bit stuck sometimes. You've got this!",
+      "logical_completion_calls": 2,
+      "generate_content_attempts": 2
+    },
+    {
+      "case_group": "equation_first_step",
+      "problem": "Solve 2(x - 3) = 10.",
+      "history": [
+        {
+          "role": "teacher",
+          "content": "Try the first step."
+        },
+        {
+          "role": "student",
+          "content": "I do not know how to begin. Please help me with the first step."
+        }
+      ],
+      "selected_move": "probing",
+      "tutor_response": "What does the '2' outside the parentheses indicate you should do with the expression inside?",
+      "logical_completion_calls": 2,
+      "generate_content_attempts": 2
+    },
+    {
+      "case_group": "equation_first_step",
+      "problem": "Solve 2(x - 3) = 10.",
+      "history": [
+        {
+          "role": "teacher",
+          "content": "Try the first step."
+        },
+        {
+          "role": "student",
+          "content": "I do not know how to begin. Please help me with the first step."
+        }
+      ],
+      "selected_move": "focus",
+      "tutor_response": "Consider how you can remove the parentheses on the left side of the equation.",
+      "logical_completion_calls": 2,
+      "generate_content_attempts": 2
+    },
+    {
+      "case_group": "equation_first_step",
+      "problem": "Solve 2(x - 3) = 10.",
+      "history": [
+        {
+          "role": "teacher",
+          "content": "Try the first step."
+        },
+        {
+          "role": "student",
+          "content": "I do not know how to begin. Please help me with the first step."
+        }
+      ],
+      "selected_move": "telling",
+      "tutor_response": "To begin, you can divide both sides of the equation by 2. This will simplify the left side. What do you get when you do that?",
+      "logical_completion_calls": 2,
+      "generate_content_attempts": 2
+    }
+  ]
+}

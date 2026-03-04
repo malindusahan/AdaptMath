@@ -5,7 +5,11 @@ from unittest.mock import Mock
 
 from app.agents.tutor.math_verifier import SymPyMathVerifier
 from app.agents.tutor.response_verifier import TeachingResponseVerifier
-from app.agents.tutor.tutor_agent import TutorAgent
+from app.agents.tutor.tutor_agent import (
+    MOVE_REALIZATION_CONTRACT,
+    TutorAgent,
+    build_move_realization_instruction,
+)
 from app.schemas.tutor import TutorInput
 
 
@@ -110,6 +114,96 @@ class TutorResponseVerificationTests(unittest.TestCase):
 
         self.assertTrue(result["approved"])
         self.assertEqual(result["deterministic_failures"], [])
+
+    def test_audit_accepts_established_contextual_equation(self) -> None:
+        verifier = self.make_verifier()
+        result = verifier.evaluate_payload(
+            {
+                "checkable_claims": [
+                    {
+                        "source_text": "c^2 = 225",
+                        "left_expression": "c**2",
+                        "right_expression": "225",
+                        "_established_contextual_equation": True,
+                    }
+                ],
+                "logical_issues": [],
+                "turn_scope_issues": [],
+                "turn_scope_verdict": "pass",
+                "move_alignment_verdict": "pass",
+            }
+        )
+
+        self.assertTrue(result["approved"])
+        self.assertEqual(result["deterministic_failures"], [])
+        self.assertEqual(
+            result["deterministic_results"][0]["verification_status"],
+            "established_contextual_equation",
+        )
+
+    def test_audit_marks_equation_found_in_dialogue_as_contextual(self) -> None:
+        payload = {
+            "checkable_claims": [
+                {
+                    "source_text": "c^2 = 225",
+                    "left_expression": "c**2",
+                    "right_expression": "225",
+                }
+            ],
+            "logical_issues": [],
+            "turn_scope_issues": [],
+            "turn_scope_verdict": "pass",
+            "move_alignment_verdict": "pass",
+            "scope_reason": "Atomic.",
+            "move_alignment_reason": "Aligned.",
+        }
+        client = SimpleNamespace(
+            chat=SimpleNamespace(
+                completions=SimpleNamespace(
+                    create=Mock(return_value=self.make_response(json.dumps(payload)))
+                )
+            )
+        )
+        verifier = TeachingResponseVerifier(
+            client=client,
+            model_name="test-model",
+            math_verifier=SymPyMathVerifier(),
+        )
+
+        result = verifier.audit(
+            question="Find the hypotenuse.",
+            verified_evidence="81 + 144 = 225",
+            teaching_response="You found c^2 = 225. What comes next?",
+            pedagogical_move="generic",
+            conversation_history=[
+                {"role": "student", "content": r"\(c^2=225\)."}
+            ],
+        )
+
+        self.assertTrue(result["approved"])
+        self.assertEqual(result["deterministic_failures"], [])
+        self.assertEqual(
+            result["deterministic_results"][0]["verification_status"],
+            "established_contextual_equation",
+        )
+
+    def test_audit_still_rejects_false_symbolic_identity(self) -> None:
+        verifier = self.make_verifier()
+        result = verifier.evaluate_payload(
+            {
+                "checkable_claims": [
+                    {
+                        "source_text": "(x + 1)^2 = x^2 + 1",
+                        "left_expression": "(x+1)**2",
+                        "right_expression": "x**2+1",
+                    }
+                ],
+                "logical_issues": [],
+            }
+        )
+
+        self.assertFalse(result["approved"])
+        self.assertEqual(len(result["deterministic_failures"]), 1)
 
     def test_audit_rejects_clear_logical_contradiction(self) -> None:
         verifier = self.make_verifier()
@@ -228,6 +322,95 @@ class TutorResponseVerificationTests(unittest.TestCase):
         self.assertIn("multiplication", prompt)
         self.assertIn("requests multiple learner tasks", prompt)
         self.assertIn("How would you start solving this problem?", prompt)
+
+    def test_verifier_distinguishes_contextual_equations_from_identities(self) -> None:
+        prompt = TeachingResponseVerifier.audit_prompt
+        self.assertIn("conditional/contextual equation", prompt)
+        self.assertIn("c^2 = 225", prompt)
+        self.assertIn("not a claim", prompt)
+
+    def test_verifier_allows_direct_one_step_answer_after_escalation(self) -> None:
+        prompt = TeachingResponseVerifier.audit_prompt
+        self.assertIn("explicitly requests the answer", prompt)
+        self.assertIn("may instead receive its verified answer directly", prompt)
+        self.assertIn("no follow-up", prompt)
+
+    def test_each_move_has_a_distinct_primary_realization_contract(self) -> None:
+        self.assertEqual(
+            set(MOVE_REALIZATION_CONTRACT),
+            {"generic", "probing", "focus", "telling"},
+        )
+        self.assertEqual(len(set(MOVE_REALIZATION_CONTRACT.values())), 4)
+        self.assertIn(
+            "Do not default to interrogating",
+            MOVE_REALIZATION_CONTRACT["generic"],
+        )
+        self.assertIn(
+            "ONE clear, specific main mathematical",
+            MOVE_REALIZATION_CONTRACT["probing"],
+        )
+        self.assertIn("Give a targeted", MOVE_REALIZATION_CONTRACT["focus"])
+        self.assertIn("information FIRST", MOVE_REALIZATION_CONTRACT["telling"])
+
+    def test_selected_move_is_explicit_in_private_generation_instruction(self) -> None:
+        instruction = build_move_realization_instruction("telling")
+        self.assertIn("Selected pedagogical move: telling", instruction)
+        self.assertIn("PRIVATE", instruction)
+        self.assertIn("explanation", instruction)
+
+        agent = TutorAgent.__new__(TutorAgent)
+        finalizer_context = TutorAgent._build_finalizer_context(
+            agent,
+            self.make_tutor_input().model_copy(
+                update={"pedagogical_move": "telling"}
+            ),
+            evidence=[],
+        )
+        self.assertIn("AUTHORITATIVE SELECTED-MOVE REALIZATION", finalizer_context)
+        self.assertIn("Selected pedagogical move: telling", finalizer_context)
+
+    def test_verifier_does_not_impose_universal_question_suffix(self) -> None:
+        prompt = TeachingResponseVerifier.audit_prompt
+        self.assertIn("no universal requirement to ask a question", prompt)
+        self.assertIn("declarative generic and focus turns can pass", prompt)
+
+    def test_raw_internal_move_prefix_is_retried_not_shown(self) -> None:
+        agent = TutorAgent.__new__(TutorAgent)
+        agent.model_name = "test-model"
+        agent.final_teaching_prompt = "test finalizer prompt"
+        agent.max_response_verification_attempts = 3
+        create = Mock(
+            side_effect=[
+                self.make_teacher_turn_response("[PROBING] Why did you divide?"),
+                self.make_teacher_turn_response("Why did you choose division here?"),
+            ]
+        )
+        agent.client = SimpleNamespace(
+            chat=SimpleNamespace(completions=SimpleNamespace(create=create))
+        )
+        agent.response_verifier = SimpleNamespace(
+            audit=Mock(
+                return_value={
+                    "approved": True,
+                    "deterministic_failures": [],
+                    "logical_issues": [],
+                    "turn_scope_issues": [],
+                    "turn_scope_verdict": "pass",
+                    "move_alignment_verdict": "pass",
+                }
+            ),
+            correction_feedback=Mock(return_value=""),
+        )
+
+        result = TutorAgent._generate_teaching_response(
+            agent, self.make_tutor_input(), evidence=[]
+        )
+
+        self.assertEqual(result, "Why did you choose division here?")
+        self.assertEqual(create.call_count, 2)
+        self.assertEqual(agent.response_verifier.audit.call_count, 1)
+        retry_context = create.call_args_list[1].kwargs["messages"][1]["content"]
+        self.assertIn("exposed a private pedagogical-move label", retry_context)
 
     def test_teaching_finalizer_retries_before_audit_when_self_check_reports_future_steps(self) -> None:
         agent = TutorAgent.__new__(TutorAgent)

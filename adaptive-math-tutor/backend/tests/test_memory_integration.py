@@ -10,6 +10,7 @@ from pydantic import SecretStr
 from app.api import tutor as tutor_api
 from app.clients.memory.memory_client import (
     MemoryClient,
+    MemoryTopicClassification,
     MemoryTutorContextResponse,
 )
 from app.core.config import Settings
@@ -102,6 +103,104 @@ def test_http_retrieval_rejects_mismatched_student_identity():
             student_id="student-a",
             target_skill="Linear Equations",
         ) is None
+    finally:
+        http_client.close()
+
+
+def test_user_authentication_uses_bearer_token_without_service_key():
+    requests: list[httpx.Request] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        requests.append(request)
+        return httpx.Response(
+            200,
+            request=request,
+            json={
+                "user_id": "user-a",
+                "username": "student-a",
+                "role": "STUDENT",
+                "student_id": "student-a",
+                "age": 15,
+                "password_hash": "must-be-discarded",
+            },
+        )
+
+    http_client = httpx.Client(transport=httpx.MockTransport(handler))
+    client = MemoryClient(settings=_settings(), http_client=http_client)
+    try:
+        user = client.authenticate_user("mem_sess_test-token")
+    finally:
+        http_client.close()
+
+    assert user is not None
+    assert user.student_id == "student-a"
+    assert not hasattr(user, "password_hash")
+    assert requests[0].url.path == "/auth/me"
+    assert requests[0].headers["Authorization"] == "Bearer mem_sess_test-token"
+    assert "X-Service-Key" not in requests[0].headers
+
+
+def test_user_authentication_fails_closed_on_unauthorized_response():
+    def handler(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(401, request=request, json={"detail": "invalid"})
+
+    http_client = httpx.Client(transport=httpx.MockTransport(handler))
+    client = MemoryClient(settings=_settings(), http_client=http_client)
+    try:
+        assert client.authenticate_user("invalid") is None
+    finally:
+        http_client.close()
+
+
+def test_topic_classification_is_authenticated_and_allowlisted():
+    requests: list[httpx.Request] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        requests.append(request)
+        return httpx.Response(
+            200,
+            json={
+                "topic": "Area Circle",
+                "skill_id": "SKILL_39",
+                "confidence": 0.6366,
+                "is_math": True,
+                "model_version": "phase16-minilm-ft-v2",
+                "unexpected_internal_field": "discarded",
+            },
+        )
+
+    http_client = httpx.Client(transport=httpx.MockTransport(handler))
+    client = MemoryClient(settings=_settings(), http_client=http_client)
+    try:
+        result = client.classify_question(question="Find the area of a circle.")
+    finally:
+        http_client.close()
+
+    assert result == MemoryTopicClassification(
+        topic="Area Circle",
+        skill_id="SKILL_39",
+        confidence=0.6366,
+        is_math=True,
+        model_version="phase16-minilm-ft-v2",
+    )
+    assert len(requests) == 1
+    assert requests[0].url.path == "/topic/classify"
+    assert requests[0].headers["X-Service-Key"] == "test-service-key"
+    assert requests[0].read() == b'{"question":"Find the area of a circle."}'
+
+
+def test_topic_classification_fails_closed_on_invalid_response():
+    def handler(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(
+            200,
+            request=request,
+            json={"topic": "Area Circle", "is_math": True},
+        )
+
+    http_client = httpx.Client(transport=httpx.MockTransport(handler))
+    client = MemoryClient(settings=_settings(), http_client=http_client)
+    try:
+        assert client.classify_question(question="Find the area.") is None
     finally:
         http_client.close()
 

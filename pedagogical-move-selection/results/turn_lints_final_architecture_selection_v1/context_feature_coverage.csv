@@ -1,0 +1,23 @@
+block,feature,analysis_N,runtime_representable_N,runtime_representable_percent,real_substantive_observed_N,real_substantive_observed_percent,missing_representation
+S,selector_p_generic,84,84,100.0,84,100.0,none
+S,selector_p_probing,84,84,100.0,84,100.0,none
+S,selector_p_focus,84,84,100.0,84,100.0,none
+S,selector_p_telling,84,84,100.0,84,100.0,none
+K,mastery_before,84,84,100.0,70,83.33333333333334,previous delta zero + explicit missing indicator
+K,previous_mastery_delta,84,84,100.0,70,83.33333333333334,previous delta zero + explicit missing indicator
+K,previous_mastery_delta_missing,84,84,100.0,70,83.33333333333334,previous delta zero + explicit missing indicator
+L,previous_reasoning_probability,84,84,100.0,3,3.571428571428571,three zeros + shared missing indicator
+L,previous_uncertainty_probability,84,84,100.0,3,3.571428571428571,three zeros + shared missing indicator
+L,previous_clarification_probability,84,84,100.0,3,3.571428571428571,three zeros + shared missing indicator
+L,previous_learner_signals_missing,84,84,100.0,3,3.571428571428571,three zeros + shared missing indicator
+H,previous_move_generic,84,84,100.0,70,83.33333333333334,zero one-hot + missing indicator; count remains observed
+H,previous_move_probing,84,84,100.0,70,83.33333333333334,zero one-hot + missing indicator; count remains observed
+H,previous_move_focus,84,84,100.0,70,83.33333333333334,zero one-hot + missing indicator; count remains observed
+H,previous_move_telling,84,84,100.0,70,83.33333333333334,zero one-hot + missing indicator; count remains observed
+H,previous_move_missing,84,84,100.0,70,83.33333333333334,zero one-hot + missing indicator; count remains observed
+H,prior_tutor_turn_count,84,84,100.0,70,83.33333333333334,zero one-hot + missing indicator; count remains observed
+Q,previous_mistake_identification,84,84,100.0,70,83.33333333333334,four zeros + shared missing indicator
+Q,previous_mistake_location,84,84,100.0,70,83.33333333333334,four zeros + shared missing indicator
+Q,previous_providing_guidance,84,84,100.0,70,83.33333333333334,four zeros + shared missing indicator
+Q,previous_actionability,84,84,100.0,70,83.33333333333334,four zeros + shared missing indicator
+Q,previous_mrb1_missing,84,84,100.0,70,83.33333333333334,four zeros + shared missing indicator

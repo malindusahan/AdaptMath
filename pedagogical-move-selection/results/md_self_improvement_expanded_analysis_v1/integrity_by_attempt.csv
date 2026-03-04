@@ -1,0 +1,13 @@
+attempt_number,attempt_id,index_starts_at_1_mismatches,index_monotonic_mismatches,index_contiguous_mismatches,resolver_identity_mismatches,text_history_mismatches,mastery_continuity_mismatches,action_mastery_mismatches,delta_equation_mismatches,timestamp_order_mismatches,assessment_chain_mismatches,assessment_separation_mismatches
+1,5413cab2-22c8-4536-a66b-66619d887e84:1,0,0,0,0,0,0,0,0,0,0,0
+2,8a72eaca-f99f-4226-92d4-f73cc0492a2e:1,0,0,0,0,0,0,0,0,0,0,0
+3,ecaa67e8-e212-4866-877f-9e2dd4cced40:1,0,0,0,0,0,0,0,0,0,0,0
+4,f3133173-8f14-44d9-b485-97a42dc45030:1,0,0,0,0,0,0,0,0,0,0,0
+5,a6d964ef-ca38-47e1-a1f5-6009be1aa0b5:1,0,0,0,0,0,0,0,0,0,0,0
+6,dffa3aac-68c5-4b98-b5cc-3bddd6e5f956:1,0,0,0,0,0,0,0,0,0,0,0
+7,b9a3b98d-ab91-4e24-b3f7-39a0623831b9:1,0,0,0,0,0,0,0,0,0,0,0
+8,0adabdf3-b861-4b0f-b802-451cc208dd0b:1,0,0,0,0,0,0,0,0,0,0,0
+9,978c3e3b-ab82-4c73-9791-5dc47de68792:1,0,0,0,0,0,0,0,0,0,0,0
+10,bf4054b0-35ba-46ac-8cef-3d83a59f61c0:1,0,0,0,0,0,0,0,0,0,0,0
+11,9bba79bb-b00a-40ca-a121-24da1db2e319:1,0,0,0,0,0,0,0,0,0,0,0
+12,eef1d04e-fe55-4457-9edf-f1c05786fd69:1,0,0,0,0,0,0,0,0,0,0,0

@@ -1,0 +1,60 @@
+{
+  "epoch": 2,
+  "target_val": {
+    "accuracy": 1.0,
+    "macro_f1": 1.0,
+    "weighted_f1": 1.0,
+    "per_class_f1": {
+      "generic": 1.0,
+      "probing": 1.0,
+      "focus": 1.0,
+      "telling": 1.0
+    },
+    "pred_distribution": {
+      "generic": 600,
+      "probing": 600,
+      "focus": 600,
+      "telling": 600
+    }
+  },
+  "challenge_val": {
+    "accuracy": 0.665,
+    "macro_f1": 0.5440388327888328,
+    "weighted_f1": 0.6632310662310662,
+    "per_class_f1": {
+      "generic": 0.72,
+      "probing": 0.3557692307692308,
+      "focus": 0.10038610038610038,
+      "telling": 1.0
+    },
+    "pred_distribution": {
+      "generic": 45,
+      "probing": 256,
+      "focus": 99,
+      "telling": 400
+    },
+    "telling_precision": 1.0,
+    "telling_recall": 1.0,
+    "telling_false_trigger_rate_on_non_telling": 0.0,
+    "telling_tp": 400,
+    "telling_fp": 0,
+    "telling_fn": 0
+  },
+  "mathdial_val": {
+    "accuracy": 0.5027027027027027,
+    "macro_f1": 0.441921274964333,
+    "weighted_f1": 0.4735778386661692,
+    "per_class_f1": {
+      "generic": 0.6026785714285714,
+      "probing": 0.23954372623574144,
+      "focus": 0.6020719073735528,
+      "telling": 0.32339089481946626
+    },
+    "pred_distribution": {
+      "generic": 454,
+      "probing": 114,
+      "focus": 963,
+      "telling": 319
+    }
+  }
+}

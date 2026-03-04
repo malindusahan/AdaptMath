@@ -17,7 +17,7 @@ from src.ontology.ontology_seed_service import OntologySeedService
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-EXPECTED_REVISION = "0011_adaptmath_ingestion"
+EXPECTED_REVISION = "0013_policy_state_ordered_json"
 
 
 def main() -> None:

@@ -34,6 +34,7 @@ class AdaptiveTutorAgentAdapter:
         self._tutor_agent = tutor_agent
         self._state = tutor_state
         self._memory_adapter = memory_adapter
+        self.last_generation_fallback_used = False
 
     @staticmethod
     def _dialogue_history(
@@ -108,6 +109,9 @@ class AdaptiveTutorAgentAdapter:
         response = getattr(output, "teaching_response", None)
         if not isinstance(response, str) or not response.strip():
             raise ValueError("TutorAgent returned an empty teaching response.")
+        self.last_generation_fallback_used = bool(
+            getattr(output, "fallback_used", False)
+        )
 
         self._memory_adapter.set_pending_pedagogical_move(pedagogical_move)
         return response.strip()

@@ -1,0 +1,16 @@
+field,nonmissing_values,missing_count,conflicting_nonmissing
+data_mode,"[""real""]",0,False
+selector_mode,"[""ordinary-md7r1-v1""]",0,False
+selector_checkpoint,"[""md7r1_epoch3""]",0,False
+selector_model_sha256,"[""d32d37f7f664d038f80fefb92f874804b49e5ac3d848985636ae64e6a2a60a13""]",0,False
+move_order,"[""[\""generic\"",\""probing\"",\""focus\"",\""telling\""]""]",15,False
+learner_agency_version,"[""learner_agency_telling_escalation_v1""]",0,False
+c3_version,"[""turn_lints_v3_c3_9d""]",0,False
+lints_policy_version,"[""true_disjoint_lints_v3""]",0,False
+lints_policy_lineage,"[""MD7-R1 fresh LinTS v1""]",0,False
+tau,"[""0.1""]",0,False
+mrb1_version,"[""frozen_mrb1""]",0,False
+mrb1_sha256,"[""9ad757e884beae6a242cf6fe17d5b3524e7599e413e9b9cc5f3b999a37a6f1d7""]",0,False
+resolver_version,"[""2.0""]",0,False
+bkt_version,"[""confidence_weighted_bkt_v1""]",0,False
+bkt_sha256,"[""a82d8f066c965d931882ae3251db50b42f8033defb89da3e822b7b23a3b56e75""]",0,False

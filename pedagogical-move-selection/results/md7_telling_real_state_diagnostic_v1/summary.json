@@ -1,0 +1,375 @@
+{
+  "diagnostic": "md7_telling_real_state_diagnostic_v1",
+  "decision": "B. TELLING OVERCORRECTION",
+  "decision_reason": "Candidate predicts telling on 3/4 recoverable-after-one-scaffold cases, including learner responses that already show recovery. This fails the required preservation of probing/focus behavior in recoverable difficulty.",
+  "models": {
+    "baseline": {
+      "path": "pedagogical-move-selection/models/candidates/md7r1_epoch3",
+      "hashes": {
+        "model.safetensors": "d32d37f7f664d038f80fefb92f874804b49e5ac3d848985636ae64e6a2a60a13",
+        "config.json": "9877dd11007c8af1d2841a2c1bb470023ef2ceeb748b47c24686ea82479e9127",
+        "tokenizer.json": "80d0fb9a6bbc3ab2b24ec149d6b47981036a5f96c753667be38709975753550b",
+        "tokenizer_config.json": "bb5706f71e3d5cb4bf9878ad9b14a2079e6fbd618fc0a0ba2ac1b257d7824cc9"
+      },
+      "id2label": {
+        "0": "generic",
+        "1": "probing",
+        "2": "focus",
+        "3": "telling"
+      }
+    },
+    "candidate": {
+      "path": "pedagogical-move-selection/models/candidates/md7_telling_calibration_epoch3/md7_telling_calibration_v5_candidates/md7_telling_calibration_v5/epoch3",
+      "hashes": {
+        "model.safetensors": "a24d364b7d7461144afa97bae70c3690c4ce7af919927010cfb3fce73df9619c",
+        "config.json": "419efd3794d791c4927dec0518ebe7d81765a22c3d8b8d28956589d625da52c0",
+        "tokenizer.json": "80d0fb9a6bbc3ab2b24ec149d6b47981036a5f96c753667be38709975753550b",
+        "tokenizer_config.json": "bb5706f71e3d5cb4bf9878ad9b14a2079e6fbd618fc0a0ba2ac1b257d7824cc9"
+      },
+      "id2label": {
+        "0": "generic",
+        "1": "probing",
+        "2": "focus",
+        "3": "telling"
+      }
+    }
+  },
+  "inference_contract": {
+    "sequence_a_prefix": "Problem:\n",
+    "sequence_b_prefix": "Conversation:\n",
+    "history_turn_format": "{user}: {text}",
+    "suffix": "\n\nNext teacher pedagogical move:",
+    "truncation_side": "left",
+    "truncation": "only_second",
+    "max_length": 512,
+    "label_order": [
+      "generic",
+      "probing",
+      "focus",
+      "telling"
+    ]
+  },
+  "safety_check": {
+    "status": "PASS",
+    "scope": "existing MathDial validation only",
+    "validation_rows": 1850,
+    "validation_path": "pedagogical-move-selection/data/processed/mathdial/validation.jsonl",
+    "validation_sha256": "225e6b8f671bf1e335af175343722aa9ac2a603a96d67bcb5220be1e92c0b2b6",
+    "baseline_model_path": "pedagogical-move-selection/models/candidates/md7r1_epoch3",
+    "baseline_model_sha256": "d32d37f7f664d038f80fefb92f874804b49e5ac3d848985636ae64e6a2a60a13",
+    "metrics": {
+      "accuracy": 0.5162162162162162,
+      "macro_f1": 0.4611286390258053,
+      "per_class_f1": {
+        "generic": 0.6105263157894737,
+        "probing": 0.3333333333333333,
+        "focus": 0.6004672897196262,
+        "telling": 0.300187617260788
+      }
+    },
+    "runtime": {
+      "device": "cpu",
+      "torch": "2.6.0+cu124",
+      "transformers": "4.56.2",
+      "tokenizer_class": "RobertaTokenizerFast",
+      "tokenizer_is_fast": true
+    },
+    "contract": {
+      "sequence_a_prefix": "Problem:\n",
+      "sequence_b_prefix": "Conversation:\n",
+      "history_turn_format": "{user}: {text}",
+      "suffix": "\n\nNext teacher pedagogical move:",
+      "truncation_side": "left",
+      "truncation": "only_second",
+      "max_length": 512,
+      "label_order": [
+        "generic",
+        "probing",
+        "focus",
+        "telling"
+      ]
+    },
+    "protected_test_opened": false,
+    "candidate_scored_during_gate": false,
+    "writes_during_gate": 0
+  },
+  "real_state_reconstruction": {
+    "n": 87,
+    "completed": true,
+    "selector_mode": "ordinary-md7r1-v1",
+    "formal_assessment_rows_used": 0,
+    "future_fields_used_for_prediction": [],
+    "baseline_probability_parity_max_abs_error": 1.2516975402832031e-06,
+    "parity_rows_failed_at_1e_5": 0
+  },
+  "challenge": {
+    "n": 48,
+    "telling_plausible_n": 24,
+    "hard_non_telling_n": 24,
+    "source": "manual realistic adaptations plus deployment-style authored cases",
+    "labels_are_causal_ground_truth": false
+  },
+  "telling_plausible": {
+    "baseline": {
+      "n": 24,
+      "top1_telling_count": 19,
+      "top1_telling_rate": 0.7916666666666666,
+      "mean_telling_probability": 0.7761732943666478,
+      "median_telling_probability": 0.9734310805797577,
+      "max_telling_probability": 0.9976131916046143,
+      "top1_distribution": {
+        "generic": 5,
+        "probing": 0,
+        "focus": 0,
+        "telling": 19
+      }
+    },
+    "candidate": {
+      "n": 24,
+      "top1_telling_count": 24,
+      "top1_telling_rate": 1.0,
+      "mean_telling_probability": 0.9969001983602842,
+      "median_telling_probability": 0.9987701177597046,
+      "max_telling_probability": 0.9992345571517944,
+      "top1_distribution": {
+        "generic": 0,
+        "probing": 0,
+        "focus": 0,
+        "telling": 24
+      }
+    },
+    "sensitivity_gain": 0.20833333333333337
+  },
+  "hard_non_telling": {
+    "baseline": {
+      "n": 24,
+      "top1_telling_count": 0,
+      "top1_telling_rate": 0.0,
+      "mean_telling_probability": 0.0015298576969750381,
+      "median_telling_probability": 0.0011220607557334006,
+      "max_telling_probability": 0.004041509702801704,
+      "top1_distribution": {
+        "generic": 11,
+        "probing": 12,
+        "focus": 1,
+        "telling": 0
+      }
+    },
+    "candidate": {
+      "n": 24,
+      "top1_telling_count": 3,
+      "top1_telling_rate": 0.125,
+      "mean_telling_probability": 0.11216755513608707,
+      "median_telling_probability": 0.0007204195135273039,
+      "max_telling_probability": 0.9634163975715637,
+      "top1_distribution": {
+        "generic": 1,
+        "probing": 15,
+        "focus": 5,
+        "telling": 3
+      }
+    },
+    "false_trigger_change": 0.125
+  },
+  "recoverable_after_one_scaffold": {
+    "n": 4,
+    "candidate_top1_telling_count": 3,
+    "candidate_top1_telling_rate": 0.75
+  },
+  "real_states": {
+    "baseline_top1_telling_count": 0,
+    "candidate_top1_telling_count": 4,
+    "candidate_top1_telling_rate": 0.04597701149425287,
+    "policy_displacement_count": 24,
+    "policy_displacement_rate": 0.27586206896551724,
+    "changed_to_telling_count": 4,
+    "changed_away_from_telling_count": 0,
+    "top1_transitions": [
+      {
+        "baseline_top1": "focus",
+        "candidate_top1": "focus",
+        "count": 21
+      },
+      {
+        "baseline_top1": "focus",
+        "candidate_top1": "probing",
+        "count": 13
+      },
+      {
+        "baseline_top1": "focus",
+        "candidate_top1": "telling",
+        "count": 2
+      },
+      {
+        "baseline_top1": "generic",
+        "candidate_top1": "focus",
+        "count": 1
+      },
+      {
+        "baseline_top1": "generic",
+        "candidate_top1": "generic",
+        "count": 18
+      },
+      {
+        "baseline_top1": "generic",
+        "candidate_top1": "probing",
+        "count": 2
+      },
+      {
+        "baseline_top1": "probing",
+        "candidate_top1": "focus",
+        "count": 4
+      },
+      {
+        "baseline_top1": "probing",
+        "candidate_top1": "probing",
+        "count": 24
+      },
+      {
+        "baseline_top1": "probing",
+        "candidate_top1": "telling",
+        "count": 2
+      }
+    ],
+    "telling_probability_delta": {
+      "count": 87,
+      "min": -0.04556385241448879,
+      "q1": -0.011368743143975735,
+      "median": -0.0030989572405815125,
+      "mean": 0.020975134906495503,
+      "q3": 0.00010575877968221903,
+      "max": 0.6774098481982946,
+      "std": 0.1092016289950426
+    }
+  },
+  "observational_outcome_stratification": {
+    "n": 4,
+    "evaluator_distribution": {
+      "correct": 4
+    },
+    "delta_mastery": {
+      "count": 4,
+      "min": 0.018871587353022856,
+      "q1": 0.022376308830446168,
+      "median": 0.0971070051937235,
+      "mean": 0.09837768340440532,
+      "q3": 0.17310837976768267,
+      "max": 0.18042513587715142,
+      "std": 0.07726432365638916
+    },
+    "mastery_before": {
+      "count": 4,
+      "min": 0.32068980617750237,
+      "q1": 0.45600865808536595,
+      "median": 0.6872238985675669,
+      "mean": 0.6480037519290092,
+      "q3": 0.8792189924112103,
+      "max": 0.8968774044034007,
+      "std": 0.2456735848502619
+    },
+    "interpretation": "Observational historical outcomes joined only after independent pre-action predictions; no causal claim."
+  },
+  "synthetic_calibration_evidence": {
+    "candidate_epoch3_metrics": {
+      "epoch": 3,
+      "target_val": {
+        "accuracy": 1.0,
+        "macro_f1": 1.0,
+        "weighted_f1": 1.0,
+        "per_class_f1": {
+          "generic": 1.0,
+          "probing": 1.0,
+          "focus": 1.0,
+          "telling": 1.0
+        },
+        "pred_distribution": {
+          "generic": 600,
+          "probing": 600,
+          "focus": 600,
+          "telling": 600
+        }
+      },
+      "challenge_val": {
+        "accuracy": 0.6575,
+        "macro_f1": 0.531511717213345,
+        "weighted_f1": 0.6532093737706761,
+        "per_class_f1": {
+          "generic": 0.72,
+          "probing": 0.35071090047393366,
+          "focus": 0.05533596837944664,
+          "telling": 1.0
+        },
+        "pred_distribution": {
+          "generic": 45,
+          "probing": 262,
+          "focus": 93,
+          "telling": 400
+        },
+        "telling_precision": 1.0,
+        "telling_recall": 1.0,
+        "telling_false_trigger_rate_on_non_telling": 0.0,
+        "telling_tp": 400,
+        "telling_fp": 0,
+        "telling_fn": 0
+      },
+      "mathdial_val": {
+        "accuracy": 0.49675675675675673,
+        "macro_f1": 0.4497967067613938,
+        "weighted_f1": 0.478263474309056,
+        "per_class_f1": {
+          "generic": 0.6157461809635723,
+          "probing": 0.2972536348949919,
+          "focus": 0.5787545787545788,
+          "telling": 0.30743243243243246
+        },
+        "pred_distribution": {
+          "generic": 409,
+          "probing": 207,
+          "focus": 960,
+          "telling": 274
+        }
+      }
+    },
+    "selected_epoch_holdout": {
+      "selected_epoch": 3,
+      "selection_basis": "Epoch 3 selected using validation only: telling challenge performance + MathDial validation retention.",
+      "synthetic_final_holdout": {
+        "accuracy": 1.0,
+        "macro_f1": 1.0,
+        "weighted_f1": 1.0,
+        "per_class_f1": {
+          "generic": 1.0,
+          "probing": 1.0,
+          "focus": 1.0,
+          "telling": 1.0
+        },
+        "pred_distribution": {
+          "generic": 300,
+          "probing": 300,
+          "focus": 300,
+          "telling": 300
+        }
+      }
+    },
+    "real_effectiveness_evidence": false
+  },
+  "claims_not_entitled": [
+    "candidate telling would have caused better learning",
+    "candidate would have improved historical outcomes",
+    "negative BKT proves telling was needed",
+    "synthetic perfection demonstrates real tutoring effectiveness"
+  ],
+  "recommended_next_experiment": "A targeted offline telling-boundary recalibration ablation that adds recoverable-after-one-scaffold hard negatives, followed by repetition of this same frozen diagnostic before any live exploration.",
+  "side_effects": {
+    "training": 0,
+    "model_writes": 0,
+    "production_policy_writes": 0,
+    "authoritative_real_data_writes": 0,
+    "tutor_api_calls": 0,
+    "bkt_updates": 0,
+    "lints_updates": 0,
+    "mathdial_final_test_use": 0,
+    "mrbench_v3_test_use": 0,
+    "protected_input_hash_changes": {}
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "current_architecture_cache_files_removed": 8,
+  "current_architecture_evidence_deleted": 0,
+  "datasets_deleted": 0,
+  "directories_removed": 10504,
+  "files_removed": 79458,
+  "generated_at": "2026-08-29T04:49:53.340955Z",
+  "models_deleted": 0,
+  "net_bytes_removed": 1445486119,
+  "notebooks_deleted": 0,
+  "project_size_after_bytes": 16138619584,
+  "project_size_before_bytes": 17584105703,
+  "real_interaction_data_deleted": 0,
+  "removed_by_category": {
+    "DELETE_SAFE_CACHE": 79458
+  },
+  "retained_size_by_category": {
+    "datasets": 1188842924,
+    "dependencies": 5284245149,
+    "models": 4284518281,
+    "notebooks": 3216012,
+    "other": 4830345195,
+    "results": 505194550,
+    "runtime": 35131325,
+    "source": 7126148
+  },
+  "verified_removed_candidate_bytes": 1584443300
+}

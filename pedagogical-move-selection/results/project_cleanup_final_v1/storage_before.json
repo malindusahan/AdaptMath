@@ -1,0 +1,25 @@
+{
+  "ambiguous_retained_count": 1594,
+  "category_sizes": {
+    "datasets": 1050145284,
+    "dependencies": 6855922783,
+    "models": 4284518281,
+    "notebooks": 3216012,
+    "other": 4837451300,
+    "results": 504941595,
+    "runtime": 40784596,
+    "source": 7125852
+  },
+  "dataset_count": 1124,
+  "delete_candidate_bytes": 1584443300,
+  "delete_candidate_directories": 10504,
+  "delete_candidate_files": 79458,
+  "directory_count": 28959,
+  "experiment_count": 33,
+  "file_count": 253355,
+  "generated_at": "2026-08-29T04:30:04.858316Z",
+  "inaccessible_count": 0,
+  "model_lineage_count": 46,
+  "notebook_count": 36,
+  "total_size_bytes": 17584105703
+}

@@ -1,0 +1,151 @@
+Initial student model and BKT parameters
+Add structured evaluator for correctness
+Basic BKT update step
+Add observation confidence
+Separate correctness from behavioural evidence
+Skill-level mastery state
+Support correct/partial/incorrect/unknown
+One observation per student event
+Add learn, guess, slip, forget params
+Add reasoning detector
+Add uncertainty detector
+Add clarification detector
+Introduce Signal Resolver
+Correct + uncertainty → reduced confidence
+Incorrect + uncertainty → stronger negative
+Unknown + uncertainty → weak negative proxy
+Reasoning alone cannot create positive mastery
+Enforce single observation rule
+Document dialogue vs assessment evidence strength
+Resolver integration tests
+Continuous BKT updates during tutoring
+Teaching-progress evaluator
+Define Attempt as one tutoring session
+Snapshot mastery_before at attempt start
+Compute mastery_after and delta
+Support signed delta_mastery
+3-question formal assessment in attempt
+Assessment also goes through BKT
+Pass delta as delayed reward
+Move selector must not calculate mastery
+Attempt-level mastery tests
+Fix inconsistent initial prior problem
+Immutable effective_initial_prior
+Support prior provenance types
+Store prior in Knowledge Graph
+Guarantee mastery continuity across attempts
+Knowledge Graph owns mastery
+Persist observations and mastery states
+Block unauthorized mastery writes
+Full-history BKT recomputation
+Verify recomputation matches live state
+Unauthorized skill isolation tests
+Learning Path Generator skeleton
+Load curriculum prerequisite graph
+Combine mastery with prerequisites
+Define skill states (weak/partial/strong etc)
+Strong threshold set to 0.70
+Handle multi-parent prerequisites
+Produce recommended_order
+Report blocked, unseen, regressions
+Report learn_next and already_strong
+No semantic similarity for prerequisites
+Path generator + student model integration
+Path generation tests
+Wire student model into full lifecycle
+Snapshot mastery_before on attempt start
+MD6 + LinTS select pedagogical moves
+BKT updates during student turns
+Final BKT update after assessment
+Single attempt-level delta as reward
+No per-dialogue rewards
+Smoke: shared attempt identity
+Smoke: attempt-start snapshot
+Smoke: no premature LinTS update
+Smoke: 3-question assessment
+Smoke: one attempt-level outcome
+Smoke: delta arithmetic
+Smoke: move-selector reward parity
+Smoke: delayed LinTS update
+Smoke: initial-prior persistence
+Smoke: cross-attempt continuity
+Smoke: independent BKT parity
+Smoke: unauthorized-skill isolation
+Final component documentation
+Component summary complete
+Initial student model and BKT parameters
+Add structured evaluator for correctness
+Basic BKT update step
+Add observation confidence
+Separate correctness from behavioural evidence
+Skill-level mastery state
+Support correct/partial/incorrect/unknown
+One observation per student event
+Add learn, guess, slip, forget params
+Add reasoning detector
+Add uncertainty detector
+Add clarification detector
+Introduce Signal Resolver
+Correct + uncertainty → reduced confidence
+Incorrect + uncertainty → stronger negative
+Unknown + uncertainty → weak negative proxy
+Reasoning alone cannot create positive mastery
+Enforce single observation rule
+Document dialogue vs assessment evidence strength
+Resolver integration tests
+Continuous BKT updates during tutoring
+Teaching-progress evaluator
+Define Attempt as one tutoring session
+Snapshot mastery_before at attempt start
+Compute mastery_after and delta
+Support signed delta_mastery
+3-question formal assessment in attempt
+Assessment also goes through BKT
+Pass delta as delayed reward
+Move selector must not calculate mastery
+Attempt-level mastery tests
+Fix inconsistent initial prior problem
+Immutable effective_initial_prior
+Support prior provenance types
+Store prior in Knowledge Graph
+Guarantee mastery continuity across attempts
+Knowledge Graph owns mastery
+Persist observations and mastery states
+Block unauthorized mastery writes
+Full-history BKT recomputation
+Verify recomputation matches live state
+Unauthorized skill isolation tests
+Learning Path Generator skeleton
+Load curriculum prerequisite graph
+Combine mastery with prerequisites
+Define skill states (weak/partial/strong etc)
+Strong threshold set to 0.70
+Handle multi-parent prerequisites
+Produce recommended_order
+Report blocked, unseen, regressions
+Report learn_next and already_strong
+No semantic similarity for prerequisites
+Path generator + student model integration
+Path generation tests
+Wire student model into full lifecycle
+Snapshot mastery_before on attempt start
+MD6 + LinTS select pedagogical moves
+BKT updates during student turns
+Final BKT update after assessment
+Single attempt-level delta as reward
+No per-dialogue rewards
+Smoke: shared attempt identity
+Smoke: attempt-start snapshot
+Smoke: no premature LinTS update
+Smoke: 3-question assessment
+Smoke: one attempt-level outcome
+Smoke: delta arithmetic
+Smoke: move-selector reward parity
+Smoke: delayed LinTS update
+Smoke: initial-prior persistence
+Smoke: cross-attempt continuity
+Smoke: independent BKT parity
+Smoke: unauthorized-skill isolation
+Final component documentation
+Component summary complete
+Add basic student model

@@ -1,0 +1,13 @@
+stage,move,turns,learners,skills
+raw,generic,21,3,11
+raw,probing,30,3,11
+raw,focus,36,3,9
+raw,telling,0,0,0
+effective,generic,21,3,11
+effective,probing,30,3,11
+effective,focus,36,3,9
+effective,telling,0,0,0
+final,generic,22,3,11
+final,probing,30,3,11
+final,focus,35,3,9
+final,telling,0,0,0

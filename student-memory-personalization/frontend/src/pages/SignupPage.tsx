@@ -43,8 +43,8 @@ export const SignupPage: React.FC = () => {
       setErrorMsg('Password and confirmation password do not match.')
       return
     }
-    if (password.length < 4) {
-      setErrorMsg('Password must be at least 4 characters long.')
+    if (password.length < 8) {
+      setErrorMsg('Password must be at least 8 characters long.')
       return
     }
 
@@ -162,6 +162,7 @@ export const SignupPage: React.FC = () => {
               placeholder="••••••••"
               className="w-full bg-slate-950/80 border border-slate-800 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-500 transition-all outline-none"
               required
+              minLength={8}
             />
           </div>
 
@@ -177,6 +178,7 @@ export const SignupPage: React.FC = () => {
               placeholder="••••••••"
               className="w-full bg-slate-950/80 border border-slate-800 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 rounded-xl px-4 py-2.5 text-sm text-white placeholder-slate-500 transition-all outline-none"
               required
+              minLength={8}
             />
           </div>
 

@@ -1,12 +1,19 @@
 import type {
   TutorAnswerPayload,
+  TutorPracticeStartPayload,
+  TutorPracticeStartResponse,
   TutorSessionResponse,
   TutorStartPayload,
   TutorStudentTurnPayload,
 } from "../types/tutor";
+import type { StudentProfile } from "../types/profile";
+import {
+  getStoredAuthToken,
+  notifyInvalidAuthentication,
+} from "./auth";
 
 const API_BASE_URL = (
-  import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000"
+  import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8402"
 ).replace(/\/$/, "");
 
 export class ApiError extends Error {
@@ -25,16 +32,21 @@ async function request<T>(
   path: string,
   init?: RequestInit,
 ): Promise<T> {
+  const token = getStoredAuthToken();
   const response = await fetch(`${API_BASE_URL}${path}`, {
     ...init,
     headers: {
       Accept: "application/json",
       ...(init?.body ? { "Content-Type": "application/json" } : {}),
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...init?.headers,
     },
   });
 
   if (!response.ok) {
+    if (response.status === 401 && (path.startsWith("/tutor") || path === "/profile")) {
+      notifyInvalidAuthentication();
+    }
     let detail = `Request failed with status ${response.status}.`;
 
     try {
@@ -54,10 +66,23 @@ async function request<T>(
   return (await response.json()) as T;
 }
 
+export function getStudentProfile(): Promise<StudentProfile> {
+  return request<StudentProfile>("/profile");
+}
+
 export function startTutorSession(
   payload: TutorStartPayload,
 ): Promise<TutorSessionResponse> {
   return request<TutorSessionResponse>("/tutor/start", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+}
+
+export function startRecommendedPractice(
+  payload: TutorPracticeStartPayload,
+): Promise<TutorPracticeStartResponse> {
+  return request<TutorPracticeStartResponse>("/tutor/start-practice", {
     method: "POST",
     body: JSON.stringify(payload),
   });
@@ -68,6 +93,19 @@ export function getTutorSession(
 ): Promise<TutorSessionResponse> {
   return request<TutorSessionResponse>(
     `/tutor/${encodeURIComponent(threadId)}`,
+  );
+}
+
+export function getActiveTutorSession(): Promise<TutorSessionResponse | null> {
+  return request<TutorSessionResponse | null>("/tutor/active");
+}
+
+export function abandonTutorSession(
+  threadId: string,
+): Promise<TutorSessionResponse> {
+  return request<TutorSessionResponse>(
+    `/tutor/${encodeURIComponent(threadId)}/abandon`,
+    { method: "POST" },
   );
 }
 

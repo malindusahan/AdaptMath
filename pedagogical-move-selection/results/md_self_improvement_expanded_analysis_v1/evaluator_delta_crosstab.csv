@@ -1,0 +1,5 @@
+correctness,positive_count,zero_count,negative_count,positive_percent,zero_percent,negative_percent,row_total
+correct,50,0,0,100.0,0.0,0.0,50
+partial,6,0,0,100.0,0.0,0.0,6
+incorrect,1,0,12,7.6923076923076925,0.0,92.3076923076923,13
+unknown,0,0,18,0.0,0.0,100.0,18

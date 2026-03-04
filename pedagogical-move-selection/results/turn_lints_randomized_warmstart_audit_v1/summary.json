@@ -1,0 +1,1435 @@
+{
+  "schema_version": "turn_lints_randomized_warmstart_audit_v1",
+  "scientific_decision": "A_RAW_MD7_PROPORTIONAL_RANDOMIZATION_DEFENSIBLE",
+  "behavior_policy": "md7_r2_probability_proportional_v1",
+  "source": "pedagogical-move-selection/results/md_self_improvement_turn_data_v1/turn_outcomes.jsonl",
+  "source_sha256": "4c984c92214072c8899a589042bfe8e0d0289039a824af667632d2bb61010445",
+  "audited_pre_action_state_count": 98,
+  "attempt_count": 15,
+  "stored_source_selector_lineages": {
+    "ad770256a71efcce7485705099511494e41806b2e29bc3829f9ba8aeaf731cd5": 2,
+    "d32d37f7f664d038f80fefb92f874804b49e5ac3d848985636ae64e6a2a60a13": 96
+  },
+  "probabilities_recomputed_with_current_frozen_selector": true,
+  "selector": {
+    "version": "MD7-R2-TELL-C1 epoch 2",
+    "sha256": "ad770256a71efcce7485705099511494e41806b2e29bc3829f9ba8aeaf731cd5",
+    "class_order": [
+      "generic",
+      "probing",
+      "focus",
+      "telling"
+    ],
+    "model_directory": "pedagogical-move-selection/models/frozen/md7_r2_tell_c1_epoch2",
+    "paired_input": "Problem + Conversation + Next teacher pedagogical move",
+    "tokenizer_truncation": "only_second, left truncation",
+    "max_length": 512
+  },
+  "exact_expected_action_distribution": {
+    "generic": 0.24466983907054143,
+    "probing": 0.3166525163454033,
+    "focus": 0.33732737065086843,
+    "telling": 0.10135027393318692
+  },
+  "probability_by_move": {
+    "generic": {
+      "move": "generic",
+      "count": 98,
+      "min": 8.498787209240048e-05,
+      "p1": 8.6590936497638e-05,
+      "p5": 0.00014121575699969406,
+      "p10": 0.00017210214033127057,
+      "q1": 0.004893283976284676,
+      "median": 0.07653714183224687,
+      "mean": 0.24466983907054146,
+      "q3": 0.4200625867195226,
+      "p90": 0.7956558551303408,
+      "p95": 0.9042291805849502,
+      "p99": 0.9701477235585871,
+      "max": 0.9870850999321387,
+      "proportion_below_0.001": 0.17346938775510204,
+      "proportion_below_0.005": 0.25510204081632654,
+      "proportion_below_0.01": 0.2857142857142857,
+      "proportion_below_0.025": 0.35714285714285715,
+      "proportion_below_0.05": 0.42857142857142855
+    },
+    "probing": {
+      "move": "probing",
+      "count": 98,
+      "min": 0.0067376867247886905,
+      "p1": 0.008383616568923386,
+      "p5": 0.016931456302168912,
+      "p10": 0.0365234325042484,
+      "q1": 0.09943117104300588,
+      "median": 0.16606196856866703,
+      "mean": 0.3166525163454032,
+      "q3": 0.45641697653600327,
+      "p90": 0.9823209140840575,
+      "p95": 0.997980489677329,
+      "p99": 0.9991562367057485,
+      "max": 0.9992254387778595,
+      "proportion_below_0.001": 0.0,
+      "proportion_below_0.005": 0.0,
+      "proportion_below_0.01": 0.02040816326530612,
+      "proportion_below_0.025": 0.07142857142857142,
+      "proportion_below_0.05": 0.14285714285714285
+    },
+    "focus": {
+      "move": "focus",
+      "count": 98,
+      "min": 0.00021060432686766857,
+      "p1": 0.00033952863119182176,
+      "p5": 0.0006805083424953942,
+      "p10": 0.0026326505693778832,
+      "q1": 0.05309732919593871,
+      "median": 0.27868462405103206,
+      "mean": 0.3373273706508684,
+      "q3": 0.6517682876829394,
+      "p90": 0.7420152571273366,
+      "p95": 0.7708156647749199,
+      "p99": 0.8206831627622105,
+      "max": 0.8238727747173624,
+      "proportion_below_0.001": 0.061224489795918366,
+      "proportion_below_0.005": 0.12244897959183673,
+      "proportion_below_0.01": 0.14285714285714285,
+      "proportion_below_0.025": 0.21428571428571427,
+      "proportion_below_0.05": 0.24489795918367346
+    },
+    "telling": {
+      "move": "telling",
+      "count": 98,
+      "min": 0.0003168567596864737,
+      "p1": 0.00038403075535423385,
+      "p5": 0.0009226772327140467,
+      "p10": 0.002058051983543713,
+      "q1": 0.008265796860979915,
+      "median": 0.02926120324313931,
+      "mean": 0.10135027393318695,
+      "q3": 0.09570657053652853,
+      "p90": 0.2796954842268185,
+      "p95": 0.4244672602354796,
+      "p99": 0.8171168426942816,
+      "max": 0.8191980136871305,
+      "proportion_below_0.001": 0.061224489795918366,
+      "proportion_below_0.005": 0.20408163265306123,
+      "proportion_below_0.01": 0.25510204081632654,
+      "proportion_below_0.025": 0.45918367346938777,
+      "proportion_below_0.05": 0.6122448979591837
+    }
+  },
+  "all_context_action_pair_probability_bins": {
+    "proportion_below_0.001": 0.07397959183673469,
+    "proportion_below_0.005": 0.14540816326530612,
+    "proportion_below_0.01": 0.1760204081632653,
+    "proportion_below_0.025": 0.2755102040816326,
+    "proportion_below_0.05": 0.35714285714285715
+  },
+  "top1": {
+    "counts": {
+      "generic": 27,
+      "probing": 24,
+      "focus": 41,
+      "telling": 6
+    },
+    "expected_agreement": 0.7132890302468907,
+    "expected_deviation_rate": 0.28671096975310917,
+    "top1_probability": {
+      "count": 98,
+      "min": 0.3364424156813014,
+      "p1": 0.3577336541970901,
+      "p5": 0.4196531238193394,
+      "p10": 0.4562977748480725,
+      "q1": 0.5778732985132349,
+      "median": 0.719868727997795,
+      "mean": 0.7132890302468907,
+      "q3": 0.8230507097804676,
+      "p90": 0.9851423675430216,
+      "p95": 0.997980489677329,
+      "p99": 0.9991562367057485,
+      "max": 0.9992254387778595
+    },
+    "top1_second_gap": {
+      "count": 98,
+      "min": 0.00572606946793508,
+      "p1": 0.010077889053519732,
+      "p5": 0.06204770359057183,
+      "p10": 0.13087475343482174,
+      "q1": 0.2536579553730249,
+      "median": 0.5613951625520894,
+      "mean": 0.5275650693906739,
+      "q3": 0.6920429925408903,
+      "p90": 0.973853893269594,
+      "p95": 0.996520943212735,
+      "p99": 0.998762572421512,
+      "max": 0.9988620860614982
+    },
+    "confidence_rank_quartiles": [
+      {
+        "confidence_rank_quartile": 1,
+        "count": 25,
+        "min_top1_probability": 0.3364424156813014,
+        "max_top1_probability": 0.5775801496388007,
+        "mean_top1_probability": 0.47941826821832245,
+        "expected_top1_agreement": 0.47941826821832245,
+        "expected_deviation_rate": 0.5205817317816775,
+        "mean_gap": 0.1785444154171536,
+        "mean_entropy_nats": 1.1407540911509413
+      },
+      {
+        "confidence_rank_quartile": 2,
+        "count": 25,
+        "min_top1_probability": 0.5787527451365374,
+        "max_top1_probability": 0.7202684806482321,
+        "mean_top1_probability": 0.6559550300779073,
+        "expected_top1_agreement": 0.6559550300779073,
+        "expected_deviation_rate": 0.34404496992209266,
+        "mean_gap": 0.4047935960325979,
+        "mean_entropy_nats": 0.846283466599285
+      },
+      {
+        "confidence_rank_quartile": 3,
+        "count": 24,
+        "min_top1_probability": 0.7290877808494535,
+        "max_top1_probability": 0.8238727747173624,
+        "mean_top1_probability": 0.7733888753267705,
+        "expected_top1_agreement": 0.7733888753267705,
+        "expected_deviation_rate": 0.2266111246732295,
+        "mean_gap": 0.6180208307792056,
+        "mean_entropy_nats": 0.6986344330511877
+      },
+      {
+        "confidence_rank_quartile": 4,
+        "count": 24,
+        "min_top1_probability": 0.837583943501414,
+        "max_top1_probability": 0.9992254387778595,
+        "mean_top1_probability": 0.9565274791227942,
+        "expected_top1_agreement": 0.9565274791227942,
+        "expected_deviation_rate": 0.04347252087720573,
+        "mean_gap": 0.9285594406392216,
+        "mean_entropy_nats": 0.1819193460735309
+      }
+    ],
+    "gap_rank_quartiles": [
+      {
+        "gap_rank_quartile": 1,
+        "count": 25,
+        "min_gap": 0.00572606946793508,
+        "max_gap": 0.24916714058567374,
+        "mean_gap": 0.14799569116915343,
+        "expected_top1_agreement": 0.49014420127438874,
+        "expected_deviation_rate": 0.5098557987256113,
+        "mean_entropy_nats": 1.0411294372145299
+      },
+      {
+        "gap_rank_quartile": 2,
+        "count": 25,
+        "min_gap": 0.26713039973507824,
+        "max_gap": 0.5617553672913799,
+        "mean_gap": 0.4286791423357087,
+        "expected_top1_agreement": 0.6512419167627022,
+        "expected_deviation_rate": 0.34875808323729784,
+        "mean_entropy_nats": 0.9101365255215446
+      },
+      {
+        "gap_rank_quartile": 3,
+        "count": 24,
+        "min_gap": 0.565679778202782,
+        "max_gap": 0.6948251410130859,
+        "mean_gap": 0.6249616411384653,
+        "expected_top1_agreement": 0.7671255214300402,
+        "expected_deviation_rate": 0.23287447856995971,
+        "mean_entropy_nats": 0.735896511190929
+      },
+      {
+        "gap_rank_quartile": 4,
+        "count": 24,
+        "min_gap": 0.702472816701818,
+        "max_gap": 0.9988620860614982,
+        "mean_gap": 0.9285594406392216,
+        "expected_top1_agreement": 0.9565274791227942,
+        "expected_deviation_rate": 0.04347252087720573,
+        "mean_entropy_nats": 0.1819193460735309
+      }
+    ]
+  },
+  "entropy_nats": {
+    "count": 98,
+    "min": 0.0070794957989785325,
+    "p1": 0.007624655321604429,
+    "p5": 0.015991606780047896,
+    "p10": 0.08627312110016683,
+    "q1": 0.554006962935867,
+    "median": 0.7851733261214131,
+    "mean": 0.7225431596198868,
+    "q3": 1.0129040903224136,
+    "p90": 1.1636552533933264,
+    "p95": 1.2565265140491886,
+    "p99": 1.3317210694471484,
+    "max": 1.3472489333502404
+  },
+  "monte_carlo": {
+    "seed_count": 4096,
+    "draw_count": 401408,
+    "simulated_action_distribution": {
+      "generic": 0.24541115274234693,
+      "probing": 0.31602010921556123,
+      "focus": 0.3374521683673469,
+      "telling": 0.1011165696747449
+    },
+    "sampled_propensity": {
+      "count": 401408,
+      "min": 9.087324775047572e-05,
+      "p1": 0.02818211357026564,
+      "p5": 0.09007318243929613,
+      "p10": 0.15177240099570308,
+      "q1": 0.3583921461099495,
+      "median": 0.6836660809963679,
+      "mean": 0.6032142921731615,
+      "q3": 0.8205845149697831,
+      "p90": 0.9870850999321387,
+      "p95": 0.9981510234148095,
+      "p99": 0.9992254387778595,
+      "max": 0.9992254387778595
+    },
+    "inverse_propensity": {
+      "count": 401408,
+      "min": 1.0007751616322818,
+      "p1": 1.0007751616322818,
+      "p5": 1.0018524016324353,
+      "p10": 1.0130838770322328,
+      "q1": 1.2186435178304864,
+      "median": 1.4627023744436907,
+      "mean": 3.9993628580685576,
+      "q3": 2.7902397160601127,
+      "p90": 6.588813206086867,
+      "p95": 11.102083582690547,
+      "p99": 35.483499046539904,
+      "max": 11004.338732845223
+    },
+    "sampled_propensity_frequencies": {
+      "below_0.01": 0.001793686224489796,
+      "below_0.025": 0.008534956951530613,
+      "below_0.05": 0.020246233258928572
+    }
+  },
+  "telling": {
+    "count": 98,
+    "min": 0.0003168567596864737,
+    "p1": 0.00038403075535423385,
+    "p5": 0.0009226772327140467,
+    "p10": 0.002058051983543713,
+    "q1": 0.008265796860979915,
+    "median": 0.02926120324313931,
+    "mean": 0.10135027393318695,
+    "q3": 0.09570657053652853,
+    "p90": 0.2796954842268185,
+    "p95": 0.4244672602354796,
+    "p99": 0.8171168426942816,
+    "max": 0.8191980136871305,
+    "expected_rate": 0.10135027393318692,
+    "non_telling_top1_context_count": 92,
+    "conditional_expected_rate_when_top1_not_telling": 0.06930378875426214,
+    "aggregate_expected_contribution_when_top1_not_telling": 0.06506069964685834,
+    "telling_top1_context_count": 6,
+    "conditional_expected_rate_when_top1_telling": 0.5927297133433677
+  },
+  "coverage_horizons": [
+    {
+      "horizon": 50,
+      "move": "generic",
+      "exact_expected_count": 12.233491953527071,
+      "simulation_mean_count": 12.2774,
+      "simulation_p5_count": 7.0,
+      "simulation_median_count": 12.0,
+      "simulation_p95_count": 17.0,
+      "replicates": 10000
+    },
+    {
+      "horizon": 50,
+      "move": "probing",
+      "exact_expected_count": 15.832625817270166,
+      "simulation_mean_count": 15.7637,
+      "simulation_p5_count": 11.0,
+      "simulation_median_count": 16.0,
+      "simulation_p95_count": 21.0,
+      "replicates": 10000
+    },
+    {
+      "horizon": 50,
+      "move": "focus",
+      "exact_expected_count": 16.866368532543422,
+      "simulation_mean_count": 16.9157,
+      "simulation_p5_count": 11.0,
+      "simulation_median_count": 17.0,
+      "simulation_p95_count": 22.0,
+      "replicates": 10000
+    },
+    {
+      "horizon": 50,
+      "move": "telling",
+      "exact_expected_count": 5.067513696659346,
+      "simulation_mean_count": 5.0432,
+      "simulation_p5_count": 2.0,
+      "simulation_median_count": 5.0,
+      "simulation_p95_count": 9.0,
+      "replicates": 10000
+    },
+    {
+      "horizon": 100,
+      "move": "generic",
+      "exact_expected_count": 24.466983907054143,
+      "simulation_mean_count": 24.4155,
+      "simulation_p5_count": 17.0,
+      "simulation_median_count": 24.0,
+      "simulation_p95_count": 32.0,
+      "replicates": 10000
+    },
+    {
+      "horizon": 100,
+      "move": "probing",
+      "exact_expected_count": 31.665251634540333,
+      "simulation_mean_count": 31.6233,
+      "simulation_p5_count": 24.0,
+      "simulation_median_count": 32.0,
+      "simulation_p95_count": 40.0,
+      "replicates": 10000
+    },
+    {
+      "horizon": 100,
+      "move": "focus",
+      "exact_expected_count": 33.732737065086845,
+      "simulation_mean_count": 33.8093,
+      "simulation_p5_count": 26.0,
+      "simulation_median_count": 34.0,
+      "simulation_p95_count": 42.0,
+      "replicates": 10000
+    },
+    {
+      "horizon": 100,
+      "move": "telling",
+      "exact_expected_count": 10.135027393318692,
+      "simulation_mean_count": 10.1519,
+      "simulation_p5_count": 5.0,
+      "simulation_median_count": 10.0,
+      "simulation_p95_count": 15.0,
+      "replicates": 10000
+    },
+    {
+      "horizon": 250,
+      "move": "generic",
+      "exact_expected_count": 61.16745976763536,
+      "simulation_mean_count": 61.253,
+      "simulation_p5_count": 50.0,
+      "simulation_median_count": 61.0,
+      "simulation_p95_count": 73.0,
+      "replicates": 10000
+    },
+    {
+      "horizon": 250,
+      "move": "probing",
+      "exact_expected_count": 79.16312908635082,
+      "simulation_mean_count": 79.0422,
+      "simulation_p5_count": 67.0,
+      "simulation_median_count": 79.0,
+      "simulation_p95_count": 91.0,
+      "replicates": 10000
+    },
+    {
+      "horizon": 250,
+      "move": "focus",
+      "exact_expected_count": 84.33184266271711,
+      "simulation_mean_count": 84.3598,
+      "simulation_p5_count": 72.0,
+      "simulation_median_count": 84.0,
+      "simulation_p95_count": 97.0,
+      "replicates": 10000
+    },
+    {
+      "horizon": 250,
+      "move": "telling",
+      "exact_expected_count": 25.33756848329673,
+      "simulation_mean_count": 25.345,
+      "simulation_p5_count": 18.0,
+      "simulation_median_count": 25.0,
+      "simulation_p95_count": 33.0,
+      "replicates": 10000
+    },
+    {
+      "horizon": 500,
+      "move": "generic",
+      "exact_expected_count": 122.33491953527071,
+      "simulation_mean_count": 122.2401,
+      "simulation_p5_count": 107.0,
+      "simulation_median_count": 122.0,
+      "simulation_p95_count": 138.0,
+      "replicates": 10000
+    },
+    {
+      "horizon": 500,
+      "move": "probing",
+      "exact_expected_count": 158.32625817270164,
+      "simulation_mean_count": 158.4165,
+      "simulation_p5_count": 141.0,
+      "simulation_median_count": 158.0,
+      "simulation_p95_count": 176.0,
+      "replicates": 10000
+    },
+    {
+      "horizon": 500,
+      "move": "focus",
+      "exact_expected_count": 168.66368532543422,
+      "simulation_mean_count": 168.7278,
+      "simulation_p5_count": 152.0,
+      "simulation_median_count": 169.0,
+      "simulation_p95_count": 186.0,
+      "replicates": 10000
+    },
+    {
+      "horizon": 500,
+      "move": "telling",
+      "exact_expected_count": 50.67513696659346,
+      "simulation_mean_count": 50.6156,
+      "simulation_p5_count": 40.0,
+      "simulation_median_count": 51.0,
+      "simulation_p95_count": 62.0,
+      "replicates": 10000
+    }
+  ],
+  "representative_cases": {
+    "low_entropy": {
+      "attempt_id": "0adabdf3-b861-4b0f-b802-451cc208dd0b:1",
+      "action_event_id": "0adabdf3-b861-4b0f-b802-451cc208dd0b:1:action:2",
+      "action_turn_index": 2,
+      "problem": "A right triangle has a hypotenuse of 13 cm and one shorter side of 5 cm.\n\nFind the length of the other shorter side.",
+      "history_before_action": [
+        {
+          "text": "How would you start solving this problem?",
+          "user": "teacher"
+        },
+        {
+          "text": "I think I use the Pythagorean theorem, but I’m not sure how to set it up since 13 is already the hypotenuse.",
+          "user": "student"
+        }
+      ],
+      "latest_student_text": "I think I use the Pythagorean theorem, but I’m not sure how to set it up since 13 is already the hypotenuse.",
+      "mastery_at_action": 0.7482284975314546,
+      "probabilities": {
+        "generic": 9.435174609260326e-05,
+        "probing": 0.9992254387778595,
+        "focus": 0.0003633527163613868,
+        "telling": 0.0003168567596864737
+      },
+      "top1": "probing",
+      "top1_probability": 0.9992254387778595,
+      "second_best": "focus",
+      "second_best_probability": 0.0003633527163613868,
+      "top1_second_gap": 0.9988620860614982,
+      "entropy_nats": 0.0070794957989785325,
+      "non_top1_sampling_probability": 0.0007745612221404796
+    },
+    "middle_entropy": {
+      "attempt_id": "f3133173-8f14-44d9-b485-97a42dc45030:1",
+      "action_event_id": "f3133173-8f14-44d9-b485-97a42dc45030:1:action:6",
+      "action_turn_index": 6,
+      "problem": "A school survey shows that \\(\\frac{3}{5}\\) of the students prefer studying with digital tools.\n\nConvert \\(\\frac{3}{5}\\) into:\n\nA decimal\nA percent\n\nThen, if there are 200 students in total, how many students prefer digital tools?",
+      "history_before_action": [
+        {
+          "text": "How would you start solving this problem?",
+          "user": "teacher"
+        },
+        {
+          "text": "I would start by converting \\(\\frac{3}{5}\\) to a decimal by dividing 3 by 5. Then I can turn that decimal into a percent by multiplying by 100.",
+          "user": "student"
+        },
+        {
+          "text": "That's a great plan! Can you explain why dividing the numerator by the denominator converts a fraction to a decimal?",
+          "user": "teacher"
+        },
+        {
+          "text": "I think dividing the numerator by the denominator works because the fraction bar means division. So \\(\\frac{3}{5}\\) means \\(3 \\div 5\\). I’m not totally sure though—I sometimes get confused about whether it should be \\(3 \\div 5\\) or \\(5 \\div 3\\).",
+          "user": "student"
+        },
+        {
+          "text": "You're right that the fraction bar means division. To help clarify, what do the numerator (the top number) and the denominator (the bottom number) represent in a fraction like \\(\\frac{3}{5}\\) when you think about sharing or dividing?",
+          "user": "teacher"
+        },
+        {
+          "text": "The numerator is how many parts you have, and the denominator is how many equal parts the whole is divided into.",
+          "user": "student"
+        },
+        {
+          "text": "Excellent! So, if you have 3 parts and you're dividing them into 5 equal sections, which number is being divided by which?",
+          "user": "teacher"
+        },
+        {
+          "text": "idk",
+          "user": "student"
+        },
+        {
+          "text": "You mentioned the numerator is 'how many parts you have'. When you perform division, which number represents the total amount that is being divided or shared?",
+          "user": "teacher"
+        },
+        {
+          "text": "i  dnt understand it",
+          "user": "student"
+        }
+      ],
+      "latest_student_text": "i  dnt understand it",
+      "mastery_at_action": 0.5909147476377821,
+      "probabilities": {
+        "generic": 0.02506690248248853,
+        "probing": 0.2629600826239512,
+        "focus": 0.6898797729718888,
+        "telling": 0.022093241921671457
+      },
+      "top1": "focus",
+      "top1_probability": 0.6898797729718888,
+      "second_best": "probing",
+      "second_best_probability": 0.2629600826239512,
+      "top1_second_gap": 0.42691969034793764,
+      "entropy_nats": 0.7839911835792794,
+      "non_top1_sampling_probability": 0.31012022702811115
+    },
+    "high_entropy": {
+      "attempt_id": "5413cab2-22c8-4536-a66b-66619d887e84:1",
+      "action_event_id": "5413cab2-22c8-4536-a66b-66619d887e84:1:action:12",
+      "action_turn_index": 12,
+      "problem": "A rectangle has a length that is 4 cm more than its width. The area of the rectangle is 96 cm². Find the length and width of the rectangle.",
+      "history_before_action": [
+        {
+          "text": "How would you start solving this problem?",
+          "user": "teacher"
+        },
+        {
+          "text": "I would start by letting the width be \\(x\\) cm. Then the length would be \\(x + 4\\) cm. Since the area is 96 cm², I can use the formula length × width = area to form an equation.",
+          "user": "student"
+        },
+        {
+          "text": "That's a great start! What equation would you form using those expressions for length and width?",
+          "user": "teacher"
+        },
+        {
+          "text": "I think the equation would be \\(x + 4x = 96\\), because the width is \\(x\\) and the length is \\(x+4\\).",
+          "user": "student"
+        },
+        {
+          "text": "You've correctly defined the width as \\(x\\) and the length as \\(x+4\\). Remember that the area of a rectangle is found by multiplying the length and the width. How would you write that multiplication using your expressions for length and width?",
+          "user": "teacher"
+        },
+        {
+          "text": "I would write it as \\(x(x+4)=96\\), because the width is \\(x\\) and the length is \\(x+4\\).",
+          "user": "student"
+        },
+        {
+          "text": "Excellent! Now that you have the equation \\(x(x+4)=96\\), what's the first step to simplify the left side of this equation?",
+          "user": "teacher"
+        },
+        {
+          "text": "i dont know",
+          "user": "student"
+        },
+        {
+          "text": "To simplify \\(x(x+4)\\), you need to multiply \\(x\\) by each term inside the parentheses. What do you get when you do that?",
+          "user": "teacher"
+        },
+        {
+          "text": "i cannot understand clearly",
+          "user": "student"
+        },
+        {
+          "text": "No problem. Let's break it down. To simplify \\(x(x+4)\\), you need to multiply \\(x\\) by each term inside the parentheses. What do you get when you multiply \\(x\\) by the first term, which is \\(x\\)?",
+          "user": "teacher"
+        },
+        {
+          "text": "2x",
+          "user": "student"
+        },
+        {
+          "text": "Not quite. When you multiply \\(x\\) by \\(x\\), you are multiplying a variable by itself. What is \\(x \\cdot x\\) usually written as?",
+          "user": "teacher"
+        },
+        {
+          "text": "i really dont know",
+          "user": "student"
+        },
+        {
+          "text": "No problem. When you multiply a variable by itself, like \\(x \\cdot x\\), we write it using an exponent. For example, \\(2 \\cdot 2\\) is \\(2^2\\). How would you write \\(x \\cdot x\\) using an exponent?",
+          "user": "teacher"
+        },
+        {
+          "text": "I think it would be \\(x^2\\).",
+          "user": "student"
+        },
+        {
+          "text": "Exactly! So, you've multiplied \\(x\\) by the first term, \\(x\\), to get \\(x^2\\). Now, what do you get when you multiply \\(x\\) by the second term inside the parentheses, which is \\(4\\)?",
+          "user": "teacher"
+        },
+        {
+          "text": "I get \\(4x\\), because \\(x \\times 4 = 4x\\).",
+          "user": "student"
+        },
+        {
+          "text": "Great! You've found that \\(x \\cdot x = x^2\\) and \\(x \\cdot 4 = 4x\\). Now, how do you combine these two results to show the simplified form of \\(x(x+4)\\)?",
+          "user": "teacher"
+        },
+        {
+          "text": "The simplified form is \\(x^2 + 4x\\).",
+          "user": "student"
+        },
+        {
+          "text": "You've correctly simplified \\(x(x+4)\\) to \\(x^2 + 4x\\). Now, what is the complete equation when you substitute this simplified expression back into \\(x(x+4)=96\\)?",
+          "user": "teacher"
+        },
+        {
+          "text": "The complete equation is \\(x^2 + 4x = 96\\).",
+          "user": "student"
+        }
+      ],
+      "latest_student_text": "The complete equation is \\(x^2 + 4x = 96\\).",
+      "mastery_at_action": 0.7689896010776588,
+      "probabilities": {
+        "generic": 0.18866899525143171,
+        "probing": 0.18444932881365186,
+        "focus": 0.3583921461099495,
+        "telling": 0.26848952982496693
+      },
+      "top1": "focus",
+      "top1_probability": 0.3583921461099495,
+      "second_best": "telling",
+      "second_best_probability": 0.26848952982496693,
+      "top1_second_gap": 0.08990261628498258,
+      "entropy_nats": 1.3472489333502404,
+      "non_top1_sampling_probability": 0.6416078538900505
+    },
+    "high_telling_not_top1": [
+      {
+        "attempt_id": "4220e000-557f-487a-949f-a6b3662998ac:1",
+        "action_event_id": "4220e000-557f-487a-949f-a6b3662998ac:1:action:7",
+        "action_turn_index": 7,
+        "problem": "A right triangle has two shorter sides measuring 9 cm and 12 cm.\n\nFind the length of the hypotenuse.\n\nUse the Pythagorean Theorem to show your working.",
+        "history_before_action": [
+          {
+            "text": "How would you start solving this problem?",
+            "user": "teacher"
+          },
+          {
+            "text": "A right triangle has two shorter sides measuring 9 cm and 12 cm. Find the length of the hypotenuse. Use the Pythagorean Theorem to show your working.\nA\nHow would you start solving this problem?",
+            "user": "student"
+          },
+          {
+            "text": "The problem asks you to use the Pythagorean Theorem. What do you recall about that theorem, and how might it apply to finding the hypotenuse?",
+            "user": "teacher"
+          },
+          {
+            "text": "I remember it’s something like \\(a^2+b^2=c^2\\), and I think \\(c\\) is the hypotenuse. So I would use 9 and 12 for \\(a\\) and \\(b\\).",
+            "user": "student"
+          },
+          {
+            "text": "That's exactly right! \\(c\\) is indeed the hypotenuse. What would be your next step after identifying \\(a\\), \\(b\\), and \\(c\\)?",
+            "user": "teacher"
+          },
+          {
+            "text": "I think I put the numbers into the formula:\n\n$$\n9^2+12^2=c^2\n$$",
+            "user": "student"
+          },
+          {
+            "text": "You've set up the equation correctly. What would you do next to solve for \\(c\\)?",
+            "user": "teacher"
+          },
+          {
+            "text": "i dont know",
+            "user": "student"
+          },
+          {
+            "text": "You've got the equation set up. What's your idea for how to move forward from here?",
+            "user": "teacher"
+          },
+          {
+            "text": "i dont have any idea",
+            "user": "student"
+          },
+          {
+            "text": "You've correctly set up the equation \\(9^2+12^2=c^2\\). What's your initial thought on how to simplify or work with the numbers in this equation?",
+            "user": "teacher"
+          },
+          {
+            "text": "I’d calculate \\(9^2=81\\) and \\(12^2=144\\), then add them together.",
+            "user": "student"
+          }
+        ],
+        "latest_student_text": "I’d calculate \\(9^2=81\\) and \\(12^2=144\\), then add them together.",
+        "mastery_at_action": 0.6826402676719963,
+        "probabilities": {
+          "generic": 0.4570833742618561,
+          "probing": 0.04048427939414978,
+          "focus": 0.10092246532440186,
+          "telling": 0.4015098810195923
+        },
+        "top1": "generic",
+        "top1_probability": 0.4570833742618561,
+        "second_best": "telling",
+        "second_best_probability": 0.4015098810195923,
+        "top1_second_gap": 0.055573493242263794,
+        "entropy_nats": 1.085515340851761,
+        "non_top1_sampling_probability": 0.5429166257381439
+      },
+      {
+        "attempt_id": "5413cab2-22c8-4536-a66b-66619d887e84:1",
+        "action_event_id": "5413cab2-22c8-4536-a66b-66619d887e84:1:action:15",
+        "action_turn_index": 15,
+        "problem": "A rectangle has a length that is 4 cm more than its width. The area of the rectangle is 96 cm². Find the length and width of the rectangle.",
+        "history_before_action": [
+          {
+            "text": "How would you start solving this problem?",
+            "user": "teacher"
+          },
+          {
+            "text": "I would start by letting the width be \\(x\\) cm. Then the length would be \\(x + 4\\) cm. Since the area is 96 cm², I can use the formula length × width = area to form an equation.",
+            "user": "student"
+          },
+          {
+            "text": "That's a great start! What equation would you form using those expressions for length and width?",
+            "user": "teacher"
+          },
+          {
+            "text": "I think the equation would be \\(x + 4x = 96\\), because the width is \\(x\\) and the length is \\(x+4\\).",
+            "user": "student"
+          },
+          {
+            "text": "You've correctly defined the width as \\(x\\) and the length as \\(x+4\\). Remember that the area of a rectangle is found by multiplying the length and the width. How would you write that multiplication using your expressions for length and width?",
+            "user": "teacher"
+          },
+          {
+            "text": "I would write it as \\(x(x+4)=96\\), because the width is \\(x\\) and the length is \\(x+4\\).",
+            "user": "student"
+          },
+          {
+            "text": "Excellent! Now that you have the equation \\(x(x+4)=96\\), what's the first step to simplify the left side of this equation?",
+            "user": "teacher"
+          },
+          {
+            "text": "i dont know",
+            "user": "student"
+          },
+          {
+            "text": "To simplify \\(x(x+4)\\), you need to multiply \\(x\\) by each term inside the parentheses. What do you get when you do that?",
+            "user": "teacher"
+          },
+          {
+            "text": "i cannot understand clearly",
+            "user": "student"
+          },
+          {
+            "text": "No problem. Let's break it down. To simplify \\(x(x+4)\\), you need to multiply \\(x\\) by each term inside the parentheses. What do you get when you multiply \\(x\\) by the first term, which is \\(x\\)?",
+            "user": "teacher"
+          },
+          {
+            "text": "2x",
+            "user": "student"
+          },
+          {
+            "text": "Not quite. When you multiply \\(x\\) by \\(x\\), you are multiplying a variable by itself. What is \\(x \\cdot x\\) usually written as?",
+            "user": "teacher"
+          },
+          {
+            "text": "i really dont know",
+            "user": "student"
+          },
+          {
+            "text": "No problem. When you multiply a variable by itself, like \\(x \\cdot x\\), we write it using an exponent. For example, \\(2 \\cdot 2\\) is \\(2^2\\). How would you write \\(x \\cdot x\\) using an exponent?",
+            "user": "teacher"
+          },
+          {
+            "text": "I think it would be \\(x^2\\).",
+            "user": "student"
+          },
+          {
+            "text": "Exactly! So, you've multiplied \\(x\\) by the first term, \\(x\\), to get \\(x^2\\). Now, what do you get when you multiply \\(x\\) by the second term inside the parentheses, which is \\(4\\)?",
+            "user": "teacher"
+          },
+          {
+            "text": "I get \\(4x\\), because \\(x \\times 4 = 4x\\).",
+            "user": "student"
+          },
+          {
+            "text": "Great! You've found that \\(x \\cdot x = x^2\\) and \\(x \\cdot 4 = 4x\\). Now, how do you combine these two results to show the simplified form of \\(x(x+4)\\)?",
+            "user": "teacher"
+          },
+          {
+            "text": "The simplified form is \\(x^2 + 4x\\).",
+            "user": "student"
+          },
+          {
+            "text": "You've correctly simplified \\(x(x+4)\\) to \\(x^2 + 4x\\). Now, what is the complete equation when you substitute this simplified expression back into \\(x(x+4)=96\\)?",
+            "user": "teacher"
+          },
+          {
+            "text": "The complete equation is \\(x^2 + 4x = 96\\).",
+            "user": "student"
+          },
+          {
+            "text": "You've got the equation \\(x^2 + 4x = 96\\). To solve a quadratic equation, it's usually helpful to set one side of the equation to zero. What would the equation look like if you moved the 96 to the left side?",
+            "user": "teacher"
+          },
+          {
+            "text": "It would be:\n\n$$\nx^2 + 4x - 96 = 0\n$$",
+            "user": "student"
+          },
+          {
+            "text": "Now that you have the equation \\(x^2 + 4x - 96 = 0\\), what would be your next step to solve for \\(x\\)?",
+            "user": "teacher"
+          },
+          {
+            "text": "i dont know",
+            "user": "student"
+          },
+          {
+            "text": "You have a quadratic equation. What methods do you know for solving equations like this?",
+            "user": "teacher"
+          },
+          {
+            "text": "i dont know about that",
+            "user": "student"
+          }
+        ],
+        "latest_student_text": "i dont know about that",
+        "mastery_at_action": 0.7442457504674579,
+        "probabilities": {
+          "generic": 0.401303392687541,
+          "probing": 0.03630264211602933,
+          "focus": 0.22358273636051226,
+          "telling": 0.33881122883591736
+        },
+        "top1": "generic",
+        "top1_probability": 0.401303392687541,
+        "second_best": "telling",
+        "second_best_probability": 0.33881122883591736,
+        "top1_second_gap": 0.06249216385162365,
+        "entropy_nats": 1.1884003042054627,
+        "non_top1_sampling_probability": 0.598696607312459
+      },
+      {
+        "attempt_id": "5413cab2-22c8-4536-a66b-66619d887e84:1",
+        "action_event_id": "5413cab2-22c8-4536-a66b-66619d887e84:1:action:10",
+        "action_turn_index": 10,
+        "problem": "A rectangle has a length that is 4 cm more than its width. The area of the rectangle is 96 cm². Find the length and width of the rectangle.",
+        "history_before_action": [
+          {
+            "text": "How would you start solving this problem?",
+            "user": "teacher"
+          },
+          {
+            "text": "I would start by letting the width be \\(x\\) cm. Then the length would be \\(x + 4\\) cm. Since the area is 96 cm², I can use the formula length × width = area to form an equation.",
+            "user": "student"
+          },
+          {
+            "text": "That's a great start! What equation would you form using those expressions for length and width?",
+            "user": "teacher"
+          },
+          {
+            "text": "I think the equation would be \\(x + 4x = 96\\), because the width is \\(x\\) and the length is \\(x+4\\).",
+            "user": "student"
+          },
+          {
+            "text": "You've correctly defined the width as \\(x\\) and the length as \\(x+4\\). Remember that the area of a rectangle is found by multiplying the length and the width. How would you write that multiplication using your expressions for length and width?",
+            "user": "teacher"
+          },
+          {
+            "text": "I would write it as \\(x(x+4)=96\\), because the width is \\(x\\) and the length is \\(x+4\\).",
+            "user": "student"
+          },
+          {
+            "text": "Excellent! Now that you have the equation \\(x(x+4)=96\\), what's the first step to simplify the left side of this equation?",
+            "user": "teacher"
+          },
+          {
+            "text": "i dont know",
+            "user": "student"
+          },
+          {
+            "text": "To simplify \\(x(x+4)\\), you need to multiply \\(x\\) by each term inside the parentheses. What do you get when you do that?",
+            "user": "teacher"
+          },
+          {
+            "text": "i cannot understand clearly",
+            "user": "student"
+          },
+          {
+            "text": "No problem. Let's break it down. To simplify \\(x(x+4)\\), you need to multiply \\(x\\) by each term inside the parentheses. What do you get when you multiply \\(x\\) by the first term, which is \\(x\\)?",
+            "user": "teacher"
+          },
+          {
+            "text": "2x",
+            "user": "student"
+          },
+          {
+            "text": "Not quite. When you multiply \\(x\\) by \\(x\\), you are multiplying a variable by itself. What is \\(x \\cdot x\\) usually written as?",
+            "user": "teacher"
+          },
+          {
+            "text": "i really dont know",
+            "user": "student"
+          },
+          {
+            "text": "No problem. When you multiply a variable by itself, like \\(x \\cdot x\\), we write it using an exponent. For example, \\(2 \\cdot 2\\) is \\(2^2\\). How would you write \\(x \\cdot x\\) using an exponent?",
+            "user": "teacher"
+          },
+          {
+            "text": "I think it would be \\(x^2\\).",
+            "user": "student"
+          },
+          {
+            "text": "Exactly! So, you've multiplied \\(x\\) by the first term, \\(x\\), to get \\(x^2\\). Now, what do you get when you multiply \\(x\\) by the second term inside the parentheses, which is \\(4\\)?",
+            "user": "teacher"
+          },
+          {
+            "text": "I get \\(4x\\), because \\(x \\times 4 = 4x\\).",
+            "user": "student"
+          }
+        ],
+        "latest_student_text": "I get \\(4x\\), because \\(x \\times 4 = 4x\\).",
+        "mastery_at_action": 0.6274962214242815,
+        "probabilities": {
+          "generic": 0.15839359046225554,
+          "probing": 0.12010950505651902,
+          "focus": 0.39051299996291844,
+          "telling": 0.33098390451830695
+        },
+        "top1": "focus",
+        "top1_probability": 0.39051299996291844,
+        "second_best": "telling",
+        "second_best_probability": 0.33098390451830695,
+        "top1_second_gap": 0.05952909544461149,
+        "entropy_nats": 1.279582877868711,
+        "non_top1_sampling_probability": 0.6094870000370816
+      }
+    ],
+    "telling_top1": [
+      {
+        "attempt_id": "a6d964ef-ca38-47e1-a1f5-6009be1aa0b5:1",
+        "action_event_id": "a6d964ef-ca38-47e1-a1f5-6009be1aa0b5:1:action:6",
+        "action_turn_index": 6,
+        "problem": "A warehouse packs 48 boxes of notebooks. Each box contains 125 notebooks.\n\nHow many notebooks are there altogether?",
+        "history_before_action": [
+          {
+            "text": "How would you start solving this problem?",
+            "user": "teacher"
+          },
+          {
+            "text": "i have no idea",
+            "user": "student"
+          },
+          {
+            "text": "What about the problem makes you feel stuck?",
+            "user": "teacher"
+          },
+          {
+            "text": "do i need to devide 125 by 48?",
+            "user": "student"
+          },
+          {
+            "text": "Why do you think division would be the right operation to find the total number of notebooks?",
+            "user": "teacher"
+          },
+          {
+            "text": "i just thought like that",
+            "user": "student"
+          },
+          {
+            "text": "What would dividing 125 by 48 tell you about the notebooks in the warehouse?",
+            "user": "teacher"
+          },
+          {
+            "text": "number of all notebooks",
+            "user": "student"
+          },
+          {
+            "text": "If you divide 125 notebooks by 48 boxes, what would the resulting number tell you?",
+            "user": "teacher"
+          },
+          {
+            "text": "number of all notebooks in the warehouse",
+            "user": "student"
+          }
+        ],
+        "latest_student_text": "number of all notebooks in the warehouse",
+        "mastery_at_action": 0.32068980617750237,
+        "probabilities": {
+          "generic": 0.0019802993661402948,
+          "probing": 0.1693753155846212,
+          "focus": 0.009446371362107946,
+          "telling": 0.8191980136871305
+        },
+        "top1": "telling",
+        "top1_probability": 0.8191980136871305,
+        "second_best": "probing",
+        "second_best_probability": 0.1693753155846212,
+        "top1_second_gap": 0.6498226981025093,
+        "entropy_nats": 0.5204880414070733,
+        "non_top1_sampling_probability": 0.18080198631286948
+      },
+      {
+        "attempt_id": "a6d964ef-ca38-47e1-a1f5-6009be1aa0b5:1",
+        "action_event_id": "a6d964ef-ca38-47e1-a1f5-6009be1aa0b5:1:action:7",
+        "action_turn_index": 7,
+        "problem": "A warehouse packs 48 boxes of notebooks. Each box contains 125 notebooks.\n\nHow many notebooks are there altogether?",
+        "history_before_action": [
+          {
+            "text": "How would you start solving this problem?",
+            "user": "teacher"
+          },
+          {
+            "text": "i have no idea",
+            "user": "student"
+          },
+          {
+            "text": "What about the problem makes you feel stuck?",
+            "user": "teacher"
+          },
+          {
+            "text": "do i need to devide 125 by 48?",
+            "user": "student"
+          },
+          {
+            "text": "Why do you think division would be the right operation to find the total number of notebooks?",
+            "user": "teacher"
+          },
+          {
+            "text": "i just thought like that",
+            "user": "student"
+          },
+          {
+            "text": "What would dividing 125 by 48 tell you about the notebooks in the warehouse?",
+            "user": "teacher"
+          },
+          {
+            "text": "number of all notebooks",
+            "user": "student"
+          },
+          {
+            "text": "If you divide 125 notebooks by 48 boxes, what would the resulting number tell you?",
+            "user": "teacher"
+          },
+          {
+            "text": "number of all notebooks in the warehouse",
+            "user": "student"
+          },
+          {
+            "text": "If you divide 125 notebooks by 48 boxes, what would the resulting number tell you about the notebooks *per box*?",
+            "user": "teacher"
+          },
+          {
+            "text": "It would tell me how many notebooks there are per box, not the total number of notebooks.",
+            "user": "student"
+          }
+        ],
+        "latest_student_text": "It would tell me how many notebooks there are per box, not the total number of notebooks.",
+        "mastery_at_action": 0.5011149420546538,
+        "probabilities": {
+          "generic": 0.0041162214612873475,
+          "probing": 0.16274862155271286,
+          "focus": 0.016082680404899144,
+          "telling": 0.8170524765811007
+        },
+        "top1": "telling",
+        "top1_probability": 0.8170524765811007,
+        "second_best": "probing",
+        "second_best_probability": 0.16274862155271286,
+        "top1_second_gap": 0.6543038550283878,
+        "entropy_nats": 0.5495963916459652,
+        "non_top1_sampling_probability": 0.1829475234188993
+      },
+      {
+        "attempt_id": "a6d964ef-ca38-47e1-a1f5-6009be1aa0b5:1",
+        "action_event_id": "a6d964ef-ca38-47e1-a1f5-6009be1aa0b5:1:action:5",
+        "action_turn_index": 5,
+        "problem": "A warehouse packs 48 boxes of notebooks. Each box contains 125 notebooks.\n\nHow many notebooks are there altogether?",
+        "history_before_action": [
+          {
+            "text": "How would you start solving this problem?",
+            "user": "teacher"
+          },
+          {
+            "text": "i have no idea",
+            "user": "student"
+          },
+          {
+            "text": "What about the problem makes you feel stuck?",
+            "user": "teacher"
+          },
+          {
+            "text": "do i need to devide 125 by 48?",
+            "user": "student"
+          },
+          {
+            "text": "Why do you think division would be the right operation to find the total number of notebooks?",
+            "user": "teacher"
+          },
+          {
+            "text": "i just thought like that",
+            "user": "student"
+          },
+          {
+            "text": "What would dividing 125 by 48 tell you about the notebooks in the warehouse?",
+            "user": "teacher"
+          },
+          {
+            "text": "number of all notebooks",
+            "user": "student"
+          }
+        ],
+        "latest_student_text": "number of all notebooks",
+        "mastery_at_action": 0.4021584070654143,
+        "probabilities": {
+          "generic": 0.0011612878659169746,
+          "probing": 0.4128517132142059,
+          "focus": 0.007234253783339709,
+          "telling": 0.5787527451365374
+        },
+        "top1": "telling",
+        "top1_probability": 0.5787527451365374,
+        "second_best": "probing",
+        "second_best_probability": 0.4128517132142059,
+        "top1_second_gap": 0.16590103192233152,
+        "entropy_nats": 0.7252498262591122,
+        "non_top1_sampling_probability": 0.4212472548634626
+      }
+    ],
+    "meaningful_focus_telling_competition": {
+      "attempt_id": "5413cab2-22c8-4536-a66b-66619d887e84:1",
+      "action_event_id": "5413cab2-22c8-4536-a66b-66619d887e84:1:action:10",
+      "action_turn_index": 10,
+      "problem": "A rectangle has a length that is 4 cm more than its width. The area of the rectangle is 96 cm². Find the length and width of the rectangle.",
+      "history_before_action": [
+        {
+          "text": "How would you start solving this problem?",
+          "user": "teacher"
+        },
+        {
+          "text": "I would start by letting the width be \\(x\\) cm. Then the length would be \\(x + 4\\) cm. Since the area is 96 cm², I can use the formula length × width = area to form an equation.",
+          "user": "student"
+        },
+        {
+          "text": "That's a great start! What equation would you form using those expressions for length and width?",
+          "user": "teacher"
+        },
+        {
+          "text": "I think the equation would be \\(x + 4x = 96\\), because the width is \\(x\\) and the length is \\(x+4\\).",
+          "user": "student"
+        },
+        {
+          "text": "You've correctly defined the width as \\(x\\) and the length as \\(x+4\\). Remember that the area of a rectangle is found by multiplying the length and the width. How would you write that multiplication using your expressions for length and width?",
+          "user": "teacher"
+        },
+        {
+          "text": "I would write it as \\(x(x+4)=96\\), because the width is \\(x\\) and the length is \\(x+4\\).",
+          "user": "student"
+        },
+        {
+          "text": "Excellent! Now that you have the equation \\(x(x+4)=96\\), what's the first step to simplify the left side of this equation?",
+          "user": "teacher"
+        },
+        {
+          "text": "i dont know",
+          "user": "student"
+        },
+        {
+          "text": "To simplify \\(x(x+4)\\), you need to multiply \\(x\\) by each term inside the parentheses. What do you get when you do that?",
+          "user": "teacher"
+        },
+        {
+          "text": "i cannot understand clearly",
+          "user": "student"
+        },
+        {
+          "text": "No problem. Let's break it down. To simplify \\(x(x+4)\\), you need to multiply \\(x\\) by each term inside the parentheses. What do you get when you multiply \\(x\\) by the first term, which is \\(x\\)?",
+          "user": "teacher"
+        },
+        {
+          "text": "2x",
+          "user": "student"
+        },
+        {
+          "text": "Not quite. When you multiply \\(x\\) by \\(x\\), you are multiplying a variable by itself. What is \\(x \\cdot x\\) usually written as?",
+          "user": "teacher"
+        },
+        {
+          "text": "i really dont know",
+          "user": "student"
+        },
+        {
+          "text": "No problem. When you multiply a variable by itself, like \\(x \\cdot x\\), we write it using an exponent. For example, \\(2 \\cdot 2\\) is \\(2^2\\). How would you write \\(x \\cdot x\\) using an exponent?",
+          "user": "teacher"
+        },
+        {
+          "text": "I think it would be \\(x^2\\).",
+          "user": "student"
+        },
+        {
+          "text": "Exactly! So, you've multiplied \\(x\\) by the first term, \\(x\\), to get \\(x^2\\). Now, what do you get when you multiply \\(x\\) by the second term inside the parentheses, which is \\(4\\)?",
+          "user": "teacher"
+        },
+        {
+          "text": "I get \\(4x\\), because \\(x \\times 4 = 4x\\).",
+          "user": "student"
+        }
+      ],
+      "latest_student_text": "I get \\(4x\\), because \\(x \\times 4 = 4x\\).",
+      "mastery_at_action": 0.6274962214242815,
+      "probabilities": {
+        "generic": 0.15839359046225554,
+        "probing": 0.12010950505651902,
+        "focus": 0.39051299996291844,
+        "telling": 0.33098390451830695
+      },
+      "top1": "focus",
+      "top1_probability": 0.39051299996291844,
+      "second_best": "telling",
+      "second_best_probability": 0.33098390451830695,
+      "top1_second_gap": 0.05952909544461149,
+      "entropy_nats": 1.279582877868711,
+      "non_top1_sampling_probability": 0.6094870000370816
+    },
+    "meaningful_probing_focus_competition": {
+      "attempt_id": "b9a3b98d-ab91-4e24-b3f7-39a0623831b9:1",
+      "action_event_id": "b9a3b98d-ab91-4e24-b3f7-39a0623831b9:1:action:4",
+      "action_turn_index": 4,
+      "problem": "Factor completely:\n\n$$ x^2 + 9x + 20 $$\n\nThen use your factors to find the values of \\(x\\) that make the expression equal to zero.",
+      "history_before_action": [
+        {
+          "text": "How would you start solving this problem?",
+          "user": "teacher"
+        },
+        {
+          "text": "I think I need to find two numbers that multiply to 20 and add to 9, but I’m not fully sure how to pick them.",
+          "user": "student"
+        },
+        {
+          "text": "That's a great start! To help you pick them, what are some pairs of numbers that multiply to 20?",
+          "user": "teacher"
+        },
+        {
+          "text": "Maybe \\(1\\) and \\(20\\), \\(2\\) and \\(10\\), and \\(4\\) and \\(5\\).",
+          "user": "student"
+        },
+        {
+          "text": "Excellent! Now, for each of those pairs, what do they add up to?",
+          "user": "teacher"
+        },
+        {
+          "text": "\\(1+20=21\\), \\(2+10=12\\), and \\(4+5=9\\). So I think \\(4\\) and \\(5\\) are the pair we need.",
+          "user": "student"
+        }
+      ],
+      "latest_student_text": "\\(1+20=21\\), \\(2+10=12\\), and \\(4+5=9\\). So I think \\(4\\) and \\(5\\) are the pair we need.",
+      "mastery_at_action": 0.5646842225295485,
+      "probabilities": {
+        "generic": 0.015516986731622794,
+        "probing": 0.48072348880550175,
+        "focus": 0.49093597021733854,
+        "telling": 0.01282355424553689
+      },
+      "top1": "focus",
+      "top1_probability": 0.49093597021733854,
+      "second_best": "probing",
+      "second_best_probability": 0.48072348880550175,
+      "top1_second_gap": 0.010212481411836782,
+      "entropy_nats": 0.8218908673583851,
+      "non_top1_sampling_probability": 0.5090640297826614
+    },
+    "high_generic_with_history": {
+      "attempt_id": "8a72eaca-f99f-4226-92d4-f73cc0492a2e:1",
+      "action_event_id": "8a72eaca-f99f-4226-92d4-f73cc0492a2e:1:action:5",
+      "action_turn_index": 5,
+      "problem": "A rectangular garden has a length that is 6 meters more than its width. The area of the garden is 72 m².\n\nFind the width and length of the garden.",
+      "history_before_action": [
+        {
+          "text": "How would you start solving this problem?",
+          "user": "teacher"
+        },
+        {
+          "text": "I would let the width be \\(x\\) meters. Then the length would be \\(x+6\\) meters. Since the area is 72 m², I would use the formula length × width = area to make an equation.",
+          "user": "student"
+        },
+        {
+          "text": "That's a great plan! What equation would you get when you put your expressions for length and width into the area formula?",
+          "user": "teacher"
+        },
+        {
+          "text": "i dont know",
+          "user": "student"
+        },
+        {
+          "text": "You've correctly identified that length × width = area. Can you try writing out what that looks like when you substitute your expressions for length and width into the formula?",
+          "user": "teacher"
+        },
+        {
+          "text": "The equation would be:\n\n$$\nx(x+6)=72\n$$\n\nbecause the width is \\(x\\) and the length is \\(x+6\\).",
+          "user": "student"
+        },
+        {
+          "text": "That's the correct equation! Now, what would be your next step to solve for \\(x\\)? How can you simplify and rearrange this equation?",
+          "user": "teacher"
+        },
+        {
+          "text": "I would expand the left side first:\n\n$$\nx(x+6)=x^2+6x\n$$\n\nSo the equation becomes:\n\n$$\nx^2+6x=72\n$$\n\nThen move 72 to the left side:\n\n$$\nx^2+6x-72=0\n$$\n\nNow I can factor the quadratic to solve for \\(x\\).",
+          "user": "student"
+        }
+      ],
+      "latest_student_text": "I would expand the left side first:\n\n$$\nx(x+6)=x^2+6x\n$$\n\nSo the equation becomes:\n\n$$\nx^2+6x=72\n$$\n\nThen move 72 to the left side:\n\n$$\nx^2+6x-72=0\n$$\n\nNow I can factor the quadratic to solve for \\(x\\).",
+      "mastery_at_action": 0.9801093693571412,
+      "probabilities": {
+        "generic": 0.9340257692317543,
+        "probing": 0.0084345216156492,
+        "focus": 0.020008122064732976,
+        "telling": 0.03753158708786354
+      },
+      "top1": "generic",
+      "top1_probability": 0.9340257692317543,
+      "second_best": "telling",
+      "second_best_probability": 0.03753158708786354,
+      "top1_second_gap": 0.8964941821438908,
+      "entropy_nats": 0.30549109078822345,
+      "non_top1_sampling_probability": 0.06597423076824571
+    }
+  },
+  "runtime_implementation": true,
+  "runtime_activation": false,
+  "current_runtime_mode": "SHADOW",
+  "runtime_event_schema": "adaptmath_turn_lints_event_v4",
+  "runtime_behavior_policy": "md7_r2_probability_proportional_v1",
+  "runtime_lineage_schema": "adaptmath_randomized_warmstart_lineage_v1",
+  "runtime_event_assignment_fields": [
+    "decision_source",
+    "treatment_assignment_source",
+    "behavior_policy",
+    "behavior_propensity",
+    "full_behavior_probability_vector",
+    "randomized_assignment",
+    "assignment_rng_source",
+    "assignment_seed",
+    "assignment_random_draw",
+    "posterior_updated"
+  ],
+  "focused_tests": {
+    "files": [
+      "adaptive-math-tutor/backend/tests/test_randomized_warmstart.py",
+      "adaptive-math-tutor/backend/tests/test_turn_lints_v1.py",
+      "adaptive-math-tutor/backend/tests/test_turn_lints_selector_anchor.py"
+    ],
+    "passed": 29,
+    "failed": 0,
+    "external_llm_tests": 0
+  },
+  "randomized_treatment_observations_created": 0,
+  "turn_lints_posterior_updates": 0,
+  "safety": {
+    "training": 0,
+    "randomized_real_treatments": 0,
+    "live_updates": 0,
+    "external_tutor_api_calls": 0,
+    "protected_mathdial_test_use": 0,
+    "mrbench_v3_test_use": 0,
+    "authoritative_historical_rewrites": 0
+  }
+}

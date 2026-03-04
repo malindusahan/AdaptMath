@@ -38,3 +38,4 @@ class TutorOutput(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     teaching_response: str = Field(..., min_length=1)
+    fallback_used: bool = False

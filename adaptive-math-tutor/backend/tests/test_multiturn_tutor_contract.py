@@ -29,16 +29,26 @@ class MultiTurnTutorContractTests(unittest.TestCase):
         self.assertIn("Never ask the learner for the complete solution", self.tutor)
 
     def test_move_execution_is_narrowed_per_turn(self) -> None:
-        self.assertIn("generic: make ONE broad conversational invitation", self.tutor)
-        self.assertIn("focus: direct attention to ONE relevant", self.tutor)
-        self.assertIn("probing: investigate ONE current claim", self.tutor)
-        self.assertIn("telling: explicitly provide ONE needed fact", self.tutor)
+        self.assertIn("generic: the PRIMARY speech act is context-aware", self.tutor)
+        self.assertIn("probing: the PRIMARY speech act is eliciting", self.tutor)
+        self.assertIn("focus: the PRIMARY speech act is directing", self.tutor)
+        self.assertIn("telling: the PRIMARY speech act is explicit", self.tutor)
+
+    def test_telling_honors_explicit_answer_requests_for_one_step_questions(self) -> None:
+        self.assertIn("LEARNER-AGENCY ESCALATION", self.tutor)
+        self.assertIn("state the verified answer directly", self.tutor)
+        self.assertIn("Do not turn the response back into a", self.tutor)
 
     def test_generic_opening_turn_contract_rejects_full_solution_planning(self) -> None:
         self.assertIn("PASS, generic", self.tutor)
-        self.assertIn("How would you start solving this problem?", self.tutor)
+        self.assertIn("Keep\nthe two circular regions", self.tutor)
         self.assertIn("What numbers would you write down", self.tutor)
         self.assertIn("requests the whole solution plan", self.tutor)
+
+    def test_realization_contract_has_no_universal_question_requirement(self) -> None:
+        self.assertIn("There is NO global requirement to ask a question", self.tutor)
+        self.assertIn("A question is optional, not the default", self.tutor)
+        self.assertIn("instruction or explanation", self.tutor)
 
     def test_teacher_turn_uses_structured_atomic_self_check(self) -> None:
         self.assertIn("build_teacher_turn_schema", self.tutor)

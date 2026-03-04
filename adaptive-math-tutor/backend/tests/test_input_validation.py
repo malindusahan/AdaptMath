@@ -43,12 +43,29 @@ class InputValidationTests(unittest.TestCase):
         self.assertEqual(request.topic, "algebra")
         self.assertEqual(request.subtopic, "linear equations")
 
-    def test_tutor_start_requires_explicit_target_skill(self):
+    def test_tutor_start_allows_automatic_target_skill(self):
         payload = self._valid_start_payload()
         del payload["target_skill"]
 
-        with self.assertRaises(ValidationError):
-            TutorStartRequest(**payload)
+        request = TutorStartRequest(**payload)
+
+        self.assertIsNone(request.target_skill)
+
+    def test_tutor_start_allows_server_derived_student_identity(self):
+        payload = self._valid_start_payload()
+        del payload["student_id"]
+
+        request = TutorStartRequest(**payload)
+
+        self.assertIsNone(request.student_id)
+
+    def test_tutor_start_normalizes_blank_target_skill_to_automatic(self):
+        payload = self._valid_start_payload()
+        payload["target_skill"] = "   "
+
+        request = TutorStartRequest(**payload)
+
+        self.assertIsNone(request.target_skill)
 
     def test_tutor_start_rejects_whitespace_only_required_text(self):
         payload = self._valid_start_payload()

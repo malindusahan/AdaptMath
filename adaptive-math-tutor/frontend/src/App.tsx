@@ -1,22 +1,36 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Menu, Plus, Settings2 } from "lucide-react";
 import {
+  abandonTutorSession,
   ApiError,
+  getActiveTutorSession,
   getHealth,
   getReady,
   getTutorSession,
   resumeTutorSession,
+  startRecommendedPractice,
   startTutorSession,
   submitTutorAnswers,
   submitTutorTurn,
 } from "./api/client";
+import {
+  AUTH_INVALID_EVENT,
+  clearStudentHint,
+  getStoredAuthToken,
+  getStoredStudentHint,
+  logout as logoutUser,
+  restoreAuthentication,
+  saveStudentHint,
+} from "./api/auth";
+import { AuthScreen } from "./components/AuthScreen";
 import { ChatComposer } from "./components/ChatComposer";
 import { ChatMessages } from "./components/ChatMessages";
 import { ChatSidebar } from "./components/ChatSidebar";
 import { EmptyChat } from "./components/EmptyChat";
-import { LearnerSetupForm } from "./components/LearnerSetupForm";
 import { ProfileDialog } from "./components/ProfileDialog";
+import { StudentProfilePage } from "./components/StudentProfilePage";
 import {
+  clearLearnerSetup,
   loadActiveChatId,
   loadChats,
   loadLearnerSetup,
@@ -25,6 +39,7 @@ import {
   saveLearnerSetup,
 } from "./lib/storage";
 import type { ChatConversation, ChatMessage } from "./types/chat";
+import type { AuthenticatedUser } from "./types/auth";
 import type {
   LearnerSetup,
   TutorAnswerPayload,
@@ -32,6 +47,12 @@ import type {
 } from "./types/tutor";
 
 type BackendStatus = "checking" | "ready" | "offline";
+type AuthStatus = "checking" | "authenticated" | "unauthenticated";
+type AppPage = "tutor" | "profile";
+
+function pageFromPath(): AppPage {
+  return window.location.pathname === "/profile" ? "profile" : "tutor";
+}
 
 function nowIso(): string {
   return new Date().toISOString();
@@ -50,6 +71,22 @@ function createEmptyChat(): ChatConversation {
   };
 }
 
+function learnerSetupForAccount(
+  user: AuthenticatedUser,
+  existing: LearnerSetup | null,
+): LearnerSetup {
+  if (existing) return { ...existing, studentId: user.student_id };
+
+  const accountAge = user.age && user.age >= 8 && user.age <= 18 ? user.age : 15;
+  return {
+    studentId: user.student_id,
+    age: accountAge,
+    topic: "Mathematics",
+    subtopic: "",
+    targetSkill: "",
+  };
+}
+
 function titleFromQuestion(question: string): string {
   const clean = question.replace(/\s+/g, " ").trim();
   return clean.length <= 42 ? clean : `${clean.slice(0, 39).trim()}…`;
@@ -59,7 +96,7 @@ function errorMessage(error: unknown): string {
   if (error instanceof ApiError) {
     if (error.status === 409) {
       if (error.detail.includes("currently active")) {
-        return "Another adaptive tutoring session is currently active. Please retry shortly.";
+        return "Finish the active lesson before starting another one.";
       }
       if (error.detail.includes("interrupted by a server restart")) {
         return "This tutoring session was interrupted by a server restart and cannot be safely continued. Start a new session.";
@@ -198,6 +235,7 @@ function reconcileSession(
 
   if (
     session.status === "complete" &&
+    session.route !== "gemini_general_chat" &&
     !hasCompletionSnapshot(messages, session.thread_id)
   ) {
     messages.push({
@@ -219,20 +257,96 @@ function reconcileSession(
 }
 
 export default function App() {
-  const [learner, setLearner] = useState<LearnerSetup | null>(() => loadLearnerSetup());
+  const [authStatus, setAuthStatus] = useState<AuthStatus>("checking");
+  const [authUser, setAuthUser] = useState<AuthenticatedUser | null>(null);
+  const [authNotice, setAuthNotice] = useState<string | null>(null);
+  const [learner, setLearner] = useState<LearnerSetup | null>(null);
   const [chats, setChats] = useState<ChatConversation[]>(() => loadChats());
   const [activeChatId, setActiveChatId] = useState<string | null>(() => loadActiveChatId());
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [page, setPage] = useState<AppPage>(() => pageFromPath());
   const [backendStatus, setBackendStatus] = useState<BackendStatus>("checking");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const scrollerRef = useRef<HTMLDivElement>(null);
+  const startRequestInFlightRef = useRef(false);
 
   const activeChat = useMemo(
     () => chats.find((chat) => chat.id === activeChatId) ?? null,
     [activeChatId, chats],
   );
+
+  function activateAuthenticatedUser(user: AuthenticatedUser) {
+    const storedSetup = loadLearnerSetup();
+    const previousStudentId = getStoredStudentHint() ?? storedSetup?.studentId ?? null;
+    const identityChanged = Boolean(
+      previousStudentId && previousStudentId !== user.student_id,
+    );
+
+    if (identityChanged) {
+      clearLearnerSetup();
+      saveChats([]);
+      saveActiveChatId(null);
+      setChats([]);
+      setActiveChatId(null);
+    }
+
+    const resolvedSetup = learnerSetupForAccount(
+      user,
+      identityChanged ? null : storedSetup,
+    );
+    saveLearnerSetup(resolvedSetup);
+    setLearner(resolvedSetup);
+
+    saveStudentHint(user.student_id);
+    setAuthUser(user);
+    setAuthStatus("authenticated");
+    setAuthNotice(null);
+    setError(null);
+  }
+
+  useEffect(() => {
+    function followBrowserHistory() {
+      setPage(pageFromPath());
+      setSettingsOpen(false);
+    }
+    window.addEventListener("popstate", followBrowserHistory);
+    return () => window.removeEventListener("popstate", followBrowserHistory);
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    const hadStoredToken = Boolean(getStoredAuthToken());
+
+    async function restore() {
+      const user = await restoreAuthentication();
+      if (cancelled) return;
+      if (user) {
+        activateAuthenticatedUser(user);
+      } else {
+        setAuthStatus("unauthenticated");
+        if (hadStoredToken) {
+          setAuthNotice("Your saved session is no longer valid. Please sign in again.");
+        }
+      }
+    }
+
+    function authenticationInvalidated() {
+      if (cancelled) return;
+      setAuthUser(null);
+      setLearner(null);
+      setAuthStatus("unauthenticated");
+      setAuthNotice("Your authentication session ended. Please sign in again.");
+    }
+
+    window.addEventListener(AUTH_INVALID_EVENT, authenticationInvalidated);
+    void restore();
+    return () => {
+      cancelled = true;
+      window.removeEventListener(AUTH_INVALID_EVENT, authenticationInvalidated);
+    };
+  }, []);
 
   useEffect(() => {
     if (!learner) return;
@@ -273,6 +387,28 @@ export default function App() {
       window.clearInterval(timer);
     };
   }, []);
+
+  useEffect(() => {
+    const studentId = learner?.studentId;
+    if (!studentId) return;
+
+    let cancelled = false;
+    async function recoverServerLesson() {
+      try {
+        const session = await getActiveTutorSession();
+        if (!cancelled && session) attachActiveSession(session);
+      } catch (caught) {
+        if (!cancelled && (!(caught instanceof ApiError) || caught.status !== 404)) {
+          setError(errorMessage(caught));
+        }
+      }
+    }
+
+    void recoverServerLesson();
+    return () => {
+      cancelled = true;
+    };
+  }, [learner?.studentId]);
 
   useEffect(() => {
     const chatId = activeChat?.id;
@@ -377,13 +513,41 @@ export default function App() {
     });
   }, [activeChat?.messages.length, activeChat?.session?.status, busy]);
 
-  function handleSetup(next: LearnerSetup) {
-    saveLearnerSetup(next);
-    setLearner(next);
+  async function endActiveLesson(chat: ChatConversation): Promise<boolean> {
+    const threadId = chat.activeThreadId;
+    if (!threadId) return true;
+
+    setBusy(true);
     setError(null);
+    try {
+      const session = await abandonTutorSession(threadId);
+      updateChat(chat.id, (current) => reconcileSession(current, session));
+      return true;
+    } catch (caught) {
+      setActiveChatId(chat.id);
+      saveActiveChatId(chat.id);
+      setError(errorMessage(caught));
+      return false;
+    } finally {
+      setBusy(false);
+    }
   }
 
-  function createChat() {
+  async function createChat() {
+    if (busy) return;
+    const activeLesson = [...chats]
+      .sort(
+        (a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
+      )
+      .find((chat) => Boolean(chat.activeThreadId));
+
+    if (activeLesson) {
+      const confirmed = window.confirm(
+        "End the active lesson and start a new chat? The unfinished attempt will be retained as aborted.",
+      );
+      if (!confirmed || !(await endActiveLesson(activeLesson))) return;
+    }
+
     const chat = createEmptyChat();
     setChats((current) => [chat, ...current]);
     setActiveChatId(chat.id);
@@ -399,10 +563,18 @@ export default function App() {
     setError(null);
   }
 
-  function deleteChat(chatId: string) {
+  async function deleteChat(chatId: string) {
+    if (busy) return;
     const chat = chats.find((item) => item.id === chatId);
     if (!chat) return;
-    if (!window.confirm(`Delete “${chat.title}”?`)) return;
+    if (chat.activeThreadId) {
+      const confirmed = window.confirm(
+        `End the active lesson and delete "${chat.title}"? The unfinished attempt record will be retained as aborted.`,
+      );
+      if (!confirmed || !(await endActiveLesson(chat))) return;
+    } else if (!window.confirm(`Delete "${chat.title}"?`)) {
+      return;
+    }
 
     const remaining = chats.filter((item) => item.id !== chatId);
     if (remaining.length === 0) {
@@ -432,8 +604,41 @@ export default function App() {
     );
   }
 
+  function attachActiveSession(session: TutorSessionResponse) {
+    const existing = chats.find(
+      (chat) => chat.activeThreadId === session.thread_id || chat.session?.thread_id === session.thread_id,
+    );
+    const destination = existing ?? {
+      ...createEmptyChat(),
+      title: "Recovered lesson",
+    };
+    const recovered = reconcileSession(destination, session);
+
+    setChats((current) =>
+      existing
+        ? current.map((chat) => (chat.id === existing.id ? recovered : chat))
+        : [recovered, ...current],
+    );
+    setActiveChatId(destination.id);
+    saveActiveChatId(destination.id);
+    setError(null);
+  }
+
   async function sendQuestion(question: string) {
-    if (!learner || !activeChat) return;
+    if (!learner || !activeChat || startRequestInFlightRef.current) return;
+
+    const otherActiveLesson = [...chats]
+      .sort(
+        (a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
+      )
+      .find((chat) => chat.id !== activeChat.id && Boolean(chat.activeThreadId));
+
+    if (otherActiveLesson) {
+      setActiveChatId(otherActiveLesson.id);
+      saveActiveChatId(otherActiveLesson.id);
+      setError("Continue and finish this active lesson before starting another one.");
+      return;
+    }
 
     if (activeChat.activeThreadId) {
       setError("Finish the current lesson before asking a new question.");
@@ -441,31 +646,43 @@ export default function App() {
     }
 
     const chatId = activeChat.id;
+    startRequestInFlightRef.current = true;
     setBusy(true);
     setError(null);
 
-    const userMessage: ChatMessage = {
-      id: crypto.randomUUID(),
-      type: "user",
-      createdAt: nowIso(),
-      content: question,
-    };
-
-    updateChat(chatId, (chat) => ({
-      ...chat,
-      title: chat.messages.length === 0 ? titleFromQuestion(question) : chat.title,
-      messages: [...chat.messages, userMessage],
-      updatedAt: nowIso(),
-    }));
-
     try {
+      try {
+        const activeSession = await getActiveTutorSession();
+        if (activeSession) {
+          attachActiveSession(activeSession);
+          return;
+        }
+      } catch (caught) {
+        if (!(caught instanceof ApiError) || caught.status !== 404) throw caught;
+      }
+
+      const userMessage: ChatMessage = {
+        id: crypto.randomUUID(),
+        type: "user",
+        createdAt: nowIso(),
+        content: question,
+      };
+
+      updateChat(chatId, (chat) => ({
+        ...chat,
+        title: chat.messages.length === 0 ? titleFromQuestion(question) : chat.title,
+        messages: [...chat.messages, userMessage],
+        updatedAt: nowIso(),
+      }));
+
       const session = await startTutorSession({
-        student_id: learner.studentId,
         age: learner.age,
         question,
         topic: learner.topic,
         subtopic: learner.subtopic.trim() || null,
-        target_skill: learner.targetSkill,
+        ...(learner.targetSkill.trim()
+          ? { target_skill: learner.targetSkill.trim() }
+          : {}),
         relevant_history: [],
         previous_errors: [],
         previous_strategies: [],
@@ -473,8 +690,23 @@ export default function App() {
 
       updateChat(chatId, (chat) => reconcileSession(chat, session));
     } catch (caught) {
+      if (caught instanceof ApiError && caught.status === 409) {
+        try {
+          const activeSession = await getActiveTutorSession();
+          if (activeSession) {
+            attachActiveSession(activeSession);
+            return;
+          }
+        } catch (recoveryError) {
+          if (!(recoveryError instanceof ApiError) || recoveryError.status !== 404) {
+            setError(errorMessage(recoveryError));
+            return;
+          }
+        }
+      }
       setError(errorMessage(caught));
     } finally {
+      startRequestInFlightRef.current = false;
       setBusy(false);
     }
   }
@@ -589,8 +821,137 @@ export default function App() {
     setSettingsOpen(false);
   }
 
+  function navigate(next: AppPage) {
+    const path = next === "profile" ? "/profile" : "/";
+    if (window.location.pathname !== path) window.history.pushState({}, "", path);
+    setPage(next);
+    setSidebarOpen(false);
+    setSettingsOpen(false);
+  }
+
+  async function practiceRecommendedSkill(skill: string): Promise<void> {
+    if (!learner) throw new Error("Your learner context is not ready.");
+    if (startRequestInFlightRef.current) {
+      throw new Error("Another lesson is already being prepared.");
+    }
+
+    startRequestInFlightRef.current = true;
+    setBusy(true);
+    setError(null);
+
+    try {
+      const activeSession = await getActiveTutorSession();
+      if (activeSession) {
+        throw new ApiError(
+          409,
+          "Finish or abandon your active lesson before starting this recommendation.",
+        );
+      }
+
+      const result = await startRecommendedPractice({ target_skill: skill });
+      const nextLearner = { ...learner, targetSkill: result.target_skill };
+      saveLearnerSetup(nextLearner);
+      setLearner(nextLearner);
+
+      const userMessage: ChatMessage = {
+        id: crypto.randomUUID(),
+        type: "user",
+        createdAt: nowIso(),
+        content: result.problem,
+      };
+      const destination: ChatConversation = {
+        ...createEmptyChat(),
+        title: titleFromQuestion(result.problem),
+        messages: [userMessage],
+      };
+      const started = reconcileSession(destination, result.session);
+
+      setChats((current) => [started, ...current]);
+      setActiveChatId(started.id);
+      saveActiveChatId(started.id);
+      navigate("tutor");
+    } finally {
+      startRequestInFlightRef.current = false;
+      setBusy(false);
+    }
+  }
+
+  async function logout() {
+    const confirmed = window.confirm(
+      "Log out and clear this learner's chats from this browser? Saved learning records will not be deleted.",
+    );
+    if (!confirmed) return;
+
+    let logoutFailed = false;
+    try {
+      await logoutUser();
+    } catch {
+      logoutFailed = true;
+    } finally {
+      clearStudentHint();
+      clearLearnerSetup();
+      saveChats([]);
+      saveActiveChatId(null);
+      setAuthUser(null);
+      setAuthStatus("unauthenticated");
+      setAuthNotice(
+        logoutFailed
+          ? "Local sign-out completed, but the authentication service could not confirm logout."
+          : "You have been signed out.",
+      );
+      setLearner(null);
+      setChats([]);
+      setActiveChatId(null);
+      setSidebarOpen(false);
+      setSettingsOpen(false);
+      setError(null);
+      window.history.replaceState({}, "", "/");
+      setPage("tutor");
+    }
+  }
+
+  if (authStatus === "checking") {
+    return (
+      <main className="flex min-h-screen items-center justify-center bg-zinc-50 text-sm text-zinc-500">
+        Restoring your AdaptMath session…
+      </main>
+    );
+  }
+
+  if (authStatus === "unauthenticated" || !authUser) {
+    return (
+      <AuthScreen
+        notice={authNotice}
+        onAuthenticated={activateAuthenticatedUser}
+      />
+    );
+  }
+
   if (!learner) {
-    return <LearnerSetupForm initialValue={loadLearnerSetup()} onContinue={handleSetup} />;
+    return (
+      <main className="flex min-h-screen items-center justify-center bg-zinc-50 text-sm text-zinc-500">
+        Opening your Tutor workspace…
+      </main>
+    );
+  }
+
+  if (page === "profile") {
+    return (
+      <>
+        <StudentProfilePage
+          onBack={() => navigate("tutor")}
+          onOpenSettings={() => setSettingsOpen(true)}
+          onStartPracticing={practiceRecommendedSkill}
+        />
+        <ProfileDialog
+          open={settingsOpen}
+          identity={authUser}
+          learner={learner}
+          onClose={() => setSettingsOpen(false)}
+          onSave={saveProfile}
+        />
+      </>
+    );
   }
 
   const sessionStatus = activeChat?.session?.status ?? null;
@@ -625,12 +986,14 @@ export default function App() {
         chats={chats}
         activeChatId={activeChatId}
         learner={learner}
+        identity={authUser}
         open={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
         onNewChat={createChat}
         onSelectChat={selectChat}
         onDeleteChat={deleteChat}
-        onOpenSettings={() => setSettingsOpen(true)}
+        onOpenProfile={() => navigate("profile")}
+        onLogout={logout}
       />
 
       <section className="flex min-w-0 flex-1 flex-col bg-white">
@@ -657,7 +1020,9 @@ export default function App() {
                 {activeChat?.title || "New chat"}
               </div>
               <div className="truncate text-[11px] text-zinc-400">
-                {learner.topic}{learner.subtopic ? ` · ${learner.subtopic}` : ""}
+                {learner.targetSkill
+                  ? `Focus: ${learner.targetSkill}`
+                  : `${learner.topic}${learner.subtopic ? ` · ${learner.subtopic}` : ""}`}
               </div>
             </div>
           </div>
@@ -742,6 +1107,7 @@ export default function App() {
 
       <ProfileDialog
         open={settingsOpen}
+        identity={authUser}
         learner={learner}
         onClose={() => setSettingsOpen(false)}
         onSave={saveProfile}

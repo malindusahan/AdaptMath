@@ -1,0 +1,144 @@
+{
+  "validation": "manual_controlled_live_md7r1_v1",
+  "validated_at_utc": "2026-08-27T05:00:39.096798+00:00",
+  "offline_only": true,
+  "external_api_calls": 0,
+  "training": 0,
+  "pytest_command": [
+    "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\adaptive-math-tutor\\backend\\.venv-integration\\Scripts\\python.exe",
+    "-m",
+    "pytest",
+    "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\adaptive-math-tutor\\backend\\tests\\test_manual_controlled_live.py",
+    "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\adaptive-math-tutor\\backend\\tests\\test_adaptive_tutor_integration.py",
+    "-q"
+  ],
+  "pytest_stdout": ".............                                                        [100%]\n13 passed, 4 subtests passed in 0.30s",
+  "checks": [
+    {
+      "number": 1,
+      "name": "ordinary mode resolves frozen MD6 as active",
+      "status": "PASS",
+      "evidence": "test_resource_routing_keeps_md6_default_and_requires_exact_opt_in"
+    },
+    {
+      "number": 2,
+      "name": "controlled-live mode resolves MD7 as active",
+      "status": "PASS",
+      "evidence": "resource routing test loads the candidate path only under the exact opt-in"
+    },
+    {
+      "number": 3,
+      "name": "controlled-live mode loads MD6 shadow",
+      "status": "PASS",
+      "evidence": "resource routing test retains the default frozen selector as shadow_md6"
+    },
+    {
+      "number": 4,
+      "name": "identical fixture problem/history reaches both selectors",
+      "status": "PASS",
+      "evidence": "test_active_md7_and_shadow_md6_receive_identical_fixture"
+    },
+    {
+      "number": 5,
+      "name": "returned active probabilities are MD7",
+      "status": "PASS",
+      "evidence": "paired-selector and integrated-pipeline fixture assertions"
+    },
+    {
+      "number": 6,
+      "name": "MD6 probabilities are diagnostic only",
+      "status": "PASS",
+      "evidence": "MD6 argmax probing while returned/final MD7 path is focus"
+    },
+    {
+      "number": 7,
+      "name": "C3 receives MD7 probabilities",
+      "status": "PASS",
+      "evidence": "integrated fixture asserts context[0:4] equals MD7 vector"
+    },
+    {
+      "number": 8,
+      "name": "overlay threshold remains 0.10",
+      "status": "PASS",
+      "evidence": "DEFAULT_GAP_THRESHOLD=0.1"
+    },
+    {
+      "number": 9,
+      "name": "final move comes from MD7-driven path",
+      "status": "PASS",
+      "evidence": "integrated fixture forces MD7 focus/MD6 probing and observes final focus"
+    },
+    {
+      "number": 10,
+      "name": "abort/test lifecycle produces zero LinTS updates",
+      "status": "PASS",
+      "evidence": "pipeline abort and coordinator controlled-completion tests both assert total_updates=0"
+    },
+    {
+      "number": 11,
+      "name": "real policy state remains byte-for-byte unchanged",
+      "status": "PASS",
+      "evidence": "before/after size, mtime_ns, and SHA256 match"
+    },
+    {
+      "number": 12,
+      "name": "real experience log remains byte-for-byte unchanged",
+      "status": "PASS",
+      "evidence": "before/after size, mtime_ns, and SHA256 match"
+    },
+    {
+      "number": 13,
+      "name": "isolated diagnostic record can be written",
+      "status": "PASS",
+      "evidence": "test_isolated_turn_log_has_both_selectors_and_preserves_policy"
+    },
+    {
+      "number": 14,
+      "name": "ordinary mode is unchanged when flag is absent",
+      "status": "PASS",
+      "evidence": "exact opt-in test plus existing adaptive integration regression suite"
+    }
+  ],
+  "protected_files_before": {
+    "policy_state": {
+      "path": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\adaptive-math-tutor\\backend\\runtime\\adaptive_demo\\policy_state.json",
+      "exists": true,
+      "size": 10096,
+      "mtime_ns": 1787752578788845700,
+      "sha256": "09a97a6305924f823190d22832b1c32837e21a4ebde7d67b00936ddfab1a18ea"
+    },
+    "experience_log": {
+      "path": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\adaptive-math-tutor\\backend\\runtime\\adaptive_demo\\attempts.jsonl",
+      "exists": true,
+      "size": 7376,
+      "mtime_ns": 1787752578786507200,
+      "sha256": "cb38b5b39701af6fabd0a8d7e557cd7dddb661d668bbe9a48a2ef36c73a55a17"
+    }
+  },
+  "protected_files_after": {
+    "policy_state": {
+      "path": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\adaptive-math-tutor\\backend\\runtime\\adaptive_demo\\policy_state.json",
+      "exists": true,
+      "size": 10096,
+      "mtime_ns": 1787752578788845700,
+      "sha256": "09a97a6305924f823190d22832b1c32837e21a4ebde7d67b00936ddfab1a18ea"
+    },
+    "experience_log": {
+      "path": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\adaptive-math-tutor\\backend\\runtime\\adaptive_demo\\attempts.jsonl",
+      "exists": true,
+      "size": 7376,
+      "mtime_ns": 1787752578786507200,
+      "sha256": "cb38b5b39701af6fabd0a8d7e557cd7dddb661d668bbe9a48a2ef36c73a55a17"
+    }
+  },
+  "protected_files_unchanged": true,
+  "model_files_unchanged": true,
+  "side_effects": {
+    "training": 0,
+    "model_writes": 0,
+    "LinTS_posterior_updates": 0,
+    "production_policy_writes": 0,
+    "production_experience_log_writes": 0,
+    "external_API_calls": 0
+  }
+}

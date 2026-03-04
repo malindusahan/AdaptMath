@@ -11,6 +11,9 @@ from app.api.complexity import (
 from app.api.planner import (
     router as planner_router,
 )
+from app.api.profile import (
+    router as profile_router,
+)
 from app.api.tutor import (
     router as tutor_router,
 )
@@ -137,6 +140,10 @@ app.include_router(
 
 app.include_router(
     tutor_router
+)
+
+app.include_router(
+    profile_router
 )
 
 

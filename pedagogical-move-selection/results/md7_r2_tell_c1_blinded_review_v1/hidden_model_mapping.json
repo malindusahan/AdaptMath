@@ -1,0 +1,17 @@
+{
+  "access_classification": "SEALED_UNBLINDED_NOT_FOR_REVIEWER",
+  "warning": "Do not provide this file to reviewers before expert_review_form.csv is frozen.",
+  "seed": 2026082801,
+  "system_mapping": {
+    "System X": {
+      "model_role": "reference",
+      "path": "pedagogical-move-selection/models/candidates/md7r1_epoch3",
+      "weight_sha256": "d32d37f7f664d038f80fefb92f874804b49e5ac3d848985636ae64e6a2a60a13"
+    },
+    "System Y": {
+      "model_role": "recalibrated",
+      "path": "pedagogical-move-selection/models/candidates/md7_r2_tell_c1/epoch2",
+      "weight_sha256": "ad770256a71efcce7485705099511494e41806b2e29bc3829f9ba8aeaf731cd5"
+    }
+  }
+}

@@ -2,6 +2,7 @@ import json
 from typing import Any
 
 from app.agents.tutor.math_verifier import SymPyMathVerifier
+from app.agents.tutor.realization_contract import build_move_audit_instruction
 
 
 TEACHING_RESPONSE_AUDIT_SCHEMA: dict[str, Any] = {
@@ -109,6 +110,13 @@ Examples of extraction format only:
 - text "(x-2)(x+2) = x^2-4" -> left_expression "(x-2)*(x+2)",
   right_expression "x**2-4"
 
+Do not extract a conditional/contextual equation merely because the teacher
+restates or refers to it. For example, after a learner establishes c^2 = 225,
+the teacher's reference to "c^2 = 225" is not a claim that c^2 and 225 are
+universally equivalent. Check its support against the supplied context under
+TASK 2 instead. Any contradiction with verified evidence belongs in
+logical_issues.
+
 Do not invent a claim that the response does not make. Do not extract a claim
 if it cannot be represented reliably in the expression syntax above.
 
@@ -158,25 +166,48 @@ The following is a PASSING generic turn:
 It asks for one broad learner contribution and then returns control.
 
 Move-specific scope rules:
-- generic: one broad invitation to reveal current thinking, begin, or say what
-  the learner would try next. On an opening turn, it should not teach or hint at
-  a sequence of operations/formulas the learner has not already introduced.
-- focus: one immediate quantity, relationship, representation, or reasoning
-  target only.
-- probing: one current learner claim, reason, misconception, or justification
-  only.
-- telling: one needed fact, idea, representation, or strategy step only, then
-  one immediate opportunity for the learner to act.
+- generic: one neutral acknowledgement, encouragement, transition, or broadly
+  supportive, context-aware statement. It must be useful rather than merely
+  "Great" or "Okay", must not repeat stock acknowledgement from recent Tutor
+  turns, target a specific gap, teach a method, or default to eliciting
+  reasoning. A question is optional, never required.
+- probing: one clear, specific diagnostic/reasoning question that elicits the
+  learner's thinking without first supplying or answering the missing step.
+  Fail a worked solution followed by a token question.
+- focus: one targeted cue, observation, or directive pointing attention to a
+  specific error, relationship, clue, representation, or sub-step. It should
+  not be rejected merely because it is declarative and has no question. Fail
+  vacuous praise and fail a complete worked explanation.
+- telling: one needed fact, explanation, representation, method, or worked step
+  supplied explicitly, with instruction/explanation before any optional
+  follow-up. Fail a response that only asks the learner what to do. If the
+  latest learner message explicitly requests the answer, or the latest two
+  learner messages both communicate non-engagement, a short one-step problem
+  may instead receive its verified answer directly with one brief clarification.
+  Do not reject that direct answer merely because it contains no follow-up
+  question.
 
 A short explanation followed by one question can pass when both address the
 same immediate target. Do not count punctuation mechanically; judge semantic
 scope.
+
+There is no universal requirement to ask a question or end with a question.
+Judge the primary pedagogical speech act, not punctuation. In particular,
+declarative generic and focus turns can pass, while telling must actually
+provide information before any optional question.
 
 TASK 4 - CHECK ALIGNMENT WITH THE EXTERNALLY SELECTED MOVE
 Set move_alignment_verdict to "fail" if the teacher response does not actually
 execute the supplied move, blends multiple moves, or substitutes a different
 move. Do not decide that another move would be better; only judge fidelity to
 the supplied move.
+
+The raw internal labels generic, probing, focus, and telling are private. Fail
+alignment if the learner-facing response is prefixed with one of those labels.
+
+Use the supplied exact move-alignment contract. Length ranges are guidance for
+clarity, not mechanical sentence-count gates. Reject material semantic
+mismatches while allowing natural wording.
 
 For both verdicts, provide a concise reason. If a verdict fails, include at
 least one corresponding turn_scope_issue describing the learner-facing text
@@ -224,6 +255,13 @@ problems, turn_scope_issues may be empty.
         user_content = (
             f"ORIGINAL QUESTION:\n{question}\n\n"
             f"EXTERNALLY SELECTED PEDAGOGICAL MOVE:\n{pedagogical_move or 'not supplied'}\n\n"
+            "EXACT MOVE-ALIGNMENT CONTRACT:\n"
+            + (
+                build_move_audit_instruction(pedagogical_move)
+                if pedagogical_move is not None
+                else "No move supplied; apply only correctness and scope checks."
+            )
+            + "\n\n"
             "CURRENT CONVERSATION HISTORY:\n"
             + json.dumps(
                 conversation_history,
@@ -267,7 +305,57 @@ problems, turn_scope_issues may be empty.
             raise RuntimeError(
                 "Tutor response verifier did not return a JSON object."
             )
+
+        return self.prepare_inline_payload(
+            payload,
+            question=question,
+            verified_evidence=verified_evidence,
+            conversation_history=conversation_history,
+        )
+
+    def prepare_inline_payload(
+        self,
+        payload: dict[str, Any],
+        *,
+        question: str,
+        verified_evidence: str,
+        conversation_history: list[dict[str, Any]],
+    ) -> dict[str, Any]:
+        """Add deterministic context markers to an inline model audit.
+
+        The learner-facing Tutor can return the audit in the same structured
+        response as ``teacher_message``.  Keeping contextual-equation handling
+        here makes that one-call path use the exact same deterministic evaluator
+        as the legacy independent-auditor path.
+        """
+        context_parts = [question, verified_evidence]
+        for turn in conversation_history:
+            if not isinstance(turn, dict):
+                continue
+            for key in ("content", "text"):
+                value = turn.get(key)
+                if isinstance(value, str):
+                    context_parts.append(value)
+        normalized_context = self._normalize_math_text("\n".join(context_parts))
+        raw_claims = payload.get("checkable_claims", [])
+        if isinstance(raw_claims, list):
+            for claim in raw_claims:
+                if not isinstance(claim, dict):
+                    continue
+                source_text = claim.get("source_text")
+                if not isinstance(source_text, str):
+                    continue
+                normalized_source = self._normalize_math_text(source_text)
+                if normalized_source and normalized_source in normalized_context:
+                    claim["_established_contextual_equation"] = True
         return payload
+
+    @staticmethod
+    def _normalize_math_text(value: str) -> str:
+        normalized = value.casefold().replace("**", "^")
+        for token in ("\\(", "\\)", "\\[", "\\]", "$$", "$", "{", "}"):
+            normalized = normalized.replace(token, "")
+        return "".join(character for character in normalized if not character.isspace())
 
     def evaluate_payload(
         self,
@@ -326,6 +414,29 @@ problems, turn_scope_issues may be empty.
                         "claim": index,
                         "source_text": source_text,
                         "reason": "Extracted claim had incomplete fields.",
+                    }
+                )
+                continue
+
+            if claim.get("_established_contextual_equation") is True:
+                result = {
+                    "claim": index,
+                    "source_text": source_text,
+                    "left_expression": left_expression,
+                    "right_expression": right_expression,
+                    "verified": None,
+                    "verification_status": "established_contextual_equation",
+                }
+                deterministic_results.append(result)
+                inconclusive_checks.append(
+                    {
+                        **result,
+                        "reason": (
+                            "Contextual equations are conditions or established "
+                            "intermediate facts, not universal identities. Their "
+                            "support is assessed against the supplied dialogue "
+                            "and verified evidence."
+                        ),
                     }
                 )
                 continue
@@ -496,7 +607,9 @@ problems, turn_scope_issues may be empty.
         parts.append(
             "The corrected response must address one immediate reasoning target, "
             "give the learner one coherent action, and stop. Do not name several "
-            "future operations or ask for the complete solution plan."
+            "future operations or ask for the complete solution plan. Preserve "
+            "the exact selected move's primary speech act and move-sensitive "
+            "clarity/length guidance."
         )
 
         return "\n\n".join(parts)

@@ -1,0 +1,92 @@
+{
+  "experiment": "MD7-R2-TELL-C1",
+  "status": "PASS",
+  "generation_seed": 42,
+  "correction_rows": 2400,
+  "target_counts": {
+    "telling": 1200,
+    "focus": 1200
+  },
+  "split_counts": {
+    "train": 2400
+  },
+  "topic_counts": {
+    "arithmetic_mean": 100,
+    "combining_like_terms": 100,
+    "decimal_addition": 100,
+    "distributive_property": 100,
+    "equivalent_ratios": 100,
+    "fraction_to_decimal": 100,
+    "integer_multiplication": 100,
+    "like_denominator_fractions": 100,
+    "one_step_addition_equations": 100,
+    "one_step_multiplication_equations": 100,
+    "one_step_subtraction_equations": 100,
+    "order_of_operations": 100,
+    "percent_of": 100,
+    "product_of_powers": 100,
+    "proportions": 100,
+    "pythagorean_theorem": 100,
+    "rectangle_area": 100,
+    "rectangle_perimeter": 100,
+    "simple_probability": 100,
+    "slope": 100,
+    "supplementary_angles": 100,
+    "triangle_area": 100,
+    "two_step_equations": 100,
+    "unlike_denominator_fractions": 100
+  },
+  "rationale_tag_counts": {
+    "direct_explanation_request_after_two_scaffolds": 192,
+    "one_scaffold_incomplete_progress": 192,
+    "one_scaffold_incorrect_execution": 192,
+    "one_scaffold_local_confusion": 192,
+    "one_scaffold_partial_structure": 192,
+    "one_scaffold_persistent_once": 216,
+    "one_scaffold_same_error": 216,
+    "two_scaffolds_exhausted_narrow_step": 192,
+    "two_scaffolds_microstep_failure": 216,
+    "two_scaffolds_repeated_confusion": 192,
+    "two_scaffolds_same_error": 216,
+    "two_scaffolds_same_misconception": 192
+  },
+  "boundary_type_counts": {
+    "persistent_after_two_meaningful_scaffolds": 1200,
+    "recoverable_after_exactly_one_meaningful_scaffold": 1200
+  },
+  "structure": {
+    "family_count": 1200,
+    "all_families_exactly_one_focus_one_telling": true,
+    "focus_rows_with_exactly_one_scaffold": 1200,
+    "telling_rows_with_at_least_two_scaffolds": 1200,
+    "focus_rows_with_direct_answer_request": 0,
+    "rows_with_artificial_label_tokens_in_model_text": 0
+  },
+  "exact_problem_history_duplicate_count": 0,
+  "exact_history_duplicate_count": 0,
+  "overlap": {
+    "frozen_48_case_diagnostic_problem_history": 0,
+    "frozen_48_case_diagnostic_history": 0,
+    "original_synthetic_all_plus_challenge_problem_history": 0,
+    "existing_synthetic_validation_test_challenge_problem_history": 0,
+    "existing_synthetic_validation_test_challenge_history": 0
+  },
+  "privacy": {
+    "learner_identifiers_present": 0,
+    "is_real_conversation_true": 0
+  },
+  "label_provenance": {
+    "bkt_derived": false,
+    "mrb1_derived": false,
+    "manual_semantic_contract": true
+  },
+  "protected_data": {
+    "mathdial_final_test_read": false,
+    "mrbench_v3_test_read": false,
+    "original_synthetic_final_test_used_for_overlap_audit_only": 1200,
+    "original_synthetic_final_test_packaged_or_used_for_training_or_selection": false
+  },
+  "source_and_protected_hash_changes": {},
+  "production_changes": 0,
+  "local_training_runs": 0
+}

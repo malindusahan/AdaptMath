@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TypedDict
 
 from app.agents.complexity.service import get_complexity_service
-from app.core.persistence import check_persistence_ready
+from app.core.persistence import check_persistence_ready, get_persistence_mode
 
 
 class ReadinessCheck(TypedDict):
@@ -21,7 +21,10 @@ def _check_checkpoint_database() -> ReadinessCheck:
         if check_persistence_ready():
             return {
                 "status": "ok",
-                "detail": "SQLite checkpoint database is available.",
+                "detail": (
+                    f"{get_persistence_mode().capitalize()} checkpoint "
+                    "persistence is available."
+                ),
             }
     except Exception as exc:  # readiness must report, not crash
         return {
@@ -31,7 +34,10 @@ def _check_checkpoint_database() -> ReadinessCheck:
 
     return {
         "status": "error",
-        "detail": "SQLite checkpoint database is unavailable.",
+        "detail": (
+            f"{get_persistence_mode().capitalize()} checkpoint "
+            "persistence is unavailable."
+        ),
     }
 
 

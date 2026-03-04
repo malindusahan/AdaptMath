@@ -34,6 +34,7 @@ export interface TutorSessionResponse {
   route?: string | null;
   route_reason?: string | null;
   complexity_score?: number | null;
+  target_skill?: string | null;
   student_response_message?: string | null;
   assessment_message?: string | null;
   pedagogical_move_message?: string | null;
@@ -51,15 +52,25 @@ export interface LearnerHistoryItem {
 }
 
 export interface TutorStartPayload {
-  student_id: string;
+  student_id?: string;
   age: number;
   question: string;
   topic: string;
   subtopic?: string | null;
-  target_skill: string;
+  target_skill?: string | null;
   relevant_history: LearnerHistoryItem[];
   previous_errors: string[];
   previous_strategies: string[];
+}
+
+export interface TutorPracticeStartPayload {
+  target_skill: string;
+}
+
+export interface TutorPracticeStartResponse {
+  target_skill: string;
+  problem: string;
+  session: TutorSessionResponse;
 }
 
 export interface TutorStudentTurnPayload {

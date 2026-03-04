@@ -1,0 +1,44 @@
+{
+  "correlations": {
+    "HEADROOM_NORMALIZED": {
+      "N": 713,
+      "absolute_rho": 0.25025190749826887,
+      "p_value": 1.2129038670174851e-11,
+      "rho": -0.25025190749826887
+    },
+    "RAW_BKT_DELTA": {
+      "N": 713,
+      "absolute_rho": 0.4410723836944835,
+      "p_value": 2.6703072222237133e-35,
+      "rho": -0.4410723836944835
+    }
+  },
+  "rewards": [
+    {
+      "N": 713,
+      "abs_spearman_rho": 0.4410723836944835,
+      "column": "reward_raw_delta",
+      "max": 0.5256938997504583,
+      "mean": 0.029226411175655328,
+      "median": 0.0245809152101033,
+      "min": -0.2,
+      "reward": "RAW_BKT_DELTA",
+      "spearman_p_value": 2.6703072222237133e-35,
+      "spearman_rho_abs_reward_vs_mastery_before": -0.4410723836944835,
+      "std": 0.07797005016736071
+    },
+    {
+      "N": 713,
+      "abs_spearman_rho": 0.25025190749826887,
+      "column": "reward_headroom_normalized",
+      "max": 0.6250348590209017,
+      "mean": 0.08308865762881369,
+      "median": 0.0846575139941906,
+      "min": -0.3161679704454543,
+      "reward": "HEADROOM_NORMALIZED",
+      "spearman_p_value": 1.2129038670174851e-11,
+      "spearman_rho_abs_reward_vs_mastery_before": -0.25025190749826887,
+      "std": 0.13688075947573344
+    }
+  ]
+}

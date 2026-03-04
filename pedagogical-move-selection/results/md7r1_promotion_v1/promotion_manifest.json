@@ -1,0 +1,463 @@
+{
+  "promotion_version": "md7r1_promotion_v1",
+  "promoted_selector": "MD7-R1 epoch 3",
+  "md7_path": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\pedagogical-move-selection\\models\\candidates\\md7r1_epoch3",
+  "md7_hashes": {
+    "config.json": "9877dd11007c8af1d2841a2c1bb470023ef2ceeb748b47c24686ea82479e9127",
+    "model.safetensors": "d32d37f7f664d038f80fefb92f874804b49e5ac3d848985636ae64e6a2a60a13",
+    "tokenizer.json": "80d0fb9a6bbc3ab2b24ec149d6b47981036a5f96c753667be38709975753550b",
+    "tokenizer_config.json": "bb5706f71e3d5cb4bf9878ad9b14a2079e6fbd618fc0a0ba2ac1b257d7824cc9"
+  },
+  "md6_rollback_path": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\pedagogical-move-selection\\models\\frozen\\md6",
+  "md6_hashes": {
+    "config.json": "9877dd11007c8af1d2841a2c1bb470023ef2ceeb748b47c24686ea82479e9127",
+    "model.safetensors": "674f1abbaf8c6c23d4b736a80f40b3532e4681c125695ebbe3863e404acb56e7",
+    "tokenizer.json": "80d0fb9a6bbc3ab2b24ec149d6b47981036a5f96c753667be38709975753550b",
+    "tokenizer_config.json": "4903bcd294e8ff8b840eb9c21909d2f910b466d250ac6e298a7438a7da63ef0d"
+  },
+  "context_dim": 9,
+  "context_features": [
+    "md6_p_generic",
+    "md6_p_probing",
+    "md6_p_focus",
+    "md6_p_telling",
+    "running_mistake_identification",
+    "running_mistake_location",
+    "running_providing_guidance",
+    "running_actionability",
+    "has_within_attempt_quality"
+  ],
+  "overlay_threshold": 0.1,
+  "lints": {
+    "policy": "true disjoint LinTS",
+    "ridge_lambda": 1.0,
+    "exploration_scale": 0.2,
+    "arms": [
+      "baseline",
+      "generic_bias",
+      "probing_bias",
+      "focus_bias",
+      "telling_bias"
+    ],
+    "state_envelope_schema": "turn_lints_state_v3",
+    "policy_state_schema": "true_disjoint_lints_v3"
+  },
+  "reward_type": "raw signed mastery delta",
+  "credit_rule": "T equal delayed updates; weight=1/T each; total attempt weight=1",
+  "md7_policy_lineage": {
+    "policy_state": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\adaptive-math-tutor\\backend\\runtime\\adaptive_demo_md7r1_v1\\policy_state.json",
+    "experience_log": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\adaptive-math-tutor\\backend\\runtime\\adaptive_demo_md7r1_v1\\attempts.jsonl",
+    "final_total_updates": 0,
+    "no_migrated_md6_posterior": true
+  },
+  "md6_rollback_policy_lineage": {
+    "policy_state": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\adaptive-math-tutor\\backend\\runtime\\adaptive_demo\\policy_state.json",
+    "experience_log": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\adaptive-math-tutor\\backend\\runtime\\adaptive_demo\\attempts.jsonl",
+    "unchanged_during_validation": true
+  },
+  "mode_pairing": {
+    "ordinary-md7r1-v1": "MD7 selector -> fresh MD7 lineage",
+    "md6-rollback-v1": "frozen MD6 selector -> preserved MD6 lineage",
+    "manual-controlled-live-md7r1-v1": "MD7 active + MD6 shadow -> MD7 lineage read-only; completion aborted"
+  },
+  "routing_fixture": {
+    "selector_loads": [
+      "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\pedagogical-move-selection\\models\\candidates\\md7r1_epoch3"
+    ],
+    "policy_path": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\md7r1_promotion_fixture_tqconiop\\normal\\md7\\policy_state.json",
+    "experience_log_path": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\md7r1_promotion_fixture_tqconiop\\normal\\md7\\attempts.jsonl",
+    "md7_probabilities": {
+      "generic": 0.02,
+      "probing": 0.02,
+      "focus": 0.94,
+      "telling": 0.02
+    },
+    "c3_first_four": [
+      0.02,
+      0.02,
+      0.94,
+      0.02
+    ],
+    "base_move": "focus",
+    "reward": 0.2,
+    "delayed_updates": 2,
+    "per_update_weight": 0.5,
+    "total_attempt_weight": 1.0,
+    "md6_lineage_unchanged": true
+  },
+  "rollback_fixture": {
+    "selector_loads": [
+      null
+    ],
+    "policy_path": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\md7r1_promotion_fixture_tqconiop\\rollback\\md6\\policy_state.json",
+    "experience_log_path": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\md7r1_promotion_fixture_tqconiop\\rollback\\md6\\attempts.jsonl",
+    "active_probabilities": {
+      "generic": 0.02,
+      "probing": 0.94,
+      "focus": 0.02,
+      "telling": 0.02
+    },
+    "delayed_updates": 2,
+    "total_attempt_weight": 1.0,
+    "md7_lineage_unchanged": true
+  },
+  "controlled_live_fixture": {
+    "active_probabilities": {
+      "generic": 0.02,
+      "probing": 0.02,
+      "focus": 0.94,
+      "telling": 0.02
+    },
+    "shadow_probabilities": {
+      "generic": 0.02,
+      "probing": 0.94,
+      "focus": 0.02,
+      "telling": 0.02
+    },
+    "posterior_updates": 0,
+    "policy_written": false,
+    "experience_log_written": false
+  },
+  "cpu_model_smoke": {
+    "normal": {
+      "mode": "ordinary-md7r1-v1",
+      "model_path": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\pedagogical-move-selection\\models\\candidates\\md7r1_epoch3",
+      "probabilities": {
+        "generic": 0.43947237730026245,
+        "probing": 0.5515110492706299,
+        "focus": 0.003935961052775383,
+        "telling": 0.005080568604171276
+      },
+      "preprocessing": {
+        "truncation_side": "left",
+        "truncation": "only_second",
+        "max_length": 512
+      }
+    },
+    "rollback": {
+      "mode": "md6-rollback-v1",
+      "model_path": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\pedagogical-move-selection\\models\\frozen\\md6",
+      "probabilities": {
+        "generic": 0.12970876693725586,
+        "probing": 0.5693743228912354,
+        "focus": 0.16965878009796143,
+        "telling": 0.13125815987586975
+      },
+      "preprocessing": {
+        "truncation_side": "left",
+        "truncation": "only_second",
+        "max_length": 512
+      }
+    }
+  },
+  "promotion_validation_result": "PASS",
+  "validation_checks": [
+    {
+      "number": 1,
+      "name": "ordinary mode resolves MD7-R1 epoch 3 active",
+      "status": "PASS",
+      "evidence": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\pedagogical-move-selection\\models\\candidates\\md7r1_epoch3"
+    },
+    {
+      "number": 2,
+      "name": "ordinary mode does not load/use MD6 as active",
+      "status": "PASS",
+      "evidence": [
+        "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\pedagogical-move-selection\\models\\candidates\\md7r1_epoch3"
+      ]
+    },
+    {
+      "number": 3,
+      "name": "rollback mode resolves frozen MD6 active",
+      "status": "PASS",
+      "evidence": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\pedagogical-move-selection\\models\\frozen\\md6"
+    },
+    {
+      "number": 4,
+      "name": "controlled-live resolves MD7 active plus MD6 shadow",
+      "status": "PASS",
+      "evidence": "10 passed in 0.38s"
+    },
+    {
+      "number": 5,
+      "name": "accepted MD7 hashes match",
+      "status": "PASS",
+      "evidence": {
+        "config.json": "9877dd11007c8af1d2841a2c1bb470023ef2ceeb748b47c24686ea82479e9127",
+        "model.safetensors": "d32d37f7f664d038f80fefb92f874804b49e5ac3d848985636ae64e6a2a60a13",
+        "tokenizer.json": "80d0fb9a6bbc3ab2b24ec149d6b47981036a5f96c753667be38709975753550b",
+        "tokenizer_config.json": "bb5706f71e3d5cb4bf9878ad9b14a2079e6fbd618fc0a0ba2ac1b257d7824cc9"
+      }
+    },
+    {
+      "number": 6,
+      "name": "frozen MD6 hashes match",
+      "status": "PASS",
+      "evidence": {
+        "config.json": "9877dd11007c8af1d2841a2c1bb470023ef2ceeb748b47c24686ea82479e9127",
+        "model.safetensors": "674f1abbaf8c6c23d4b736a80f40b3532e4681c125695ebbe3863e404acb56e7",
+        "tokenizer.json": "80d0fb9a6bbc3ab2b24ec149d6b47981036a5f96c753667be38709975753550b",
+        "tokenizer_config.json": "4903bcd294e8ff8b840eb9c21909d2f910b466d250ac6e298a7438a7da63ef0d"
+      }
+    },
+    {
+      "number": 7,
+      "name": "label order unchanged",
+      "status": "PASS",
+      "evidence": [
+        "generic",
+        "probing",
+        "focus",
+        "telling"
+      ]
+    },
+    {
+      "number": 8,
+      "name": "preprocessing unchanged",
+      "status": "PASS",
+      "evidence": {
+        "truncation_side": "left",
+        "truncation": "only_second",
+        "max_length": 512
+      }
+    },
+    {
+      "number": 9,
+      "name": "normal C3 receives MD7 probabilities",
+      "status": "PASS",
+      "evidence": [
+        0.02,
+        0.02,
+        0.94,
+        0.02
+      ]
+    },
+    {
+      "number": 10,
+      "name": "C3 dimension remains 9",
+      "status": "PASS",
+      "evidence": 9
+    },
+    {
+      "number": 11,
+      "name": "overlay threshold remains 0.10",
+      "status": "PASS",
+      "evidence": 0.1
+    },
+    {
+      "number": 12,
+      "name": "LinTS lambda remains 1",
+      "status": "PASS",
+      "evidence": 1.0
+    },
+    {
+      "number": 13,
+      "name": "exploration scale remains 0.20",
+      "status": "PASS",
+      "evidence": 0.2
+    },
+    {
+      "number": 14,
+      "name": "arms unchanged",
+      "status": "PASS",
+      "evidence": [
+        "baseline",
+        "generic_bias",
+        "probing_bias",
+        "focus_bias",
+        "telling_bias"
+      ]
+    },
+    {
+      "number": 15,
+      "name": "reward remains raw signed mastery delta",
+      "status": "PASS",
+      "evidence": {
+        "name": "mastery_delta",
+        "fixture_reward": 0.2
+      }
+    },
+    {
+      "number": 16,
+      "name": "delayed credit remains 1/T",
+      "status": "PASS",
+      "evidence": {
+        "updates": 2,
+        "per_update_weight": 0.5,
+        "total_weight": 1.0
+      }
+    },
+    {
+      "number": 17,
+      "name": "fresh MD7 state begins with zero updates",
+      "status": "PASS",
+      "evidence": 0
+    },
+    {
+      "number": 18,
+      "name": "old MD6 policy state unchanged byte-for-byte",
+      "status": "PASS",
+      "evidence": {
+        "path": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\adaptive-math-tutor\\backend\\runtime\\adaptive_demo\\policy_state.json",
+        "exists": true,
+        "size": 10096,
+        "mtime_ns": 1787752578788845700,
+        "sha256": "09a97a6305924f823190d22832b1c32837e21a4ebde7d67b00936ddfab1a18ea"
+      }
+    },
+    {
+      "number": 19,
+      "name": "old MD6 attempt log unchanged byte-for-byte",
+      "status": "PASS",
+      "evidence": {
+        "path": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\adaptive-math-tutor\\backend\\runtime\\adaptive_demo\\attempts.jsonl",
+        "exists": true,
+        "size": 7376,
+        "mtime_ns": 1787752578786507200,
+        "sha256": "cb38b5b39701af6fabd0a8d7e557cd7dddb661d668bbe9a48a2ef36c73a55a17"
+      }
+    },
+    {
+      "number": 20,
+      "name": "normal fixture updates only fresh MD7 lineage",
+      "status": "PASS",
+      "evidence": {
+        "selector_loads": [
+          "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\pedagogical-move-selection\\models\\candidates\\md7r1_epoch3"
+        ],
+        "policy_path": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\md7r1_promotion_fixture_tqconiop\\normal\\md7\\policy_state.json",
+        "experience_log_path": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\md7r1_promotion_fixture_tqconiop\\normal\\md7\\attempts.jsonl",
+        "md7_probabilities": {
+          "generic": 0.02,
+          "probing": 0.02,
+          "focus": 0.94,
+          "telling": 0.02
+        },
+        "c3_first_four": [
+          0.02,
+          0.02,
+          0.94,
+          0.02
+        ],
+        "base_move": "focus",
+        "reward": 0.2,
+        "delayed_updates": 2,
+        "per_update_weight": 0.5,
+        "total_attempt_weight": 1.0,
+        "md6_lineage_unchanged": true
+      }
+    },
+    {
+      "number": 21,
+      "name": "normal fixture total delayed weight is exactly 1",
+      "status": "PASS",
+      "evidence": 1.0
+    },
+    {
+      "number": 22,
+      "name": "rollback fixture touches only MD6 lineage",
+      "status": "PASS",
+      "evidence": {
+        "selector_loads": [
+          null
+        ],
+        "policy_path": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\md7r1_promotion_fixture_tqconiop\\rollback\\md6\\policy_state.json",
+        "experience_log_path": "C:\\Users\\Lenovo\\AppData\\Local\\Temp\\md7r1_promotion_fixture_tqconiop\\rollback\\md6\\attempts.jsonl",
+        "active_probabilities": {
+          "generic": 0.02,
+          "probing": 0.94,
+          "focus": 0.02,
+          "telling": 0.02
+        },
+        "delayed_updates": 2,
+        "total_attempt_weight": 1.0,
+        "md7_lineage_unchanged": true
+      }
+    },
+    {
+      "number": 23,
+      "name": "controlled-live fixture produces zero updates",
+      "status": "PASS",
+      "evidence": {
+        "active_probabilities": {
+          "generic": 0.02,
+          "probing": 0.02,
+          "focus": 0.94,
+          "telling": 0.02
+        },
+        "shadow_probabilities": {
+          "generic": 0.02,
+          "probing": 0.94,
+          "focus": 0.02,
+          "telling": 0.02
+        },
+        "posterior_updates": 0,
+        "policy_written": false,
+        "experience_log_written": false
+      }
+    },
+    {
+      "number": 24,
+      "name": "full backend tests pass",
+      "status": "PASS",
+      "evidence": "136 passed, 19 warnings, 13 subtests passed in 17.16s"
+    },
+    {
+      "number": 25,
+      "name": "cross-repository bridge tests pass",
+      "status": "PASS",
+      "evidence": "17 passed in 1.39s"
+    }
+  ],
+  "test_results": {
+    "targeted": {
+      "command": [
+        "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\adaptive-math-tutor\\backend\\.venv-integration\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\adaptive-math-tutor\\backend\\tests\\test_md7r1_promotion.py",
+        "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\adaptive-math-tutor\\backend\\tests\\test_manual_controlled_live.py",
+        "-q"
+      ],
+      "returncode": 0,
+      "summary": "10 passed in 0.38s"
+    },
+    "backend": {
+      "command": [
+        "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\adaptive-math-tutor\\backend\\.venv-integration\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\adaptive-math-tutor\\backend\\tests",
+        "-q"
+      ],
+      "returncode": 0,
+      "summary": "136 passed, 19 warnings, 13 subtests passed in 17.16s"
+    },
+    "bridge": {
+      "command": [
+        "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\adaptive-math-tutor\\backend\\.venv-integration\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\pedagogical-move-selection\\tests\\test_student_model_v3_bridge.py",
+        "-q"
+      ],
+      "returncode": 0,
+      "summary": "17 passed in 1.39s"
+    }
+  },
+  "side_effects": {
+    "training_writes": 0,
+    "model_writes": 0,
+    "external_api_calls": 0,
+    "held_out_test_use": 0,
+    "accidental_protected_file_touches": 0,
+    "md6_policy_mutations": 0,
+    "md6_experience_log_mutations": 0
+  },
+  "timestamp_utc": "2026-08-27T06:49:36.330857+00:00",
+  "notes": [
+    "MD6 remains the immutable frozen rollback baseline.",
+    "No evaluation metrics were generated or fabricated.",
+    "Offline fixture learning used temporary paths; production MD7 state remains at zero updates."
+  ]
+}

@@ -1,0 +1,11 @@
+semantic_group,boundary,n,baseline_telling_count,candidate_telling_count,baseline_mean_p_telling,candidate_mean_p_telling
+A_repeated_confusion_after_two_scaffolds,telling_plausible,6,6,6,0.9935667514801025,0.9976793428262075
+B_persistent_same_misconception,telling_plausible,6,5,6,0.7522593289613724,0.998713473478953
+C_explicit_direct_explanation_request,telling_plausible,6,2,6,0.3789187849809726,0.9920768837134043
+D_repeated_microstep_failure,telling_plausible,6,6,6,0.9799483120441437,0.9991310934225718
+E_first_incorrect_answer,non_telling,4,0,0,0.001045351949869655,0.0005655904169543646
+F_first_i_dont_know,non_telling,4,0,0,0.0007472714059986174,0.0006372591378749348
+G_first_identifiable_misconception,non_telling,4,0,0,0.0025557853805366904,0.0029984523716848344
+H_correct_or_partial_needing_reasoning,non_telling,4,0,0,0.0014173111921991222,0.0024366397919948213
+I_recoverable_after_one_scaffold,non_telling,4,0,3,0.0022077755274949595,0.6656882762908936
+J_neutral_opening,non_telling,4,0,0,0.001205650725751184,0.0006791128071199637

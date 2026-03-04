@@ -1,0 +1,437 @@
+{
+  "analysis_version": "md_self_improvement_pilot_analysis_v1",
+  "analysis_type": "read_only_descriptive_scientific_analysis",
+  "inventory": {
+    "completed_attempts": 6,
+    "aborted_attempts": 0,
+    "dialogue_turns": 57,
+    "formal_assessment_observations": 18,
+    "pending_actions": 0,
+    "pending_processing_failures": 0
+  },
+  "integrity": {
+    "index_starts_at_1_mismatches": 0,
+    "index_monotonic_mismatches": 0,
+    "index_contiguous_mismatches": 0,
+    "resolver_identity_mismatches": 0,
+    "text_history_mismatches": 0,
+    "mastery_continuity_mismatches": 0,
+    "action_mastery_mismatches": 0,
+    "delta_equation_mismatches": 0,
+    "timestamp_order_mismatches": 0,
+    "assessment_chain_mismatches": 0,
+    "assessment_separation_mismatches": 0,
+    "duplicate_action_id_groups": 0,
+    "duplicate_action_id_extra_records": 0,
+    "conflicting_action_id_groups": 0,
+    "duplicate_resolver_id_groups": 0,
+    "duplicate_resolver_id_extra_records": 0,
+    "conflicting_resolver_id_groups": 0,
+    "duplicate_assessment_event_groups": 0,
+    "duplicate_assessment_event_extra_records": 0,
+    "conflicting_assessment_event_groups": 0,
+    "duplicate_attempt_summary_groups": 0,
+    "duplicate_attempt_summary_extra_records": 0,
+    "conflicting_attempt_summary_groups": 0,
+    "exact_duplicate_turn_records": 0,
+    "exact_duplicate_assessment_records": 0,
+    "exact_duplicate_summary_records": 0,
+    "pending_actions": 0,
+    "pending_processing_failures": 0
+  },
+  "privacy": {
+    "post_fix_attempt_count": 5,
+    "post_fix_record_count": 52,
+    "pattern_counts": {
+      "absolute_C_Users_paths": 0,
+      "Lenovo": 0,
+      "username": 0,
+      "email_word": 0,
+      "email_address": 0,
+      "account_id": 0,
+      "api_key": 0,
+      "auth_token": 0,
+      "secret": 0
+    },
+    "path_field_count": 10,
+    "rooted_path_field_count": 0,
+    "pseudonyms": [
+      "psn_f78c0817d43053e5bd31da20"
+    ],
+    "invalid_pseudonyms": []
+  },
+  "provenance": {
+    "turn_fields": {
+      "data_mode": {
+        "nonmissing_values": [
+          "real"
+        ],
+        "missing_count": 0,
+        "conflicting_nonmissing": false
+      },
+      "selector_mode": {
+        "nonmissing_values": [
+          "ordinary-md7r1-v1"
+        ],
+        "missing_count": 0,
+        "conflicting_nonmissing": false
+      },
+      "selector_checkpoint": {
+        "nonmissing_values": [
+          "md7r1_epoch3"
+        ],
+        "missing_count": 0,
+        "conflicting_nonmissing": false
+      },
+      "selector_model_sha256": {
+        "nonmissing_values": [
+          "d32d37f7f664d038f80fefb92f874804b49e5ac3d848985636ae64e6a2a60a13"
+        ],
+        "missing_count": 0,
+        "conflicting_nonmissing": false
+      },
+      "move_order": {
+        "nonmissing_values": [
+          "[\"generic\",\"probing\",\"focus\",\"telling\"]"
+        ],
+        "missing_count": 15,
+        "conflicting_nonmissing": false
+      },
+      "learner_agency_version": {
+        "nonmissing_values": [
+          "learner_agency_telling_escalation_v1"
+        ],
+        "missing_count": 0,
+        "conflicting_nonmissing": false
+      },
+      "c3_version": {
+        "nonmissing_values": [
+          "turn_lints_v3_c3_9d"
+        ],
+        "missing_count": 0,
+        "conflicting_nonmissing": false
+      },
+      "lints_policy_version": {
+        "nonmissing_values": [
+          "true_disjoint_lints_v3"
+        ],
+        "missing_count": 0,
+        "conflicting_nonmissing": false
+      },
+      "lints_policy_lineage": {
+        "nonmissing_values": [
+          "MD7-R1 fresh LinTS v1"
+        ],
+        "missing_count": 0,
+        "conflicting_nonmissing": false
+      },
+      "tau": {
+        "nonmissing_values": [
+          "0.1"
+        ],
+        "missing_count": 0,
+        "conflicting_nonmissing": false
+      },
+      "mrb1_version": {
+        "nonmissing_values": [
+          "frozen_mrb1"
+        ],
+        "missing_count": 0,
+        "conflicting_nonmissing": false
+      },
+      "mrb1_sha256": {
+        "nonmissing_values": [
+          "9ad757e884beae6a242cf6fe17d5b3524e7599e413e9b9cc5f3b999a37a6f1d7"
+        ],
+        "missing_count": 0,
+        "conflicting_nonmissing": false
+      },
+      "resolver_version": {
+        "nonmissing_values": [
+          "2.0"
+        ],
+        "missing_count": 0,
+        "conflicting_nonmissing": false
+      },
+      "bkt_version": {
+        "nonmissing_values": [
+          "confidence_weighted_bkt_v1"
+        ],
+        "missing_count": 0,
+        "conflicting_nonmissing": false
+      },
+      "bkt_sha256": {
+        "nonmissing_values": [
+          "a82d8f066c965d931882ae3251db50b42f8033defb89da3e822b7b23a3b56e75"
+        ],
+        "missing_count": 0,
+        "conflicting_nonmissing": false
+      }
+    },
+    "mixed_nonmissing_value_fields": 0,
+    "policy_schema": "turn_lints_state_v3",
+    "policy_class": "TrueDisjointLinTS",
+    "policy_state_schema": "true_disjoint_lints_v3",
+    "lineage_manifest": {
+      "lineage_version": "md7r1_lints_v1",
+      "selector": "MD7-R1 epoch 3",
+      "policy_state": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\adaptive-math-tutor\\backend\\runtime\\adaptive_demo_md7r1_real_v1\\policy_state.json",
+      "experience_log": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\adaptive-math-tutor\\backend\\runtime\\adaptive_demo_md7r1_real_v1\\attempts.jsonl",
+      "context_dim": 9,
+      "ridge_lambda": 1.0,
+      "exploration_scale": 0.2,
+      "arms": [
+        "baseline",
+        "generic_bias",
+        "probing_bias",
+        "focus_bias",
+        "telling_bias"
+      ],
+      "data_mode": "real",
+      "total_updates": 15,
+      "created_policy": false,
+      "created_log": false
+    },
+    "legacy_lineage_manifest_absolute_paths": [
+      "policy_state",
+      "experience_log"
+    ]
+  },
+  "mastery_before": {
+    "count": 57,
+    "min": 0.011041522580481314,
+    "q1": 0.5926729369053769,
+    "median": 0.6876959091528465,
+    "mean": 0.7022200784055371,
+    "q3": 0.8436223211978062,
+    "max": 0.9894141164608343,
+    "std_population": 0.19757830236025675
+  },
+  "headroom": {
+    "count": 57,
+    "min": 0.010585883539165675,
+    "q1": 0.15637767880219378,
+    "median": 0.3123040908471535,
+    "mean": 0.29777992159446304,
+    "q3": 0.4073270630946231,
+    "max": 0.9889584774195187,
+    "std_population": 0.19757830236025675
+  },
+  "dialogue_delta": {
+    "status_counts": {
+      "observed_update": 57,
+      "resolved_no_update": 0,
+      "censored_no_response": 0,
+      "processing_failed": 0
+    },
+    "sign_counts": {
+      "positive": 30,
+      "zero": 0,
+      "negative": 27
+    },
+    "statistics": {
+      "count": 57,
+      "min": -0.1549093972095324,
+      "q1": -0.04041929710863523,
+      "median": 0.007024604359649134,
+      "mean": 0.020374715205328242,
+      "q3": 0.07116099405207954,
+      "max": 0.5565306848534494,
+      "std_population": 0.10939051561494423
+    },
+    "absolute_statistics": {
+      "count": 57,
+      "min": 0.0013711078406207777,
+      "q1": 0.02710504074275727,
+      "median": 0.05997218360955492,
+      "mean": 0.07566866747463741,
+      "q3": 0.09502752255463648,
+      "max": 0.5565306848534494,
+      "std_population": 0.08158226945123763
+    },
+    "interpretation": "confidence-weighted BKT posterior belief update after resolved learner evidence"
+  },
+  "moves": {
+    "raw": [
+      {
+        "move": "generic",
+        "count": 13,
+        "percent": 22.80701754385965
+      },
+      {
+        "move": "probing",
+        "count": 20,
+        "percent": 35.08771929824562
+      },
+      {
+        "move": "focus",
+        "count": 24,
+        "percent": 42.10526315789474
+      },
+      {
+        "move": "telling",
+        "count": 0,
+        "percent": 0.0
+      }
+    ],
+    "effective": [
+      {
+        "move": "generic",
+        "count": 13,
+        "percent": 22.80701754385965
+      },
+      {
+        "move": "probing",
+        "count": 20,
+        "percent": 35.08771929824562
+      },
+      {
+        "move": "focus",
+        "count": 24,
+        "percent": 42.10526315789474
+      },
+      {
+        "move": "telling",
+        "count": 0,
+        "percent": 0.0
+      }
+    ],
+    "final": [
+      {
+        "move": "generic",
+        "count": 14,
+        "percent": 24.56140350877193
+      },
+      {
+        "move": "probing",
+        "count": 20,
+        "percent": 35.08771929824562
+      },
+      {
+        "move": "focus",
+        "count": 23,
+        "percent": 40.35087719298246
+      },
+      {
+        "move": "telling",
+        "count": 0,
+        "percent": 0.0
+      }
+    ],
+    "learner_agency_trigger_count": 0,
+    "learner_agency_trigger_rate_percent": 0.0
+  },
+  "lints_authority": {
+    "total_turns": 57,
+    "baseline_only_eligible_turns": 54,
+    "turns_with_nonbaseline_eligible": 3,
+    "eligible_arm_count": {
+      "count": 57,
+      "min": 1.0,
+      "q1": 1.0,
+      "median": 1.0,
+      "mean": 1.0701754385964912,
+      "q3": 1.0,
+      "max": 3.0,
+      "std_population": 0.31676263307487346
+    },
+    "selected_arm_counts": {
+      "baseline": 56,
+      "generic_bias": 1,
+      "probing_bias": 0,
+      "focus_bias": 0,
+      "telling_bias": 0
+    },
+    "actual_override_count": 1,
+    "actual_override_rate_percent": 1.7543859649122806,
+    "policy_total_updates": 57,
+    "policy_arm_update_counts": {
+      "baseline": 56,
+      "generic_bias": 1,
+      "probing_bias": 0,
+      "focus_bias": 0,
+      "telling_bias": 0
+    },
+    "experience_log_attempts": 6,
+    "experience_log_turns": 57
+  },
+  "effective_gap": {
+    "statistics": {
+      "count": 57,
+      "min": 0.011799991130828857,
+      "q1": 0.2477969229221344,
+      "median": 0.3930843025445938,
+      "mean": 0.5077357405792562,
+      "q3": 0.8395371437072754,
+      "max": 0.9979600947117433,
+      "std_population": 0.3239563635358542
+    },
+    "thresholds": [
+      {
+        "gap_at_or_below": 0.02,
+        "count": 2,
+        "percent": 3.508771929824561
+      },
+      {
+        "gap_at_or_below": 0.05,
+        "count": 2,
+        "percent": 3.508771929824561
+      },
+      {
+        "gap_at_or_below": 0.1,
+        "count": 3,
+        "percent": 5.263157894736842
+      },
+      {
+        "gap_at_or_below": 0.15,
+        "count": 6,
+        "percent": 10.526315789473683
+      },
+      {
+        "gap_at_or_below": 0.2,
+        "count": 10,
+        "percent": 17.543859649122805
+      }
+    ],
+    "tau_0_10_permits_alternative_count": 3,
+    "tau_0_10_permits_alternative_fraction": 0.05263157894736842
+  },
+  "learner_dependence": {
+    "unique_learner_count": 1,
+    "learners": [
+      "psn_f78c0817d43053e5bd31da20"
+    ],
+    "repeated_learner_skill_combinations": [
+      {
+        "learner_pseudonym": "psn_f78c0817d43053e5bd31da20",
+        "skill": "Equation Solving Two or Fewer Steps",
+        "attempt_count": 2
+      }
+    ]
+  },
+  "credit": {
+    "positive_cumulative_attempts": 6,
+    "positive_cumulative_attempts_with_negative_dialogue_turn": 6,
+    "negative_dialogue_but_positive_total_attempts": [
+      2,
+      3
+    ]
+  },
+  "data_sufficiency": {
+    "pipeline_prototyping": "yes",
+    "tiny_pilot_retraining_experiment": "not yet supported beyond an engineering smoke test",
+    "policy_improvement_claims": "no",
+    "reason": "57 turns come from one learner, five skills, sparse intervention coverage, and observational non-randomized decisions."
+  },
+  "side_effects": {
+    "training": 0,
+    "model_writes": 0,
+    "policy_writes": 0,
+    "authoritative_research_writes": 0,
+    "api_calls": 0,
+    "tutor_conversations": 0,
+    "protected_evaluation_use": 0,
+    "input_hash_changes": {}
+  },
+  "verdict": "B. PILOT DATASET CLEAN BUT COVERAGE TOO WEAK — COLLECT MORE BEFORE MD8 DESIGN"
+}

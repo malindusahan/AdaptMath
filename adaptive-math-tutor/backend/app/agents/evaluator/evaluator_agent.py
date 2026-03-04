@@ -1,3 +1,6 @@
+import logging
+import re
+
 from pydantic import BaseModel, Field
 
 from langchain_core.prompts import ChatPromptTemplate
@@ -13,6 +16,9 @@ from app.schemas.evaluator import (
     EvaluatorInput,
     EvaluatorOutput,
 )
+
+
+logger = logging.getLogger(__name__)
 
 
 class EvaluationJudgment(BaseModel):
@@ -45,7 +51,8 @@ class EvaluatorAgent:
             model=settings.gemini_model,
             google_api_key=settings.gemini_api_key.get_secret_value(),
             temperature=0,
-            max_retries=2,
+            timeout=settings.gemini_timeout_seconds,
+            max_retries=settings.gemini_max_retries,
         )
 
         self.structured_model = self.model.with_structured_output(
@@ -84,6 +91,18 @@ Rules:
 - never place the expected answer inside the learner-visible question;
 - do not introduce concepts that were not established by the original problem
   or the teaching dialogue;
+- assess TRANSFER rather than surface recall: do not copy the original story,
+  entities, wording, or numerical values, and do not create the original
+  problem again with only one number changed;
+- use genuinely different numerical values from every number in the original
+  question;
+- make the three items meaningfully different from one another. Across the set,
+  use varied evidence demands such as a new-context application, explanation
+  or justification, error analysis, representation, or reverse reasoning. Do
+  not produce three successive fragments of the original solution procedure;
+- at least two items must require applying the learned mathematics in a new
+  context or structurally different situation, not recalling facts from the
+  original story;
 - if this is a reteaching cycle, focus the new assessment on whether the prior
   difficulty has actually been resolved without simply repeating the old
   assessment verbatim.
@@ -118,6 +137,9 @@ RETEACHING
 
 COMPLETED INTERACTIVE TEACHING DIALOGUE
 {conversation_history}
+
+REJECTION FEEDBACK FROM A PREVIOUS DRAFT
+{rejection_feedback}
 
 Generate the three-question understanding assessment now.
 """,
@@ -178,6 +200,8 @@ Evaluate all three learner answers.
     def _generate_assessment_once(
         self,
         assessment_input: AssessmentGenerationInput,
+        *,
+        rejection_feedback: str | None = None,
     ) -> AssessmentGenerationOutput:
         chain = self.assessment_prompt | self.assessment_structured_model
         return chain.invoke(
@@ -197,21 +221,119 @@ Evaluate all three learner answers.
                     turn.model_dump()
                     for turn in assessment_input.conversation_history
                 ],
+                "rejection_feedback": rejection_feedback or "None; this is the first draft.",
             }
         )
+
+    @staticmethod
+    def _number_literals(text: str) -> set[str]:
+        return set(re.findall(r"(?<![\w.])-?\d+(?:\.\d+)?", text.lower()))
+
+    @staticmethod
+    def _content_tokens(text: str) -> set[str]:
+        stopwords = {
+            "a", "an", "and", "are", "as", "at", "be", "by", "does",
+            "each", "for", "from", "had", "has", "have", "how", "if",
+            "in", "into", "is", "it", "many", "of", "on", "or", "that",
+            "the", "there", "these", "this", "to", "use", "was", "were",
+            "what", "when", "which", "why", "will", "with", "would", "you",
+            "your",
+        }
+        return {
+            token
+            for token in re.findall(r"[a-z]+", text.lower())
+            if len(token) > 2 and token not in stopwords
+        }
+
+    @classmethod
+    def _validate_assessment_variability(
+        cls,
+        assessment_input: AssessmentGenerationInput,
+        result: AssessmentGenerationOutput,
+    ) -> None:
+        original_numbers = cls._number_literals(assessment_input.original_question)
+        original_tokens = cls._content_tokens(assessment_input.original_question)
+        normalized_questions: list[str] = []
+        question_token_sets: list[set[str]] = []
+
+        for item in result.assessment_questions:
+            normalized = " ".join(item.question.lower().split())
+            if normalized in normalized_questions:
+                raise ValueError("Assessment questions must have distinct wording.")
+            normalized_questions.append(normalized)
+
+            reused_numbers = original_numbers & cls._number_literals(item.question)
+            if reused_numbers:
+                raise ValueError(
+                    "Assessment reused original numerical values: "
+                    f"{sorted(reused_numbers)}."
+                )
+
+            tokens = cls._content_tokens(item.question)
+            shared = tokens & original_tokens
+            if len(shared) >= 3 and len(shared) / max(1, len(tokens)) >= 0.5:
+                raise ValueError(
+                    "Assessment question is too close to the original story; "
+                    f"shared content={sorted(shared)}."
+                )
+            question_token_sets.append(tokens)
+
+        for left_index, left in enumerate(question_token_sets):
+            for right in question_token_sets[left_index + 1 :]:
+                shared = left & right
+                smaller = min(len(left), len(right))
+                if smaller and len(shared) >= 3 and len(shared) / smaller >= 0.7:
+                    raise ValueError(
+                        "Assessment questions are too similar to one another; "
+                        f"shared content={sorted(shared)}."
+                    )
 
     def generate_assessment(
         self,
         assessment_input: AssessmentGenerationInput,
     ) -> AssessmentGenerationOutput:
-        """Generate exactly three valid assessment questions, retrying once."""
+        """Generate exactly three valid assessment questions, retrying once.
+
+        Variability is a quality preference, not a reason to strand an otherwise
+        complete lesson.  When both structured Gemini drafts are valid but the
+        conservative local diversity heuristic still objects, retain the second
+        (feedback-informed) draft instead of converting that disagreement into a
+        fatal pipeline error.  Provider and schema failures remain fatal when no
+        usable three-question assessment was produced.
+        """
         last_error: Exception | None = None
+        rejection_feedback: str | None = None
+        structured_candidates: list[AssessmentGenerationOutput] = []
         for _ in range(2):
             try:
-                result = self._generate_assessment_once(assessment_input)
-                return AssessmentGenerationOutput.model_validate(result)
+                result = self._generate_assessment_once(
+                    assessment_input,
+                    rejection_feedback=rejection_feedback,
+                )
+                validated = AssessmentGenerationOutput.model_validate(result)
+                structured_candidates.append(validated)
+                self._validate_assessment_variability(
+                    assessment_input,
+                    validated,
+                )
+                return validated
             except Exception as exc:  # model/schema failure is retried once
                 last_error = exc
+                rejection_feedback = (
+                    "The previous draft was rejected: "
+                    f"{type(exc).__name__}: {exc}. Generate a substantially "
+                    "different three-question transfer assessment that obeys "
+                    "every variability rule."
+                )
+
+        if structured_candidates:
+            logger.warning(
+                "assessment_variability_fallback candidate_count=%d "
+                "last_issue_type=%s",
+                len(structured_candidates),
+                type(last_error).__name__ if last_error is not None else "unknown",
+            )
+            return structured_candidates[-1]
 
         raise RuntimeError(
             "Evaluator assessment generation failed after two attempts. "

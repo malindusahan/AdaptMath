@@ -8,7 +8,7 @@ from app.schemas.profile import StudentProfile
 
 class RouterInput(BaseModel):
     """
-    Context supplied to the GenAI Router.
+    Context supplied to the deterministic local Router.
     """
 
     question: str = Field(
@@ -33,7 +33,7 @@ class RouterInput(BaseModel):
 
 class RouterOutput(BaseModel):
     """
-    Structured pre-tutoring workflow selected by the GenAI Router.
+    Structured pre-tutoring workflow selected by the local Router.
 
     direct_tutor:
         Tutor directly.

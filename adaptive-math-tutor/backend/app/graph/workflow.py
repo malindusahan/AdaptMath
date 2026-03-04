@@ -5,7 +5,6 @@ from langgraph.types import interrupt
 
 from app.agents.complexity.service import get_complexity_service
 from app.agents.evaluator.evaluator_agent import EvaluatorAgent
-from app.agents.planner.planner_agent import PlannerAgent
 from app.agents.progress.teaching_progress_agent import TeachingProgressAgent
 from app.agents.router.router_agent import RouterAgent
 from app.agents.tutor.tutor_agent import TutorAgent
@@ -22,7 +21,7 @@ from app.schemas.dialogue import DialogueTurn
 from app.schemas.evaluator import EvaluatorInput, StudentAnswer
 from app.schemas.memory import MemoryContext
 from app.schemas.pedagogical_move import PedagogicalMoveSelection
-from app.schemas.planner import PlannerInput, PlannerOutput
+from app.schemas.planner import PlannerOutput
 from app.schemas.profile import StudentProfile
 from app.schemas.progress import TeachingProgressInput
 from app.schemas.router import RouterInput
@@ -34,7 +33,6 @@ from app.schemas.tutor import TutorInput, TutorMathInput
 # ============================================================
 
 router_agent = RouterAgent()
-planner_agent = PlannerAgent()
 tutor_agent = TutorAgent()
 progress_agent = TeachingProgressAgent()
 evaluator_agent = EvaluatorAgent()
@@ -101,18 +99,12 @@ def choose_initial_workflow(
 # ============================================================
 
 def planner_node(state: TutorState) -> dict:
-    result = planner_agent.create_plan(
-        PlannerInput(
-            question=state["question"],
-            topic=state["topic"],
-            subtopic=state.get("subtopic"),
-            student_age=state["age"],
-            complexity_score=state["complexity_score"],
-            previous_errors=state.get("previous_errors", []),
-            previous_strategies=state.get("previous_strategies", []),
-        )
-    )
-    return {"planner_output": result.model_dump()}
+    """Preserve the explicit planned route without a separate model call.
+
+    The following math-preparation node generates the plan and deterministic
+    mathematical checks together in one structured Gemini request.
+    """
+    return {}
 
 
 # ============================================================
@@ -145,8 +137,17 @@ def math_preparation_node(state: TutorState) -> dict:
         previous_errors=state.get("previous_errors", []),
         reteaching=False,
     )
-    evidence = tutor_agent.prepare_math_evidence(math_input)
-    return {"verified_math_evidence": evidence}
+    planner_output, evidence = tutor_agent.prepare_question(
+        math_input,
+        include_planner=state["route"] == "planned_tutor",
+        previous_strategies=state.get("previous_strategies", []),
+    )
+    return {
+        "planner_output": (
+            planner_output.model_dump() if planner_output is not None else None
+        ),
+        "verified_math_evidence": evidence,
+    }
 
 
 # ============================================================
@@ -170,6 +171,8 @@ def adaptive_tutor_turn_node(state: TutorState) -> dict:
         key: result[key]
         for key in (
             "attempt_id",
+            "action_event_id",
+            "action_turn_index",
             "turn_index",
             "pedagogical_move",
             "selected_arm",
@@ -179,6 +182,15 @@ def adaptive_tutor_turn_node(state: TutorState) -> dict:
             "context",
             "md6_probabilities",
             "mrb1_scores",
+            "tutor_generation_fallback_used",
+            "selector",
+            "adaptive_decision",
+            "mastery_at_action",
+            "attempt_start_mastery",
+            "attempt_started_at",
+            "thread_id",
+            "adaptive_attempt_index",
+            "thread_turn_count",
         )
         if key in result
     }
@@ -300,7 +312,8 @@ def await_student_response_node(state: TutorState) -> dict:
 def teaching_progress_node(state: TutorState) -> dict:
     """
     Decide whether interactive teaching should continue or whether the learner
-    is ready for the formal 3-question assessment.
+    is ready for the formal 3-question assessment, then immediately resolve the
+    latest student response into at most one informal BKT observation.
 
     This node does NOT choose the next pedagogical move.
     """
@@ -318,7 +331,16 @@ def teaching_progress_node(state: TutorState) -> dict:
             ],
             previous_errors=state.get("previous_errors", []),
             reteaching=state.get("teaching_phase", "initial") == "reteaching",
+            verified_math_evidence=state.get("verified_math_evidence", []),
         )
+    )
+
+    adaptive_coordinator.process_dialogue_turn(
+        state,
+        correctness=result.latest_response_correctness,
+        evaluator_confidence=result.correctness_confidence,
+        evaluator_reason=result.correctness_reason,
+        evidence_category=result.latest_response_evidence_category,
     )
 
     return {

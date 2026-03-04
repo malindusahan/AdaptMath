@@ -41,6 +41,7 @@ class TutorState(TypedDict, total=False):
     target_skill: str
     adaptive_lifecycle_status: AdaptiveLifecycleStatus
     mastery_before: float
+    attempt_started_at: str
 
     # Current mathematics problem.
     question: str
@@ -56,6 +57,10 @@ class TutorState(TypedDict, total=False):
     # It is consumed for one teacher turn and never selected by this component.
     pedagogical_move: PedagogicalMove | None
     adaptive_turn_diagnostics: dict[str, Any]
+    # Identity of the Tutor action awaiting its next learner observation.
+    # These are attempt-local and never derived from thread-global turn_count.
+    action_event_id: str
+    action_turn_index: int
     adaptive_completion_result: dict[str, Any]
     completed_attempt_id: str
 

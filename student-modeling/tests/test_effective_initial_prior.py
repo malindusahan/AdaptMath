@@ -228,8 +228,18 @@ def test_schema_migration_is_additive_idempotent_and_does_not_guess_legacy_prior
             """
         ).fetchall()
         schema_version = conn.execute("PRAGMA user_version").fetchone()[0]
+        attempt_columns = {
+            row[1] for row in conn.execute("PRAGMA table_info(attempts)")
+        }
+        attempt_indexes = {
+            row[1]: row[2]
+            for row in conn.execute("PRAGMA index_list(attempts)")
+        }
 
     assert "bkt_initial_priors" in tables
+    assert "resolved_events" in tables
+    assert "resolver_event_id" in attempt_columns
+    assert attempt_indexes["uq_attempts_resolver_event_id"] == 1
     assert legacy_mastery == pytest.approx(0.73)
     assert prior_rows == [
         ("attempts-only", "Other", None, "legacy_unknown"),

@@ -49,6 +49,12 @@ _integration_backups/
 # ============================================================
 **/runtime/adaptive_demo/
 
+# Passive self-improvement observations are local research data. Keep the
+# versioned schema/manifest in source control, never the learner records.
+pedagogical-move-selection/results/md_self_improvement_turn_data_v1/*.jsonl
+pedagogical-move-selection/results/md_self_improvement_turn_data_v1/*.lock
+pedagogical-move-selection/results/md_self_improvement_turn_data_v1/pending_actions/
+
 # ============================================================
 # IDE / OS
 # ============================================================

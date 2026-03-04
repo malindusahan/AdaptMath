@@ -216,6 +216,40 @@ def test_unauthorized_skill_cannot_create_behavioural_proxy():
     assert resolved.behaviour.clarification_present is True
 
 
+def test_semantic_no_knowledge_evidence_cannot_create_negative_proxy():
+    transcript = [
+        {"role": "tutor", "text": "Choose how you would like to continue."},
+        {"role": "student", "text": "Please continue with questions."},
+    ]
+    extraction = {
+        "events": [
+            {
+                "turn_index": 1,
+                "skill": "Ratio",
+                "correctness": "unknown",
+                "evaluator_confidence": 0.0,
+                "evaluator_source": "adaptmath_no_knowledge_evidence",
+                "evidence_category": "interaction_management",
+            }
+        ]
+    }
+
+    resolved = resolve_extracted_events(
+        extraction=extraction,
+        transcript=transcript,
+        student_id="student-1",
+        session_id="session-1",
+        uncertainty_predictor=lambda text: 0.99,
+        clarification_predictor=lambda text: 0.99,
+    )[0]
+
+    assert resolved.primary_signal == PrimarySignal.NO_UPDATE
+    assert resolved.bkt_update.should_update is False
+    assert resolved.bkt_update.outcome is None
+    assert resolved.behaviour.uncertainty_present is True
+    assert resolved.behaviour.clarification_present is True
+
+
 @pytest.mark.parametrize(
     "evaluator_source",
     [
@@ -351,4 +385,31 @@ def test_event_id_is_deterministic():
     assert first[0].event_id == second[0].event_id
     assert first[0].event_id == (
         "sess_xyz:turn_0:percent_of"
+    )
+
+
+def test_source_action_identity_is_preserved_through_resolution():
+    action_event_id = "thread-a:2:action:1"
+    transcript = [{"role": "student", "text": "10"}]
+    extraction = {
+        "events": [
+            {
+                "turn_index": 0,
+                "skill": "Percent Of",
+                "correctness": "correct",
+            }
+        ]
+    }
+
+    resolved = resolve_extracted_events(
+        extraction=extraction,
+        transcript=transcript,
+        student_id="s1",
+        session_id="dialogue-session",
+        source_action_event_id=action_event_id,
+    )
+
+    assert resolved[0].source_action_event_id == action_event_id
+    assert resolved[0].event_id == (
+        "thread-a:2:action:1:resolver:percent_of"
     )

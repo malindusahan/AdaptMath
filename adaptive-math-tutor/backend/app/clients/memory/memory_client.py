@@ -51,6 +51,28 @@ class MemoryTutorContextResponse(BaseModel):
     )
 
 
+class MemoryTopicClassification(BaseModel):
+    """Allowlisted result from Memory's stateless topic classifier."""
+
+    model_config = ConfigDict(extra="ignore")
+    topic: str | None = Field(default=None, max_length=255)
+    skill_id: str | None = Field(default=None, max_length=128)
+    confidence: float = Field(ge=0.0, le=1.0)
+    is_math: bool
+    model_version: str = Field(min_length=1, max_length=128)
+
+
+class MemoryAuthenticatedUser(BaseModel):
+    """Allowlisted non-secret learner identity returned by Memory ``/auth/me``."""
+
+    model_config = ConfigDict(extra="ignore")
+    user_id: str = Field(min_length=1, max_length=255)
+    username: str = Field(min_length=1, max_length=255)
+    role: Literal["STUDENT"]
+    student_id: str = Field(min_length=1, max_length=255)
+    age: int | None = Field(default=None, ge=0)
+
+
 class CompletedAttemptAcknowledgement(BaseModel):
     """Safe acknowledgement from the evidence-only ingestion endpoint."""
 
@@ -90,13 +112,72 @@ class MemoryClient:
             return None
         return {"X-Service-Key": key}
 
-    def _client(self) -> tuple[httpx.Client, bool]:
+    def _client(
+        self,
+        *,
+        timeout_seconds: float | None = None,
+    ) -> tuple[httpx.Client, bool]:
         if self._http_client is not None:
             return self._http_client, False
         return (
-            httpx.Client(timeout=self.settings.memory_timeout_seconds),
+            httpx.Client(
+                timeout=(
+                    timeout_seconds
+                    if timeout_seconds is not None
+                    else self.settings.memory_timeout_seconds
+                )
+            ),
             True,
         )
+
+    def classify_question(
+        self,
+        *,
+        question: str,
+    ) -> MemoryTopicClassification | None:
+        """Classify a question, or return None when Memory is unavailable."""
+        headers = self._headers()
+        if headers is None:
+            return None
+        client, owns_client = self._client(
+            timeout_seconds=self.settings.memory_topic_timeout_seconds,
+        )
+        try:
+            response = client.post(
+                f"{self.settings.memory_api_url.rstrip('/')}/topic/classify",
+                json={"question": question},
+                headers=headers,
+            )
+            response.raise_for_status()
+            return MemoryTopicClassification.model_validate(response.json())
+        except (httpx.HTTPError, ValueError, ValidationError):
+            logger.warning(
+                "Memory topic classification failed; no skill was selected."
+            )
+            return None
+        finally:
+            if owns_client:
+                client.close()
+
+    def authenticate_user(self, token: str) -> MemoryAuthenticatedUser | None:
+        """Validate one browser session token against Memory, failing closed."""
+        normalized_token = token.strip()
+        if not normalized_token:
+            return None
+        client, owns_client = self._client()
+        try:
+            response = client.get(
+                f"{self.settings.memory_api_url.rstrip('/')}/auth/me",
+                headers={"Authorization": f"Bearer {normalized_token}"},
+            )
+            response.raise_for_status()
+            return MemoryAuthenticatedUser.model_validate(response.json())
+        except (httpx.HTTPError, ValueError, ValidationError):
+            logger.warning("Memory user authentication failed closed.")
+            return None
+        finally:
+            if owns_client:
+                client.close()
 
     def retrieve_tutor_context(
         self,

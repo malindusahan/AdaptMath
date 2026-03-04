@@ -1,0 +1,142 @@
+{
+  "schema_version": "md7_r2_tell_c1_manifest_v1",
+  "experiment": "MD7-R2-TELL-C1",
+  "status": "prepared_not_trained_not_promoted",
+  "seed": 42,
+  "move_order": [
+    "generic",
+    "probing",
+    "focus",
+    "telling"
+  ],
+  "correction_dataset": {
+    "file": "correction_train.jsonl",
+    "sha256": "7ecc68d03022d19ee755b4e714c1258ce5808bd3a13bf55a0c8a0d5a8f86aa90",
+    "rows": 2400,
+    "target_counts": {
+      "focus": 1200,
+      "telling": 1200
+    },
+    "split": "train_only",
+    "family_count": 1200,
+    "schema_version": "md7_r2_tell_c1_correction_v1"
+  },
+  "original_calibration_source": {
+    "path_discovered": "C:\\Users\\Lenovo\\Downloads\\telling_calibration_synthetic_v1.jsonl",
+    "source_sha256": "006a0c7015e5f9ff3166556d2b9291ce3a40dd73893e0a14c60a9f1d14bc4540",
+    "source_rows": 9600,
+    "packaged_train_rows": 6000,
+    "packaged_validation_rows": 2400,
+    "source_final_test_rows": 1200,
+    "source_final_test_packaged": false,
+    "challenge_source_sha256": "5d62f16b16ab2ee88f4f6b860f4a3480dcf844e7fb21e09bd4b2ef25f9698a61",
+    "challenge_rows": 800
+  },
+  "training_mixture": {
+    "original_telling_calibration_train": 6000,
+    "matched_boundary_correction_train": 2400,
+    "mathdial_train_replay": 3600,
+    "total": 12000,
+    "overall_synthetic_fraction": 0.7,
+    "mathdial_replay_fraction": 0.3,
+    "component_fractions": {
+      "original_telling_calibration_train": 0.5,
+      "matched_boundary_correction_train": 0.2,
+      "mathdial_train_replay": 0.3
+    },
+    "mathdial_train_available_counts": {
+      "probing": 3413,
+      "generic": 3579,
+      "focus": 5443,
+      "telling": 2470
+    },
+    "mathdial_replay_quota_by_class": {
+      "generic": 864,
+      "probing": 824,
+      "focus": 1315,
+      "telling": 597
+    },
+    "resulting_training_label_counts": {
+      "generic": 2364,
+      "probing": 2324,
+      "focus": 4015,
+      "telling": 3297
+    }
+  },
+  "model_initialization": {
+    "path": "md7r1_epoch3",
+    "source_path": "pedagogical-move-selection/models/candidates/md7r1_epoch3",
+    "model_sha256": "d32d37f7f664d038f80fefb92f874804b49e5ac3d848985636ae64e6a2a60a13",
+    "not_telling_calibration_epoch": true
+  },
+  "mathdial": {
+    "train_rows": 14905,
+    "validation_rows": 1850,
+    "train_sha256": "2d0c9605d86d99c956b62466fcea6cfc0dbfed7d4ebfe2d39229689a5c10af76",
+    "validation_sha256": "225e6b8f671bf1e335af175343722aa9ac2a603a96d67bcb5220be1e92c0b2b6",
+    "test_packaged_or_read": false
+  },
+  "hyperparameters": {
+    "seed": 42,
+    "learning_rate": 1e-05,
+    "epochs": 3,
+    "weight_decay": 0.01,
+    "warmup_ratio": 0.1,
+    "effective_global_batch": 16,
+    "max_length": 512,
+    "objective": "ordinary_four_class_cross_entropy"
+  },
+  "preprocessing": {
+    "first_sequence_prefix": "Problem:\n",
+    "second_sequence_prefix": "Conversation:\n",
+    "dialogue_format": "{user}: {text}",
+    "suffix": "\n\nNext teacher pedagogical move:",
+    "tokenizer_truncation_side": "left",
+    "truncation": "only_second",
+    "label_order": [
+      "generic",
+      "probing",
+      "focus",
+      "telling"
+    ]
+  },
+  "pretraining_guard_expected": {
+    "accuracy": 0.5162162162162162,
+    "macro_f1": 0.4611286390258053,
+    "per_class_f1": {
+      "generic": 0.6105263157894737,
+      "probing": 0.3333333333333333,
+      "focus": 0.6004672897196262,
+      "telling": 0.300187617260788
+    },
+    "prediction_distribution": {
+      "generic": 413,
+      "probing": 188,
+      "focus": 1034,
+      "telling": 215
+    }
+  },
+  "kaggle_file_hashes": {
+    "correction_train.jsonl": "7ecc68d03022d19ee755b4e714c1258ce5808bd3a13bf55a0c8a0d5a8f86aa90",
+    "telling_calibration_train_v1.jsonl": "5be7c018f435ae816325a5a05dfb92102349dfd2bc3ff886b9fec22c54eae803",
+    "telling_calibration_validation_v1.jsonl": "3658bdb7a99867a4b9545625ab519653053452223d8888fc0901da175b8e4db2",
+    "telling_boundary_challenge_val_v1.jsonl": "bc4d947d924fab5f47dc990e384a6715d1bf6bb77cee0b8aa76d2368297bfb4f",
+    "mathdial/train.jsonl": "2d0c9605d86d99c956b62466fcea6cfc0dbfed7d4ebfe2d39229689a5c10af76",
+    "mathdial/validation.jsonl": "225e6b8f671bf1e335af175343722aa9ac2a603a96d67bcb5220be1e92c0b2b6",
+    "md7r1_epoch3/model.safetensors": "d32d37f7f664d038f80fefb92f874804b49e5ac3d848985636ae64e6a2a60a13",
+    "md7r1_epoch3/config.json": "9877dd11007c8af1d2841a2c1bb470023ef2ceeb748b47c24686ea82479e9127",
+    "md7r1_epoch3/tokenizer.json": "80d0fb9a6bbc3ab2b24ec149d6b47981036a5f96c753667be38709975753550b",
+    "md7r1_epoch3/tokenizer_config.json": "bb5706f71e3d5cb4bf9878ad9b14a2079e6fbd618fc0a0ba2ac1b257d7824cc9"
+  },
+  "guardrails": {
+    "local_training": false,
+    "automatic_epoch_selection": false,
+    "production_changes": 0,
+    "authoritative_real_data_writes": 0,
+    "api_calls": 0,
+    "bkt_updates": 0,
+    "lints_updates": 0,
+    "mathdial_final_test_use": 0,
+    "mrbench_v3_test_use": 0
+  }
+}

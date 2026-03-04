@@ -1,5 +1,6 @@
 from functools import lru_cache
 from pathlib import Path
+from typing import Literal
 
 from pydantic import Field, SecretStr, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -21,6 +22,7 @@ class Settings(BaseSettings):
     memory_enabled: bool = True
     memory_service_api_key: SecretStr | None = None
     memory_timeout_seconds: float = Field(default=2.0, gt=0, le=30)
+    memory_topic_timeout_seconds: float = Field(default=15.0, gt=0, le=60)
     memory_history_limit: int = Field(default=5, ge=1, le=10)
 
     # Legacy field retained for backwards-compatible local .env files.
@@ -33,7 +35,10 @@ class Settings(BaseSettings):
     move_selector_api_url: str | None = None
 
     gemini_api_key: SecretStr
-    gemini_model: str = "gemini-2.5-flash"
+    gemini_model: str = "gemini-3.6-flash"
+    gemini_timeout_seconds: float = Field(default=30.0, gt=0, le=120)
+    gemini_max_retries: int = Field(default=0, ge=0, le=2)
+    planning_complexity_threshold: float = Field(default=0.5, gt=0, lt=1)
 
     @field_validator("gemini_api_key")
     @classmethod
@@ -45,6 +50,16 @@ class Settings(BaseSettings):
     # Persistent LangGraph checkpoint database. Relative paths are
     # resolved from the backend project root.
     checkpoint_db_path: str = "runtime/adaptmath_checkpoints.sqlite3"
+    tutor_persistence: Literal["sqlite", "postgres"] = "sqlite"
+    adaptmath_database_url: SecretStr | None = None
+    tutor_persistence_schema: str = "tutor"
+
+    @field_validator("tutor_persistence_schema")
+    @classmethod
+    def require_tutor_schema(cls, value: str) -> str:
+        if value != "tutor":
+            raise ValueError("TUTOR_PERSISTENCE_SCHEMA must be exactly 'tutor'.")
+        return value
 
     # Browser clients are allowed only from explicitly configured origins.
     # Keep this comma-separated in .env so local and deployed frontends can

@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
-from datetime import date
 from pydantic import BaseModel, ConfigDict, Field
+
+
+PASSWORD_MIN_LENGTH = 8
 
 
 class SignupRequest(BaseModel):
@@ -13,8 +15,18 @@ class SignupRequest(BaseModel):
 
     username: str = Field(..., min_length=1, max_length=255, description="Unique username.")
     date_of_birth: str = Field(..., description="Date of birth in YYYY-MM-DD format.")
-    password: str = Field(..., min_length=1, max_length=255, description="Account password.")
-    confirm_password: str = Field(..., min_length=1, max_length=255, description="Confirm password matching password.")
+    password: str = Field(
+        ...,
+        min_length=PASSWORD_MIN_LENGTH,
+        max_length=255,
+        description=f"Account password (minimum {PASSWORD_MIN_LENGTH} characters).",
+    )
+    confirm_password: str = Field(
+        ...,
+        min_length=PASSWORD_MIN_LENGTH,
+        max_length=255,
+        description="Confirm password matching password.",
+    )
 
 
 class SignupResponse(BaseModel):
@@ -54,7 +66,8 @@ class UserMeResponse(BaseModel):
 
     model_config = ConfigDict(extra="ignore")
 
+    user_id: str
     username: str
     role: str
-    student_id: str | None = None
+    student_id: str
     age: int | None = None

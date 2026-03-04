@@ -107,6 +107,20 @@ function Test-AdaptMathCredentialPresent {
     return $false
 }
 
+function Get-AdaptMathDotEnvValue {
+    param(
+        [Parameter(Mandatory = $true)][string]$Path,
+        [Parameter(Mandatory = $true)][string]$Name
+    )
+    if (-not (Test-Path -LiteralPath $Path -PathType Leaf)) { return $null }
+    foreach ($line in Get-Content -LiteralPath $Path) {
+        if ($line -match ('^\s*' + [regex]::Escape($Name) + '\s*=\s*(.*?)\s*$')) {
+            return $Matches[1].Trim().Trim('"').Trim("'")
+        }
+    }
+    return $null
+}
+
 function Save-AdaptMathRuntimeState {
     param([Parameter(Mandatory = $true)]$State)
 
@@ -164,4 +178,3 @@ function Stop-AdaptMathProcessTree {
     Stop-Descendants -ParentPid $rootPid
     Stop-Process -Id $rootPid -Force -ErrorAction SilentlyContinue
 }
-

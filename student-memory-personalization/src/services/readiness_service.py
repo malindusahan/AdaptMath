@@ -15,7 +15,7 @@ from src.schemas.api_common import ReadinessResponse
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 ARTIFACTS_DIR = PROJECT_ROOT / "artifacts"
 TOPIC_EXTRACTOR_DIR = ARTIFACTS_DIR / "topic_extractor"
-EXPECTED_ALEMBIC_REVISION = "0011_adaptmath_ingestion"
+EXPECTED_ALEMBIC_REVISION = "0013_policy_state_ordered_json"
 REQUIRED_TABLES = {
     "students",
     "learning_sessions",
@@ -26,6 +26,34 @@ REQUIRED_TABLES = {
     "concept_memory",
     "student_misconceptions",
     "completed_attempt_receipts",
+}
+REQUIRED_UNIFICATION_TABLES = {
+    "auth": {"sessions"},
+    "tutor": {
+        "checkpoint_migrations",
+        "checkpoints",
+        "checkpoint_blobs",
+        "checkpoint_writes",
+        "threads",
+    },
+    "student_model": {
+        "students",
+        "mastery",
+        "bkt_initial_priors",
+        "attempts",
+        "resolved_events",
+        "sessions",
+    },
+    "research": {
+        "policy_states",
+        "turn_actions",
+        "selector_decisions",
+        "policy_contexts",
+        "c3_contexts",
+        "mrb1_scores",
+        "policy_updates",
+        "experience_records",
+    },
 }
 
 
@@ -107,6 +135,16 @@ class ReadinessService:
                         if missing_tables:
                             raise RuntimeError("Required migration tables are missing.")
                         if bind.dialect.name == "postgresql":
+                            for owned_schema, required in (
+                                REQUIRED_UNIFICATION_TABLES.items()
+                            ):
+                                present = set(
+                                    inspector.get_table_names(schema=owned_schema)
+                                )
+                                if required - present:
+                                    raise RuntimeError(
+                                        f"Required {owned_schema} tables are missing."
+                                    )
                             revision = session.execute(
                                 text("SELECT version_num FROM alembic_version")
                             ).scalar_one_or_none()

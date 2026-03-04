@@ -1,0 +1,13 @@
+field,value,count
+primary_signal,behavioural_difficulty,17
+primary_signal,correct_explanation,14
+primary_signal,correct_answer,13
+primary_signal,incorrect_answer,11
+primary_signal,partial_correct,2
+should_update,true,57
+observation_source,evaluator,40
+observation_source,behavioural_proxy,17
+reasoning_present,<missing>,57
+uncertainty_present,<missing>,57
+clarification_present,<missing>,57
+repeated_misunderstanding,<missing>,57

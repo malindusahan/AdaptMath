@@ -1,0 +1,23 @@
+block,feature,source,pre_action_timing,leakage_status,usable_reward_rows,available_rows,missing_rows,retrospective_ablation_status
+S,selector_p_generic,MD selector probabilities,computed from problem and history before Tutor action t,PASS,96,96,0,available
+S,selector_p_probing,MD selector probabilities,computed from problem and history before Tutor action t,PASS,96,96,0,available
+S,selector_p_focus,MD selector probabilities,computed from problem and history before Tutor action t,PASS,96,96,0,available
+S,selector_p_telling,MD selector probabilities,computed from problem and history before Tutor action t,PASS,96,96,0,available
+K,mastery_before,BKT state and prior linked turn outcome,mastery_before is snapshotted before action t; prior delta is from t-1,PASS,96,96,0,available
+K,previous_mastery_delta,BKT state and prior linked turn outcome,mastery_before is snapshotted before action t; prior delta is from t-1,PASS,96,96,0,available
+K,previous_mastery_delta_missing,BKT state and prior linked turn outcome,mastery_before is snapshotted before action t; prior delta is from t-1,PASS,96,96,0,available
+L,previous_reasoning_probability,Student Modeling resolved behaviour from t-1,assigned after learner response t-1 and before action t,PASS,96,2,94,unavailable
+L,previous_uncertainty_probability,Student Modeling resolved behaviour from t-1,assigned after learner response t-1 and before action t,PASS,96,2,94,unavailable
+L,previous_clarification_probability,Student Modeling resolved behaviour from t-1,assigned after learner response t-1 and before action t,PASS,96,2,94,unavailable
+L,previous_learner_signals_missing,Student Modeling resolved behaviour from t-1,assigned after learner response t-1 and before action t,PASS,96,2,94,unavailable
+H,previous_move_generic,Turn controller completed-action history,previous move and count exist before action t,PASS,96,96,0,available
+H,previous_move_probing,Turn controller completed-action history,previous move and count exist before action t,PASS,96,96,0,available
+H,previous_move_focus,Turn controller completed-action history,previous move and count exist before action t,PASS,96,96,0,available
+H,previous_move_telling,Turn controller completed-action history,previous move and count exist before action t,PASS,96,96,0,available
+H,previous_move_missing,Turn controller completed-action history,previous move and count exist before action t,PASS,96,96,0,available
+H,prior_tutor_turn_count,Turn controller completed-action history,previous move and count exist before action t,PASS,96,96,0,available
+Q,previous_mistake_identification,frozen MRB1 score for Tutor response t-1,current MRB1_t is post-action and only becomes Q for t+1,PASS,96,96,0,available
+Q,previous_mistake_location,frozen MRB1 score for Tutor response t-1,current MRB1_t is post-action and only becomes Q for t+1,PASS,96,96,0,available
+Q,previous_providing_guidance,frozen MRB1 score for Tutor response t-1,current MRB1_t is post-action and only becomes Q for t+1,PASS,96,96,0,available
+Q,previous_actionability,frozen MRB1 score for Tutor response t-1,current MRB1_t is post-action and only becomes Q for t+1,PASS,96,96,0,available
+Q,previous_mrb1_missing,frozen MRB1 score for Tutor response t-1,current MRB1_t is post-action and only becomes Q for t+1,PASS,96,96,0,available

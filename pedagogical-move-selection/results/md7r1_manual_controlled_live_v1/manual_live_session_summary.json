@@ -1,0 +1,50 @@
+{
+  "schema_version": "md7r1_manual_controlled_live_summary_v1",
+  "runtime_id": "adac6f1e794443058f9c6fafa76645f0",
+  "started_at_utc": "2026-08-28T06:56:25.267877+00:00",
+  "updated_at_utc": "2026-08-28T06:56:36.861526+00:00",
+  "mode": "manual_controlled_live",
+  "active_selector": "MD7-R1 epoch 3",
+  "shadow_selector": "frozen MD6",
+  "learner_agency_escalation": "explicit answer request or two consecutive non-engagement turns force telling",
+  "lints_posterior_updates": 0,
+  "real_adaptive_persistence_writes": 0,
+  "turn_count": 1,
+  "bkt_activity_count": 0,
+  "bkt_activity_log_path": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\pedagogical-move-selection\\results\\md7r1_manual_controlled_live_v1\\bkt_activity.jsonl",
+  "completed_attempts": [],
+  "turn_log_path": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\pedagogical-move-selection\\results\\md7r1_manual_controlled_live_v1\\manual_live_turns.jsonl",
+  "protected_files_before": {
+    "policy_state": {
+      "path": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\adaptive-math-tutor\\backend\\runtime\\adaptive_demo_md7r1_real_v1\\policy_state.json",
+      "exists": true,
+      "size": 11522,
+      "mtime_ns": 1787895658343457200,
+      "sha256": "a331f200b54b3b3ad2476565d315bb26773113cb3ebb8b5f2a8cfae24c7460b6"
+    },
+    "experience_log": {
+      "path": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\adaptive-math-tutor\\backend\\runtime\\adaptive_demo_md7r1_real_v1\\attempts.jsonl",
+      "exists": true,
+      "size": 66745,
+      "mtime_ns": 1787895658335578800,
+      "sha256": "e5e2240889b0432ce7a7e8ad16fbeef1d3ea9e6d30ea7ae01703313772d951a2"
+    }
+  },
+  "protected_files_current": {
+    "policy_state": {
+      "path": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\adaptive-math-tutor\\backend\\runtime\\adaptive_demo_md7r1_real_v1\\policy_state.json",
+      "exists": true,
+      "size": 11522,
+      "mtime_ns": 1787895658343457200,
+      "sha256": "a331f200b54b3b3ad2476565d315bb26773113cb3ebb8b5f2a8cfae24c7460b6"
+    },
+    "experience_log": {
+      "path": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\adaptive-math-tutor\\backend\\runtime\\adaptive_demo_md7r1_real_v1\\attempts.jsonl",
+      "exists": true,
+      "size": 66745,
+      "mtime_ns": 1787895658335578800,
+      "sha256": "e5e2240889b0432ce7a7e8ad16fbeef1d3ea9e6d30ea7ae01703313772d951a2"
+    }
+  },
+  "protected_files_unchanged": true
+}

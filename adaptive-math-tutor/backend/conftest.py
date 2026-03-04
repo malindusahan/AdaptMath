@@ -24,6 +24,22 @@ if "CHECKPOINT_DB_PATH" not in os.environ:
         "ADAPTIVE_EXPERIENCE_LOG_PATH",
         str(_runtime_root / "attempts.jsonl"),
     )
+    os.environ.setdefault(
+        "ADAPTIVE_MD6_POLICY_STATE_PATH",
+        str(_runtime_root / "md6" / "policy_state.json"),
+    )
+    os.environ.setdefault(
+        "ADAPTIVE_MD6_EXPERIENCE_LOG_PATH",
+        str(_runtime_root / "md6" / "attempts.jsonl"),
+    )
+    os.environ.setdefault(
+        "ADAPTIVE_MD7_POLICY_STATE_PATH",
+        str(_runtime_root / "md7" / "policy_state.json"),
+    )
+    os.environ.setdefault(
+        "ADAPTIVE_MD7_EXPERIENCE_LOG_PATH",
+        str(_runtime_root / "md7" / "attempts.jsonl"),
+    )
 
 
 def pytest_sessionfinish(session, exitstatus) -> None:

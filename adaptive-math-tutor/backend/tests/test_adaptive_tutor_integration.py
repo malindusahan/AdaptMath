@@ -1,13 +1,16 @@
 from __future__ import annotations
 
 import copy
+import json
 import sys
 import tempfile
 import unittest
+from datetime import datetime
 from pathlib import Path
 from types import SimpleNamespace
 
 from app.integrations.adaptive_component_coordinator import (
+    DIALOGUE_EVALUATOR_CONFIDENCE_CAP,
     _AssessmentEvidenceSource,
     AdaptiveAttemptComponents,
     AdaptiveComponentCoordinator,
@@ -18,6 +21,7 @@ from app.integrations.adaptive_component_coordinator import (
 from app.integrations.adaptive_tutor_agent_adapter import (
     AdaptiveTutorAgentAdapter,
 )
+from app.integrations.self_improvement_turn_collector import PassiveTurnCollector
 from app.integrations.tutor_state_memory_adapter import (
     TutorStateMemoryAdapter,
 )
@@ -93,11 +97,34 @@ class RejectingTutor:
         raise RuntimeError("Existing verifier rejected a conflicting move.")
 
 
+class FailOnceTutor:
+    def __init__(self) -> None:
+        self.calls = 0
+
+    def teach_turn(self, tutor_input, evidence):
+        del tutor_input, evidence
+        self.calls += 1
+        if self.calls == 1:
+            raise RuntimeError("Temporary tutor failure.")
+        return TutorOutput(teaching_response="What would you try first?")
+
+
+class FailOnceMRB1(RecordingMRB1):
+    def score_response(self, conversation_history, tutor_response):
+        if not self.calls:
+            self.calls.append(
+                (copy.deepcopy(list(conversation_history)), tutor_response)
+            )
+            raise RuntimeError("Temporary MRB1 failure.")
+        return super().score_response(conversation_history, tutor_response)
+
+
 class FakeStudentPipeline:
     def __init__(self, mastery_store: dict[tuple[str, str], float]) -> None:
         self.mastery_store = mastery_store
         self.context = None
         self.process_calls = 0
+        self.dialogue_calls = []
 
     def start_attempt(self, *, student_id, attempt_id, attempt_skill=None):
         if attempt_skill is None:
@@ -110,6 +137,13 @@ class FakeStudentPipeline:
             mastery_before=mastery,
         )
         return self.context
+
+    def current_mastery(self, *, student_id, attempt_id):
+        if self.context is None:
+            raise RuntimeError("attempt not started")
+        if student_id != self.context.student_id or attempt_id != self.context.attempt_id:
+            raise ValueError("identity mismatch")
+        return self.mastery_store[(student_id, self.context.skill)]
 
     def process_assessment_cycle(
         self,
@@ -135,6 +169,32 @@ class FakeStudentPipeline:
                 "mastery_after": after,
                 "delta_mastery": after - self.context.mastery_before,
             }
+        }
+
+    def process_dialogue_turn(self, **kwargs):
+        self.dialogue_calls.append(copy.deepcopy(kwargs))
+        if self.context is None:
+            raise RuntimeError("attempt not started")
+        return {
+            "incremental_learning_outcome": {
+                "mastery_before": self.context.mastery_before,
+                "mastery_after": self.context.mastery_before,
+                "delta_mastery": 0.0,
+            },
+            "learning_outcome": {
+                "attempt_id": self.context.attempt_id,
+                "skill": self.context.skill,
+                "mastery_before": self.context.mastery_before,
+                "mastery_after": self.context.mastery_before,
+                "delta_mastery": 0.0,
+            },
+            "resolved_events": [],
+            "knowledge_graph_result": {
+                "session_id": (
+                    f"{self.context.attempt_id}:dialogue:{kwargs['turn_index']}"
+                ),
+                "skills_updated": [],
+            },
         }
 
 
@@ -383,6 +443,101 @@ class AssessmentEvidenceProjectionTests(unittest.TestCase):
             "incorrect",
         )
 
+    def test_dialogue_batches_advance_mastery_without_replaying_prior_turns(self):
+        source = _AssessmentEvidenceSource("Skill A")
+
+        class Graph:
+            def __init__(self):
+                self.mastery = 0.2
+
+            def get_current_mastery_probability(self, *args, **kwargs):
+                del args, kwargs
+                return self.mastery
+
+        class IncrementalCrossSession:
+            def __init__(self):
+                self.knowledge_graph = Graph()
+                self.calls = []
+
+            def start_attempt(self, *, student_id, attempt_id, attempt_skill):
+                return SimpleNamespace(
+                    student_id=student_id,
+                    attempt_id=attempt_id,
+                    skill=attempt_skill,
+                    mastery_before=self.knowledge_graph.mastery,
+                )
+
+            def process_transcript(self, **kwargs):
+                self.calls.append(copy.deepcopy(kwargs))
+                extraction = source.extract(kwargs["transcript"])
+                events = []
+                for event in extraction["events"]:
+                    verdict = source(event, kwargs["transcript"])
+                    if verdict["correctness"] == "correct":
+                        self.knowledge_graph.mastery += 0.1
+                    elif verdict["correctness"] == "incorrect":
+                        self.knowledge_graph.mastery -= 0.05
+                    events.append(
+                        SimpleNamespace(
+                            bkt_update=SimpleNamespace(should_update=True)
+                        )
+                    )
+                return {
+                    "resolved_events": events,
+                    "knowledge_graph_result": {
+                        "session_id": kwargs["session_id"],
+                        "skills_updated": [],
+                    },
+                }
+
+        cross_session = IncrementalCrossSession()
+        pipeline = TutorAssessmentStudentModelPipeline(
+            target_skill="Skill A",
+            cross_session_pipeline=cross_session,
+            evidence_source=source,
+        )
+        pipeline.start_attempt(
+            student_id="student-a",
+            attempt_id="thread-a:1",
+            attempt_skill="Skill A",
+        )
+        dialogue = pipeline.process_dialogue_turn(
+            student_id="student-a",
+            attempt_id="thread-a:1",
+            turn_index=1,
+            teacher_text="What is x if x + 2 = 5?",
+            student_text="x is 3",
+            correctness="correct",
+            evaluator_confidence=0.5,
+        )
+        completed = pipeline.process_assessment_cycle(
+            student_id="student-a",
+            attempt_id="thread-a:1",
+            evaluated_answers=[
+                {"question": f"Question {index}", "student_answer": "yes", "is_correct": True}
+                for index in range(1, 4)
+            ],
+        )
+
+        self.assertAlmostEqual(
+            dialogue["incremental_learning_outcome"]["mastery_after"],
+            0.3,
+        )
+        self.assertEqual(len(cross_session.calls), 2)
+        self.assertTrue(
+            all(call["attempt_context"] is None for call in cross_session.calls)
+        )
+        self.assertEqual(
+            [len(call["transcript"]) for call in cross_session.calls],
+            [2, 6],
+        )
+        self.assertAlmostEqual(completed["learning_outcome"]["mastery_before"], 0.2)
+        self.assertAlmostEqual(completed["learning_outcome"]["mastery_after"], 0.6)
+        self.assertEqual(
+            completed["dialogue_evidence_summary"],
+            {"turns_processed": 1, "observations_applied": 1},
+        )
+
 
 class AdaptiveCoordinatorLifecycleTests(unittest.TestCase):
     def setUp(self):
@@ -400,18 +555,23 @@ class AdaptiveCoordinatorLifecycleTests(unittest.TestCase):
         )
         self.mastery_store: dict[tuple[str, str], float] = {}
         self.student_pipelines: list[FakeStudentPipeline] = []
+        self.adaptive_pipelines: list[AdaptiveTutorPipeline] = []
+        self.md6_selectors: list[RecordingMD6] = []
         self.cached_evidence_by_thread: dict[str, list[dict[str, str]]] = {}
 
         def factory(**identity):
             memory_adapter = TutorStateMemoryAdapter()
+            md6 = RecordingMD6()
             adaptive = AdaptiveTutorPipeline(
-                md6=RecordingMD6(),
+                md6=md6,
                 mrb1=RecordingMRB1(),
                 controller=TurnLevelAttemptController(self.policy),
                 experience_logger=self.logger,
                 policy_state_path=self.temp_path / "policy.json",
                 memory_adapter=memory_adapter,
             )
+            self.adaptive_pipelines.append(adaptive)
+            self.md6_selectors.append(md6)
             student = FakeStudentPipeline(self.mastery_store)
             self.student_pipelines.append(student)
             bridge = StudentModelFrozenV3Bridge(
@@ -437,6 +597,11 @@ class AdaptiveCoordinatorLifecycleTests(unittest.TestCase):
     def test_failed_assessment_finishes_once_and_starts_next_attempt(self):
         state = tutor_state()
         started = self.coordinator.start_attempt(state)
+        first_started_at = started["attempt_started_at"]
+        self.assertEqual(
+            datetime.fromisoformat(first_started_at.replace("Z", "+00:00")).utcoffset(),
+            datetime.fromisoformat("2026-01-01T00:00:00+00:00").utcoffset(),
+        )
         state.update(started)
         turn = self.coordinator.run_tutor_turn(
             state,
@@ -452,6 +617,7 @@ class AdaptiveCoordinatorLifecycleTests(unittest.TestCase):
         self.assertEqual(completed["attempt_id"], "thread-a:2")
         self.assertEqual(completed["adaptive_attempt_index"], 2)
         self.assertEqual(completed["adaptive_lifecycle_status"], "active")
+        self.assertNotEqual(completed["attempt_started_at"], first_started_at)
         self.assertAlmostEqual(completed["mastery_before"], 0.3)
         self.assertEqual(self.policy.total_updates, 1)
         self.assertEqual(len(self.student_pipelines), 2)
@@ -467,6 +633,246 @@ class AdaptiveCoordinatorLifecycleTests(unittest.TestCase):
         next_state = copy.deepcopy(old_state)
         next_state.update(completed)
         self.coordinator.abort_attempt(next_state)
+
+    def test_research_lifecycle_rows_bind_start_status_and_full_provenance(self):
+        move_order = ["generic", "probing", "focus", "telling"]
+        collector = PassiveTurnCollector(
+            self.temp_path / "research",
+            data_mode="synthetic",
+            version_provenance={
+                "runtime": {
+                    "selector_mode": "ordinary-md7r1-v1",
+                    "selector_deployment_status": "active_runtime",
+                    "learner_agency_version": (
+                        "learner_agency_telling_escalation_v1"
+                    ),
+                    "lints_policy_lineage": "MD7-R1 fresh LinTS v1",
+                    "lints_policy_version": "true_disjoint_lints_v3",
+                    "c3_version": "turn_lints_v3_c3_9d",
+                    "tau": 0.10,
+                    "move_order": move_order,
+                    "resolver_version": "2.0",
+                    "bkt_config_version": "confidence_weighted_bkt_v1",
+                    "bkt_config_sha256": "bkt-sha",
+                },
+                "selector": {
+                    "checkpoint": "md7r1_epoch3",
+                    "model_sha256": "md7-sha",
+                    "move_order": move_order,
+                },
+                "tutor_quality": {
+                    "model_version": "frozen_mrb1",
+                    "model_sha256": "mrb1-sha",
+                },
+                "policy": {
+                    "policy_lineage": "MD7-R1 fresh LinTS v1",
+                    "policy_state_relative_path": (
+                        "adaptive-math-tutor/backend/runtime/policy_state.json"
+                    ),
+                },
+            },
+        )
+        coordinator = AdaptiveComponentCoordinator(
+            component_factory=self.factory,
+            skill_validator=lambda skill: skill in {"Skill A", "Skill B"},
+            research_collector=collector,
+        )
+        state = tutor_state()
+        first_start = coordinator.start_attempt(state)
+        state.update(first_start)
+        turn = coordinator.run_tutor_turn(state, tutor_agent=RecordingTutor())
+        state.update(turn)
+        completed = coordinator.finish_attempt(
+            assessment_state(state, needs_reteaching=True)
+        )
+        second_start = completed["attempt_started_at"]
+        self.assertNotEqual(first_start["attempt_started_at"], second_start)
+
+        next_state = assessment_state(state, needs_reteaching=True)
+        next_state.update(completed)
+        coordinator.abort_attempt(next_state)
+
+        assessment = json.loads(
+            collector.assessment_path.read_text(encoding="utf-8").splitlines()[0]
+        )
+        summaries = [
+            json.loads(line)
+            for line in collector.attempt_path.read_text(
+                encoding="utf-8"
+            ).splitlines()
+        ]
+        self.assertEqual(
+            assessment["attempt_started_at"], first_start["attempt_started_at"]
+        )
+        self.assertEqual(
+            assessment["provenance"]["active_selector"]["move_order"],
+            move_order,
+        )
+        self.assertEqual(
+            [row["completion_status"] for row in summaries],
+            ["completed", "aborted"],
+        )
+        self.assertEqual(
+            [row["attempt_started_at"] for row in summaries],
+            [first_start["attempt_started_at"], second_start],
+        )
+        self.assertNotIn("policy_state_path", summaries[0]["adaptive_completion"])
+        self.assertEqual(
+            summaries[0]["provenance"]["selector_mode"],
+            "ordinary-md7r1-v1",
+        )
+        self.assertEqual(summaries[0]["provenance"]["data_mode"], "synthetic")
+
+    def test_each_action_reads_live_mastery_but_retains_attempt_start_mastery(self):
+        state = tutor_state()
+        state.update(self.coordinator.start_attempt(state))
+
+        first = self.coordinator.run_tutor_turn(
+            state,
+            tutor_agent=RecordingTutor(),
+        )
+        self.mastery_store[("student-a", "Skill A")] = 0.47
+        state["turn_count"] = 1
+        second = self.coordinator.run_tutor_turn(
+            state,
+            tutor_agent=RecordingTutor(),
+        )
+
+        self.assertAlmostEqual(first["mastery_at_action"], 0.2)
+        self.assertAlmostEqual(second["mastery_at_action"], 0.47)
+        self.assertAlmostEqual(second["attempt_start_mastery"], 0.2)
+        self.assertEqual(second["action_turn_index"], 2)
+        self.coordinator.abort_attempt(state)
+
+    def test_controlled_live_completion_processes_bkt_but_aborts_policy(self):
+        observed_bkt_activity = []
+        manual = AdaptiveComponentCoordinator(
+            component_factory=self.factory,
+            skill_validator=lambda skill: skill in {"Skill A", "Skill B"},
+            suppress_policy_completion=True,
+            bkt_activity_observer=lambda **activity: observed_bkt_activity.append(
+                activity
+            ),
+        )
+        state = tutor_state()
+        state.update(manual.start_attempt(state))
+        turn = manual.run_tutor_turn(state, tutor_agent=RecordingTutor())
+        state.update(turn)
+        completed = manual.finish_attempt(
+            assessment_state(state, needs_reteaching=False)
+        )
+
+        result = completed["adaptive_completion_result"]
+        self.assertTrue(result["controlled_live"])
+        self.assertEqual(result["policy_completion"], "aborted_without_update")
+        self.assertTrue(result["policy_update_suppressed"])
+        self.assertTrue(result["experience_log_write_suppressed"])
+        self.assertTrue(result["policy_state_write_suppressed"])
+        self.assertEqual(self.policy.total_updates, 0)
+        self.assertFalse((self.temp_path / "attempts.jsonl").exists())
+        self.assertFalse((self.temp_path / "policy.json").exists())
+        self.assertEqual(self.student_pipelines[0].process_calls, 1)
+        self.assertEqual(len(observed_bkt_activity), 1)
+        self.assertEqual(observed_bkt_activity[0]["student_id"], "student-a")
+        self.assertEqual(observed_bkt_activity[0]["attempt_id"], "thread-a:1")
+        self.assertEqual(observed_bkt_activity[0]["target_skill"], "Skill A")
+        self.assertEqual(len(observed_bkt_activity[0]["evaluated_answers"]), 3)
+        duplicate = manual.finish_attempt(
+            assessment_state(state, needs_reteaching=False)
+        )
+        self.assertEqual(duplicate, completed)
+        self.assertEqual(len(observed_bkt_activity), 1)
+        self.assertFalse(manual.has_active_attempt("thread-a"))
+
+    def test_dialogue_bkt_is_confidence_capped_and_retry_idempotent(self):
+        observed = []
+        coordinator = AdaptiveComponentCoordinator(
+            component_factory=self.factory,
+            skill_validator=lambda skill: skill in {"Skill A", "Skill B"},
+            dialogue_bkt_activity_observer=lambda **activity: observed.append(
+                activity
+            ),
+        )
+        state = tutor_state()
+        state.update(coordinator.start_attempt(state))
+        coordinator.run_tutor_turn(state, tutor_agent=RecordingTutor())
+        state["turn_count"] = 1
+        state["conversation_history"].append(
+            {"role": "student", "content": "x is 3"}
+        )
+
+        first = coordinator.process_dialogue_turn(
+            state,
+            correctness="correct",
+            evaluator_confidence=0.95,
+            evaluator_reason="The response solves the requested step.",
+        )
+        replay = coordinator.process_dialogue_turn(
+            state,
+            correctness="correct",
+            evaluator_confidence=0.95,
+            evaluator_reason="The response solves the requested step.",
+        )
+
+        self.assertEqual(first, replay)
+        pipeline = self.student_pipelines[0]
+        self.assertEqual(len(pipeline.dialogue_calls), 1)
+        self.assertEqual(
+            pipeline.dialogue_calls[0]["evaluator_confidence"],
+            DIALOGUE_EVALUATOR_CONFIDENCE_CAP,
+        )
+        self.assertEqual(len(observed), 1)
+        self.assertEqual(
+            observed[0]["dialogue_evidence"]["student_text"],
+            "x is 3",
+        )
+        coordinator.abort_attempt(state)
+
+    def test_temporary_tutor_failure_reuses_one_sampled_decision_on_resume(self):
+        state = tutor_state()
+        state.update(self.coordinator.start_attempt(state))
+        tutor = FailOnceTutor()
+
+        with self.assertRaisesRegex(RuntimeError, "Temporary tutor failure"):
+            self.coordinator.run_tutor_turn(state, tutor_agent=tutor)
+
+        self.assertTrue(self.coordinator.has_active_attempt("thread-a"))
+        self.assertEqual(len(self.md6_selectors[0].calls), 1)
+        result = self.coordinator.run_tutor_turn(state, tutor_agent=tutor)
+
+        self.assertEqual(tutor.calls, 2)
+        self.assertEqual(len(self.md6_selectors[0].calls), 1)
+        self.assertEqual(result["turn_index"], 1)
+        self.assertEqual(
+            len(self.adaptive_pipelines[0].controller.completed_turns),
+            1,
+        )
+        self.assertEqual(self.policy.total_updates, 0)
+        self.coordinator.abort_attempt(state)
+
+    def test_temporary_mrb1_failure_reuses_tutor_response_on_resume(self):
+        state = tutor_state()
+        state.update(self.coordinator.start_attempt(state))
+        tutor = RecordingTutor()
+        scorer = FailOnceMRB1()
+        self.adaptive_pipelines[0].mrb1 = scorer
+
+        with self.assertRaisesRegex(RuntimeError, "Temporary MRB1 failure"):
+            self.coordinator.run_tutor_turn(state, tutor_agent=tutor)
+
+        self.assertTrue(self.coordinator.has_active_attempt("thread-a"))
+        result = self.coordinator.run_tutor_turn(state, tutor_agent=tutor)
+
+        self.assertEqual(len(tutor.calls), 1)
+        self.assertEqual(len(self.md6_selectors[0].calls), 1)
+        self.assertEqual(len(scorer.calls), 2)
+        self.assertEqual(result["turn_index"], 1)
+        self.assertEqual(
+            len(self.adaptive_pipelines[0].controller.completed_turns),
+            1,
+        )
+        self.assertEqual(self.policy.total_updates, 0)
+        self.coordinator.abort_attempt(state)
 
     def test_two_threads_are_isolated_and_overlap_is_rejected(self):
         first = tutor_state("thread-a", "student-a", target_skill="Skill A")

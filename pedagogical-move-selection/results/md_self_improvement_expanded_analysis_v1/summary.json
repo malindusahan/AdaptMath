@@ -1,0 +1,1080 @@
+{
+  "analysis_version": "md_self_improvement_expanded_analysis_v1",
+  "analysis_scope": {
+    "primary": "12 completed ordinary-mode attempts / 87 observed dialogue turns",
+    "inventory": "all 96 action records including two censored aborted attempts",
+    "observed_sensitivity": "94 observed dialogue updates including seven from one aborted manual-controlled attempt"
+  },
+  "inventory": {
+    "completed_attempts": 12,
+    "aborted_attempts": 2,
+    "action_records": 96,
+    "observed_dialogue_turns_all": 94,
+    "completed_cohort_turns": 87,
+    "formal_assessment_observations": 36,
+    "unique_learners": 3,
+    "unique_skills_all": 11,
+    "unique_skills_completed": 11,
+    "unique_learner_skill_pairs_completed": 11,
+    "pending_actions": 0,
+    "pending_processing_failures": 0
+  },
+  "integrity": {
+    "mismatch_counts": {
+      "duplicate_action_id_groups": 0,
+      "duplicate_action_id_extra_records": 0,
+      "conflicting_action_id_groups": 0,
+      "duplicate_resolver_id_groups": 0,
+      "duplicate_resolver_id_extra_records": 0,
+      "conflicting_resolver_id_groups": 0,
+      "duplicate_assessment_id_groups": 0,
+      "duplicate_assessment_id_extra_records": 0,
+      "conflicting_assessment_id_groups": 0,
+      "duplicate_summary_id_groups": 0,
+      "duplicate_summary_id_extra_records": 0,
+      "conflicting_summary_id_groups": 0,
+      "exact_duplicate_turn_records": 0,
+      "exact_duplicate_assessment_records": 0,
+      "exact_duplicate_summary_records": 0,
+      "index_starts_at_1_mismatches": 0,
+      "index_monotonic_mismatches": 0,
+      "index_contiguous_mismatches": 0,
+      "timestamp_order_mismatches": 0,
+      "resolver_action_identity_mismatches": 0,
+      "delta_equation_mismatches": 0,
+      "action_mastery_mismatches": 0,
+      "mastery_continuity_mismatches": 0,
+      "history_text_temporal_mismatches": 0,
+      "assessment_separation_mismatches": 0,
+      "assessment_chain_mismatches": 0,
+      "censored_action_mastery_continuity_mismatches": 0,
+      "pending_actions": 0,
+      "pending_processing_failures": 0
+    },
+    "blocking_mismatch_count": 0,
+    "clean": true
+  },
+  "privacy": {
+    "scope": "all post-first-attempt records, including censored attempts",
+    "pattern_counts": {
+      "absolute_C_Users_paths": 0,
+      "raw_username_Lenovo": 0,
+      "email_address": 0,
+      "account_id": 0,
+      "api_key": 0,
+      "auth_token": 0,
+      "secret": 0
+    },
+    "rooted_path_fields": [],
+    "invalid_pseudonyms": [],
+    "failure_count": 0
+  },
+  "provenance": {
+    "data_mode_counts": {
+      "real": 96
+    },
+    "selector_modes_all_action_records": {
+      "manual-controlled-live-md7r1-v1": 1,
+      "ordinary-md7r1-v1": 95
+    },
+    "selector_modes_completed_cohort": {
+      "ordinary-md7r1-v1": 87,
+      "manual-controlled-live-md7r1-v1": 0
+    },
+    "manual_mode_exception": "8 action records (7 observed, 1 censored) from aborted attempt 4220e000…; excluded from primary completed-cohort analyses",
+    "base_turn_field_audit": {
+      "data_mode": {
+        "nonmissing_values": [
+          "real"
+        ],
+        "missing_count": 0,
+        "conflicting_nonmissing": false
+      },
+      "selector_mode": {
+        "nonmissing_values": [
+          "manual-controlled-live-md7r1-v1",
+          "ordinary-md7r1-v1"
+        ],
+        "missing_count": 0,
+        "conflicting_nonmissing": true
+      },
+      "selector_checkpoint": {
+        "nonmissing_values": [
+          "md7r1_epoch3"
+        ],
+        "missing_count": 0,
+        "conflicting_nonmissing": false
+      },
+      "selector_model_sha256": {
+        "nonmissing_values": [
+          "d32d37f7f664d038f80fefb92f874804b49e5ac3d848985636ae64e6a2a60a13"
+        ],
+        "missing_count": 0,
+        "conflicting_nonmissing": false
+      },
+      "move_order": {
+        "nonmissing_values": [
+          "[\"generic\",\"probing\",\"focus\",\"telling\"]"
+        ],
+        "missing_count": 15,
+        "conflicting_nonmissing": false
+      },
+      "learner_agency_version": {
+        "nonmissing_values": [
+          "learner_agency_telling_escalation_v1"
+        ],
+        "missing_count": 0,
+        "conflicting_nonmissing": false
+      },
+      "c3_version": {
+        "nonmissing_values": [
+          "turn_lints_v3_c3_9d"
+        ],
+        "missing_count": 0,
+        "conflicting_nonmissing": false
+      },
+      "lints_policy_version": {
+        "nonmissing_values": [
+          "true_disjoint_lints_v3"
+        ],
+        "missing_count": 0,
+        "conflicting_nonmissing": false
+      },
+      "lints_policy_lineage": {
+        "nonmissing_values": [
+          "MD7-R1 fresh LinTS v1"
+        ],
+        "missing_count": 0,
+        "conflicting_nonmissing": false
+      },
+      "tau": {
+        "nonmissing_values": [
+          "0.1"
+        ],
+        "missing_count": 0,
+        "conflicting_nonmissing": false
+      },
+      "mrb1_version": {
+        "nonmissing_values": [
+          "frozen_mrb1"
+        ],
+        "missing_count": 0,
+        "conflicting_nonmissing": false
+      },
+      "mrb1_sha256": {
+        "nonmissing_values": [
+          "9ad757e884beae6a242cf6fe17d5b3524e7599e413e9b9cc5f3b999a37a6f1d7"
+        ],
+        "missing_count": 0,
+        "conflicting_nonmissing": false
+      },
+      "resolver_version": {
+        "nonmissing_values": [
+          "2.0"
+        ],
+        "missing_count": 0,
+        "conflicting_nonmissing": false
+      },
+      "bkt_version": {
+        "nonmissing_values": [
+          "confidence_weighted_bkt_v1"
+        ],
+        "missing_count": 0,
+        "conflicting_nonmissing": false
+      },
+      "bkt_sha256": {
+        "nonmissing_values": [
+          "a82d8f066c965d931882ae3251db50b42f8033defb89da3e822b7b23a3b56e75"
+        ],
+        "missing_count": 0,
+        "conflicting_nonmissing": false
+      }
+    }
+  },
+  "coverage": {
+    "learners": [
+      {
+        "learner_pseudonym": "psn_9a081eb5df240169b9f3c83b",
+        "attempts": 3,
+        "turns": 10,
+        "skills": 3,
+        "start_min": 0.2091773436971774,
+        "start_median": 0.7322287873726493,
+        "start_mean": 0.6141059154857932,
+        "start_max": 0.9009116153875528,
+        "final_min": 0.9101462082412068,
+        "final_median": 0.9566732707561004,
+        "final_mean": 0.9487626028693095,
+        "final_max": 0.979468329610621,
+        "move_generic": 3,
+        "move_probing": 5,
+        "move_focus": 2,
+        "move_telling": 0,
+        "eval_correct": 9,
+        "eval_partial": 1,
+        "eval_incorrect": 0,
+        "eval_unknown": 0,
+        "bkt_positive": 10,
+        "bkt_zero": 0,
+        "bkt_negative": 0
+      },
+      {
+        "learner_pseudonym": "psn_b94f4a505b4ee07be23867fc",
+        "attempts": 3,
+        "turns": 20,
+        "skills": 3,
+        "start_min": 0.7807387535603924,
+        "start_median": 0.8135524878930875,
+        "start_mean": 0.8147637471511601,
+        "start_max": 0.85,
+        "final_min": 0.9898405174289288,
+        "final_median": 0.9914304595900428,
+        "final_mean": 0.9934007739525081,
+        "final_max": 0.9989313448385528,
+        "move_generic": 5,
+        "move_probing": 5,
+        "move_focus": 10,
+        "move_telling": 0,
+        "eval_correct": 14,
+        "eval_partial": 3,
+        "eval_incorrect": 2,
+        "eval_unknown": 1,
+        "bkt_positive": 17,
+        "bkt_zero": 0,
+        "bkt_negative": 3
+      },
+      {
+        "learner_pseudonym": "psn_f78c0817d43053e5bd31da20",
+        "attempts": 6,
+        "turns": 57,
+        "skills": 5,
+        "start_min": 0.0110415225804813,
+        "start_median": 0.6511452727326541,
+        "start_mean": 0.6246262304004758,
+        "start_max": 0.9740457914204136,
+        "final_min": 0.9444547628424902,
+        "final_median": 0.9958100837865738,
+        "final_mean": 0.9847049361837059,
+        "final_max": 0.9999999869060648,
+        "move_generic": 14,
+        "move_probing": 20,
+        "move_focus": 23,
+        "move_telling": 0,
+        "eval_correct": 27,
+        "eval_partial": 2,
+        "eval_incorrect": 11,
+        "eval_unknown": 17,
+        "bkt_positive": 30,
+        "bkt_zero": 0,
+        "bkt_negative": 27
+      }
+    ],
+    "skills": [
+      {
+        "skill": "Complementary and Supplementary Angles",
+        "unique_learners": 1,
+        "attempts": 1,
+        "turns": 9,
+        "start_min": 0.8436223211978062,
+        "start_median": 0.8436223211978062,
+        "start_mean": 0.8436223211978062,
+        "start_max": 0.8436223211978062,
+        "raw_generic": 1,
+        "raw_probing": 6,
+        "raw_focus": 2,
+        "raw_telling": 0,
+        "final_generic": 2,
+        "final_probing": 6,
+        "final_focus": 1,
+        "final_telling": 0,
+        "eval_correct": 2,
+        "eval_partial": 1,
+        "eval_incorrect": 1,
+        "eval_unknown": 5,
+        "bkt_positive": 3,
+        "bkt_zero": 0,
+        "bkt_negative": 6,
+        "dialogue_net": -0.0972859046801827,
+        "assessment_net": 0.2517724918424954,
+        "flags": "single_learner;single_attempt;very_small_turn_count_<10;near_saturation"
+      },
+      {
+        "skill": "Conversion of Fraction Decimals Percents",
+        "unique_learners": 1,
+        "attempts": 1,
+        "turns": 10,
+        "start_min": 0.6167572017388457,
+        "start_median": 0.6167572017388457,
+        "start_mean": 0.6167572017388457,
+        "start_max": 0.6167572017388457,
+        "raw_generic": 1,
+        "raw_probing": 4,
+        "raw_focus": 5,
+        "raw_telling": 0,
+        "final_generic": 1,
+        "final_probing": 4,
+        "final_focus": 5,
+        "final_telling": 0,
+        "eval_correct": 6,
+        "eval_partial": 1,
+        "eval_incorrect": 2,
+        "eval_unknown": 1,
+        "bkt_positive": 7,
+        "bkt_zero": 0,
+        "bkt_negative": 3,
+        "dialogue_net": 0.1070489128281656,
+        "assessment_net": 0.2206486482754788,
+        "flags": "single_learner;single_attempt"
+      },
+      {
+        "skill": "Equation Solving Two or Fewer Steps",
+        "unique_learners": 1,
+        "attempts": 2,
+        "turns": 23,
+        "start_min": 0.6416626571109912,
+        "start_median": 0.8078542242657024,
+        "start_mean": 0.8078542242657024,
+        "start_max": 0.9740457914204136,
+        "raw_generic": 9,
+        "raw_probing": 3,
+        "raw_focus": 11,
+        "raw_telling": 0,
+        "final_generic": 9,
+        "final_probing": 3,
+        "final_focus": 11,
+        "final_telling": 0,
+        "eval_correct": 12,
+        "eval_partial": 0,
+        "eval_incorrect": 3,
+        "eval_unknown": 8,
+        "bkt_positive": 12,
+        "bkt_zero": 0,
+        "bkt_negative": 11,
+        "dialogue_net": 0.1555353492075981,
+        "assessment_net": 0.1992694165199537,
+        "flags": "single_learner;high_starting_mastery"
+      },
+      {
+        "skill": "Interior Angles Triangle",
+        "unique_learners": 1,
+        "attempts": 1,
+        "turns": 5,
+        "start_min": 0.8135524878930875,
+        "start_median": 0.8135524878930875,
+        "start_mean": 0.8135524878930875,
+        "start_max": 0.8135524878930875,
+        "raw_generic": 3,
+        "raw_probing": 1,
+        "raw_focus": 1,
+        "raw_telling": 0,
+        "final_generic": 3,
+        "final_probing": 1,
+        "final_focus": 1,
+        "final_telling": 0,
+        "eval_correct": 4,
+        "eval_partial": 0,
+        "eval_incorrect": 1,
+        "eval_unknown": 0,
+        "bkt_positive": 4,
+        "bkt_zero": 0,
+        "bkt_negative": 1,
+        "dialogue_net": 0.1287919436531321,
+        "assessment_net": 0.0565869132923331,
+        "flags": "single_learner;single_attempt;very_small_turn_count_<10;near_saturation"
+      },
+      {
+        "skill": "Multiplication Whole Numbers",
+        "unique_learners": 1,
+        "attempts": 1,
+        "turns": 7,
+        "start_min": 0.6606278883543171,
+        "start_median": 0.6606278883543171,
+        "start_mean": 0.6606278883543171,
+        "start_max": 0.6606278883543171,
+        "raw_generic": 1,
+        "raw_probing": 6,
+        "raw_focus": 0,
+        "raw_telling": 0,
+        "final_generic": 1,
+        "final_probing": 6,
+        "final_focus": 0,
+        "final_telling": 0,
+        "eval_correct": 2,
+        "eval_partial": 0,
+        "eval_incorrect": 3,
+        "eval_unknown": 2,
+        "bkt_positive": 2,
+        "bkt_zero": 0,
+        "bkt_negative": 5,
+        "dialogue_net": 0.0111565147648631,
+        "assessment_net": 0.3233683416154241,
+        "flags": "single_learner;single_attempt;very_small_turn_count_<10;near_saturation"
+      },
+      {
+        "skill": "Multiplication and Division Integers",
+        "unique_learners": 1,
+        "attempts": 1,
+        "turns": 9,
+        "start_min": 0.7807387535603924,
+        "start_median": 0.7807387535603924,
+        "start_mean": 0.7807387535603924,
+        "start_max": 0.7807387535603924,
+        "raw_generic": 1,
+        "raw_probing": 1,
+        "raw_focus": 7,
+        "raw_telling": 0,
+        "final_generic": 1,
+        "final_probing": 1,
+        "final_focus": 7,
+        "final_telling": 0,
+        "eval_correct": 7,
+        "eval_partial": 2,
+        "eval_incorrect": 0,
+        "eval_unknown": 0,
+        "bkt_positive": 9,
+        "bkt_zero": 0,
+        "bkt_negative": 0,
+        "dialogue_net": 0.1739555459193795,
+        "assessment_net": 0.0351462179491569,
+        "flags": "single_learner;single_attempt;very_small_turn_count_<10"
+      },
+      {
+        "skill": "Multiplication and Division Positive Decimals",
+        "unique_learners": 1,
+        "attempts": 1,
+        "turns": 6,
+        "start_min": 0.85,
+        "start_median": 0.85,
+        "start_mean": 0.85,
+        "start_max": 0.85,
+        "raw_generic": 1,
+        "raw_probing": 3,
+        "raw_focus": 2,
+        "raw_telling": 0,
+        "final_generic": 1,
+        "final_probing": 3,
+        "final_focus": 2,
+        "final_telling": 0,
+        "eval_correct": 3,
+        "eval_partial": 1,
+        "eval_incorrect": 1,
+        "eval_unknown": 1,
+        "bkt_positive": 4,
+        "bkt_zero": 0,
+        "bkt_negative": 2,
+        "dialogue_net": -0.0358264239647476,
+        "assessment_net": 0.1772568835547905,
+        "flags": "single_learner;single_attempt;very_small_turn_count_<10;near_saturation"
+      },
+      {
+        "skill": "Perimeter of a Polygon",
+        "unique_learners": 1,
+        "attempts": 1,
+        "turns": 2,
+        "start_min": 0.9009116153875528,
+        "start_median": 0.9009116153875528,
+        "start_mean": 0.9009116153875528,
+        "start_max": 0.9009116153875528,
+        "raw_generic": 1,
+        "raw_probing": 1,
+        "raw_focus": 0,
+        "raw_telling": 0,
+        "final_generic": 1,
+        "final_probing": 1,
+        "final_focus": 0,
+        "final_telling": 0,
+        "eval_correct": 2,
+        "eval_partial": 0,
+        "eval_incorrect": 0,
+        "eval_unknown": 0,
+        "bkt_positive": 2,
+        "bkt_zero": 0,
+        "bkt_negative": 0,
+        "dialogue_net": 0.0582898969700197,
+        "assessment_net": -0.0490553041163657,
+        "flags": "single_learner;single_attempt;very_small_turn_count_<10;high_starting_mastery"
+      },
+      {
+        "skill": "Polynomial Factors",
+        "unique_learners": 1,
+        "attempts": 1,
+        "turns": 5,
+        "start_min": 0.2091773436971774,
+        "start_median": 0.2091773436971774,
+        "start_mean": 0.2091773436971774,
+        "start_max": 0.2091773436971774,
+        "raw_generic": 1,
+        "raw_probing": 3,
+        "raw_focus": 1,
+        "raw_telling": 0,
+        "final_generic": 1,
+        "final_probing": 3,
+        "final_focus": 1,
+        "final_telling": 0,
+        "eval_correct": 5,
+        "eval_partial": 0,
+        "eval_incorrect": 0,
+        "eval_unknown": 0,
+        "bkt_positive": 5,
+        "bkt_zero": 0,
+        "bkt_negative": 0,
+        "dialogue_net": 0.54546077456224,
+        "assessment_net": 0.2248302113512036,
+        "flags": "single_learner;single_attempt;very_small_turn_count_<10"
+      },
+      {
+        "skill": "Pythagorean Theorem",
+        "unique_learners": 1,
+        "attempts": 1,
+        "turns": 3,
+        "start_min": 0.7322287873726493,
+        "start_median": 0.7322287873726493,
+        "start_mean": 0.7322287873726493,
+        "start_max": 0.7322287873726493,
+        "raw_generic": 1,
+        "raw_probing": 1,
+        "raw_focus": 1,
+        "raw_telling": 0,
+        "final_generic": 1,
+        "final_probing": 1,
+        "final_focus": 1,
+        "final_telling": 0,
+        "eval_correct": 2,
+        "eval_partial": 1,
+        "eval_incorrect": 0,
+        "eval_unknown": 0,
+        "bkt_positive": 3,
+        "bkt_zero": 0,
+        "bkt_negative": 0,
+        "dialogue_net": 0.0951569772368453,
+        "assessment_net": 0.1292875061466056,
+        "flags": "single_learner;single_attempt;very_small_turn_count_<10"
+      },
+      {
+        "skill": "Simplifying Expressions positive exponents",
+        "unique_learners": 1,
+        "attempts": 1,
+        "turns": 8,
+        "start_min": 0.0110415225804813,
+        "start_median": 0.0110415225804813,
+        "start_mean": 0.0110415225804813,
+        "start_max": 0.0110415225804813,
+        "raw_generic": 1,
+        "raw_probing": 1,
+        "raw_focus": 6,
+        "raw_telling": 0,
+        "final_generic": 1,
+        "final_probing": 1,
+        "final_focus": 6,
+        "final_telling": 0,
+        "eval_correct": 5,
+        "eval_partial": 0,
+        "eval_incorrect": 2,
+        "eval_unknown": 1,
+        "bkt_positive": 6,
+        "bkt_zero": 0,
+        "bkt_negative": 2,
+        "dialogue_net": 0.9849038945832654,
+        "assessment_net": 0.0040545697423181,
+        "flags": "single_learner;single_attempt;very_small_turn_count_<10;near_saturation"
+      }
+    ],
+    "moves": {
+      "raw": {
+        "generic": 21,
+        "probing": 30,
+        "focus": 36,
+        "telling": 0
+      },
+      "effective": {
+        "generic": 21,
+        "probing": 30,
+        "focus": 36,
+        "telling": 0
+      },
+      "final": {
+        "generic": 22,
+        "probing": 30,
+        "focus": 35,
+        "telling": 0
+      },
+      "telling_origins": {
+        "raw_md7": 0,
+        "learner_agency": 0,
+        "lints_override": 0
+      }
+    },
+    "agency_trigger_count": 0,
+    "agency_semantic_miss_count": 2
+  },
+  "lints": {
+    "baseline_only": 79,
+    "alternatives": 8,
+    "eligible_bins": {
+      "2": 7,
+      "3": 1,
+      "4_plus": 0
+    },
+    "eligible_arm_stats": {
+      "count": 87,
+      "min": 1.0,
+      "q1": 1.0,
+      "median": 1.0,
+      "mean": 1.103448275862069,
+      "q3": 1.0,
+      "max": 3.0,
+      "std": 0.34019881809077573
+    },
+    "selected_arms": {
+      "baseline": 86,
+      "generic_bias": 1,
+      "probing_bias": 0,
+      "focus_bias": 0,
+      "telling_bias": 0
+    },
+    "actual_overrides": 1,
+    "arm_update_counts": {
+      "baseline": 86,
+      "generic_bias": 1,
+      "probing_bias": 0,
+      "focus_bias": 0,
+      "telling_bias": 0
+    },
+    "policy_total_updates": 87,
+    "experience_attempts": 12,
+    "experience_turns": 87
+  },
+  "md7_gap": {
+    "stats": {
+      "count": 87,
+      "min": 0.0019766688346862,
+      "q1": 0.23921272158622742,
+      "median": 0.3930843025445938,
+      "mean": 0.5007133519687775,
+      "q3": 0.8497164845466614,
+      "max": 0.9979600947117432,
+      "std": 0.33054521819783156
+    },
+    "thresholds": [
+      {
+        "threshold": 0.02,
+        "count": 4,
+        "percent": 4.597701149425287
+      },
+      {
+        "threshold": 0.05,
+        "count": 4,
+        "percent": 4.597701149425287
+      },
+      {
+        "threshold": 0.1,
+        "count": 8,
+        "percent": 9.195402298850574
+      },
+      {
+        "threshold": 0.15,
+        "count": 12,
+        "percent": 13.793103448275861
+      },
+      {
+        "threshold": 0.2,
+        "count": 17,
+        "percent": 19.54022988505747
+      }
+    ],
+    "tau_0_10_alternative_fraction": 0.09195402298850575
+  },
+  "bkt": {
+    "mastery_before": {
+      "count": 87,
+      "min": 0.0110415225804813,
+      "q1": 0.6221267115815636,
+      "median": 0.7397806131002348,
+      "mean": 0.7285193946319061,
+      "q3": 0.8988945098954768,
+      "max": 0.9894141164608344,
+      "std": 0.1954995169360748
+    },
+    "headroom": {
+      "count": 87,
+      "min": 0.0105858835391656,
+      "q1": 0.10110549010452319,
+      "median": 0.2602193868997652,
+      "mean": 0.2714806053680938,
+      "q3": 0.37787328841843637,
+      "max": 0.9889584774195188,
+      "std": 0.19549951693607484
+    },
+    "delta": {
+      "count": 87,
+      "min": -0.1710836699786672,
+      "q1": -0.02848221711988145,
+      "median": 0.0217703693489806,
+      "mean": 0.024450430817018136,
+      "q3": 0.06857612139128094,
+      "max": 0.5565306848534494,
+      "std": 0.09532161839036109
+    },
+    "absolute_delta": {
+      "count": 87,
+      "min": 0.0013711078406207,
+      "q1": 0.02420705238002625,
+      "median": 0.0494524306110741,
+      "mean": 0.06793484743794173,
+      "q3": 0.09188816873716675,
+      "max": 0.5565306848534494,
+      "std": 0.07119614458156424
+    },
+    "sign_counts": {
+      "positive": 57,
+      "zero": 0,
+      "negative": 30
+    },
+    "bands": [
+      {
+        "band": "[0,.25)",
+        "turns": 2,
+        "learners": 2,
+        "skills": 2,
+        "mean_delta": 0.33136262719835696,
+        "median_delta": 0.33136262719835696,
+        "mean_abs_delta": 0.33136262719835696,
+        "median_abs_delta": 0.33136262719835696,
+        "positive": 2,
+        "zero": 0,
+        "negative": 0
+      },
+      {
+        "band": "[.25,.50)",
+        "turns": 8,
+        "learners": 2,
+        "skills": 4,
+        "mean_delta": 0.048391061445525484,
+        "median_delta": 0.08842576893783005,
+        "mean_abs_delta": 0.10325618431495398,
+        "median_abs_delta": 0.09545464307798354,
+        "positive": 5,
+        "zero": 0,
+        "negative": 3
+      },
+      {
+        "band": "[.50,.75)",
+        "turns": 36,
+        "learners": 3,
+        "skills": 8,
+        "mean_delta": 0.02846301519522866,
+        "median_delta": 0.05775284611139,
+        "mean_abs_delta": 0.08098692795383178,
+        "median_abs_delta": 0.0746648734927132,
+        "positive": 23,
+        "zero": 0,
+        "negative": 13
+      },
+      {
+        "band": "[.75,.90)",
+        "turns": 19,
+        "learners": 3,
+        "skills": 7,
+        "mean_delta": 0.001573279309236304,
+        "median_delta": 0.0188715873530228,
+        "mean_abs_delta": 0.04956926930142137,
+        "median_abs_delta": 0.0387795900292939,
+        "positive": 13,
+        "zero": 0,
+        "negative": 6
+      },
+      {
+        "band": "[.90,.97)",
+        "turns": 14,
+        "learners": 3,
+        "skills": 6,
+        "mean_delta": 0.0029656419934501943,
+        "median_delta": 0.0142273123036003,
+        "mean_abs_delta": 0.035969718860677805,
+        "median_abs_delta": 0.023276824902497502,
+        "positive": 11,
+        "zero": 0,
+        "negative": 3
+      },
+      {
+        "band": "[.97,1]",
+        "turns": 8,
+        "learners": 1,
+        "skills": 2,
+        "mean_delta": -0.00234326333654555,
+        "median_delta": -0.0027579555548536,
+        "mean_abs_delta": 0.0075794263837682,
+        "median_abs_delta": 0.0074635064515910995,
+        "positive": 3,
+        "zero": 0,
+        "negative": 5
+      }
+    ]
+  },
+  "evaluator_bkt": [
+    {
+      "correctness": "correct",
+      "positive_count": 50,
+      "zero_count": 0,
+      "negative_count": 0,
+      "positive_percent": 100.0,
+      "zero_percent": 0.0,
+      "negative_percent": 0.0,
+      "row_total": 50
+    },
+    {
+      "correctness": "partial",
+      "positive_count": 6,
+      "zero_count": 0,
+      "negative_count": 0,
+      "positive_percent": 100.0,
+      "zero_percent": 0.0,
+      "negative_percent": 0.0,
+      "row_total": 6
+    },
+    {
+      "correctness": "incorrect",
+      "positive_count": 1,
+      "zero_count": 0,
+      "negative_count": 12,
+      "positive_percent": 7.6923076923076925,
+      "zero_percent": 0.0,
+      "negative_percent": 92.3076923076923,
+      "row_total": 13
+    },
+    {
+      "correctness": "unknown",
+      "positive_count": 0,
+      "zero_count": 0,
+      "negative_count": 18,
+      "positive_percent": 0.0,
+      "zero_percent": 0.0,
+      "negative_percent": 100.0,
+      "row_total": 18
+    }
+  ],
+  "signal_redundancy": {
+    "evaluator_eta_squared_delta": 0.44362376889822136,
+    "correlations": [
+      {
+        "group": "all",
+        "association": "delta_mastery_vs_mastery_before",
+        "n": 87,
+        "pearson": -0.45471155869272684,
+        "spearman": -0.357002259969381
+      },
+      {
+        "group": "all",
+        "association": "delta_mastery_vs_headroom",
+        "n": 87,
+        "pearson": 0.4547115586927268,
+        "spearman": 0.357002259969381
+      },
+      {
+        "group": "all",
+        "association": "delta_mastery_vs_update_confidence",
+        "n": 87,
+        "pearson": 0.15593687288315614,
+        "spearman": 0.12689444019659937
+      },
+      {
+        "group": "correct",
+        "association": "delta_mastery_vs_mastery_before",
+        "n": 50,
+        "pearson": -0.7681214421552939,
+        "spearman": -0.9058823529411764
+      },
+      {
+        "group": "correct",
+        "association": "delta_mastery_vs_headroom",
+        "n": 50,
+        "pearson": 0.7681214421552939,
+        "spearman": 0.9058823529411764
+      },
+      {
+        "group": "correct",
+        "association": "delta_mastery_vs_update_confidence",
+        "n": 50,
+        "pearson": 0.17700038457441386,
+        "spearman": 0.23475170736403653
+      },
+      {
+        "group": "partial",
+        "association": "delta_mastery_vs_mastery_before",
+        "n": 6,
+        "pearson": -0.5263878333210525,
+        "spearman": -0.6
+      },
+      {
+        "group": "partial",
+        "association": "delta_mastery_vs_headroom",
+        "n": 6,
+        "pearson": 0.5263878333210528,
+        "spearman": 0.6
+      },
+      {
+        "group": "partial",
+        "association": "delta_mastery_vs_update_confidence",
+        "n": 6,
+        "pearson": 0.2337405886757374,
+        "spearman": 0.2571428571428572
+      },
+      {
+        "group": "incorrect",
+        "association": "delta_mastery_vs_mastery_before",
+        "n": 13,
+        "pearson": 0.03844844275629907,
+        "spearman": 0.07692307692307691
+      },
+      {
+        "group": "incorrect",
+        "association": "delta_mastery_vs_headroom",
+        "n": 13,
+        "pearson": -0.03844844275629896,
+        "spearman": -0.07692307692307691
+      },
+      {
+        "group": "incorrect",
+        "association": "delta_mastery_vs_update_confidence",
+        "n": 13,
+        "pearson": -0.12460630491551351,
+        "spearman": -0.016506205436421884
+      },
+      {
+        "group": "unknown",
+        "association": "delta_mastery_vs_mastery_before",
+        "n": 18,
+        "pearson": 0.44795015926621606,
+        "spearman": 0.3085655314757482
+      },
+      {
+        "group": "unknown",
+        "association": "delta_mastery_vs_headroom",
+        "n": 18,
+        "pearson": -0.4479501592662162,
+        "spearman": -0.3085655314757482
+      },
+      {
+        "group": "unknown",
+        "association": "delta_mastery_vs_update_confidence",
+        "n": 18,
+        "pearson": -0.22768226081574147,
+        "spearman": -0.17503999009157364
+      }
+    ],
+    "interpretation": "Evaluator class nearly determines delta sign, while within-class delta magnitude still varies with mastery/headroom and update confidence; residual variation remains but is structured by the BKT update."
+  },
+  "attempt_credit": {
+    "positive_cumulative_attempts": 12,
+    "positive_with_negative_immediate_turns": 8,
+    "negative_dialogue_positive_total_attempts": [
+      2,
+      3,
+      12
+    ]
+  },
+  "old_to_new": {
+    "attempts": [
+      6,
+      12
+    ],
+    "learners": [
+      1,
+      3
+    ],
+    "skills": [
+      5,
+      11
+    ],
+    "turns": [
+      57,
+      87
+    ],
+    "raw_moves": [
+      {
+        "generic": 13,
+        "probing": 20,
+        "focus": 24,
+        "telling": 0
+      },
+      {
+        "generic": 21,
+        "probing": 30,
+        "focus": 36,
+        "telling": 0
+      }
+    ],
+    "final_moves": [
+      {
+        "generic": 14,
+        "probing": 20,
+        "focus": 23,
+        "telling": 0
+      },
+      {
+        "generic": 22,
+        "probing": 30,
+        "focus": 35,
+        "telling": 0
+      }
+    ],
+    "agency_triggers": [
+      0,
+      0
+    ],
+    "lints_overrides": [
+      1,
+      1
+    ],
+    "baseline_only_rate_percent": [
+      94.73684210526316,
+      90.80459770114942
+    ],
+    "alternative_opportunity_rate_percent": [
+      5.2631578947368425,
+      9.195402298850574
+    ],
+    "bkt_signs": [
+      {
+        "positive": 30,
+        "zero": 0,
+        "negative": 27
+      },
+      {
+        "positive": 57,
+        "zero": 0,
+        "negative": 30
+      }
+    ],
+    "mastery_before_range": [
+      [
+        0.011041522580481314,
+        0.9894141164608343
+      ],
+      [
+        0.0110415225804813,
+        0.9894141164608344
+      ]
+    ]
+  },
+  "comparable_state_regions_multi_learner_multi_move": 6,
+  "sufficiency": {
+    "data_pipeline_prototyping": "yes",
+    "engineering_training_smoke_test": "yes",
+    "tiny_scientific_sft_candidate": "conditional_no_not_without_qualification_and_replay",
+    "comparison_against_md7": "no_for_scientific_effectiveness; yes_for_pipeline_descriptives",
+    "claim_of_tutoring_policy_improvement": "no"
+  },
+  "recommended_next_experiment_category": "B",
+  "verdict": "B. DATA CLEAN BUT ACTION COVERAGE POLICY-BOUND — DESIGN CONTROLLED EXPLORATION NEXT",
+  "side_effects": {
+    "training": 0,
+    "model_writes": 0,
+    "policy_writes": 0,
+    "authoritative_research_writes": 0,
+    "api_calls": 0,
+    "tutor_conversations": 0,
+    "protected_evaluation_use": 0,
+    "protected_input_hash_changes": {}
+  }
+}

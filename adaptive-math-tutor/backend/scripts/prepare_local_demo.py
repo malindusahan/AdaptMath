@@ -10,7 +10,21 @@ from pathlib import Path
 
 BACKEND_ROOT = Path(__file__).resolve().parents[1]
 WORKSPACE_ROOT = BACKEND_ROOT.parents[1]
-DEMO_ROOT = BACKEND_ROOT / "runtime" / "adaptive_demo"
+DATA_MODE = os.getenv("ADAPTIVE_DATA_MODE", "synthetic").strip()
+if DATA_MODE not in {"real", "synthetic"}:
+    raise ValueError("ADAPTIVE_DATA_MODE must be exactly 'real' or 'synthetic'.")
+DEMO_ROOT = Path(
+    os.getenv(
+        "ADAPTIVE_LOCAL_RUNTIME_ROOT",
+        BACKEND_ROOT
+        / "runtime"
+        / (
+            "adaptive_live_real_v1"
+            if DATA_MODE == "real"
+            else "adaptive_demo"
+        ),
+    )
+).resolve()
 STUDENT_SOURCE = WORKSPACE_ROOT / "student-modeling"
 MOVE_SOURCE = WORKSPACE_ROOT / "pedagogical-move-selection"
 
@@ -26,19 +40,18 @@ def _require_source(path: Path, required: tuple[str, ...], label: str) -> Path:
 
 
 def _copy_student_runtime(source: Path, destination: Path) -> None:
-    if destination.exists():
-        raise FileExistsError(
-            f"Demo student-model runtime already exists: {destination}"
-        )
-    destination.mkdir(parents=True)
+    # This directory is an executable copy, not the scientific source of
+    # truth. Refresh code on every launch while preserving the runtime data DB.
+    destination.mkdir(parents=True, exist_ok=True)
     for directory in ("bkt", "core", "db", "models"):
         shutil.copytree(
             source / directory,
             destination / directory,
+            dirs_exist_ok=True,
             ignore=shutil.ignore_patterns("__pycache__", "*.pyc"),
         )
     shutil.copy2(source / "config.py", destination / "config.py")
-    (destination / "data").mkdir()
+    (destination / "data").mkdir(exist_ok=True)
 
 
 def _initialize_student_database(student_root: Path) -> Path:
@@ -62,20 +75,23 @@ def _initialize_checkpoint_database(path: Path) -> None:
         connection.close()
 
 
-def _initialize_synthetic_policy(move_root: Path, path: Path) -> None:
+def _initialize_policy(move_root: Path, path: Path) -> None:
     root_text = str(move_root)
     if root_text not in sys.path:
         sys.path.insert(0, root_text)
     from src.self_improvement.lints_policy import TrueDisjointLinTS
-    from src.self_improvement.state_io import save_policy_state
+    from src.self_improvement.state_io import load_policy_state, save_policy_state
     from src.self_improvement.turn_context_builder import TURN_FEATURE_NAMES
 
     policy = TrueDisjointLinTS(
         context_dim=len(TURN_FEATURE_NAMES),
         seed=42,
-        data_mode="synthetic",
+        data_mode=DATA_MODE,
     )
-    save_policy_state(policy, path)
+    if path.exists():
+        load_policy_state(policy, path, expected_data_mode=DATA_MODE)
+    else:
+        save_policy_state(policy, path)
 
 
 def main() -> int:
@@ -90,11 +106,7 @@ def main() -> int:
         "pedagogical-move-selection checkout",
     )
 
-    if DEMO_ROOT.exists():
-        raise FileExistsError(
-            f"Refusing to overwrite existing demo state: {DEMO_ROOT}"
-        )
-    DEMO_ROOT.mkdir(parents=True)
+    DEMO_ROOT.mkdir(parents=True, exist_ok=True)
 
     student_root = DEMO_ROOT / "student_model"
     checkpoint_path = DEMO_ROOT / "checkpoints.sqlite3"
@@ -104,11 +116,16 @@ def main() -> int:
     _copy_student_runtime(student_source, student_root)
     student_db_path = _initialize_student_database(student_root)
     _initialize_checkpoint_database(checkpoint_path)
-    _initialize_synthetic_policy(move_source, policy_path)
-    experience_path.touch(exist_ok=False)
+    _initialize_policy(move_source, policy_path)
+    experience_path.touch(exist_ok=True)
 
     manifest = {
-        "mode": "synthetic-local-demo",
+        "mode": DATA_MODE,
+        "runtime_kind": (
+            "interactive-human-tutoring"
+            if DATA_MODE == "real"
+            else "synthetic-local-demo"
+        ),
         "student_model_source": str(student_source),
         "student_model_state": str(student_db_path),
         "checkpoint_db": str(checkpoint_path.resolve()),
@@ -120,7 +137,7 @@ def main() -> int:
         encoding="utf-8",
     )
 
-    print("Prepared isolated synthetic local-demo storage:")
+    print(f"Prepared isolated {DATA_MODE} local runtime storage:")
     for name in (
         "checkpoint_db",
         "policy_state",

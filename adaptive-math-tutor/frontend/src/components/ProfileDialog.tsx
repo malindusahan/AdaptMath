@@ -1,15 +1,17 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { X } from "lucide-react";
+import type { AuthenticatedUser } from "../types/auth";
 import type { LearnerSetup } from "../types/tutor";
 
 interface ProfileDialogProps {
   open: boolean;
+  identity: AuthenticatedUser;
   learner: LearnerSetup;
   onClose: () => void;
   onSave: (learner: LearnerSetup) => void;
 }
 
-export function ProfileDialog({ open, learner, onClose, onSave }: ProfileDialogProps) {
+export function ProfileDialog({ open, identity, learner, onClose, onSave }: ProfileDialogProps) {
   const [draft, setDraft] = useState(learner);
 
   useEffect(() => {
@@ -19,9 +21,7 @@ export function ProfileDialog({ open, learner, onClose, onSave }: ProfileDialogP
   if (!open) return null;
 
   const invalid =
-    !draft.studentId.trim() ||
     !draft.topic.trim() ||
-    !draft.targetSkill.trim() ||
     draft.age < 8 ||
     draft.age > 18;
 
@@ -30,7 +30,7 @@ export function ProfileDialog({ open, learner, onClose, onSave }: ProfileDialogP
     if (invalid) return;
     onSave({
       ...draft,
-      studentId: draft.studentId.trim(),
+      studentId: identity.student_id,
       topic: draft.topic.trim(),
       subtopic: draft.subtopic.trim(),
       targetSkill: draft.targetSkill.trim(),
@@ -43,7 +43,7 @@ export function ProfileDialog({ open, learner, onClose, onSave }: ProfileDialogP
         <div className="flex items-center justify-between border-b border-zinc-100 px-5 py-4">
           <div>
             <h2 id="profile-title" className="font-semibold text-zinc-950">Learner context</h2>
-            <p className="mt-0.5 text-xs text-zinc-500">Temporary until Profile/Auth and Topic services are connected.</p>
+            <p className="mt-0.5 text-xs text-zinc-500">Signed in as {identity.username}. Account identity is read-only.</p>
           </div>
           <button type="button" onClick={onClose} className="rounded-lg p-2 text-zinc-500 hover:bg-zinc-100" aria-label="Close settings">
             <X className="h-5 w-5" aria-hidden="true" />
@@ -51,15 +51,11 @@ export function ProfileDialog({ open, learner, onClose, onSave }: ProfileDialogP
         </div>
 
         <form onSubmit={submit} className="grid gap-4 p-5">
-          <label className="grid gap-1.5 text-sm font-medium text-zinc-700">
-            Student ID
-            <input
-              className="chat-field"
-              value={draft.studentId}
-              maxLength={128}
-              onChange={(event) => setDraft((current) => ({ ...current, studentId: event.target.value }))}
-            />
-          </label>
+          {import.meta.env.DEV && (
+            <div className="rounded-xl bg-zinc-50 px-3.5 py-2.5 text-xs text-zinc-500">
+              Resolved student: <span className="font-mono text-zinc-700">{identity.student_id}</span>
+            </div>
+          )}
           <label className="grid gap-1.5 text-sm font-medium text-zinc-700">
             Age
             <input
@@ -90,11 +86,12 @@ export function ProfileDialog({ open, learner, onClose, onSave }: ProfileDialogP
             />
           </label>
           <label className="grid gap-1.5 text-sm font-medium text-zinc-700">
-            Canonical BKT skill
+            Canonical BKT skill override <span className="font-normal text-zinc-400">(optional)</span>
             <input
               className="chat-field"
               value={draft.targetSkill}
               maxLength={128}
+              placeholder="Automatically identified from each question"
               onChange={(event) => setDraft((current) => ({ ...current, targetSkill: event.target.value }))}
             />
           </label>

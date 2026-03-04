@@ -352,6 +352,7 @@ export interface LoginResponse {
 }
 
 export interface UserMeResponse {
+  user_id: string
   username: string
   role: string
   student_id?: string | null

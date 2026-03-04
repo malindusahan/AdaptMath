@@ -1,0 +1,470 @@
+{
+  "diagnostic": "md7_telling_epoch_ablation_v1",
+  "decision": "B. ALL EPOCHS OVERCORRECT",
+  "decision_code": "B",
+  "decision_reason": "Epoch 1 and Epoch 2 both fail the same unchanged v1 boundary rubric as Epoch 3; earlier stopping does not remove the substantive recoverable-state boundary failure.",
+  "preferred_earlier_epoch_if_any": null,
+  "models": {
+    "baseline": {
+      "path": "pedagogical-move-selection/models/candidates/md7r1_epoch3",
+      "hashes": {
+        "model.safetensors": "d32d37f7f664d038f80fefb92f874804b49e5ac3d848985636ae64e6a2a60a13",
+        "config.json": "9877dd11007c8af1d2841a2c1bb470023ef2ceeb748b47c24686ea82479e9127",
+        "tokenizer.json": "80d0fb9a6bbc3ab2b24ec149d6b47981036a5f96c753667be38709975753550b",
+        "tokenizer_config.json": "bb5706f71e3d5cb4bf9878ad9b14a2079e6fbd618fc0a0ba2ac1b257d7824cc9"
+      }
+    },
+    "epoch1": {
+      "path": "pedagogical-move-selection/models/candidates/md7_telling_calibration_epoch3/md7_telling_calibration_v5_candidates/md7_telling_calibration_v5/epoch1",
+      "hashes": {
+        "model.safetensors": "1dc67fa3a3296c386214c36e696cd5bf82cb7884c707381fb01f437e6a36103a",
+        "config.json": "419efd3794d791c4927dec0518ebe7d81765a22c3d8b8d28956589d625da52c0",
+        "tokenizer.json": "80d0fb9a6bbc3ab2b24ec149d6b47981036a5f96c753667be38709975753550b",
+        "tokenizer_config.json": "bb5706f71e3d5cb4bf9878ad9b14a2079e6fbd618fc0a0ba2ac1b257d7824cc9"
+      }
+    },
+    "epoch2": {
+      "path": "pedagogical-move-selection/models/candidates/md7_telling_calibration_epoch3/md7_telling_calibration_v5_candidates/md7_telling_calibration_v5/epoch2",
+      "hashes": {
+        "model.safetensors": "6f4f19dcec16a92fe599b80428ce57a5e07fb8e828916c03ed0c99a4bc3c2314",
+        "config.json": "419efd3794d791c4927dec0518ebe7d81765a22c3d8b8d28956589d625da52c0",
+        "tokenizer.json": "80d0fb9a6bbc3ab2b24ec149d6b47981036a5f96c753667be38709975753550b",
+        "tokenizer_config.json": "bb5706f71e3d5cb4bf9878ad9b14a2079e6fbd618fc0a0ba2ac1b257d7824cc9"
+      }
+    },
+    "epoch3": {
+      "path": "pedagogical-move-selection/models/candidates/md7_telling_calibration_epoch3/md7_telling_calibration_v5_candidates/md7_telling_calibration_v5/epoch3",
+      "hashes": {
+        "model.safetensors": "a24d364b7d7461144afa97bae70c3690c4ce7af919927010cfb3fce73df9619c",
+        "config.json": "419efd3794d791c4927dec0518ebe7d81765a22c3d8b8d28956589d625da52c0",
+        "tokenizer.json": "80d0fb9a6bbc3ab2b24ec149d6b47981036a5f96c753667be38709975753550b",
+        "tokenizer_config.json": "bb5706f71e3d5cb4bf9878ad9b14a2079e6fbd618fc0a0ba2ac1b257d7824cc9"
+      }
+    }
+  },
+  "frozen_inputs": {
+    "source_diagnostic": "pedagogical-move-selection/results/md7_telling_real_state_diagnostic_v1",
+    "hashes": {
+      "analysis.py": "adb98cf8c978479d7aedb437c01bbbbe62e13b6bebd94acf5a932f0397dafd2c",
+      "real_state_predictions.csv": "ef6616a300770c48d31bf7d3325159f4da180b26d2e7a2b236f84a183d6ac8b7",
+      "telling_boundary_challenge.csv": "c415a0207fb3f4b960606317fc2d32c19cacf73f477d4900649321654bee141e",
+      "telling_boundary_predictions.csv": "20ece9e0bf7a6971f8751fc0ed39a27bcf5895a7f46bac54928bc9c860b94bff",
+      "summary.json": "47a0796905ea6c921beb5ffa8c707d70c1af2ca29f7a07b0e051872fadb40875"
+    },
+    "real_state_count": 87,
+    "challenge_count": 48,
+    "telling_plausible_count": 24,
+    "hard_non_telling_count": 24,
+    "recoverable_after_one_scaffold_count": 4,
+    "cases_added": 0,
+    "cases_removed": 0,
+    "states_regenerated": 0
+  },
+  "inference_contract": {
+    "sequence_a_prefix": "Problem:\n",
+    "sequence_b_prefix": "Conversation:\n",
+    "dialogue_format": "{user}: {text}",
+    "empty_history": "[No previous conversation]",
+    "suffix": "\n\nNext teacher pedagogical move:",
+    "truncation_side": "left",
+    "truncation": "only_second",
+    "max_length": 512,
+    "label_order": [
+      "generic",
+      "probing",
+      "focus",
+      "telling"
+    ],
+    "implementation_reused": "pedagogical-move-selection/results/md7_telling_real_state_diagnostic_v1/analysis.py"
+  },
+  "safety": {
+    "mathdial_validation": {
+      "status": "pass",
+      "run_immediately_before_candidate_scoring": true,
+      "validation_rows": 1850,
+      "accuracy": 0.5162162162162162,
+      "macro_f1": 0.4611286390258053,
+      "per_class_f1": {
+        "generic": 0.6105263157894737,
+        "probing": 0.3333333333333333,
+        "focus": 0.6004672897196262,
+        "telling": 0.300187617260788
+      },
+      "versions": {
+        "torch": "2.6.0+cu124",
+        "transformers": "4.56.2",
+        "tokenizer_class": "RobertaTokenizerFast",
+        "tokenizer_is_fast": true
+      }
+    },
+    "real_state_probability_parity_max_abs_error": 1.2516975402832031e-06,
+    "real_state_parity_rows_failed_at_1e_5": 0,
+    "v1_export_probability_parity_max_abs_error": 1.1102230246251565e-16,
+    "v1_export_parity_rows_failed_at_1e_5": 0,
+    "challenge_probability_parity_max_abs_error": 1.1102230246251565e-16,
+    "challenge_parity_rows_failed_at_1e_5": 0,
+    "historical_real_top1_mismatches": 0
+  },
+  "candidate_diagnostic_decisions_under_unchanged_v1_rubric": {
+    "epoch1": "B. TELLING OVERCORRECTION",
+    "epoch2": "B. TELLING OVERCORRECTION",
+    "epoch3": "B. TELLING OVERCORRECTION"
+  },
+  "results": {
+    "baseline": {
+      "telling_plausible": {
+        "n": 24,
+        "top1_telling_count": 19,
+        "top1_telling_rate": 0.7916666666666666,
+        "mean_p_telling": 0.7761732943666478,
+        "median_p_telling": 0.9734310805797577,
+        "max_p_telling": 0.9976131916046143,
+        "top1_distribution": {
+          "telling": 19,
+          "generic": 5
+        }
+      },
+      "hard_non_telling": {
+        "n": 24,
+        "top1_telling_count": 0,
+        "top1_telling_rate": 0.0,
+        "mean_p_telling": 0.0015298576969750381,
+        "median_p_telling": 0.0011220607557334006,
+        "max_p_telling": 0.004041509702801704,
+        "top1_distribution": {
+          "probing": 12,
+          "generic": 11,
+          "focus": 1
+        }
+      },
+      "recoverable_after_one_scaffold": {
+        "n": 4,
+        "top1_telling_count": 0,
+        "top1_telling_rate": 0.0,
+        "mean_p_telling": 0.0022077755274949595,
+        "median_p_telling": 0.002192259707953781,
+        "max_p_telling": 0.003513879841193557,
+        "top1_distribution": {
+          "generic": 3,
+          "probing": 1
+        }
+      },
+      "real_states": {
+        "model": "baseline",
+        "mathdial_accuracy": 0.5162162162162162,
+        "mathdial_macro_f1": 0.4611286390258053,
+        "telling_plausible_telling_count": 19,
+        "telling_plausible_n": 24,
+        "telling_plausible_telling_rate": 0.7916666666666666,
+        "telling_plausible_mean_p_telling": 0.7761732943666478,
+        "telling_plausible_median_p_telling": 0.9734310805797577,
+        "hard_negative_false_telling_count": 0,
+        "hard_negative_n": 24,
+        "hard_negative_false_telling_rate": 0.0,
+        "hard_negative_mean_p_telling": 0.0015298576969750381,
+        "hard_negative_max_p_telling": 0.004041509702801704,
+        "recoverable_false_telling_count": 0,
+        "recoverable_n": 4,
+        "recoverable_mean_p_telling": 0.0022077755274949595,
+        "real_state_telling_count": 0,
+        "real_state_n": 87,
+        "real_state_displacement_count": 0,
+        "real_state_displacement_rate": 0.0,
+        "real_focus_to_telling_count": 0,
+        "real_probing_to_telling_count": 0,
+        "real_generic_to_telling_count": 0,
+        "mean_real_delta_p_telling": 0.0,
+        "median_real_delta_p_telling": 0.0
+      }
+    },
+    "epoch1": {
+      "telling_plausible": {
+        "n": 24,
+        "top1_telling_count": 23,
+        "top1_telling_rate": 0.9583333333333334,
+        "mean_p_telling": 0.961113183448712,
+        "median_p_telling": 0.9977797865867615,
+        "max_p_telling": 0.9988386034965515,
+        "top1_distribution": {
+          "telling": 23,
+          "focus": 1
+        }
+      },
+      "hard_non_telling": {
+        "n": 24,
+        "top1_telling_count": 2,
+        "top1_telling_rate": 0.08333333333333333,
+        "mean_p_telling": 0.0740668848338828,
+        "median_p_telling": 0.0021986408391967416,
+        "max_p_telling": 0.8446314334869385,
+        "top1_distribution": {
+          "probing": 16,
+          "focus": 5,
+          "telling": 2,
+          "generic": 1
+        }
+      },
+      "recoverable_after_one_scaffold": {
+        "n": 4,
+        "top1_telling_count": 2,
+        "top1_telling_rate": 0.5,
+        "mean_p_telling": 0.4311778489500284,
+        "median_p_telling": 0.42380514927208424,
+        "max_p_telling": 0.8446314334869385,
+        "top1_distribution": {
+          "focus": 2,
+          "telling": 2
+        }
+      },
+      "real_states": {
+        "model": "epoch1",
+        "mathdial_accuracy": 0.5032432432432432,
+        "mathdial_macro_f1": 0.42529233050751564,
+        "telling_plausible_telling_count": 23,
+        "telling_plausible_n": 24,
+        "telling_plausible_telling_rate": 0.9583333333333334,
+        "telling_plausible_mean_p_telling": 0.961113183448712,
+        "telling_plausible_median_p_telling": 0.9977797865867615,
+        "hard_negative_false_telling_count": 2,
+        "hard_negative_n": 24,
+        "hard_negative_false_telling_rate": 0.08333333333333333,
+        "hard_negative_mean_p_telling": 0.0740668848338828,
+        "hard_negative_max_p_telling": 0.8446314334869385,
+        "recoverable_false_telling_count": 2,
+        "recoverable_n": 4,
+        "recoverable_mean_p_telling": 0.4311778489500284,
+        "real_state_telling_count": 0,
+        "real_state_n": 87,
+        "real_state_displacement_count": 15,
+        "real_state_displacement_rate": 0.1724137931034483,
+        "real_focus_to_telling_count": 0,
+        "real_probing_to_telling_count": 0,
+        "real_generic_to_telling_count": 0,
+        "mean_real_delta_p_telling": 0.02448313030074404,
+        "median_real_delta_p_telling": 0.019808515906333923
+      }
+    },
+    "epoch2": {
+      "telling_plausible": {
+        "n": 24,
+        "top1_telling_count": 24,
+        "top1_telling_rate": 1.0,
+        "mean_p_telling": 0.9939356421430906,
+        "median_p_telling": 0.9986579716205597,
+        "max_p_telling": 0.9990947246551514,
+        "top1_distribution": {
+          "telling": 24
+        }
+      },
+      "hard_non_telling": {
+        "n": 24,
+        "top1_telling_count": 3,
+        "top1_telling_rate": 0.125,
+        "mean_p_telling": 0.10737965140591162,
+        "median_p_telling": 0.0007542795792687684,
+        "max_p_telling": 0.9753122329711914,
+        "top1_distribution": {
+          "probing": 14,
+          "focus": 6,
+          "telling": 3,
+          "generic": 1
+        }
+      },
+      "recoverable_after_one_scaffold": {
+        "n": 4,
+        "top1_telling_count": 3,
+        "top1_telling_rate": 0.75,
+        "mean_p_telling": 0.6368926912546158,
+        "median_p_telling": 0.6767852008342743,
+        "max_p_telling": 0.9753122329711914,
+        "top1_distribution": {
+          "telling": 3,
+          "focus": 1
+        }
+      },
+      "real_states": {
+        "model": "epoch2",
+        "mathdial_accuracy": 0.5027027027027027,
+        "mathdial_macro_f1": 0.441921274964333,
+        "telling_plausible_telling_count": 24,
+        "telling_plausible_n": 24,
+        "telling_plausible_telling_rate": 1.0,
+        "telling_plausible_mean_p_telling": 0.9939356421430906,
+        "telling_plausible_median_p_telling": 0.9986579716205597,
+        "hard_negative_false_telling_count": 3,
+        "hard_negative_n": 24,
+        "hard_negative_false_telling_rate": 0.125,
+        "hard_negative_mean_p_telling": 0.10737965140591162,
+        "hard_negative_max_p_telling": 0.9753122329711914,
+        "recoverable_false_telling_count": 3,
+        "recoverable_n": 4,
+        "recoverable_mean_p_telling": 0.6368926912546158,
+        "real_state_telling_count": 5,
+        "real_state_n": 87,
+        "real_state_displacement_count": 20,
+        "real_state_displacement_rate": 0.22988505747126436,
+        "real_focus_to_telling_count": 2,
+        "real_probing_to_telling_count": 3,
+        "real_generic_to_telling_count": 0,
+        "mean_real_delta_p_telling": 0.03839439177623383,
+        "median_real_delta_p_telling": 0.0023720967583358288
+      }
+    },
+    "epoch3": {
+      "telling_plausible": {
+        "n": 24,
+        "top1_telling_count": 24,
+        "top1_telling_rate": 1.0,
+        "mean_p_telling": 0.9969001983602842,
+        "median_p_telling": 0.9987701177597046,
+        "max_p_telling": 0.9992345571517944,
+        "top1_distribution": {
+          "telling": 24
+        }
+      },
+      "hard_non_telling": {
+        "n": 24,
+        "top1_telling_count": 3,
+        "top1_telling_rate": 0.125,
+        "mean_p_telling": 0.112167555136087,
+        "median_p_telling": 0.0007204195135272499,
+        "max_p_telling": 0.9634163975715636,
+        "top1_distribution": {
+          "probing": 15,
+          "focus": 5,
+          "telling": 3,
+          "generic": 1
+        }
+      },
+      "recoverable_after_one_scaffold": {
+        "n": 4,
+        "top1_telling_count": 3,
+        "top1_telling_rate": 0.75,
+        "mean_p_telling": 0.6656882762908936,
+        "median_p_telling": 0.7545041143894196,
+        "max_p_telling": 0.9634163975715636,
+        "top1_distribution": {
+          "telling": 3,
+          "focus": 1
+        }
+      },
+      "real_states": {
+        "model": "epoch3",
+        "mathdial_accuracy": 0.49675675675675673,
+        "mathdial_macro_f1": 0.4497967067613938,
+        "telling_plausible_telling_count": 24,
+        "telling_plausible_n": 24,
+        "telling_plausible_telling_rate": 1.0,
+        "telling_plausible_mean_p_telling": 0.9969001983602842,
+        "telling_plausible_median_p_telling": 0.9987701177597046,
+        "hard_negative_false_telling_count": 3,
+        "hard_negative_n": 24,
+        "hard_negative_false_telling_rate": 0.125,
+        "hard_negative_mean_p_telling": 0.112167555136087,
+        "hard_negative_max_p_telling": 0.9634163975715636,
+        "recoverable_false_telling_count": 3,
+        "recoverable_n": 4,
+        "recoverable_mean_p_telling": 0.6656882762908936,
+        "real_state_telling_count": 4,
+        "real_state_n": 87,
+        "real_state_displacement_count": 24,
+        "real_state_displacement_rate": 0.27586206896551724,
+        "real_focus_to_telling_count": 2,
+        "real_probing_to_telling_count": 2,
+        "real_generic_to_telling_count": 0,
+        "mean_real_delta_p_telling": 0.02097513490649546,
+        "median_real_delta_p_telling": -0.003098957240581561
+      }
+    }
+  },
+  "mathdial_validation": {
+    "epoch1": {
+      "accuracy": 0.5032432432432432,
+      "macro_f1": 0.42529233050751564,
+      "weighted_f1": 0.46245042166326167,
+      "per_class_f1": {
+        "generic": 0.590728476821192,
+        "probing": 0.2831215970961887,
+        "focus": 0.5963824289405685,
+        "telling": 0.23093681917211328
+      },
+      "pred_distribution": {
+        "generic": 313,
+        "probing": 139,
+        "focus": 1257,
+        "telling": 141
+      }
+    },
+    "epoch2": {
+      "accuracy": 0.5027027027027027,
+      "macro_f1": 0.441921274964333,
+      "weighted_f1": 0.4735778386661692,
+      "per_class_f1": {
+        "generic": 0.6026785714285714,
+        "probing": 0.23954372623574144,
+        "focus": 0.6020719073735528,
+        "telling": 0.32339089481946626
+      },
+      "pred_distribution": {
+        "generic": 454,
+        "probing": 114,
+        "focus": 963,
+        "telling": 319
+      }
+    },
+    "epoch3": {
+      "accuracy": 0.49675675675675673,
+      "macro_f1": 0.4497967067613938,
+      "weighted_f1": 0.478263474309056,
+      "per_class_f1": {
+        "generic": 0.6157461809635723,
+        "probing": 0.2972536348949919,
+        "focus": 0.5787545787545788,
+        "telling": 0.30743243243243246
+      },
+      "pred_distribution": {
+        "generic": 409,
+        "probing": 207,
+        "focus": 960,
+        "telling": 274
+      }
+    },
+    "baseline": {
+      "accuracy": 0.5162162162162162,
+      "macro_f1": 0.4611286390258053,
+      "per_class_f1": {
+        "generic": 0.6105263157894737,
+        "probing": 0.3333333333333333,
+        "focus": 0.6004672897196262,
+        "telling": 0.300187617260788
+      }
+    }
+  },
+  "observational_outcomes": {
+    "included_in_prediction_inputs": false,
+    "fields_preserved_for_descriptive_join_only": [
+      "evaluator_category_observational",
+      "immediate_delta_mastery_observational",
+      "mastery_before_observational"
+    ]
+  },
+  "claims_not_entitled": [
+    "telling would have caused better learning",
+    "a candidate would have improved a historical outcome",
+    "negative BKT proves telling was needed",
+    "synthetic calibration performance demonstrates real tutoring effectiveness"
+  ],
+  "recommended_next_action": "Design a targeted recalibration set with recoverable-after-one-scaffold hard negatives, train only under a separately authorized experiment, and then repeat this unchanged frozen diagnostic.",
+  "side_effects": {
+    "training": 0,
+    "model_writes": 0,
+    "production_writes": 0,
+    "authoritative_data_writes": 0,
+    "tutor_api_calls": 0,
+    "bkt_updates": 0,
+    "lints_updates": 0,
+    "mathdial_final_test_use": 0,
+    "mrbench_v3_test_use": 0,
+    "protected_input_hash_changes": {}
+  }
+}

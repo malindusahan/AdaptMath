@@ -1,0 +1,20 @@
+{
+  "lineage_version": "md7r1_lints_v1",
+  "selector": "MD7-R1 epoch 3",
+  "policy_state": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\adaptive-math-tutor\\backend\\runtime\\adaptive_demo_md7r1_v1\\policy_state.json",
+  "experience_log": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\adaptive-math-tutor\\backend\\runtime\\adaptive_demo_md7r1_v1\\attempts.jsonl",
+  "context_dim": 9,
+  "ridge_lambda": 1.0,
+  "exploration_scale": 0.2,
+  "arms": [
+    "baseline",
+    "generic_bias",
+    "probing_bias",
+    "focus_bias",
+    "telling_bias"
+  ],
+  "data_mode": "synthetic",
+  "total_updates": 0,
+  "created_policy": false,
+  "created_log": false
+}

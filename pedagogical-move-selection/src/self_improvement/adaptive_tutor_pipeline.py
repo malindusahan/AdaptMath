@@ -17,7 +17,11 @@ from .mrb1_inference import FrozenMRB1Inference
 from .reward import LearningOutcome, validate_learning_outcome
 from .state_io import load_policy_state, save_policy_state
 from .turn_context_builder import TURN_FEATURE_NAMES, validate_mastery_probability
-from .turn_level_controller import AttemptCompletion, TurnLevelAttemptController
+from .turn_level_controller import (
+    AttemptCompletion,
+    TurnDecision,
+    TurnLevelAttemptController,
+)
 
 
 @runtime_checkable
@@ -186,6 +190,11 @@ class AdaptiveTutorPipeline:
         self._pending_learning_outcome: LearningOutcome | None = None
         self._pending_metadata: dict[str, object] | None = None
         self._pending_record: dict[str, object] | None = None
+        self._pending_turn_problem: str | None = None
+        self._pending_turn_history: list[Mapping[str, object]] | None = None
+        self._pending_turn_decision: TurnDecision | None = None
+        self._pending_tutor_response: str | None = None
+        self._pending_mrb1_scores: dict[str, float] | None = None
 
     @property
     def active_attempt_id(self) -> str | int | None:
@@ -213,6 +222,13 @@ class AdaptiveTutorPipeline:
             expected_data_mode=self.controller.policy.data_mode,
         )
 
+    def _clear_pending_turn_retry(self) -> None:
+        self._pending_turn_problem = None
+        self._pending_turn_history = None
+        self._pending_turn_decision = None
+        self._pending_tutor_response = None
+        self._pending_mrb1_scores = None
+
     def start_attempt(self, memory: object) -> dict[str, object]:
         """Read attempt identity/mastery from host memory and start cleanly."""
 
@@ -221,17 +237,33 @@ class AdaptiveTutorPipeline:
         attempt_id = self.memory_adapter.get_attempt_id(memory)
         mastery_before = self.memory_adapter.get_mastery_before(memory)
         validated_mastery = validate_mastery_probability(mastery_before)
-        self.controller.start_attempt(validated_mastery)
+        self.controller.start_attempt(validated_mastery, attempt_id=attempt_id)
         self._active_attempt_id = attempt_id
         self._active_mastery_before = validated_mastery
         self._pending_completion = None
         self._pending_learning_outcome = None
         self._pending_metadata = None
         self._pending_record = None
+        self._clear_pending_turn_retry()
         return {
             "attempt_id": attempt_id,
             "mastery_before": validated_mastery,
         }
+
+    def restore_attempt(
+        self,
+        memory: object,
+        completed_turns: Sequence[Mapping[str, object]],
+    ) -> dict[str, object]:
+        """Start from durable, already-completed turns without new decisions."""
+
+        started = self.start_attempt(memory)
+        try:
+            self.controller.restore_completed_turns(completed_turns)
+        except Exception:
+            self.abort_attempt(memory)
+            raise
+        return started
 
     def run_tutor_turn(
         self,
@@ -250,29 +282,50 @@ class AdaptiveTutorPipeline:
         authoritative_history = self.memory_adapter.get_conversation_history(memory)
         history_snapshot = copy.deepcopy(list(authoritative_history))
 
-        md6_probabilities = dict(
-            self.md6.predict_probabilities(problem, history_snapshot)
-        )
-        decision = self.controller.select_turn(md6_probabilities)
-        if decision.final_move not in MOVE_ORDER:
-            raise RuntimeError("Controller returned a non-canonical final move.")
+        decision = self._pending_turn_decision
+        if decision is None:
+            md6_probabilities = dict(
+                self.md6.predict_probabilities(problem, history_snapshot)
+            )
+            decision = self.controller.select_turn(md6_probabilities)
+            if decision.final_move not in MOVE_ORDER:
+                raise RuntimeError("Controller returned a non-canonical final move.")
+            self._pending_turn_problem = problem
+            self._pending_turn_history = copy.deepcopy(history_snapshot)
+            self._pending_turn_decision = decision
+        elif (
+            problem != self._pending_turn_problem
+            or history_snapshot != self._pending_turn_history
+        ):
+            raise RuntimeError(
+                "A failed tutor turn can be retried only from its identical "
+                "problem and conversation-history checkpoint."
+            )
 
-        tutor_response = tutor_agent.generate(
-            problem=problem,
-            conversation_history=copy.deepcopy(history_snapshot),
-            pedagogical_move=decision.final_move,
-        )
-        if not isinstance(tutor_response, str) or not tutor_response.strip():
-            raise ValueError("Tutor agent must return a non-empty string response.")
+        tutor_response = self._pending_tutor_response
+        if tutor_response is None:
+            tutor_response = tutor_agent.generate(
+                problem=problem,
+                conversation_history=copy.deepcopy(history_snapshot),
+                pedagogical_move=decision.final_move,
+            )
+            if not isinstance(tutor_response, str) or not tutor_response.strip():
+                raise ValueError("Tutor agent must return a non-empty string response.")
+            tutor_response = tutor_response.strip()
+            self._pending_tutor_response = tutor_response
 
-        mrb1_scores = dict(
-            self.mrb1.score_response(history_snapshot, tutor_response)
-        )
-        self.controller.record_mrb1_scores(mrb1_scores)
-        self.memory_adapter.append_tutor_response(memory, tutor_response)
+        mrb1_scores = self._pending_mrb1_scores
+        if mrb1_scores is None:
+            mrb1_scores = dict(
+                self.mrb1.score_response(history_snapshot, tutor_response)
+            )
+            self.controller.record_mrb1_scores(mrb1_scores)
+            self._pending_mrb1_scores = dict(mrb1_scores)
 
-        return {
+        result = {
             "attempt_id": attempt_id,
+            "action_event_id": decision.action_event_id,
+            "action_turn_index": decision.action_turn_index,
             "turn_index": decision.turn_index,
             "tutor_response": tutor_response,
             "pedagogical_move": decision.final_move,
@@ -283,7 +336,56 @@ class AdaptiveTutorPipeline:
             "context": list(decision.context),
             "md6_probabilities": dict(decision.md6_probabilities),
             "mrb1_scores": mrb1_scores,
+            "tutor_generation_fallback_used": bool(
+                getattr(tutor_agent, "last_generation_fallback_used", False)
+            ),
         }
+        raw_probabilities = getattr(self.md6, "last_raw_probabilities", None)
+        if not isinstance(raw_probabilities, Mapping):
+            raw_probabilities = decision.md6_probabilities
+        agency_decision = getattr(self.md6, "last_decision", None)
+        agency_mapping = (
+            agency_decision.as_mapping()
+            if callable(getattr(agency_decision, "as_mapping", None))
+            else {"triggered": False, "reason": None}
+        )
+
+        def _argmax(probabilities: Mapping[str, object]) -> str:
+            return max(
+                MOVE_ORDER,
+                key=lambda move: float(probabilities[move]),
+            )
+
+        result["selector"] = {
+            "raw": {
+                "probabilities": dict(raw_probabilities),
+                "argmax": _argmax(raw_probabilities),
+            },
+            "learner_agency": {
+                "triggered": bool(agency_mapping.get("triggered", False)),
+                "reason": agency_mapping.get("reason"),
+            },
+            "effective": {
+                "probabilities": dict(decision.md6_probabilities),
+                "argmax": _argmax(decision.md6_probabilities),
+            },
+        }
+        result["adaptive_decision"] = {
+            "context_name": "C3",
+            "context_feature_names": list(TURN_FEATURE_NAMES),
+            "context": list(decision.context),
+            "eligible_arms": list(decision.eligible_arms),
+            "sampled_scores": dict(decision.sampled_scores),
+            "selected_arm": decision.selected_arm,
+            "base_move": decision.base_move,
+            "final_move": decision.final_move,
+            "overridden": decision.overridden,
+            "gap": decision.gap,
+            "gap_threshold": decision.gap_threshold,
+        }
+        self.memory_adapter.append_tutor_response(memory, tutor_response)
+        self._clear_pending_turn_retry()
+        return result
 
     def finish_attempt(
         self,
@@ -397,6 +499,7 @@ class AdaptiveTutorPipeline:
         self._pending_learning_outcome = None
         self._pending_metadata = None
         self._pending_record = None
+        self._clear_pending_turn_retry()
         return result
 
     def abort_attempt(self, memory: object | None = None) -> None:
@@ -415,6 +518,7 @@ class AdaptiveTutorPipeline:
         self._pending_learning_outcome = None
         self._pending_metadata = None
         self._pending_record = None
+        self._clear_pending_turn_retry()
 
 
 __all__ = (

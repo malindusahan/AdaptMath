@@ -1,10 +1,13 @@
+import logging
+from threading import Lock
 from typing import Any, Literal
 from uuid import uuid4
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from langgraph.types import Command
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
+from app.agents.general_chat.general_chat_agent import get_general_chat_agent
 from app.core.input_validation import (
     ANSWER_MAX_LENGTH,
     MAX_CONTEXT_ITEMS,
@@ -18,10 +21,16 @@ from app.core.input_validation import (
     clean_text_list,
 )
 from app.core.model_errors import model_service_http_exception
-from app.core.persistence import tutor_checkpointer
+from app.core.persistence import (
+    list_checkpoint_thread_ids,
+    set_thread_status,
+    tutor_checkpointer,
+    upsert_thread_metadata,
+)
 from app.graph.state import TutorState
 from app.graph.workflow import adaptive_coordinator, tutor_graph
-from app.clients.memory.memory_client import get_memory_client
+from app.clients.memory.memory_client import MemoryAuthenticatedUser, get_memory_client
+from app.core.user_auth import require_authenticated_student
 from app.integrations.adaptive_component_coordinator import (
     AdaptiveConcurrencyError,
     AdaptiveIntegrationError,
@@ -31,9 +40,23 @@ from app.integrations.memory_context_adapter import adapt_memory_context
 from app.schemas.evaluator import StudentAnswer
 from app.schemas.memory import LearnerHistoryItem
 from app.schemas.pedagogical_move import PedagogicalMove
+from app.services.practice_problem_service import (
+    PracticeProblemGenerationError,
+    get_practice_problem_generator,
+)
 
 
 router = APIRouter(prefix="/tutor", tags=["tutor"])
+logger = logging.getLogger(__name__)
+_START_GUARD = Lock()
+
+# Memory's topic classifier has a wider ontology than the trained 95-skill BKT
+# model. Keep deliberate semantic fallbacks explicit and auditable rather than
+# silently accepting an untrained label. A discount problem applies a percent
+# to an original quantity, which is the supported ``Percent Of`` BKT skill.
+MEMORY_TO_BKT_SKILL_COMPATIBILITY = {
+    "Percent Discount": "Percent Of",
+}
 
 
 # ============================================================
@@ -55,12 +78,14 @@ class TutorStartRequest(BaseModel):
 
     model_config = ConfigDict(extra="forbid")
 
-    student_id: str = Field(..., min_length=1, max_length=STUDENT_ID_MAX_LENGTH)
+    # Retained as an optional legacy field. HTTP callers are authenticated and
+    # the server-derived Memory identity is authoritative.
+    student_id: str | None = Field(default=None, max_length=STUDENT_ID_MAX_LENGTH)
     age: int = Field(..., ge=8, le=18)
     question: str = Field(..., min_length=1, max_length=QUESTION_MAX_LENGTH)
     topic: str = Field(..., min_length=1, max_length=TOPIC_MAX_LENGTH)
     subtopic: str | None = Field(default=None, max_length=SUBTOPIC_MAX_LENGTH)
-    target_skill: str = Field(..., min_length=1, max_length=TOPIC_MAX_LENGTH)
+    target_skill: str | None = Field(default=None, max_length=TOPIC_MAX_LENGTH)
     relevant_history: list[LearnerHistoryItem] = Field(
         default_factory=list,
         max_length=MAX_HISTORY_ITEMS,
@@ -74,7 +99,7 @@ class TutorStartRequest(BaseModel):
         max_length=MAX_CONTEXT_ITEMS,
     )
 
-    @field_validator("student_id", "question", "topic", "target_skill")
+    @field_validator("question", "topic")
     @classmethod
     def normalize_required_fields(cls, value: str, info) -> str:
         return clean_required_text(
@@ -82,10 +107,20 @@ class TutorStartRequest(BaseModel):
             label=info.field_name.replace("_", " ").title(),
         )
 
+    @field_validator("student_id")
+    @classmethod
+    def normalize_legacy_student_id(cls, value: str | None) -> str | None:
+        return clean_optional_text(value, label="Student ID")
+
     @field_validator("subtopic")
     @classmethod
     def normalize_subtopic(cls, value: str | None) -> str | None:
         return clean_optional_text(value, label="Subtopic")
+
+    @field_validator("target_skill")
+    @classmethod
+    def normalize_target_skill(cls, value: str | None) -> str | None:
+        return clean_optional_text(value, label="Target Skill")
 
     @field_validator("previous_errors", "previous_strategies")
     @classmethod
@@ -94,6 +129,18 @@ class TutorStartRequest(BaseModel):
             values,
             label=info.field_name.replace("_", " ").title(),
         )
+
+
+class TutorPracticeStartRequest(BaseModel):
+    """The profile supplies only the canonical skill selected for practice."""
+
+    model_config = ConfigDict(extra="forbid")
+    target_skill: str = Field(..., min_length=1, max_length=TOPIC_MAX_LENGTH)
+
+    @field_validator("target_skill")
+    @classmethod
+    def normalize_target_skill(cls, value: str) -> str:
+        return clean_required_text(value, label="Target Skill")
 
 
 class TutorStudentResponseRequest(BaseModel):
@@ -148,6 +195,7 @@ class TutorSessionResponse(BaseModel):
     route: str | None = None
     route_reason: str | None = None
     complexity_score: float | None = None
+    target_skill: str | None = None
 
     student_response_message: str | None = None
     assessment_message: str | None = None
@@ -157,6 +205,14 @@ class TutorSessionResponse(BaseModel):
     evaluation: dict[str, Any] | None = None
     reteach_round: int = 0
     turn_count: int = 0
+
+
+class TutorPracticeStartResponse(BaseModel):
+    """A validated problem together with the normal Tutor start response."""
+
+    target_skill: str
+    problem: str
+    session: TutorSessionResponse
 
 
 # ============================================================
@@ -213,6 +269,7 @@ def _base_response_fields(graph_result: dict[str, Any]) -> dict[str, Any]:
         "route": graph_result.get("route"),
         "route_reason": graph_result.get("route_reason"),
         "complexity_score": graph_result.get("complexity_score"),
+        "target_skill": graph_result.get("target_skill"),
         "evaluation": _safe_evaluation(graph_result),
         "reteach_round": graph_result.get("reteach_round", 0),
         "turn_count": graph_result.get("turn_count", 0),
@@ -265,6 +322,7 @@ def _build_public_response(
                 **base,
             )
 
+    set_thread_status(thread_id, "COMPLETED")
     return TutorSessionResponse(
         thread_id=thread_id,
         status="complete",
@@ -292,6 +350,70 @@ def _get_persisted_snapshot(thread_id: str) -> Any:
     if checkpoint is None:
         raise HTTPException(status_code=404, detail="Tutoring session was not found.")
     return tutor_graph.get_state(config)
+
+
+def _resolved_authenticated_user(
+    value: object,
+) -> MemoryAuthenticatedUser | None:
+    """Return a DI-resolved user while preserving direct internal test calls."""
+    return value if isinstance(value, MemoryAuthenticatedUser) else None
+
+
+def _authoritative_student_id(
+    requested_student_id: str | None,
+    authenticated_user: object,
+) -> str:
+    """Use authenticated identity for HTTP calls and reject impersonation."""
+    user = _resolved_authenticated_user(authenticated_user)
+    if user is not None:
+        if (
+            requested_student_id is not None
+            and requested_student_id != user.student_id
+        ):
+            raise HTTPException(
+                status_code=403,
+                detail="The supplied student_id does not match the authenticated learner.",
+            )
+        return user.student_id
+
+    # Route dependencies always provide a user. This compatibility branch is
+    # solely for existing in-process unit tests and trusted internal callers.
+    if requested_student_id is None:
+        raise HTTPException(status_code=401, detail="Authentication required.")
+    return requested_student_id
+
+
+def _require_thread_owner(snapshot: Any, authenticated_user: object) -> None:
+    """Reject access when a persisted Tutor thread belongs to another learner."""
+    user = _resolved_authenticated_user(authenticated_user)
+    if user is None:
+        return
+    values = dict(getattr(snapshot, "values", {}) or {})
+    if values.get("student_id") != user.student_id:
+        raise HTTPException(
+            status_code=403,
+            detail="This tutoring session belongs to another learner.",
+        )
+
+
+def _find_active_student_session(
+    student_id: str,
+) -> TutorSessionResponse | None:
+    """Return the newest durable, unfinished adaptive lesson for a student."""
+
+    for thread_id in list_checkpoint_thread_ids():
+        snapshot = tutor_graph.get_state(_thread_config(thread_id))
+        values = dict(getattr(snapshot, "values", {}) or {})
+        if values.get("student_id") != student_id:
+            continue
+        if values.get("adaptive_lifecycle_status") != "active":
+            continue
+
+        if _persisted_session_phase(snapshot) == "complete":
+            continue
+        return _build_snapshot_response(thread_id, snapshot)
+
+    return None
 
 
 def _persisted_session_phase(
@@ -382,6 +504,11 @@ def _build_snapshot_response(
 
 
 def _adaptive_http_exception(exc: AdaptiveIntegrationError) -> HTTPException:
+    logger.warning(
+        "adaptive_integration_failure exception_type=%s detail=%s",
+        type(exc).__name__,
+        exc,
+    )
     if isinstance(exc, AdaptiveConcurrencyError):
         detail = (
             "Another adaptive tutoring session is currently active. "
@@ -401,17 +528,115 @@ def _adaptive_http_exception(exc: AdaptiveIntegrationError) -> HTTPException:
 # ENDPOINTS
 # ============================================================
 
+@router.get("/active", response_model=TutorSessionResponse | None)
+def get_active_tutor_session(
+    authenticated_user: MemoryAuthenticatedUser = Depends(
+        require_authenticated_student
+    ),
+) -> TutorSessionResponse | None:
+    user = _resolved_authenticated_user(authenticated_user)
+    if user is None:
+        raise HTTPException(status_code=401, detail="Authentication required.")
+    return _find_active_student_session(user.student_id)
+
+
 @router.get("/{thread_id}", response_model=TutorSessionResponse)
-def get_tutor_session(thread_id: str) -> TutorSessionResponse:
+def get_tutor_session(
+    thread_id: str,
+    authenticated_user: MemoryAuthenticatedUser = Depends(
+        require_authenticated_student
+    ),
+) -> TutorSessionResponse:
+    snapshot = _get_persisted_snapshot(thread_id)
+    _require_thread_owner(snapshot, authenticated_user)
     return _build_snapshot_response(
         thread_id,
-        _get_persisted_snapshot(thread_id),
+        snapshot,
+    )
+
+
+@router.get(
+    "/student/{student_id}/active",
+    response_model=TutorSessionResponse | None,
+)
+def get_active_tutor_session_for_student(
+    student_id: str,
+    authenticated_user: MemoryAuthenticatedUser = Depends(
+        require_authenticated_student
+    ),
+) -> TutorSessionResponse | None:
+    normalized_student_id = clean_required_text(
+        student_id,
+        label="Student ID",
+    )
+    if len(normalized_student_id) > STUDENT_ID_MAX_LENGTH:
+        raise HTTPException(status_code=422, detail="Student ID is too long.")
+    authoritative_student_id = _authoritative_student_id(
+        normalized_student_id,
+        authenticated_user,
+    )
+    return _find_active_student_session(authoritative_student_id)
+
+
+@router.post("/{thread_id}/abandon", response_model=TutorSessionResponse)
+def abandon_tutor_session(
+    thread_id: str,
+    authenticated_user: MemoryAuthenticatedUser = Depends(
+        require_authenticated_student
+    ),
+) -> TutorSessionResponse:
+    """End an unfinished lesson while retaining its durable research record."""
+
+    snapshot = _get_persisted_snapshot(thread_id)
+    _require_thread_owner(snapshot, authenticated_user)
+    values = dict(getattr(snapshot, "values", {}) or {})
+    lifecycle_status = values.get("adaptive_lifecycle_status")
+
+    if lifecycle_status == "active":
+        try:
+            aborted = adaptive_coordinator.abort_attempt(values)
+        except AdaptiveRestartRequiredError:
+            # A restarted non-learning deployment may be unable to rebuild the
+            # process-local controller. No live lease exists in that case, so
+            # close the durable lesson without fabricating a policy update.
+            logger.warning(
+                "abandoning_unrestorable_attempt thread_id=%s",
+                thread_id,
+            )
+            aborted = {"adaptive_lifecycle_status": "aborted"}
+        except AdaptiveIntegrationError as exc:
+            raise _adaptive_http_exception(exc) from exc
+        tutor_graph.update_state(
+            _thread_config(thread_id),
+            aborted,
+        )
+        values.update(aborted)
+    elif lifecycle_status not in {"aborted", "completed"}:
+        aborted = {"adaptive_lifecycle_status": "aborted"}
+        tutor_graph.update_state(
+            _thread_config(thread_id),
+            aborted,
+        )
+        values.update(aborted)
+
+    set_thread_status(thread_id, "ABORTED")
+    return TutorSessionResponse(
+        thread_id=thread_id,
+        status="complete",
+        questions=[],
+        **_base_response_fields(values),
     )
 
 
 @router.post("/{thread_id}/resume", response_model=TutorSessionResponse)
-def resume_tutor_session(thread_id: str) -> TutorSessionResponse:
+def resume_tutor_session(
+    thread_id: str,
+    authenticated_user: MemoryAuthenticatedUser = Depends(
+        require_authenticated_student
+    ),
+) -> TutorSessionResponse:
     snapshot = _get_persisted_snapshot(thread_id)
+    _require_thread_owner(snapshot, authenticated_user)
     phase = _persisted_session_phase(snapshot)
 
     if phase != "recovery_required":
@@ -428,18 +653,243 @@ def resume_tutor_session(thread_id: str) -> TutorSessionResponse:
     return _build_public_response(thread_id, graph_result)
 
 
-@router.post("/start", response_model=TutorSessionResponse)
-def start_tutor_session(request: TutorStartRequest) -> TutorSessionResponse:
+def _start_tutor_session(
+    request: TutorStartRequest,
+    authenticated_user: MemoryAuthenticatedUser,
+) -> TutorSessionResponse:
     """
     Start one Tutor thread and its first assessment-cycle adaptive attempt.
 
-    ``target_skill`` is an explicit canonical Repository-B skill. Topic and
-    subtopic are never silently reinterpreted as BKT skill identifiers.
+    An explicitly supplied ``target_skill`` remains authoritative. When it is
+    omitted, Memory's trained topic classifier identifies a candidate from the
+    question and Repository B must validate it before the attempt can start.
+    Topic and subtopic are never silently reinterpreted as BKT identifiers.
+    Classifier abstentions receive one Gemini general-chat response and exit
+    before any adaptive lesson, BKT, or move-selector state is created.
     """
 
-    thread_id = str(uuid4())
-    config = _thread_config(thread_id)
+    student_id = _authoritative_student_id(
+        request.student_id,
+        authenticated_user,
+    )
+    target_skill: str | None = None
+    if request.target_skill is not None:
+        try:
+            target_skill = adaptive_coordinator.validate_target_skill(
+                request.target_skill
+            )
+        except (KeyError, ValueError) as exc:
+            raise HTTPException(status_code=400, detail=str(exc)) from exc
 
+    existing = _find_active_student_session(student_id)
+    if existing is not None:
+        raise HTTPException(
+            status_code=409,
+            detail=(
+                "An adaptive tutoring session is currently active for this student. "
+                "Recover it before starting another one."
+            ),
+        )
+
+    if not _START_GUARD.acquire(blocking=False):
+        raise HTTPException(
+            status_code=409,
+            detail=(
+                "Another tutoring session is currently being prepared. "
+                "Please wait for it to finish."
+            ),
+        )
+    try:
+        # Close the small race between the first durable-session lookup and
+        # acquiring the non-blocking preparation guard.
+        existing = _find_active_student_session(student_id)
+        if existing is not None:
+            raise HTTPException(
+                status_code=409,
+                detail=(
+                    "An adaptive tutoring session is currently active for this student. "
+                    "Recover it before starting another one."
+                ),
+            )
+
+        memory_client = get_memory_client()
+        if target_skill is None:
+            classification = memory_client.classify_question(
+                question=request.question,
+            )
+            if classification is None:
+                raise HTTPException(
+                    status_code=503,
+                    detail=(
+                        "Automatic BKT skill identification is temporarily "
+                        "unavailable. Retry, or provide an explicit target_skill."
+                    ),
+                )
+            if not classification.is_math or not classification.topic:
+                try:
+                    gateway_decision = get_general_chat_agent().route(
+                        message=request.question,
+                    )
+                except Exception as exc:
+                    raise model_service_http_exception(exc) from exc
+
+                if gateway_decision.kind == "general_chat":
+                    response_id = f"general-{uuid4()}"
+                    logger.info(
+                        "gemini_general_chat_response response_id=%s "
+                        "classifier_confidence=%.4f classifier_model=%s "
+                        "gateway_confidence=%.4f",
+                        response_id,
+                        classification.confidence,
+                        classification.model_version,
+                        gateway_decision.confidence,
+                    )
+                    return TutorSessionResponse(
+                        thread_id=response_id,
+                        status="complete",
+                        tutor_response=gateway_decision.response,
+                        route="gemini_general_chat",
+                        route_reason=(
+                            "Memory abstained; Gemini identified general "
+                            "conversation outside the adaptive lesson lifecycle."
+                        ),
+                        target_skill=None,
+                        questions=[],
+                        turn_count=1,
+                    )
+
+                candidate = gateway_decision.target_skill
+                try:
+                    target_skill = adaptive_coordinator.validate_target_skill(
+                        candidate
+                    )
+                except (KeyError, ValueError) as exc:
+                    raise HTTPException(
+                        status_code=502,
+                        detail=(
+                            "Gemini identified a math question but did not "
+                            "return a supported BKT target skill."
+                        ),
+                    ) from exc
+                logger.info(
+                    "gemini_target_skill_selected bkt_skill=%s "
+                    "classifier_confidence=%.4f classifier_model=%s "
+                    "gateway_confidence=%.4f",
+                    target_skill,
+                    classification.confidence,
+                    classification.model_version,
+                    gateway_decision.confidence,
+                )
+            else:
+                memory_skill = classification.topic.strip()
+                candidate = MEMORY_TO_BKT_SKILL_COMPATIBILITY.get(
+                    memory_skill,
+                    memory_skill,
+                )
+                try:
+                    target_skill = adaptive_coordinator.validate_target_skill(
+                        candidate
+                    )
+                except (KeyError, ValueError) as exc:
+                    raise HTTPException(
+                        status_code=422,
+                        detail=(
+                            f"Memory identified {candidate!r}, but that label is "
+                            "not in the trained BKT vocabulary. Provide an explicit "
+                            "supported target_skill."
+                        ),
+                    ) from exc
+                logger.info(
+                    "automatic_target_skill_selected memory_skill=%s bkt_skill=%s "
+                    "confidence=%.4f model=%s",
+                    memory_skill,
+                    target_skill,
+                    classification.confidence,
+                    classification.model_version,
+                )
+
+        assert target_skill is not None
+
+        thread_id = str(uuid4())
+        config = _thread_config(thread_id)
+        adaptive_attempt_index = 1
+        attempt_id = adaptive_coordinator.derive_attempt_id(
+            thread_id,
+            adaptive_attempt_index,
+        )
+
+        retrieved_memory = adapt_memory_context(
+            memory_client.retrieve_tutor_context(
+                student_id=student_id,
+                target_skill=target_skill,
+            ),
+            target_skill=target_skill,
+        )
+
+        initial_state: TutorState = {
+            "student_id": student_id,
+            "thread_id": thread_id,
+            "attempt_id": attempt_id,
+            "adaptive_attempt_index": adaptive_attempt_index,
+            "target_skill": target_skill,
+            "adaptive_lifecycle_status": "not_started",
+            "age": request.age,
+            "question": request.question,
+            "topic": request.topic,
+            "subtopic": request.subtopic,
+            "pedagogical_move": None,
+            "relevant_history": retrieved_memory.relevant_history,
+            "previous_errors": retrieved_memory.previous_errors,
+            "previous_strategies": retrieved_memory.previous_strategies,
+            "conversation_history": [],
+            "teaching_phase": "initial",
+            "teaching_status": "continue_teaching",
+            "turn_count": 0,
+            "reteach_round": 0,
+        }
+
+        try:
+            graph_result = tutor_graph.invoke(initial_state, config=config)
+        except AdaptiveIntegrationError as exc:
+            if not adaptive_coordinator.has_active_attempt(thread_id):
+                tutor_checkpointer.delete_thread(thread_id)
+            raise _adaptive_http_exception(exc) from exc
+        except Exception as exc:
+            # Once frozen v3 has started, deleting the persisted thread would
+            # orphan an active policy attempt. Preserve it for explicit recovery.
+            if not adaptive_coordinator.has_active_attempt(thread_id):
+                tutor_checkpointer.delete_thread(thread_id)
+            raise model_service_http_exception(exc) from exc
+
+        upsert_thread_metadata(
+            thread_id=thread_id,
+            student_id=student_id,
+            target_skill=target_skill,
+        )
+        return _build_public_response(thread_id, graph_result)
+    finally:
+        _START_GUARD.release()
+
+
+@router.post("/start", response_model=TutorSessionResponse)
+def start_tutor_session(
+    request: TutorStartRequest,
+    authenticated_user: MemoryAuthenticatedUser = Depends(
+        require_authenticated_student
+    ),
+) -> TutorSessionResponse:
+    """Start a lesson from the learner's manually supplied question."""
+    return _start_tutor_session(request, authenticated_user)
+
+
+@router.post("/start-practice", response_model=TutorPracticeStartResponse)
+def start_recommended_practice(
+    request: TutorPracticeStartRequest,
+    authenticated_user: MemoryAuthenticatedUser = Depends(
+        require_authenticated_student
+    ),
+) -> TutorPracticeStartResponse:
+    """Prepare a verified problem for one skill, then use the normal start path."""
     try:
         target_skill = adaptive_coordinator.validate_target_skill(
             request.target_skill
@@ -447,62 +897,60 @@ def start_tutor_session(request: TutorStartRequest) -> TutorSessionResponse:
     except (KeyError, ValueError) as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
 
-    adaptive_attempt_index = 1
-    attempt_id = adaptive_coordinator.derive_attempt_id(
-        thread_id,
-        adaptive_attempt_index,
-    )
+    if _find_active_student_session(authenticated_user.student_id) is not None:
+        raise HTTPException(
+            status_code=409,
+            detail=(
+                "An adaptive tutoring session is currently active for this student. "
+                "Recover it before starting another one."
+            ),
+        )
 
-    retrieved_memory = adapt_memory_context(
-        get_memory_client().retrieve_tutor_context(
-            student_id=request.student_id,
-            target_skill=target_skill,
-        ),
-        target_skill=target_skill,
-    )
-
-    initial_state: TutorState = {
-        "student_id": request.student_id,
-        "thread_id": thread_id,
-        "attempt_id": attempt_id,
-        "adaptive_attempt_index": adaptive_attempt_index,
-        "target_skill": target_skill,
-        "adaptive_lifecycle_status": "not_started",
-        "age": request.age,
-        "question": request.question,
-        "topic": request.topic,
-        "subtopic": request.subtopic,
-        "pedagogical_move": None,
-        "relevant_history": retrieved_memory.relevant_history,
-        "previous_errors": retrieved_memory.previous_errors,
-        "previous_strategies": retrieved_memory.previous_strategies,
-        "conversation_history": [],
-        "teaching_phase": "initial",
-        "teaching_status": "continue_teaching",
-        "turn_count": 0,
-        "reteach_round": 0,
-    }
+    # Current registration captures an 8-18 age. The fallback keeps migrated
+    # prototype accounts usable without letting the browser assert identity.
+    student_age = authenticated_user.age or 15
+    if not 8 <= student_age <= 18:
+        student_age = 15
 
     try:
-        graph_result = tutor_graph.invoke(initial_state, config=config)
-    except AdaptiveIntegrationError as exc:
-        if not adaptive_coordinator.has_active_attempt(thread_id):
-            tutor_checkpointer.delete_thread(thread_id)
-        raise _adaptive_http_exception(exc) from exc
-    except Exception as exc:
-        # Once frozen v3 has started, deleting the persisted thread would
-        # orphan an active policy attempt. Preserve it for explicit recovery.
-        if not adaptive_coordinator.has_active_attempt(thread_id):
-            tutor_checkpointer.delete_thread(thread_id)
-        raise model_service_http_exception(exc) from exc
+        generated = get_practice_problem_generator().generate(
+            target_skill=target_skill,
+            student_age=student_age,
+            classifier=get_memory_client(),
+        )
+    except PracticeProblemGenerationError as exc:
+        raise HTTPException(
+            status_code=503,
+            detail="We couldn't prepare a practice problem right now.",
+        ) from exc
 
-    return _build_public_response(thread_id, graph_result)
+    session = _start_tutor_session(
+        TutorStartRequest(
+            age=student_age,
+            question=generated.question,
+            topic=target_skill,
+            subtopic=target_skill,
+            target_skill=target_skill,
+            relevant_history=[],
+            previous_errors=[],
+            previous_strategies=[],
+        ),
+        authenticated_user,
+    )
+    return TutorPracticeStartResponse(
+        target_skill=target_skill,
+        problem=generated.question,
+        session=session,
+    )
 
 
 @router.post("/{thread_id}/turn", response_model=TutorSessionResponse)
 def submit_student_response(
     thread_id: str,
     request: TutorStudentResponseRequest,
+    authenticated_user: MemoryAuthenticatedUser = Depends(
+        require_authenticated_student
+    ),
 ) -> TutorSessionResponse:
     """
     Submit one student's conversational reply to the latest teacher turn.
@@ -513,6 +961,7 @@ def submit_student_response(
     """
 
     snapshot = _get_persisted_snapshot(thread_id)
+    _require_thread_owner(snapshot, authenticated_user)
     phase = _persisted_session_phase(snapshot)
 
     if phase == "complete":
@@ -542,10 +991,14 @@ def submit_student_response(
 def submit_pedagogical_move(
     thread_id: str,
     request: TutorPedagogicalMoveRequest,
+    authenticated_user: MemoryAuthenticatedUser = Depends(
+        require_authenticated_student
+    ),
 ) -> TutorSessionResponse:
     """Legacy/manual seam; integrated adaptive turns never consume this."""
 
     snapshot = _get_persisted_snapshot(thread_id)
+    _require_thread_owner(snapshot, authenticated_user)
     phase = _persisted_session_phase(snapshot)
     values = dict(getattr(snapshot, "values", {}) or {})
 
@@ -585,8 +1038,12 @@ def submit_pedagogical_move(
 def submit_tutor_answers(
     thread_id: str,
     request: TutorAnswerRequest,
+    authenticated_user: MemoryAuthenticatedUser = Depends(
+        require_authenticated_student
+    ),
 ) -> TutorSessionResponse:
     snapshot = _get_persisted_snapshot(thread_id)
+    _require_thread_owner(snapshot, authenticated_user)
     phase = _persisted_session_phase(snapshot)
 
     if phase == "complete":

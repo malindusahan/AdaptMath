@@ -1,11 +1,13 @@
 import {
+  LogOut,
   MessageSquareText,
   Plus,
-  Settings2,
   Sparkles,
   Trash2,
+  UserRound,
   X,
 } from "lucide-react";
+import type { AuthenticatedUser } from "../types/auth";
 import type { ChatConversation } from "../types/chat";
 import type { LearnerSetup } from "../types/tutor";
 
@@ -13,12 +15,14 @@ interface ChatSidebarProps {
   chats: ChatConversation[];
   activeChatId: string | null;
   learner: LearnerSetup;
+  identity: AuthenticatedUser;
   open: boolean;
   onClose: () => void;
   onNewChat: () => void;
   onSelectChat: (chatId: string) => void;
   onDeleteChat: (chatId: string) => void;
-  onOpenSettings: () => void;
+  onOpenProfile: () => void;
+  onLogout: () => void;
 }
 
 function isToday(iso: string): boolean {
@@ -85,12 +89,14 @@ export function ChatSidebar({
   chats,
   activeChatId,
   learner,
+  identity,
   open,
   onClose,
   onNewChat,
   onSelectChat,
   onDeleteChat,
-  onOpenSettings,
+  onOpenProfile,
+  onLogout,
 }: ChatSidebarProps) {
   const sorted = [...chats].sort(
     (a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
@@ -170,19 +176,29 @@ export function ChatSidebar({
         <div className="border-t border-zinc-200 p-2.5">
           <button
             type="button"
-            onClick={onOpenSettings}
+            onClick={onOpenProfile}
+            aria-label="Open student profile"
+            title="Student profile"
             className="flex w-full items-center gap-3 rounded-xl px-2.5 py-2.5 text-left transition hover:bg-zinc-200/70"
           >
             <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-zinc-900 text-sm font-semibold text-white">
-              {learner.studentId.slice(0, 1).toUpperCase() || "S"}
+              {identity.username.slice(0, 1).toUpperCase() || "S"}
             </div>
             <div className="min-w-0 flex-1">
-              <div className="truncate text-sm font-medium text-zinc-900">{learner.studentId}</div>
+              <div className="truncate text-sm font-medium text-zinc-900">{identity.username}</div>
               <div className="truncate text-xs text-zinc-500">
                 Age {learner.age} · {learner.topic}
               </div>
             </div>
-            <Settings2 className="h-4 w-4 text-zinc-500" aria-hidden="true" />
+            <UserRound className="h-4 w-4 text-zinc-500" aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            onClick={onLogout}
+            className="mt-1 flex w-full items-center gap-3 rounded-xl px-2.5 py-2.5 text-left text-sm font-medium text-zinc-600 transition hover:bg-rose-50 hover:text-rose-700"
+          >
+            <LogOut className="h-4 w-4" aria-hidden="true" />
+            Log out
           </button>
         </div>
       </aside>

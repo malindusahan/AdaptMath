@@ -136,6 +136,19 @@ def save_policy_state(
     validated_policy = _validate_policy(policy)
     serialized = _serialize_envelope(validated_policy)
     destination = Path(path)
+    from .postgres_repository import (
+        policy_key_for_path,
+        postgres_enabled,
+        save_policy_snapshot,
+    )
+    if postgres_enabled():
+        envelope = json.loads(serialized)
+        save_policy_snapshot(
+            policy_key=policy_key_for_path(destination),
+            payload=envelope,
+            policy_class=POLICY_CLASS_NAME,
+        )
+        return destination
     if destination.exists() and not destination.is_file():
         raise ValueError(f"State destination is not a regular file: {destination}.")
     if destination.exists():
@@ -251,7 +264,17 @@ def load_policy_state(
             f"expected={expected_mode!r}, policy={validated_policy.data_mode!r}."
         )
 
-    envelope = _read_state_envelope(Path(path))
+    source = Path(path)
+    from .postgres_repository import (
+        load_policy_snapshot,
+        policy_key_for_path,
+        postgres_enabled,
+    )
+    envelope = (
+        load_policy_snapshot(policy_key_for_path(source))
+        if postgres_enabled()
+        else _read_state_envelope(source)
+    )
     policy_state = envelope["policy_state"]
     if not isinstance(policy_state, Mapping):
         raise TypeError("policy_state must be a mapping.")

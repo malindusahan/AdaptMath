@@ -3,6 +3,8 @@ from types import SimpleNamespace
 from unittest.mock import patch
 
 from app.api import tutor as tutor_api
+from app.clients.memory.memory_client import MemoryAuthenticatedUser
+from app.integrations.adaptive_component_coordinator import AdaptiveRestartRequiredError
 
 
 class TutorApiRecoveryTests(unittest.TestCase):
@@ -64,6 +66,126 @@ class TutorApiRecoveryTests(unittest.TestCase):
         self.assertEqual(len(response.questions), 3)
         for question in response.model_dump()["questions"]:
             self.assertNotIn("expected_answer", question)
+
+    def test_active_student_lookup_returns_newest_durable_active_lesson(self):
+        active_snapshot = self._snapshot(
+            "await_student_response",
+            "student_response_required",
+            values={
+                "student_id": "student-a",
+                "adaptive_lifecycle_status": "active",
+                "tutor_response": "Continue this lesson.",
+                "turn_count": 1,
+            },
+        )
+
+        with patch.object(
+            tutor_api,
+            "list_checkpoint_thread_ids",
+            return_value=["thread-active", "thread-other"],
+        ):
+            with patch.object(
+                tutor_api.tutor_graph,
+                "get_state",
+                return_value=active_snapshot,
+            ) as get_state_mock:
+                response = tutor_api._find_active_student_session("student-a")
+
+        self.assertIsNotNone(response)
+        self.assertEqual(response.thread_id, "thread-active")
+        self.assertEqual(response.status, "student_response_required")
+        get_state_mock.assert_called_once()
+
+    def test_active_student_endpoint_returns_none_when_no_lesson_exists(self):
+        with patch.object(tutor_api, "_find_active_student_session", return_value=None):
+            response = tutor_api.get_active_tutor_session(
+                MemoryAuthenticatedUser(
+                    user_id="user-a",
+                    username="student-a",
+                    role="STUDENT",
+                    student_id="student-a",
+                    age=15,
+                )
+            )
+
+        self.assertIsNone(response)
+
+    def test_abandon_active_lesson_aborts_attempt_and_persists_lifecycle(self):
+        snapshot = self._snapshot(
+            "await_student_response",
+            "student_response_required",
+            values={
+                "student_id": "student-a",
+                "thread_id": "thread-active",
+                "attempt_id": "thread-active:1",
+                "adaptive_lifecycle_status": "active",
+                "tutor_response": "What would you try next?",
+                "turn_count": 1,
+            },
+        )
+
+        with patch.object(tutor_api, "_get_persisted_snapshot", return_value=snapshot):
+            with patch.object(
+                tutor_api.adaptive_coordinator,
+                "abort_attempt",
+                return_value={"adaptive_lifecycle_status": "aborted"},
+            ) as abort_mock:
+                with patch.object(tutor_api.tutor_graph, "update_state") as update_mock:
+                    response = tutor_api.abandon_tutor_session("thread-active")
+
+        self.assertEqual(response.status, "complete")
+        abort_mock.assert_called_once()
+        update_mock.assert_called_once_with(
+            tutor_api._thread_config("thread-active"),
+            {"adaptive_lifecycle_status": "aborted"},
+        )
+
+    def test_abandon_is_idempotent_for_already_aborted_lesson(self):
+        snapshot = self._snapshot(
+            "await_student_response",
+            "student_response_required",
+            values={
+                "student_id": "student-a",
+                "adaptive_lifecycle_status": "aborted",
+            },
+        )
+
+        with patch.object(tutor_api, "_get_persisted_snapshot", return_value=snapshot):
+            with patch.object(
+                tutor_api.adaptive_coordinator,
+                "abort_attempt",
+            ) as abort_mock:
+                with patch.object(tutor_api.tutor_graph, "update_state") as update_mock:
+                    response = tutor_api.abandon_tutor_session("thread-active")
+
+        self.assertEqual(response.status, "complete")
+        abort_mock.assert_not_called()
+        update_mock.assert_not_called()
+
+    def test_abandon_closes_unrestorable_post_restart_lesson(self):
+        snapshot = self._snapshot(
+            "await_student_response",
+            "student_response_required",
+            values={
+                "student_id": "student-a",
+                "adaptive_lifecycle_status": "active",
+            },
+        )
+
+        with patch.object(tutor_api, "_get_persisted_snapshot", return_value=snapshot):
+            with patch.object(
+                tutor_api.adaptive_coordinator,
+                "abort_attempt",
+                side_effect=AdaptiveRestartRequiredError("restart"),
+            ):
+                with patch.object(tutor_api.tutor_graph, "update_state") as update_mock:
+                    response = tutor_api.abandon_tutor_session("thread-active")
+
+        self.assertEqual(response.status, "complete")
+        update_mock.assert_called_once_with(
+            tutor_api._thread_config("thread-active"),
+            {"adaptive_lifecycle_status": "aborted"},
+        )
 
     def test_submit_student_response_resumes_only_student_interrupt(self):
         graph_result = {

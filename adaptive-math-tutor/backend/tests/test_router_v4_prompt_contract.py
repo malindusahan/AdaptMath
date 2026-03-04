@@ -12,7 +12,7 @@ class RouterV4ArchiveTests(unittest.TestCase):
         ).read_text(encoding="utf-8")
 
         self.assertIn(
-            'ROUTER_VERSION = "5.0-development"',
+            'ROUTER_VERSION = "6.0-deterministic-local"',
             active,
         )
 

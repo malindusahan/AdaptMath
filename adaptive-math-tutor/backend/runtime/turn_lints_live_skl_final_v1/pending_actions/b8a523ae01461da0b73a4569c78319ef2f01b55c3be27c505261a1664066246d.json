@@ -1,0 +1,303 @@
+{
+  "action_event_id": "3eac0f0e-7328-4152-8951-3d97c7c5cabd:1:action:1",
+  "action_turn_index": 1,
+  "actual_move": "focus",
+  "actual_selector_move": "generic",
+  "actual_treatment_move": "focus",
+  "anchor_gamma": 0.0,
+  "anchor_mode": "none",
+  "anchor_scores": {
+    "focus": 0.0,
+    "generic": 0.0,
+    "probing": 0.0,
+    "telling": 0.0
+  },
+  "anchor_selector_sha256": "ad770256a71efcce7485705099511494e41806b2e29bc3829f9ba8aeaf731cd5",
+  "anchor_selector_version": "MD7-R2-TELL-C1 Epoch 2",
+  "assignment_random_draw": null,
+  "assignment_rng_source": null,
+  "assignment_seed": null,
+  "attempt_id": "3eac0f0e-7328-4152-8951-3d97c7c5cabd:1",
+  "behavior_policy": "turn_lints_live_v1",
+  "behavior_propensity": null,
+  "collection_lineage": "turn_lints_live_skl_final_v1",
+  "configured_reward_mode": "headroom_normalized",
+  "context": {
+    "available_blocks": [
+      "S",
+      "K",
+      "L",
+      "H",
+      "Q"
+    ],
+    "context_dimension": 11,
+    "enabled_blocks": [
+      "S",
+      "K",
+      "L"
+    ],
+    "feature_names": [
+      "selector_p_generic",
+      "selector_p_probing",
+      "selector_p_focus",
+      "selector_p_telling",
+      "mastery_before",
+      "previous_mastery_delta",
+      "previous_mastery_delta_missing",
+      "previous_reasoning_probability",
+      "previous_uncertainty_probability",
+      "previous_clarification_probability",
+      "previous_learner_signals_missing"
+    ],
+    "feature_values": {
+      "mastery_before": 0.5958625810015681,
+      "previous_clarification_probability": 0.0,
+      "previous_learner_signals_missing": 1.0,
+      "previous_mastery_delta": 0.0,
+      "previous_mastery_delta_missing": 1.0,
+      "previous_reasoning_probability": 0.0,
+      "previous_uncertainty_probability": 0.0,
+      "selector_p_focus": 0.013319525867700577,
+      "selector_p_generic": 0.9526483416557312,
+      "selector_p_probing": 0.029663480818271637,
+      "selector_p_telling": 0.004368586931377649
+    },
+    "missingness": {
+      "previous_learner_signals": "zeros_with_shared_missing_indicator",
+      "previous_mastery_delta": "zero_with_missing_indicator",
+      "previous_move": "zero_one_hot_with_missing_indicator",
+      "previous_mrb1_scores": "zeros_with_shared_missing_indicator"
+    },
+    "schema_id": "turn_lints_context_v1:S+K+L:fd7363f6eee1",
+    "schema_version": "turn_lints_context_v1",
+    "vector": [
+      0.9526483416557312,
+      0.029663480818271637,
+      0.013319525867700577,
+      0.004368586931377649,
+      0.5958625810015681,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  },
+  "contextual_ts_reward_scores": {
+    "focus": 0.20752895296153157,
+    "generic": 0.14389399771694228,
+    "probing": 0.04538422744638315,
+    "telling": -0.010339322810378249
+  },
+  "current_response_mrb1": {
+    "Actionability": 0.8854170441627502,
+    "Mistake_Identification": 0.8693014979362488,
+    "Mistake_Location": 0.8016601800918579,
+    "Providing_Guidance": 0.7894788384437561
+  },
+  "decision_source": "turn_lints_posterior_sample",
+  "diagnostic_logged_context": {
+    "available_blocks": [
+      "S",
+      "K",
+      "L",
+      "H",
+      "Q"
+    ],
+    "context_dimension": 22,
+    "enabled_blocks": [
+      "S",
+      "K",
+      "L",
+      "H",
+      "Q"
+    ],
+    "feature_names": [
+      "selector_p_generic",
+      "selector_p_probing",
+      "selector_p_focus",
+      "selector_p_telling",
+      "mastery_before",
+      "previous_mastery_delta",
+      "previous_mastery_delta_missing",
+      "previous_reasoning_probability",
+      "previous_uncertainty_probability",
+      "previous_clarification_probability",
+      "previous_learner_signals_missing",
+      "previous_move_generic",
+      "previous_move_probing",
+      "previous_move_focus",
+      "previous_move_telling",
+      "previous_move_missing",
+      "prior_tutor_turn_count",
+      "previous_mistake_identification",
+      "previous_mistake_location",
+      "previous_providing_guidance",
+      "previous_actionability",
+      "previous_mrb1_missing"
+    ],
+    "feature_values": {
+      "mastery_before": 0.5958625810015681,
+      "previous_actionability": 0.0,
+      "previous_clarification_probability": 0.0,
+      "previous_learner_signals_missing": 1.0,
+      "previous_mastery_delta": 0.0,
+      "previous_mastery_delta_missing": 1.0,
+      "previous_mistake_identification": 0.0,
+      "previous_mistake_location": 0.0,
+      "previous_move_focus": 0.0,
+      "previous_move_generic": 0.0,
+      "previous_move_missing": 1.0,
+      "previous_move_probing": 0.0,
+      "previous_move_telling": 0.0,
+      "previous_mrb1_missing": 1.0,
+      "previous_providing_guidance": 0.0,
+      "previous_reasoning_probability": 0.0,
+      "previous_uncertainty_probability": 0.0,
+      "prior_tutor_turn_count": 0.0,
+      "selector_p_focus": 0.013319525867700577,
+      "selector_p_generic": 0.9526483416557312,
+      "selector_p_probing": 0.029663480818271637,
+      "selector_p_telling": 0.004368586931377649
+    },
+    "missingness": {
+      "previous_learner_signals": "zeros_with_shared_missing_indicator",
+      "previous_mastery_delta": "zero_with_missing_indicator",
+      "previous_move": "zero_one_hot_with_missing_indicator",
+      "previous_mrb1_scores": "zeros_with_shared_missing_indicator"
+    },
+    "schema_id": "turn_lints_context_v1:S+K+L+H+Q:d94e366c42d2",
+    "schema_version": "turn_lints_context_v1",
+    "vector": [
+      0.9526483416557312,
+      0.029663480818271637,
+      0.013319525867700577,
+      0.004368586931377649,
+      0.5958625810015681,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  },
+  "explicit_learner_agency": {
+    "inferred_learner_state_used": false,
+    "request_category": null,
+    "triggered": false
+  },
+  "full_behavior_probability_vector": {
+    "focus": 0.013319525867700577,
+    "generic": 0.9526483416557312,
+    "probing": 0.029663480818271637,
+    "telling": 0.004368586931377649
+  },
+  "hypothetical_arm": null,
+  "hypothetical_is_observed_treatment": false,
+  "md7_raw_probabilities": {
+    "focus": 0.013319525867700577,
+    "generic": 0.9526483416557312,
+    "probing": 0.029663480818271637,
+    "telling": 0.004368586931377649
+  },
+  "observation_origin": "live_tutor",
+  "policy_context": {
+    "available_blocks": [
+      "S",
+      "K",
+      "L",
+      "H",
+      "Q"
+    ],
+    "context_dimension": 11,
+    "enabled_blocks": [
+      "S",
+      "K",
+      "L"
+    ],
+    "feature_names": [
+      "selector_p_generic",
+      "selector_p_probing",
+      "selector_p_focus",
+      "selector_p_telling",
+      "mastery_before",
+      "previous_mastery_delta",
+      "previous_mastery_delta_missing",
+      "previous_reasoning_probability",
+      "previous_uncertainty_probability",
+      "previous_clarification_probability",
+      "previous_learner_signals_missing"
+    ],
+    "feature_values": {
+      "mastery_before": 0.5958625810015681,
+      "previous_clarification_probability": 0.0,
+      "previous_learner_signals_missing": 1.0,
+      "previous_mastery_delta": 0.0,
+      "previous_mastery_delta_missing": 1.0,
+      "previous_reasoning_probability": 0.0,
+      "previous_uncertainty_probability": 0.0,
+      "selector_p_focus": 0.013319525867700577,
+      "selector_p_generic": 0.9526483416557312,
+      "selector_p_probing": 0.029663480818271637,
+      "selector_p_telling": 0.004368586931377649
+    },
+    "missingness": {
+      "previous_learner_signals": "zeros_with_shared_missing_indicator",
+      "previous_mastery_delta": "zero_with_missing_indicator",
+      "previous_move": "zero_one_hot_with_missing_indicator",
+      "previous_mrb1_scores": "zeros_with_shared_missing_indicator"
+    },
+    "schema_id": "turn_lints_context_v1:S+K+L:fd7363f6eee1",
+    "schema_version": "turn_lints_context_v1",
+    "vector": [
+      0.9526483416557312,
+      0.029663480818271637,
+      0.013319525867700577,
+      0.004368586931377649,
+      0.5958625810015681,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  },
+  "policy_lineage": "direct_disjoint_turn_lints_v1",
+  "policy_mode": "LIVE",
+  "policy_scores": {
+    "focus": 0.20752895296153157,
+    "generic": 0.14389399771694228,
+    "probing": 0.04538422744638315,
+    "telling": -0.010339322810378249
+  },
+  "posterior_initialization_observation": false,
+  "randomized_assignment": false,
+  "real_live_observation": true,
+  "reward_attribution": "actual_treatment_move",
+  "reward_mode": "headroom_normalized",
+  "schema_version": "adaptmath_turn_lints_event_v4",
+  "selected_arm": "focus",
+  "selector_sha256": "ad770256a71efcce7485705099511494e41806b2e29bc3829f9ba8aeaf731cd5",
+  "selector_version": "MD7-R2-TELL-C1 Epoch 2",
+  "shadow_hypothetical_move": null,
+  "shadow_moves_are_observed_treatments": false,
+  "shadow_p0_move": null,
+  "shadow_p1_move": null,
+  "synthetic_initialization": false,
+  "treatment_assignment_source": "turn_lints_posterior_sample",
+  "tutor_response": "To find the sum of 1,345 and 2,876, it's often helpful to align the numbers vertically by their place values. How would you write that out?"
+}

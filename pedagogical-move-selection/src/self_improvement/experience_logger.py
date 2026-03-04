@@ -581,6 +581,9 @@ class ExperienceLogger:
             raise ValueError("Source policy data_mode changed after logger creation.")
 
     def _validate_existing_log(self) -> None:
+        from .postgres_repository import postgres_enabled
+        if postgres_enabled():
+            return
         if not self.path.exists():
             return
         if not self.path.is_file():
@@ -656,6 +659,11 @@ class ExperienceLogger:
             allow_nan=False,
             separators=(",", ":"),
         )
+
+        from .postgres_repository import append_experience, postgres_enabled
+        if postgres_enabled():
+            append_experience(record)
+            return record
 
         self.path.parent.mkdir(parents=True, exist_ok=True)
         with self.path.open("a", encoding="utf-8", newline="\n") as handle:

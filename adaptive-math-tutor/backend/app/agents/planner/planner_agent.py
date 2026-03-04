@@ -19,7 +19,8 @@ class PlannerAgent:
             model=settings.gemini_model,
             google_api_key=settings.gemini_api_key.get_secret_value(),
             temperature=0,
-            max_retries=2,
+            timeout=settings.gemini_timeout_seconds,
+            max_retries=settings.gemini_max_retries,
         )
         self.structured_model = self.model.with_structured_output(
             PlannerOutput,

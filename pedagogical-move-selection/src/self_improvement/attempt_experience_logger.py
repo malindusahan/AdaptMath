@@ -382,6 +382,11 @@ class AttemptExperienceLogger:
             )
 
 
+        from .postgres_repository import append_experience, postgres_enabled
+        if postgres_enabled():
+            append_experience(record)
+            return self.path
+
         with self.path.open(
             "a",
             encoding="utf-8",

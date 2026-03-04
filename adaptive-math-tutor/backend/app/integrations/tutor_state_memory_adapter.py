@@ -21,6 +21,7 @@ class TutorStateMemoryAdapter:
 
     def __init__(self) -> None:
         self._pending_pedagogical_move: str | None = None
+        self._turn_lints_pre_action_state: dict[str, object] | None = None
 
     @staticmethod
     def _mapping(memory: object) -> Mapping[str, Any]:
@@ -68,6 +69,36 @@ class TutorStateMemoryAdapter:
         if "mastery_before" not in mapping:
             raise ValueError("TutorState.mastery_before is not available.")
         return mapping["mastery_before"]
+
+    def get_turn_lints_pre_action_state(
+        self,
+        memory: object,
+    ) -> Mapping[str, object]:
+        """Return the coordinator's causal snapshot for the next action."""
+
+        self._mapping(memory)
+        if self._turn_lints_pre_action_state is None:
+            raise ValueError("Turn-LinTS pre-action state is unavailable.")
+        return dict(self._turn_lints_pre_action_state)
+
+    def set_turn_lints_pre_action_state(
+        self,
+        *,
+        mastery_before: float,
+        previous_mastery_delta: float | None,
+        previous_learner_signals: Mapping[str, float] | None,
+    ) -> None:
+        """Install values already known before the upcoming Tutor action."""
+
+        self._turn_lints_pre_action_state = {
+            "mastery_before": mastery_before,
+            "previous_mastery_delta": previous_mastery_delta,
+            "previous_learner_signals": (
+                None
+                if previous_learner_signals is None
+                else dict(previous_learner_signals)
+            ),
+        }
 
     def set_pending_pedagogical_move(self, move: str) -> None:
         """Bind the externally selected move to the next adapter-owned append."""

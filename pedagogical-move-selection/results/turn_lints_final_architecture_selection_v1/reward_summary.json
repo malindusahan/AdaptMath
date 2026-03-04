@@ -1,0 +1,179 @@
+{
+  "selected": "HEADROOM_NORMALIZED",
+  "reason": "HEADROOM_NORMALIZED preserved sign, stayed finite and bounded without tuned constants, reduced absolute-reward mastery dependence from |rho|=0.742 to 0.025, and introduced no strong turn/relative-position artifact (maximum |rho|=0.155).",
+  "predeclared_criteria": [
+    "Preserve the sign/direction of the BKT posterior belief update.",
+    "Avoid mechanical domination by starting mastery/headroom.",
+    "Avoid a strong artificial dependence on turn or relative attempt position.",
+    "Remain finite and stable at mastery boundaries.",
+    "Use no arbitrary clipping or tuned weighting constants.",
+    "Retain usable contextual-bandit reward variation."
+  ],
+  "scientific_semantics": "BKT posterior belief update, not measured learning",
+  "candidates": {
+    "RAW_DELTA": {
+      "reward": "RAW_DELTA",
+      "N": 84,
+      "min": -0.1710836699786672,
+      "P1": -0.1576590235802853,
+      "P5": -0.13156083170691238,
+      "Q1": -0.019717992202646306,
+      "median": 0.022657459335950647,
+      "mean": 0.02466573859733395,
+      "Q3": 0.06579323701785256,
+      "P95": 0.12690776069261822,
+      "P99": 0.2691976693981105,
+      "max": 0.5565306848534494,
+      "SD": 0.09263472277284822,
+      "IQR": 0.08551122922049886,
+      "positive_proportion": 0.6785714285714286,
+      "zero_proportion": 0.0,
+      "negative_proportion": 0.32142857142857145,
+      "nonfinite_count": 0,
+      "boundary_before_le_0_01_N": 0,
+      "boundary_before_ge_0_99_N": 0,
+      "sign_mismatch_count": 0,
+      "spearman_reward_vs_mastery_before_rho": -0.4142776869430776,
+      "spearman_reward_vs_mastery_before_p": 8.944184403251536e-05,
+      "spearman_absolute_reward_vs_mastery_before_rho": -0.7416257043008072,
+      "spearman_absolute_reward_vs_mastery_before_p": 7.091850232198662e-16,
+      "spearman_reward_vs_turn_index_rho": -0.06658137821888446,
+      "spearman_reward_vs_turn_index_p": 0.5473384659213415,
+      "spearman_absolute_reward_vs_turn_index_rho": -0.024219753908692083,
+      "spearman_absolute_reward_vs_turn_index_p": 0.8268964578420483,
+      "spearman_reward_vs_relative_attempt_position_rho": 0.015060797807435326,
+      "spearman_reward_vs_relative_attempt_position_p": 0.891841921652949,
+      "spearman_absolute_reward_vs_relative_attempt_position_rho": -0.17073975157452775,
+      "spearman_absolute_reward_vs_relative_attempt_position_p": 0.12046274160504425,
+      "correlations": {
+        "reward_vs_mastery_before": {
+          "n": 84,
+          "rho": -0.4142776869430776,
+          "p_value": 8.944184403251536e-05
+        },
+        "absolute_reward_vs_mastery_before": {
+          "n": 84,
+          "rho": -0.7416257043008072,
+          "p_value": 7.091850232198662e-16
+        },
+        "reward_vs_turn_index": {
+          "n": 84,
+          "rho": -0.06658137821888446,
+          "p_value": 0.5473384659213415
+        },
+        "absolute_reward_vs_turn_index": {
+          "n": 84,
+          "rho": -0.024219753908692083,
+          "p_value": 0.8268964578420483
+        },
+        "reward_vs_relative_attempt_position": {
+          "n": 84,
+          "rho": 0.015060797807435326,
+          "p_value": 0.891841921652949
+        },
+        "absolute_reward_vs_relative_attempt_position": {
+          "n": 84,
+          "rho": -0.17073975157452775,
+          "p_value": 0.12046274160504425
+        }
+      },
+      "per_attempt_mean": {
+        "N": 14,
+        "mean": 0.021834940077229848,
+        "SD": 0.049656284337702826,
+        "min": -0.06816845899575452,
+        "max": 0.12311298682290818
+      },
+      "per_learner_mean": {
+        "N": 3,
+        "values": {
+          "psn_9a081eb5df240169b9f3c83b": 0.06989076487691051,
+          "psn_b94f4a505b4ee07be23867fc": 0.01632495724816407,
+          "psn_f78c0817d43053e5bd31da20": 0.019497410268218027
+        }
+      }
+    },
+    "HEADROOM_NORMALIZED": {
+      "reward": "HEADROOM_NORMALIZED",
+      "N": 84,
+      "min": -0.26215185494826826,
+      "P1": -0.23177533199796846,
+      "P5": -0.16987183058002941,
+      "Q1": -0.02368862141937151,
+      "median": 0.1775562124314644,
+      "mean": 0.14744802180779332,
+      "Q3": 0.23931671680694172,
+      "P95": 0.5400022555658863,
+      "P99": 0.692354584342238,
+      "max": 0.7005239752859275,
+      "SD": 0.20819256625143093,
+      "IQR": 0.2630053382263132,
+      "positive_proportion": 0.6785714285714286,
+      "zero_proportion": 0.0,
+      "negative_proportion": 0.32142857142857145,
+      "nonfinite_count": 0,
+      "boundary_before_le_0_01_N": 0,
+      "boundary_before_ge_0_99_N": 0,
+      "sign_mismatch_count": 0,
+      "spearman_reward_vs_mastery_before_rho": 0.11749578564383438,
+      "spearman_reward_vs_mastery_before_p": 0.28713705921731136,
+      "spearman_absolute_reward_vs_mastery_before_rho": -0.0246837333390494,
+      "spearman_absolute_reward_vs_mastery_before_p": 0.8236333464342482,
+      "spearman_reward_vs_turn_index_rho": -0.04273894258161201,
+      "spearman_reward_vs_turn_index_p": 0.6994847969561919,
+      "spearman_absolute_reward_vs_turn_index_rho": -0.0384762658936822,
+      "spearman_absolute_reward_vs_turn_index_p": 0.7282265382099371,
+      "spearman_reward_vs_relative_attempt_position_rho": 0.15487773960763965,
+      "spearman_reward_vs_relative_attempt_position_p": 0.1595126392533972,
+      "spearman_absolute_reward_vs_relative_attempt_position_rho": 0.09075018099726014,
+      "spearman_absolute_reward_vs_relative_attempt_position_p": 0.4116619858733611,
+      "correlations": {
+        "reward_vs_mastery_before": {
+          "n": 84,
+          "rho": 0.11749578564383438,
+          "p_value": 0.28713705921731136
+        },
+        "absolute_reward_vs_mastery_before": {
+          "n": 84,
+          "rho": -0.0246837333390494,
+          "p_value": 0.8236333464342482
+        },
+        "reward_vs_turn_index": {
+          "n": 84,
+          "rho": -0.04273894258161201,
+          "p_value": 0.6994847969561919
+        },
+        "absolute_reward_vs_turn_index": {
+          "n": 84,
+          "rho": -0.0384762658936822,
+          "p_value": 0.7282265382099371
+        },
+        "reward_vs_relative_attempt_position": {
+          "n": 84,
+          "rho": 0.15487773960763965,
+          "p_value": 0.1595126392533972
+        },
+        "absolute_reward_vs_relative_attempt_position": {
+          "n": 84,
+          "rho": 0.09075018099726014,
+          "p_value": 0.4116619858733611
+        }
+      },
+      "per_attempt_mean": {
+        "N": 14,
+        "mean": 0.15301230245007633,
+        "SD": 0.13976238426986884,
+        "min": -0.10700226717051267,
+        "max": 0.4472197085278315
+      },
+      "per_learner_mean": {
+        "N": 3,
+        "values": {
+          "psn_9a081eb5df240169b9f3c83b": 0.21573789415111894,
+          "psn_b94f4a505b4ee07be23867fc": 0.17189563268100275,
+          "psn_f78c0817d43053e5bd31da20": 0.12397213406464211
+        }
+      }
+    }
+  }
+}

@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
-from datetime import date, datetime
+from datetime import date, datetime, timedelta, timezone
 import hashlib
+import os
 import secrets
 from typing import Any
 import uuid
@@ -22,6 +23,7 @@ from src.schemas.auth import (
     SignupResponse,
     UserMeResponse,
 )
+from src.services.auth_session_repository import AuthSessionRepository
 
 # In-memory session store mapping session_token -> user metadata
 _ACTIVE_SESSIONS: dict[str, dict[str, Any]] = {}
@@ -67,10 +69,35 @@ def calculate_age(dob: date, today: date | None = None) -> int:
 class AuthService:
     """Provides user account registration, login verification, and identity resolution."""
 
-    def __init__(self, session_factory: SessionFactory | None = None):
+    def __init__(
+        self,
+        session_factory: SessionFactory | None = None,
+        *,
+        session_persistence: str | None = None,
+        session_ttl_seconds: int | None = None,
+    ):
         self.session_factory = (
             session_factory if session_factory is not None else get_session_factory()
         )
+        mode = (
+            session_persistence
+            if session_persistence is not None
+            else os.getenv("AUTH_SESSION_PERSISTENCE", "memory")
+        ).strip().lower()
+        if mode not in {"memory", "postgres"}:
+            raise ValueError(
+                "AUTH_SESSION_PERSISTENCE must be 'memory' or 'postgres'."
+            )
+        raw_ttl = (
+            session_ttl_seconds
+            if session_ttl_seconds is not None
+            else int(os.getenv("AUTH_SESSION_TTL_SECONDS", "43200"))
+        )
+        if raw_ttl <= 0:
+            raise ValueError("AUTH_SESSION_TTL_SECONDS must be positive.")
+        self.session_persistence = mode
+        self.session_ttl_seconds = int(raw_ttl)
+        self.session_repository = AuthSessionRepository()
 
     def signup_student(self, request: SignupRequest) -> SignupResponse:
         """Atomically register a new student and linked user account."""
@@ -217,7 +244,18 @@ class AuthService:
                 "student_id": student_id_str,
                 "age": account.age,
             }
-            _ACTIVE_SESSIONS[token] = user_data
+            if self.session_persistence == "postgres":
+                self.session_repository.create(
+                    uow.session,
+                    token=token,
+                    user_id=account.user_id,
+                    expires_at=(
+                        datetime.now(timezone.utc)
+                        + timedelta(seconds=self.session_ttl_seconds)
+                    ),
+                )
+            else:
+                _ACTIVE_SESSIONS[token] = user_data
 
             uow.session.commit()
 
@@ -235,10 +273,22 @@ class AuthService:
         """Resolve active user session from token."""
         if not token:
             return None
+        if self.session_persistence == "postgres":
+            with UnitOfWork(self.session_factory) as uow:
+                assert uow.session is not None
+                user = self.session_repository.resolve(uow.session, token)
+                uow.session.commit()
+                return user
         return _ACTIVE_SESSIONS.get(token)
 
     def logout(self, token: str | None) -> None:
         """Terminate active session."""
+        if token and self.session_persistence == "postgres":
+            with UnitOfWork(self.session_factory) as uow:
+                assert uow.session is not None
+                self.session_repository.revoke(uow.session, token)
+                uow.session.commit()
+            return
         if token and token in _ACTIVE_SESSIONS:
             del _ACTIVE_SESSIONS[token]
 

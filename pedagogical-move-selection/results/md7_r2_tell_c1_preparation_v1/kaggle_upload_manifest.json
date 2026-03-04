@@ -1,0 +1,40 @@
+{
+  "experiment": "MD7-R2-TELL-C1",
+  "upload_root": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\pedagogical-move-selection\\results\\md7_r2_tell_c1_preparation_v1",
+  "preparation_dataset_name": "md7-r2-tell-c1-preparation-v1",
+  "files": [
+    "correction_train.jsonl",
+    "dataset_audit.json",
+    "dataset_manifest.json",
+    "telling_boundary_challenge_val_v1.jsonl",
+    "telling_calibration_train_v1.jsonl",
+    "telling_calibration_validation_v1.jsonl"
+  ],
+  "notebook_file": "MD7-R2-TELL-C1-kaggle.ipynb",
+  "attach_existing_inputs": [
+    {
+      "name": "mathdial-move-selection",
+      "required_files": [
+        "train.jsonl",
+        "validation.jsonl"
+      ],
+      "note": "test.jsonl may be mounted but is never opened or used"
+    },
+    {
+      "name": "MD7-R1 - AdaptMath notebook output",
+      "required_model_files": [
+        "model.safetensors",
+        "config.json",
+        "tokenizer.json",
+        "tokenizer_config.json"
+      ],
+      "required_model_sha256": "d32d37f7f664d038f80fefb92f874804b49e5ac3d848985636ae64e6a2a60a13"
+    }
+  ],
+  "excluded_from_use": [
+    "MathDial test",
+    "MRBench V3 test",
+    "original synthetic final test",
+    "telling-calibration Epoch 1/2/3 models"
+  ]
+}

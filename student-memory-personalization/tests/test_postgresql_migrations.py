@@ -71,7 +71,7 @@ def test_alembic_configuration_loads():
 def test_migration_chain_has_expected_head():
     scripts = ScriptDirectory.from_config(_alembic_config())
 
-    assert scripts.get_heads() == ["0011_adaptmath_ingestion"]
+    assert scripts.get_heads() == ["0013_policy_state_ordered_json"]
     first_revision = scripts.get_revision("0001_core_identity")
     second_revision = scripts.get_revision("0002_raw_interactions")
     third_revision = scripts.get_revision("0003_memory_projections")
@@ -83,6 +83,8 @@ def test_migration_chain_has_expected_head():
     ninth_revision = scripts.get_revision("0009_add_long_term_skill_names")
     tenth_revision = scripts.get_revision("0010_memory_skill_names")
     eleventh_revision = scripts.get_revision("0011_adaptmath_ingestion")
+    twelfth_revision = scripts.get_revision("0012_postgres_unification")
+    thirteenth_revision = scripts.get_revision("0013_policy_state_ordered_json")
     assert first_revision is not None
     assert first_revision.down_revision is None
     assert second_revision is not None
@@ -105,6 +107,10 @@ def test_migration_chain_has_expected_head():
     assert tenth_revision.down_revision == "0009_add_long_term_skill_names"
     assert eleventh_revision is not None
     assert eleventh_revision.down_revision == "0010_memory_skill_names"
+    assert twelfth_revision is not None
+    assert twelfth_revision.down_revision == "0011_adaptmath_ingestion"
+    assert thirteenth_revision is not None
+    assert thirteenth_revision.down_revision == "0012_postgres_unification"
 
 
 def test_core_metadata_tables_remain_registered():
@@ -298,7 +304,36 @@ def test_upgrade_to_full_head_is_complete_and_idempotent():
         with engine.connect() as connection:
             assert connection.execute(
                 text("SELECT version_num FROM alembic_version")
-            ).scalar_one() == "0011_adaptmath_ingestion"
+            ).scalar_one() == "0013_policy_state_ordered_json"
+
+            required_unified_tables = {
+                "auth": {"sessions"},
+                "tutor": {
+                    "checkpoint_migrations", "checkpoints", "checkpoint_blobs",
+                    "checkpoint_writes", "threads",
+                },
+                "student_model": {
+                    "students", "mastery", "bkt_initial_priors", "attempts",
+                    "resolved_events", "sessions",
+                },
+                "research": {
+                    "policy_states", "turn_actions", "selector_decisions",
+                    "policy_contexts", "c3_contexts", "mrb1_scores",
+                    "policy_updates", "experience_records",
+                },
+            }
+            for schema, expected in required_unified_tables.items():
+                actual = {
+                    row[0]
+                    for row in connection.execute(
+                        text(
+                            "SELECT table_name FROM information_schema.tables "
+                            "WHERE table_schema = :schema"
+                        ),
+                        {"schema": schema},
+                    )
+                }
+                assert expected.issubset(actual)
 
         # A second head upgrade must be an explicit no-op.
         command.upgrade(config, "head")

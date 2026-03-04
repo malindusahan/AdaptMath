@@ -1,0 +1,37 @@
+path,repo,size_bytes,brief_purpose
+pedagogical-move-selection/notebooks/ablations/abl1-md6-selfcorrectness-yesonly-fixed.ipynb,pedagogical-move-selection,53663,abl1 md6 selfcorrectness yesonly fixed
+pedagogical-move-selection/notebooks/critic/mrb1-robertabase-multitask-critic (1).ipynb,pedagogical-move-selection,63276,mrb1 robertabase multitask critic (1)
+pedagogical-move-selection/notebooks/critic/mrb2-robertabase-multitask-softweightedce-alpha050 (1).ipynb,pedagogical-move-selection,67295,mrb2 robertabase multitask softweightedce alpha050 (1)
+pedagogical-move-selection/notebooks/diagnostics/mrb1-diag-continuousscore-audit (1).ipynb,pedagogical-move-selection,20537,mrb1 diag continuousscore audit (1)
+pedagogical-move-selection/notebooks/evaluation/md6-held-out-test.ipynb,pedagogical-move-selection,22398,md6 held out test
+pedagogical-move-selection/notebooks/self_improvement/si7a-mrb1-informed-lints-context-builder (1).ipynb,pedagogical-move-selection,22793,si7a mrb1 informed lints context builder (1)
+pedagogical-move-selection/notebooks/self_improvement/si7b-mrb1-informed-true-lints-attempt-level-overla (1).ipynb,pedagogical-move-selection,48875,si7b mrb1 informed true lints attempt level overla (1)
+pedagogical-move-selection/notebooks/supervised/md10-modernbert-weighted-ce-alpha075 (2).ipynb,pedagogical-move-selection,34908,md10 modernbert weighted ce alpha075 (2)
+pedagogical-move-selection/notebooks/supervised/md11-robertabase-weighted-ce-alpha075 (1).ipynb,pedagogical-move-selection,35336,md11 robertabase weighted ce alpha075 (1)
+pedagogical-move-selection/notebooks/supervised/md12-robertabase-weighted-ce-alpha075-4epochs (1).ipynb,pedagogical-move-selection,37006,md12 robertabase weighted ce alpha075 4epochs (1)
+pedagogical-move-selection/notebooks/supervised/md13-debertav3base-weighted-ce-alpha075 (1).ipynb,pedagogical-move-selection,41261,md13 debertav3base weighted ce alpha075 (1)
+pedagogical-move-selection/notebooks/supervised/md2-distilroberta-move-selector (1).ipynb,pedagogical-move-selection,55999,md2 distilroberta move selector (1)
+pedagogical-move-selection/notebooks/supervised/md4-distilroberta-weighted-cross-entropy (2).ipynb,pedagogical-move-selection,57933,md4 distilroberta weighted cross entropy (2)
+pedagogical-move-selection/notebooks/supervised/md5-distilroberta-soft-weighted-ce.ipynb,pedagogical-move-selection,32613,md5 distilroberta soft weighted ce
+pedagogical-move-selection/notebooks/supervised/md6-distilroberta-soft-weighted-ce-alpha075 (1).ipynb,pedagogical-move-selection,32888,md6 distilroberta soft weighted ce alpha075 (1)
+pedagogical-move-selection/notebooks/supervised/md7-distilroberta-targeted-telling-weight (1).ipynb,pedagogical-move-selection,32744,md7 distilroberta targeted telling weight (1)
+pedagogical-move-selection/notebooks/supervised/md8-distilroberta-alpha075-lr1p5e5 (1).ipynb,pedagogical-move-selection,31209,md8 distilroberta alpha075 lr1p5e5 (1)
+pedagogical-move-selection/notebooks/supervised/md9-distilroberta-alpha075-lr1p5e5-4epochs (1).ipynb,pedagogical-move-selection,33129,md9 distilroberta alpha075 lr1p5e5 4epochs (1)
+pedagogical-move-selection/results/md7_r2_tell_c1_preparation_v1/MD7-R2-TELL-C1-kaggle.ipynb,pedagogical-move-selection,23773,MD7 R2 TELL C1 kaggle
+student-memory-personalization/notebooks/01_dataset_exploration.ipynb,student-memory-personalization,537677,01 dataset exploration
+student-memory-personalization/notebooks/02_data_preprocessing.ipynb,student-memory-personalization,155926,02 data preprocessing
+student-memory-personalization/notebooks/02_model_development.ipynb,student-memory-personalization,47629,02 model development
+student-memory-personalization/notebooks/03_feature_engineering.ipynb,student-memory-personalization,483254,03 feature engineering
+student-memory-personalization/notebooks/14_01_topic_dataset_audit.ipynb,student-memory-personalization,171339,14 01 topic dataset audit
+student-memory-personalization/notebooks/14_02_topic_dataset_splits.ipynb,student-memory-personalization,8801,14 02 topic dataset splits
+student-memory-personalization/notebooks/14_03_keyword_tfidf_baselines.ipynb,student-memory-personalization,64390,14 03 keyword tfidf baselines
+student-memory-personalization/notebooks/14_04_minilm_baseline_and_finetuning.ipynb,student-memory-personalization,95627,14 04 minilm baseline and finetuning
+student-memory-personalization/notebooks/14_05_topic_extractor_model_comparison.ipynb,student-memory-personalization,121650,14 05 topic extractor model comparison
+student-memory-personalization/notebooks/14_06_topic_extractor_final_evaluation.ipynb,student-memory-personalization,125252,14 06 topic extractor final evaluation
+student-memory-personalization/notebooks/16_01_retrain_minilm_topic_extractor_v2.ipynb,student-memory-personalization,28137,16 01 retrain minilm topic extractor v2
+student-modeling/cima_test.ipynb,student-modeling,89222,cima test
+student-modeling/itsspoke_test.ipynb,student-modeling,226057,itsspoke test
+student-modeling/notebooks/bkt_exploration.ipynb,student-modeling,231108,bkt exploration
+student-modeling/notebooks/bkt_training_colab.ipynb,student-modeling,46274,bkt training colab
+student-modeling/notebooks/skill_similarity.ipynb,student-modeling,32130,skill similarity
+student-modeling/notebooks/test.ipynb,student-modeling,3903,test
