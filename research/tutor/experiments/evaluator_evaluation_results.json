@@ -1,0 +1,893 @@
+{
+  "experiment": "AdaptMath Evaluator targeted benchmark",
+  "timestamp_utc": "2026-08-18T15:59:20.216119+00:00",
+  "methodology": {
+    "description": "Balanced objectively labelled mathematics benchmark with repeated GenAI evaluator judgments.",
+    "majority_vote_unit": "unique benchmark case",
+    "positive_class_for_precision_recall": "incorrect student answer",
+    "repeat_count": 3,
+    "limitations": [
+      "This is a small targeted benchmark and does not establish universal evaluator accuracy.",
+      "Error-diagnosis correctness requires manual review.",
+      "Hosted-model behaviour may change across provider/model versions."
+    ]
+  },
+  "summary": {
+    "unique_cases": 16,
+    "correct_gold_cases": 8,
+    "incorrect_gold_cases": 8,
+    "repeats_per_case": 3,
+    "total_evaluator_calls": 48,
+    "majority_vote_accuracy": 1.0,
+    "majority_vote_accuracy_95_percent_wilson_ci": {
+      "lower": 0.8063865817272801,
+      "upper": 1.0
+    },
+    "incorrect_answer_precision": 1.0,
+    "incorrect_answer_recall": 1.0,
+    "incorrect_answer_f1": 1.0,
+    "confusion_matrix_incorrect_as_positive": {
+      "true_positive": 8,
+      "false_positive": 0,
+      "false_negative": 0,
+      "true_negative": 8
+    },
+    "repeat_unanimity_rate": 1.0,
+    "reteaching_policy_consistency_rate": 1.0,
+    "wrong_gold_runs_with_diagnosis_presence_rate": 1.0,
+    "diagnosis_metric_note": "Diagnosis presence is not diagnosis accuracy. identified_error outputs must be manually compared with each case's expected_error_concept.",
+    "mean_latency_seconds": 2.4653941958385985,
+    "median_latency_seconds": 1.7094985999865457,
+    "max_latency_seconds": 7.783201700018253
+  },
+  "cases": [
+    {
+      "case_id": "arithmetic_correct",
+      "category": "arithmetic",
+      "assessment_question": "What is 8 + 6?",
+      "expected_answer": "14",
+      "student_answer": "14",
+      "expected_is_correct": true,
+      "expected_error_concept": null,
+      "majority_predicted_is_correct": true,
+      "majority_matches_gold": true,
+      "repeat_predictions": [
+        true,
+        true,
+        true
+      ],
+      "repeat_unanimous": true,
+      "diagnosis_present_runs": 0,
+      "runs": [
+        {
+          "repeat": 1,
+          "predicted_is_correct": true,
+          "classification_matches_gold": true,
+          "needs_reteaching": false,
+          "policy_consistent": true,
+          "feedback": "Correct, 8 + 6 equals 14.",
+          "identified_error": null,
+          "overall_feedback": "All supplied answers are correct.",
+          "latency_seconds": 1.9244821000029333
+        },
+        {
+          "repeat": 2,
+          "predicted_is_correct": true,
+          "classification_matches_gold": true,
+          "needs_reteaching": false,
+          "policy_consistent": true,
+          "feedback": "Correct, 8 + 6 equals 14.",
+          "identified_error": null,
+          "overall_feedback": "All supplied answers are correct.",
+          "latency_seconds": 1.6763596999808215
+        },
+        {
+          "repeat": 3,
+          "predicted_is_correct": true,
+          "classification_matches_gold": true,
+          "needs_reteaching": false,
+          "policy_consistent": true,
+          "feedback": "Correct, 8 + 6 equals 14.",
+          "identified_error": null,
+          "overall_feedback": "All supplied answers are correct.",
+          "latency_seconds": 1.5048588000354357
+        }
+      ]
+    },
+    {
+      "case_id": "arithmetic_wrong",
+      "category": "arithmetic",
+      "assessment_question": "What is 8 + 6?",
+      "expected_answer": "14",
+      "student_answer": "13",
+      "expected_is_correct": false,
+      "expected_error_concept": "Incorrect arithmetic result.",
+      "majority_predicted_is_correct": false,
+      "majority_matches_gold": true,
+      "repeat_predictions": [
+        false,
+        false,
+        false
+      ],
+      "repeat_unanimous": true,
+      "diagnosis_present_runs": 3,
+      "runs": [
+        {
+          "repeat": 1,
+          "predicted_is_correct": false,
+          "classification_matches_gold": true,
+          "needs_reteaching": true,
+          "policy_consistent": true,
+          "feedback": "Your answer is incorrect. 8 + 6 equals 14, not 13.",
+          "identified_error": "Miscomputed the sum",
+          "overall_feedback": "One answer was incorrect; please review addition of two numbers.",
+          "latency_seconds": 1.504635999968741
+        },
+        {
+          "repeat": 2,
+          "predicted_is_correct": false,
+          "classification_matches_gold": true,
+          "needs_reteaching": true,
+          "policy_consistent": true,
+          "feedback": "Your answer is incorrect. 8 + 6 equals 14, not 13.",
+          "identified_error": "Arithmetic miscalculation (off by one)",
+          "overall_feedback": "The provided answer was incorrect; review addition to ensure accurate sums.",
+          "latency_seconds": 1.8108955000061542
+        },
+        {
+          "repeat": 3,
+          "predicted_is_correct": false,
+          "classification_matches_gold": true,
+          "needs_reteaching": true,
+          "policy_consistent": true,
+          "feedback": "Your answer is incorrect. 8 + 6 equals 14, not 13.",
+          "identified_error": "addition miscalculation",
+          "overall_feedback": "One answer was incorrect.",
+          "latency_seconds": 1.4025741000077687
+        }
+      ]
+    },
+    {
+      "case_id": "fraction_equivalent_correct",
+      "category": "semantic_equivalence",
+      "assessment_question": "Give a fraction equivalent to 1/2.",
+      "expected_answer": "1/2",
+      "student_answer": "2/4",
+      "expected_is_correct": true,
+      "expected_error_concept": null,
+      "majority_predicted_is_correct": true,
+      "majority_matches_gold": true,
+      "repeat_predictions": [
+        true,
+        true,
+        true
+      ],
+      "repeat_unanimous": true,
+      "diagnosis_present_runs": 0,
+      "runs": [
+        {
+          "repeat": 1,
+          "predicted_is_correct": true,
+          "classification_matches_gold": true,
+          "needs_reteaching": false,
+          "policy_consistent": true,
+          "feedback": "2/4 simplifies to 1/2, so it is an equivalent fraction.",
+          "identified_error": null,
+          "overall_feedback": "All answers are correct.",
+          "latency_seconds": 1.3268480999977328
+        },
+        {
+          "repeat": 2,
+          "predicted_is_correct": true,
+          "classification_matches_gold": true,
+          "needs_reteaching": false,
+          "policy_consistent": true,
+          "feedback": "2/4 simplifies to 1/2, so it is an equivalent fraction.",
+          "identified_error": null,
+          "overall_feedback": "All answers are correct.",
+          "latency_seconds": 1.2696932000108063
+        },
+        {
+          "repeat": 3,
+          "predicted_is_correct": true,
+          "classification_matches_gold": true,
+          "needs_reteaching": false,
+          "policy_consistent": true,
+          "feedback": "2/4 simplifies to 1/2, so it is an equivalent fraction.",
+          "identified_error": null,
+          "overall_feedback": "All answers are correct.",
+          "latency_seconds": 1.3008579000015743
+        }
+      ]
+    },
+    {
+      "case_id": "fraction_not_equivalent",
+      "category": "fractions",
+      "assessment_question": "Give a fraction equivalent to 1/2.",
+      "expected_answer": "1/2",
+      "student_answer": "3/5",
+      "expected_is_correct": false,
+      "expected_error_concept": "The fraction is not equivalent to 1/2.",
+      "majority_predicted_is_correct": false,
+      "majority_matches_gold": true,
+      "repeat_predictions": [
+        false,
+        false,
+        false
+      ],
+      "repeat_unanimous": true,
+      "diagnosis_present_runs": 3,
+      "runs": [
+        {
+          "repeat": 1,
+          "predicted_is_correct": false,
+          "classification_matches_gold": true,
+          "needs_reteaching": true,
+          "policy_consistent": true,
+          "feedback": "3/5 is not equivalent to 1/2; the fractions are not equal.",
+          "identified_error": "Provided fraction does not simplify to 1/2",
+          "overall_feedback": "The answer given is not an equivalent fraction to 1/2.",
+          "latency_seconds": 1.503173400007654
+        },
+        {
+          "repeat": 2,
+          "predicted_is_correct": false,
+          "classification_matches_gold": true,
+          "needs_reteaching": true,
+          "policy_consistent": true,
+          "feedback": "3/5 is not equivalent to 1/2 because 3/5 = 0.6 while 1/2 = 0.5. An equivalent fraction must have the same value, e.g., 2/4 or 3/6.",
+          "identified_error": "Provided fraction does not equal 1/2",
+          "overall_feedback": "The answer is incorrect; the fraction given is not equivalent to 1/2.",
+          "latency_seconds": 1.613820200029295
+        },
+        {
+          "repeat": 3,
+          "predicted_is_correct": false,
+          "classification_matches_gold": true,
+          "needs_reteaching": true,
+          "policy_consistent": true,
+          "feedback": "3/5 is not equivalent to 1/2; it simplifies to 0.6, not 0.5.",
+          "identified_error": "Incorrect equivalent fraction; value does not match 1/2.",
+          "overall_feedback": "Your answer is not equivalent to 1/2. Review how to generate equivalent fractions by multiplying numerator and denominator by the same non\u2011zero integer.",
+          "latency_seconds": 1.8663200999726541
+        }
+      ]
+    },
+    {
+      "case_id": "numeric_equivalent_form_correct",
+      "category": "semantic_equivalence",
+      "assessment_question": "Give any numerical value equal to one half.",
+      "expected_answer": "0.5",
+      "student_answer": "1/2",
+      "expected_is_correct": true,
+      "expected_error_concept": null,
+      "majority_predicted_is_correct": true,
+      "majority_matches_gold": true,
+      "repeat_predictions": [
+        true,
+        true,
+        true
+      ],
+      "repeat_unanimous": true,
+      "diagnosis_present_runs": 0,
+      "runs": [
+        {
+          "repeat": 1,
+          "predicted_is_correct": true,
+          "classification_matches_gold": true,
+          "needs_reteaching": false,
+          "policy_consistent": true,
+          "feedback": "Correct, 1/2 is equal to 0.5.",
+          "identified_error": null,
+          "overall_feedback": "All answers are correct.",
+          "latency_seconds": 1.0190487999934703
+        },
+        {
+          "repeat": 2,
+          "predicted_is_correct": true,
+          "classification_matches_gold": true,
+          "needs_reteaching": false,
+          "policy_consistent": true,
+          "feedback": "Correct; 1/2 is equivalent to 0.5.",
+          "identified_error": null,
+          "overall_feedback": "All answers are correct.",
+          "latency_seconds": 2.2325865000020713
+        },
+        {
+          "repeat": 3,
+          "predicted_is_correct": true,
+          "classification_matches_gold": true,
+          "needs_reteaching": false,
+          "policy_consistent": true,
+          "feedback": "Correct; 1/2 is equivalent to 0.5.",
+          "identified_error": null,
+          "overall_feedback": "All answers are correct.",
+          "latency_seconds": 1.3008087000343949
+        }
+      ]
+    },
+    {
+      "case_id": "decimal_format_not_followed",
+      "category": "instruction_compliance",
+      "assessment_question": "Write 1/2 as a decimal.",
+      "expected_answer": "0.5",
+      "student_answer": "1/2",
+      "expected_is_correct": false,
+      "expected_error_concept": "The value is mathematically equivalent but was not written in the requested decimal form.",
+      "majority_predicted_is_correct": false,
+      "majority_matches_gold": true,
+      "repeat_predictions": [
+        false,
+        false,
+        false
+      ],
+      "repeat_unanimous": true,
+      "diagnosis_present_runs": 3,
+      "runs": [
+        {
+          "repeat": 1,
+          "predicted_is_correct": false,
+          "classification_matches_gold": true,
+          "needs_reteaching": true,
+          "policy_consistent": true,
+          "feedback": "The answer should be given as a decimal; 1/2 equals 0.5.",
+          "identified_error": "Returned the original fraction instead of its decimal representation.",
+          "overall_feedback": "The response was not converted to a decimal.",
+          "latency_seconds": 1.3527502000215463
+        },
+        {
+          "repeat": 2,
+          "predicted_is_correct": false,
+          "classification_matches_gold": true,
+          "needs_reteaching": true,
+          "policy_consistent": true,
+          "feedback": "The answer should be given as a decimal. 1/2 equals 0.5, not the fraction itself.",
+          "identified_error": "Did not convert the fraction to a decimal",
+          "overall_feedback": "The response was not converted to a decimal; please express fractions as their decimal equivalents.",
+          "latency_seconds": 4.010084200010169
+        },
+        {
+          "repeat": 3,
+          "predicted_is_correct": false,
+          "classification_matches_gold": true,
+          "needs_reteaching": true,
+          "policy_consistent": true,
+          "feedback": "The answer should be given as a decimal. 1/2 equals 0.5, not the fraction itself.",
+          "identified_error": "Did not convert the fraction to a decimal",
+          "overall_feedback": "The response was not converted to a decimal; the correct decimal representation of 1/2 is 0.5.",
+          "latency_seconds": 7.414950900012627
+        }
+      ]
+    },
+    {
+      "case_id": "linear_equation_correct",
+      "category": "algebra",
+      "assessment_question": "Solve 3x + 9 = 24.",
+      "expected_answer": "x = 5",
+      "student_answer": "5",
+      "expected_is_correct": true,
+      "expected_error_concept": null,
+      "majority_predicted_is_correct": true,
+      "majority_matches_gold": true,
+      "repeat_predictions": [
+        true,
+        true,
+        true
+      ],
+      "repeat_unanimous": true,
+      "diagnosis_present_runs": 0,
+      "runs": [
+        {
+          "repeat": 1,
+          "predicted_is_correct": true,
+          "classification_matches_gold": true,
+          "needs_reteaching": false,
+          "policy_consistent": true,
+          "feedback": "Correct; 5 satisfies the equation, equivalent to x = 5.",
+          "identified_error": null,
+          "overall_feedback": "All supplied answers are correct.",
+          "latency_seconds": 5.7305642000283115
+        },
+        {
+          "repeat": 2,
+          "predicted_is_correct": true,
+          "classification_matches_gold": true,
+          "needs_reteaching": false,
+          "policy_consistent": true,
+          "feedback": "Correct. The solution is x = 5.",
+          "identified_error": null,
+          "overall_feedback": "All provided answers are correct.",
+          "latency_seconds": 6.931307499995455
+        },
+        {
+          "repeat": 3,
+          "predicted_is_correct": true,
+          "classification_matches_gold": true,
+          "needs_reteaching": false,
+          "policy_consistent": true,
+          "feedback": "Correct. The solution is x = 5.",
+          "identified_error": null,
+          "overall_feedback": "All answers are correct.",
+          "latency_seconds": 6.221809100010432
+        }
+      ]
+    },
+    {
+      "case_id": "linear_equation_wrong",
+      "category": "algebra",
+      "assessment_question": "Solve 3x + 9 = 24.",
+      "expected_answer": "x = 5",
+      "student_answer": "x = 11",
+      "expected_is_correct": false,
+      "expected_error_concept": "Incorrect solution of the linear equation.",
+      "majority_predicted_is_correct": false,
+      "majority_matches_gold": true,
+      "repeat_predictions": [
+        false,
+        false,
+        false
+      ],
+      "repeat_unanimous": true,
+      "diagnosis_present_runs": 3,
+      "runs": [
+        {
+          "repeat": 1,
+          "predicted_is_correct": false,
+          "classification_matches_gold": true,
+          "needs_reteaching": true,
+          "policy_consistent": true,
+          "feedback": "Your solution is incorrect. Solving 3x + 9 = 24 gives 3x = 15, so x = 5.",
+          "identified_error": "Arithmetic error in isolating x (incorrect subtraction/division)",
+          "overall_feedback": "The answer provided is not correct; the correct solution is x = 5.",
+          "latency_seconds": 1.495966500020586
+        },
+        {
+          "repeat": 2,
+          "predicted_is_correct": false,
+          "classification_matches_gold": true,
+          "needs_reteaching": true,
+          "policy_consistent": true,
+          "feedback": "Your solution is incorrect. Solving 3x + 9 = 24 gives x = 5, not 11.",
+          "identified_error": "Arithmetic error in solving the linear equation (incorrect subtraction/division).",
+          "overall_feedback": "One answer was incorrect; please review the steps for solving linear equations.",
+          "latency_seconds": 1.8422894999966957
+        },
+        {
+          "repeat": 3,
+          "predicted_is_correct": false,
+          "classification_matches_gold": true,
+          "needs_reteaching": true,
+          "policy_consistent": true,
+          "feedback": "The correct solution is x = 5. Substituting x = 11 does not satisfy the equation.",
+          "identified_error": "Incorrect calculation when solving the linear equation",
+          "overall_feedback": "One answer was incorrect; review the steps for isolating the variable in linear equations.",
+          "latency_seconds": 2.074624800006859
+        }
+      ]
+    },
+    {
+      "case_id": "expansion_correct",
+      "category": "algebra",
+      "assessment_question": "Expand 3(x + 4).",
+      "expected_answer": "3x + 12",
+      "student_answer": "3x + 12",
+      "expected_is_correct": true,
+      "expected_error_concept": null,
+      "majority_predicted_is_correct": true,
+      "majority_matches_gold": true,
+      "repeat_predictions": [
+        true,
+        true,
+        true
+      ],
+      "repeat_unanimous": true,
+      "diagnosis_present_runs": 0,
+      "runs": [
+        {
+          "repeat": 1,
+          "predicted_is_correct": true,
+          "classification_matches_gold": true,
+          "needs_reteaching": false,
+          "policy_consistent": true,
+          "feedback": "Correct expansion.",
+          "identified_error": null,
+          "overall_feedback": "All answers are correct.",
+          "latency_seconds": 1.2133583999820985
+        },
+        {
+          "repeat": 2,
+          "predicted_is_correct": true,
+          "classification_matches_gold": true,
+          "needs_reteaching": false,
+          "policy_consistent": true,
+          "feedback": "Correct expansion.",
+          "identified_error": null,
+          "overall_feedback": "All answers are correct.",
+          "latency_seconds": 2.715447900001891
+        },
+        {
+          "repeat": 3,
+          "predicted_is_correct": true,
+          "classification_matches_gold": true,
+          "needs_reteaching": false,
+          "policy_consistent": true,
+          "feedback": "Correct expansion.",
+          "identified_error": null,
+          "overall_feedback": "All answers are correct.",
+          "latency_seconds": 1.3081968000042252
+        }
+      ]
+    },
+    {
+      "case_id": "expansion_not_performed",
+      "category": "instruction_compliance",
+      "assessment_question": "Expand 3(x + 4).",
+      "expected_answer": "3x + 12",
+      "student_answer": "3(x + 4)",
+      "expected_is_correct": false,
+      "expected_error_concept": "The expression is equivalent but has not been expanded as requested.",
+      "majority_predicted_is_correct": false,
+      "majority_matches_gold": true,
+      "repeat_predictions": [
+        false,
+        false,
+        false
+      ],
+      "repeat_unanimous": true,
+      "diagnosis_present_runs": 3,
+      "runs": [
+        {
+          "repeat": 1,
+          "predicted_is_correct": false,
+          "classification_matches_gold": true,
+          "needs_reteaching": true,
+          "policy_consistent": true,
+          "feedback": "The expression should be expanded using the distributive property: 3(x+4)=3x+12. You wrote the original expression unchanged, so it is not expanded.",
+          "identified_error": "Did not apply distributive property; left expression unchanged.",
+          "overall_feedback": "The answer is incorrect; you need to distribute the coefficient across the parentheses to obtain 3x + 12.",
+          "latency_seconds": 4.973844999971334
+        },
+        {
+          "repeat": 2,
+          "predicted_is_correct": false,
+          "classification_matches_gold": true,
+          "needs_reteaching": true,
+          "policy_consistent": true,
+          "feedback": "The expression should be expanded using the distributive property: 3(x + 4) = 3x + 12. You repeated the original expression without expanding it.",
+          "identified_error": "Did not apply the distributive property; left the expression unchanged",
+          "overall_feedback": "The answer is incorrect; you need to distribute the coefficient across the parentheses to obtain the expanded form.",
+          "latency_seconds": 7.765249199990649
+        },
+        {
+          "repeat": 3,
+          "predicted_is_correct": false,
+          "classification_matches_gold": true,
+          "needs_reteaching": true,
+          "policy_consistent": true,
+          "feedback": "The answer was not expanded; you repeated the original expression instead of distributing the 3.",
+          "identified_error": "Did not perform expansion; left expression unchanged.",
+          "overall_feedback": "The provided answer did not expand the expression as required.",
+          "latency_seconds": 2.3892359000165015
+        }
+      ]
+    },
+    {
+      "case_id": "expansion_sign_error",
+      "category": "algebra_error",
+      "assessment_question": "Expand 4(x - 2).",
+      "expected_answer": "4x - 8",
+      "student_answer": "4x + 8",
+      "expected_is_correct": false,
+      "expected_error_concept": "Sign error when distributing across the subtraction.",
+      "majority_predicted_is_correct": false,
+      "majority_matches_gold": true,
+      "repeat_predictions": [
+        false,
+        false,
+        false
+      ],
+      "repeat_unanimous": true,
+      "diagnosis_present_runs": 3,
+      "runs": [
+        {
+          "repeat": 1,
+          "predicted_is_correct": false,
+          "classification_matches_gold": true,
+          "needs_reteaching": true,
+          "policy_consistent": true,
+          "feedback": "The expansion of 4(x - 2) is 4x - 8; you wrote 4x + 8, which has the wrong sign for the constant term.",
+          "identified_error": "Incorrect sign for constant term",
+          "overall_feedback": "The provided answer was incorrect due to a sign error in the constant term.",
+          "latency_seconds": 7.783201700018253
+        },
+        {
+          "repeat": 2,
+          "predicted_is_correct": false,
+          "classification_matches_gold": true,
+          "needs_reteaching": true,
+          "policy_consistent": true,
+          "feedback": "The correct expansion is 4x - 8; you added the constant term instead of subtracting it.",
+          "identified_error": "Sign error in constant term",
+          "overall_feedback": "One answer was incorrect; review how to handle the negative sign when expanding expressions.",
+          "latency_seconds": 2.2098588999942876
+        },
+        {
+          "repeat": 3,
+          "predicted_is_correct": false,
+          "classification_matches_gold": true,
+          "needs_reteaching": true,
+          "policy_consistent": true,
+          "feedback": "The correct expansion is 4x - 8; you added the constant term instead of subtracting it.",
+          "identified_error": "Sign error in constant term",
+          "overall_feedback": "One answer was incorrect; review how to handle the negative sign when expanding.",
+          "latency_seconds": 2.4510567000252195
+        }
+      ]
+    },
+    {
+      "case_id": "factorised_equivalent_correct",
+      "category": "semantic_equivalence",
+      "assessment_question": "Give any expression mathematically equivalent to x^2 - 1.",
+      "expected_answer": "x^2 - 1",
+      "student_answer": "(x - 1)(x + 1)",
+      "expected_is_correct": true,
+      "expected_error_concept": null,
+      "majority_predicted_is_correct": true,
+      "majority_matches_gold": true,
+      "repeat_predictions": [
+        true,
+        true,
+        true
+      ],
+      "repeat_unanimous": true,
+      "diagnosis_present_runs": 0,
+      "runs": [
+        {
+          "repeat": 1,
+          "predicted_is_correct": true,
+          "classification_matches_gold": true,
+          "needs_reteaching": false,
+          "policy_consistent": true,
+          "feedback": "Correct: (x - 1)(x + 1) expands to x^2 - 1.",
+          "identified_error": null,
+          "overall_feedback": "All answers are correct.",
+          "latency_seconds": 1.784068400040269
+        },
+        {
+          "repeat": 2,
+          "predicted_is_correct": true,
+          "classification_matches_gold": true,
+          "needs_reteaching": false,
+          "policy_consistent": true,
+          "feedback": "Correct: (x - 1)(x + 1) expands to x^2 - 1.",
+          "identified_error": null,
+          "overall_feedback": "All answers are correct.",
+          "latency_seconds": 1.8099913999903947
+        },
+        {
+          "repeat": 3,
+          "predicted_is_correct": true,
+          "classification_matches_gold": true,
+          "needs_reteaching": false,
+          "policy_consistent": true,
+          "feedback": "Correct: (x - 1)(x + 1) expands to x^2 - 1.",
+          "identified_error": null,
+          "overall_feedback": "All answers are correct.",
+          "latency_seconds": 1.467040600022301
+        }
+      ]
+    },
+    {
+      "case_id": "percentage_correct",
+      "category": "percentages",
+      "assessment_question": "Find 15% of 200.",
+      "expected_answer": "30",
+      "student_answer": "30",
+      "expected_is_correct": true,
+      "expected_error_concept": null,
+      "majority_predicted_is_correct": true,
+      "majority_matches_gold": true,
+      "repeat_predictions": [
+        true,
+        true,
+        true
+      ],
+      "repeat_unanimous": true,
+      "diagnosis_present_runs": 0,
+      "runs": [
+        {
+          "repeat": 1,
+          "predicted_is_correct": true,
+          "classification_matches_gold": true,
+          "needs_reteaching": false,
+          "policy_consistent": true,
+          "feedback": "Correct calculation of 15% of 200.",
+          "identified_error": null,
+          "overall_feedback": "All supplied answers are correct.",
+          "latency_seconds": 1.74263749999227
+        },
+        {
+          "repeat": 2,
+          "predicted_is_correct": true,
+          "classification_matches_gold": true,
+          "needs_reteaching": false,
+          "policy_consistent": true,
+          "feedback": "Correct calculation of 15% of 200.",
+          "identified_error": null,
+          "overall_feedback": "All supplied answers are correct.",
+          "latency_seconds": 1.3743239999748766
+        },
+        {
+          "repeat": 3,
+          "predicted_is_correct": true,
+          "classification_matches_gold": true,
+          "needs_reteaching": false,
+          "policy_consistent": true,
+          "feedback": "Correct calculation of 15% of 200.",
+          "identified_error": null,
+          "overall_feedback": "All answers are correct.",
+          "latency_seconds": 2.047529600036796
+        }
+      ]
+    },
+    {
+      "case_id": "percentage_wrong",
+      "category": "percentages",
+      "assessment_question": "Find 15% of 200.",
+      "expected_answer": "30",
+      "student_answer": "35",
+      "expected_is_correct": false,
+      "expected_error_concept": "Incorrect calculation of the percentage.",
+      "majority_predicted_is_correct": false,
+      "majority_matches_gold": true,
+      "repeat_predictions": [
+        false,
+        false,
+        false
+      ],
+      "repeat_unanimous": true,
+      "diagnosis_present_runs": 3,
+      "runs": [
+        {
+          "repeat": 1,
+          "predicted_is_correct": false,
+          "classification_matches_gold": true,
+          "needs_reteaching": true,
+          "policy_consistent": true,
+          "feedback": "15% of 200 equals 0.15 \u00d7 200 = 30, so the answer 35 is incorrect.",
+          "identified_error": "Incorrect percentage calculation",
+          "overall_feedback": "The provided answer is incorrect; review how to compute percentages of a quantity.",
+          "latency_seconds": 1.6049280000152066
+        },
+        {
+          "repeat": 2,
+          "predicted_is_correct": false,
+          "classification_matches_gold": true,
+          "needs_reteaching": true,
+          "policy_consistent": true,
+          "feedback": "Your answer is incorrect. 15% of 200 equals 30, not 35.",
+          "identified_error": "Incorrect calculation of 15% of 200",
+          "overall_feedback": "The answer provided for the percentage problem is incorrect; review how to compute percentages of numbers.",
+          "latency_seconds": 1.6180521000060253
+        },
+        {
+          "repeat": 3,
+          "predicted_is_correct": false,
+          "classification_matches_gold": true,
+          "needs_reteaching": true,
+          "policy_consistent": true,
+          "feedback": "Your answer is incorrect. 15% of 200 equals 30, not 35.",
+          "identified_error": "Incorrect calculation of 15% of 200",
+          "overall_feedback": "The answer provided for the percentage problem is incorrect; review how to compute percentages of numbers.",
+          "latency_seconds": 1.5415879000211135
+        }
+      ]
+    },
+    {
+      "case_id": "area_with_units_correct",
+      "category": "geometry",
+      "assessment_question": "A rectangle is 5 cm long and 4 cm wide. Give its area including units.",
+      "expected_answer": "20 cm^2",
+      "student_answer": "20 cm\u00b2",
+      "expected_is_correct": true,
+      "expected_error_concept": null,
+      "majority_predicted_is_correct": true,
+      "majority_matches_gold": true,
+      "repeat_predictions": [
+        true,
+        true,
+        true
+      ],
+      "repeat_unanimous": true,
+      "diagnosis_present_runs": 0,
+      "runs": [
+        {
+          "repeat": 1,
+          "predicted_is_correct": true,
+          "classification_matches_gold": true,
+          "needs_reteaching": false,
+          "policy_consistent": true,
+          "feedback": "Correct area; unit and value are accurate.",
+          "identified_error": null,
+          "overall_feedback": "All answers are correct.",
+          "latency_seconds": 2.378308499988634
+        },
+        {
+          "repeat": 2,
+          "predicted_is_correct": true,
+          "classification_matches_gold": true,
+          "needs_reteaching": false,
+          "policy_consistent": true,
+          "feedback": "Correct calculation and units.",
+          "identified_error": null,
+          "overall_feedback": "All answers are correct.",
+          "latency_seconds": 1.4124405999900773
+        },
+        {
+          "repeat": 3,
+          "predicted_is_correct": true,
+          "classification_matches_gold": true,
+          "needs_reteaching": false,
+          "policy_consistent": true,
+          "feedback": "Correct area calculation with proper units.",
+          "identified_error": null,
+          "overall_feedback": "All answers are correct.",
+          "latency_seconds": 1.4942009000224061
+        }
+      ]
+    },
+    {
+      "case_id": "area_wrong_units",
+      "category": "instruction_compliance",
+      "assessment_question": "A rectangle is 5 cm long and 4 cm wide. Give its area including units.",
+      "expected_answer": "20 cm^2",
+      "student_answer": "20 cm",
+      "expected_is_correct": false,
+      "expected_error_concept": "Area requires square centimetres rather than centimetres.",
+      "majority_predicted_is_correct": false,
+      "majority_matches_gold": true,
+      "repeat_predictions": [
+        false,
+        false,
+        false
+      ],
+      "repeat_unanimous": true,
+      "diagnosis_present_runs": 3,
+      "runs": [
+        {
+          "repeat": 1,
+          "predicted_is_correct": false,
+          "classification_matches_gold": true,
+          "needs_reteaching": true,
+          "policy_consistent": true,
+          "feedback": "The numeric value is correct, but the unit should be square centimeters (cm^2), not cm.",
+          "identified_error": "Missing square unit for area",
+          "overall_feedback": "One answer was incorrect; ensure to include the proper squared unit when reporting area.",
+          "latency_seconds": 1.401824200002011
+        },
+        {
+          "repeat": 2,
+          "predicted_is_correct": false,
+          "classification_matches_gold": true,
+          "needs_reteaching": true,
+          "policy_consistent": true,
+          "feedback": "The numeric value is correct, but the unit should be cm\u00b2 (square centimeters), not cm.",
+          "identified_error": "Incorrect units (missing square)",
+          "overall_feedback": "The answer was numerically correct but used the wrong unit; area should be expressed in square centimeters.",
+          "latency_seconds": 1.887314099993091
+        },
+        {
+          "repeat": 3,
+          "predicted_is_correct": false,
+          "classification_matches_gold": true,
+          "needs_reteaching": true,
+          "policy_consistent": true,
+          "feedback": "The numeric value is correct, but the unit should be cm\u00b2 (square centimeters), not cm.",
+          "identified_error": "Incorrect units (missing square)",
+          "overall_feedback": "The answer was numerically correct but used the wrong unit; area should be expressed in square centimeters.",
+          "latency_seconds": 1.6339130999986082
+        }
+      ]
+    }
+  ]
+}

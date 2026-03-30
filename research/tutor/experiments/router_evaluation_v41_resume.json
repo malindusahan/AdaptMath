@@ -1,0 +1,150 @@
+{
+  "created_utc": "2026-08-22T08:40:33.238457+00:00",
+  "updated_utc": "2026-08-22T13:25:48.394363+00:00",
+  "model": "openai/gpt-oss-120b",
+  "router_source_sha256": "7cb1b50612ca5ce65600fa9acffa0a1f084f09a68a906786fede7607b433e30f",
+  "benchmark_sha256": "20118bf026c1776e490f37bd0833384e80c5945a06c892a9f5d2ae37256f2add",
+  "repeats_per_case": 3,
+  "calls": {
+    "problem_arithmetic": {
+      "1": {
+        "route": "direct_tutor",
+        "reason": "The problem is a single-step arithmetic addition with a very low complexity score, requiring no explicit pedagogical sequencing. Learner history is unavailable, providing no evidence of difficulty. A post‑tutoring assessment would add little value for such a straightforward task. Therefore, direct_tutor is sufficient.",
+        "latency_seconds": 1.2648521000519395,
+        "source": "seeded_from_current_results",
+        "recorded_utc": "2026-08-22T08:40:33.263676+00:00"
+      },
+      "2": {
+        "route": "direct_tutor",
+        "reason": "The problem is a single-step arithmetic addition with a very low complexity score, requiring no explicit pedagogical sequencing. No learner history or prior errors are available, and the task does not merit a follow‑up assessment to verify understanding. Direct tutoring is sufficient.",
+        "latency_seconds": 0.9393776999786496,
+        "source": "seeded_from_current_results",
+        "recorded_utc": "2026-08-22T08:40:33.273458+00:00"
+      },
+      "3": {
+        "route": "direct_tutor",
+        "reason": "The problem is a single-step arithmetic addition with a very low complexity score, requiring no explicit pedagogical sequencing. No learner history or prior errors are available, and the task does not merit a follow‑up assessment to verify understanding. Direct tutoring is sufficient.",
+        "latency_seconds": 1.0204334000591189,
+        "source": "seeded_from_current_results",
+        "recorded_utc": "2026-08-22T08:40:33.275018+00:00"
+      }
+    },
+    "problem_fraction": {
+      "1": {
+        "route": "direct_tutor",
+        "reason": "The problem is a single-step fraction addition with a very low complexity score, requiring only a straightforward explanation. No learner history or known difficulties are provided, so there is no clear need for pedagogical planning or a follow‑up assessment. Direct tutoring is sufficient.",
+        "latency_seconds": 6.12146669998765,
+        "source": "seeded_from_current_results",
+        "recorded_utc": "2026-08-22T08:40:33.282241+00:00"
+      },
+      "2": {
+        "route": "direct_tutor",
+        "reason": "The problem is a straightforward single-step fraction addition with a very low complexity score, requiring only a brief explanation. No learner history or prior errors are available, and the task does not demand explicit pedagogical sequencing or a follow‑up assessment to reveal hidden misconceptions. Therefore, a direct tutoring interaction is sufficient.",
+        "latency_seconds": 16.753117999993265,
+        "source": "seeded_from_current_results",
+        "recorded_utc": "2026-08-22T08:40:33.298185+00:00"
+      },
+      "3": {
+        "route": "direct_tutor",
+        "reason": "The problem is a single-step fraction addition with a very low complexity score, indicating minimal conceptual demand. No learner history or prior errors are available, so there is no evidence of specific difficulties that would require explicit planning or a follow‑up assessment. Direct tutoring is sufficient.",
+        "latency_seconds": 16.355600100010633,
+        "source": "seeded_from_current_results",
+        "recorded_utc": "2026-08-22T08:40:33.300965+00:00"
+      }
+    },
+    "problem_linear_equation": {
+      "1": {
+        "route": "direct_tutor",
+        "reason": "The problem is a single-step linear equation with low conceptual demand; a planner would not add meaningful structure and a post‑tutoring assessment would not provide substantial new evidence beyond the tutoring interaction. Learner history is unavailable but there is no indication of difficulty, so direct tutoring is sufficient.",
+        "latency_seconds": 17.520762200001627,
+        "source": "seeded_from_current_results",
+        "recorded_utc": "2026-08-22T08:40:33.313560+00:00"
+      },
+      "2": {
+        "route": "direct_tutor",
+        "reason": "The problem is a single-step linear equation (3x+5=20) with low mathematical complexity and no evidence of learner difficulty or misconceptions. No learner history is available, and there is no indication that additional planning or post‑tutoring assessment would add value. Direct tutoring can address the task in one coherent interaction.",
+        "latency_seconds": 17.163498800015077,
+        "source": "seeded_from_current_results",
+        "recorded_utc": "2026-08-22T08:40:33.337894+00:00"
+      },
+      "3": {
+        "route": "direct_tutor",
+        "reason": "The problem is a single-step linear equation requiring basic algebraic manipulation; explicit pedagogical sequencing would not add meaningful value, and a follow‑up assessment would not provide material new evidence beyond what a straightforward tutoring interaction would yield. Learner history is unavailable, which does not itself justify additional planning or evaluation. Therefore direct_tutor is appropriate.",
+        "latency_seconds": 16.39167699997779,
+        "source": "seeded_from_current_results",
+        "recorded_utc": "2026-08-22T08:40:33.371093+00:00"
+      }
+    },
+    "problem_geometry": {
+      "1": {
+        "route": "direct_tutor",
+        "reason": "The problem requires a single, well‑defined sequence (use the area formula and a Pythagorean calculation for the height). This can be taught coherently in one tutoring interaction. No learner history is available, but the lack of evidence does not itself justify extra planning or assessment. A post‑tutoring check would not provide material new information beyond what the tutoring exchange can already reveal for this straightforward geometry task. Therefore direct_tutor is the appropriate workflow.",
+        "latency_seconds": 17.78657890006434,
+        "source": "seeded_from_current_results",
+        "recorded_utc": "2026-08-22T08:40:33.385136+00:00"
+      },
+      "2": {
+        "route": "direct_tutor",
+        "reason": "The problem requires a straightforward two-step geometric calculation (find height via Pythagoras, then apply the triangle area formula). This can be taught effectively in a single coherent tutoring interaction without needing an explicit pedagogical plan, and there is no learner history indicating a need for additional verification. Therefore, direct_tutor is appropriate.",
+        "latency_seconds": 18.78616429993417,
+        "source": "seeded_from_current_results",
+        "recorded_utc": "2026-08-22T08:40:33.387994+00:00"
+      },
+      "3": {
+        "route": "planned_tutor",
+        "reason": "The problem requires a clear sequence (determine the height via the Pythagorean theorem, then apply the triangle‑area formula). Explicit pedagogical structuring would help the learner follow these linked steps. Learner history is unavailable, but there is no specific evidence of a misconception that would demand a separate post‑tutoring assessment. Therefore, a Planner → Tutor workflow adds the needed value without the extra evaluation step.",
+        "latency_seconds": 20.27583689999301,
+        "source": "seeded_from_current_results",
+        "recorded_utc": "2026-08-22T08:40:33.455847+00:00"
+      }
+    },
+    "problem_compound_interest": {
+      "1": {
+        "route": "direct_tutor",
+        "reason": "The problem involves a single, well‑defined concept (compound interest) with a straightforward calculation, and the complexity score is low. No learner history is available, so there is no evidence of specific misconceptions that would require explicit planning or a post‑tutoring assessment. Direct tutoring can address the task in one coherent interaction without added planning or evaluation.",
+        "latency_seconds": 20.610871299984865,
+        "source": "seeded_from_current_results",
+        "recorded_utc": "2026-08-22T08:40:33.470877+00:00"
+      },
+      "2": {
+        "route": "direct_tutor",
+        "reason": "The problem involves a single, well‑defined calculation (compound interest) with a low complexity score and no known learner difficulties. It can be taught effectively in one interaction, so neither a pedagogical plan nor a post‑tutoring assessment adds clear value.",
+        "latency_seconds": 18.365287099964917,
+        "source": "seeded_from_current_results",
+        "recorded_utc": "2026-08-22T08:40:33.492384+00:00"
+      },
+      "3": {
+        "route": "direct_tutor",
+        "reason": "The problem involves a single, well‑defined concept (compound interest) with a straightforward formula and low complexity. No learner history is available, so there is no evidence of specific difficulties that would require explicit planning or a separate assessment. A single tutoring interaction can adequately teach and check understanding, making direct_tutor the appropriate workflow.",
+        "latency_seconds": 2.109059300040826,
+        "source": "seeded_from_current_results",
+        "recorded_utc": "2026-08-22T08:40:33.506563+00:00"
+      }
+    },
+    "fraction_struggling": {
+      "2": {
+        "route": "planned_tutor_evaluate",
+        "reason": "The problem is a basic fraction addition (low complexity), but the learner has a documented difficulty finding common denominators and a history of adding denominators directly. A Planner can create a focused teaching sequence on common denominators, and a follow‑up assessment is needed to confirm the misconception is resolved, providing actionable evidence for next steps.",
+        "latency_seconds": 1.2345809999387711,
+        "source": "seeded_from_current_results",
+        "recorded_utc": "2026-08-22T08:40:33.527457+00:00"
+      }
+    },
+    "problem_complex_polynomial": {
+      "1": {
+        "route": "planned_tutor_evaluate",
+        "reason": "The problem is mathematically demanding (commuting cubic polynomials, multiple algebraic steps) and benefits from an explicit pedagogical plan to sequence concepts and reasoning. Because the reasoning is non‑trivial and learner history is unknown, a brief post‑tutoring assessment would provide concrete evidence of whether the learner has internalized the key ideas and would allow targeted remediation if needed.",
+        "latency_seconds": 3.831713799969293,
+        "source": "live_call",
+        "recorded_utc": "2026-08-22T08:40:41.580673+00:00"
+      },
+      "2": {
+        "route": "planned_tutor_evaluate",
+        "reason": "The problem requires advanced algebraic reasoning about commuting cubic polynomials, a multi‑step conceptual task that would benefit from explicit pedagogical sequencing (Planner). Because the reasoning is non‑trivial and misconceptions could remain hidden after explanation, a short post‑tutoring assessment would provide concrete evidence of the learner’s independent understanding and guide any needed remediation. Learner history is unavailable, so the assessment adds valuable new information rather than being redundant.",
+        "latency_seconds": 2.5094867000589147,
+        "source": "live_call",
+        "recorded_utc": "2026-08-22T08:51:19.357306+00:00"
+      }
+    }
+  }
+}
