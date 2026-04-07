@@ -1,0 +1,38 @@
+{
+  "model": "OpenGVLab/InternVL3-8B",
+  "family": "internvl",
+  "input_mode": "image_text",
+  "mode_tag": "M2",
+  "embedding_dim": 3584,
+  "best_regressor": "xgb",
+  "best_cv_rmse": 0.5951079851233212,
+  "cv_metrics": {
+    "ridge": {
+      "rmse": 0.6415167285705251,
+      "mae": 0.5069335264720327,
+      "pearson": 0.5926915595469926,
+      "spearman": 0.6126604583165864
+    },
+    "xgb": {
+      "rmse": 0.5951079851233212,
+      "mae": 0.4606841993542524,
+      "pearson": 0.666519210330995,
+      "spearman": 0.6794581680559755
+    }
+  },
+  "test_metrics": {
+    "ridge": {
+      "rmse": 0.6280476135105209,
+      "mae": 0.517479884823486,
+      "pearson": 0.6478756100996182,
+      "spearman": 0.6448512045347189
+    },
+    "xgb": {
+      "rmse": 0.5821448513288929,
+      "mae": 0.45409451006051016,
+      "pearson": 0.7088443488505347,
+      "spearman": 0.6902653125492048
+    }
+  },
+  "embedding_cache": "results/block4/embeddings/OpenGVLab_InternVL3-8B_image_text/embeddings.npy"
+}

@@ -1,0 +1,43 @@
+{
+  "model": "Qwen/Qwen2.5-VL-7B-Instruct",
+  "family": "qwen-vl",
+  "input_mode": "image_text",
+  "mode_tag": "S2",
+  "val_method": "stratified_holdout_20pct",
+  "best_config": {
+    "lora_r": 16,
+    "lr": 0.0002
+  },
+  "best_val_rmse": 0.7160630140413867,
+  "search_results": [
+    {
+      "lora_r": 8,
+      "lr": 0.0002,
+      "val_rmse": 0.7709999554014935
+    },
+    {
+      "lora_r": 8,
+      "lr": 5e-05,
+      "val_rmse": 0.8085554967348336
+    },
+    {
+      "lora_r": 16,
+      "lr": 0.0002,
+      "val_rmse": 0.7160630140413867
+    },
+    {
+      "lora_r": 16,
+      "lr": 5e-05,
+      "val_rmse": 0.8089274238278
+    }
+  ],
+  "test_metrics": {
+    "rmse": 0.6419452983827632,
+    "mae": 0.49994588448082516,
+    "pearson": 0.6706092743030183,
+    "spearman": 0.664286299377143
+  },
+  "parse_rate": 1.0,
+  "mean_diff": -0.17762995278269406,
+  "std_diff": 0.7966070309181654
+}

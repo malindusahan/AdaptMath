@@ -1,0 +1,62 @@
+{
+  "model": "Qwen/Qwen2.5-VL-3B-Instruct",
+  "family": "qwen-vl",
+  "input_mode": "image_only",
+  "mode_tag": "M1",
+  "embedding_dim": 2048,
+  "best_regressor": "lgbm",
+  "best_cv_rmse": 0.5925437327184815,
+  "cv_metrics": {
+    "ridge": {
+      "rmse": 0.6034615501814925,
+      "mae": 0.47444852659443515,
+      "pearson": 0.6526331961837597,
+      "spearman": 0.6601229389853244
+    },
+    "xgb": {
+      "rmse": 0.5956683324739579,
+      "mae": 0.46013574621254516,
+      "pearson": 0.6660391235149901,
+      "spearman": 0.673675379944444
+    },
+    "lgbm": {
+      "rmse": 0.5925437327184815,
+      "mae": 0.4587654402976333,
+      "pearson": 0.6686097292312395,
+      "spearman": 0.6781397213961131
+    },
+    "mlp": {
+      "rmse": 0.6601936845286781,
+      "mae": 0.5082819471580771,
+      "pearson": 0.6058855444540002,
+      "spearman": 0.6186078293110675
+    }
+  },
+  "test_metrics": {
+    "ridge": {
+      "rmse": 0.5783064732683796,
+      "mae": 0.4718859664625782,
+      "pearson": 0.713137276762482,
+      "spearman": 0.7211502125649503
+    },
+    "xgb": {
+      "rmse": 0.5742522019125968,
+      "mae": 0.4521933929016475,
+      "pearson": 0.7175330769409821,
+      "spearman": 0.7216343882853093
+    },
+    "lgbm": {
+      "rmse": 0.5825193632673749,
+      "mae": 0.46679811888442335,
+      "pearson": 0.70564267831158,
+      "spearman": 0.7026649346559596
+    },
+    "mlp": {
+      "rmse": 0.6217485655872002,
+      "mae": 0.45225583732649705,
+      "pearson": 0.6790731704315992,
+      "spearman": 0.6869154463863958
+    }
+  },
+  "embedding_cache": "results/block4/embeddings/Qwen_Qwen2.5-VL-3B-Instruct_image_only/embeddings.npy"
+}

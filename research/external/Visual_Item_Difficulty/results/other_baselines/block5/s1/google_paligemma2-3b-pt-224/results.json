@@ -1,0 +1,43 @@
+{
+  "model": "google/paligemma2-3b-pt-224",
+  "family": "paligemma",
+  "input_mode": "image_only",
+  "mode_tag": "S1",
+  "val_method": "stratified_holdout_20pct",
+  "best_config": {
+    "lora_r": 8,
+    "lr": 0.0002
+  },
+  "best_val_rmse": 0.7789633728911963,
+  "search_results": [
+    {
+      "lora_r": 8,
+      "lr": 0.0002,
+      "val_rmse": 0.7789633728911963
+    },
+    {
+      "lora_r": 8,
+      "lr": 5e-05,
+      "val_rmse": 0.8416103137225108
+    },
+    {
+      "lora_r": 16,
+      "lr": 0.0002,
+      "val_rmse": 0.808583014568996
+    },
+    {
+      "lora_r": 16,
+      "lr": 5e-05,
+      "val_rmse": 0.7983120786674638
+    }
+  ],
+  "test_metrics": {
+    "rmse": 0.776842119764738,
+    "mae": 0.6282593783845176,
+    "pearson": 0.3907241992315649,
+    "spearman": 0.47682064813228686
+  },
+  "parse_rate": 1.0,
+  "mean_diff": -0.17762995278269406,
+  "std_diff": 0.7966070309181654
+}
