@@ -1,0 +1,162 @@
+{
+  "experiment": "MD4_distilroberta_weighted_ce",
+  "model": "distilbert/distilroberta-base",
+  "max_length": 512,
+  "epochs": 3,
+  "loss": "inverse_frequency_weighted_cross_entropy",
+  "class_counts": {
+    "probing": 3413,
+    "generic": 3579,
+    "focus": 5443,
+    "telling": 2470
+  },
+  "class_weights": {
+    "generic": 1.0411428213119507,
+    "probing": 1.0917813777923584,
+    "focus": 0.6845948696136475,
+    "telling": 1.5086032152175903
+  },
+  "overall": {
+    "examples": 1850,
+    "accuracy": 0.4772972972972973,
+    "macro_f1": 0.4720959134970202,
+    "per_class_f1": {
+      "generic": 0.587360594795539,
+      "probing": 0.4053691275167785,
+      "focus": 0.5176470588235295,
+      "telling": 0.37800687285223367
+    },
+    "confusion_matrix": [
+      [
+        237,
+        30,
+        57,
+        118
+      ],
+      [
+        46,
+        151,
+        120,
+        95
+      ],
+      [
+        59,
+        112,
+        330,
+        177
+      ],
+      [
+        23,
+        40,
+        90,
+        165
+      ]
+    ]
+  },
+  "non_truncated": {
+    "examples": 1507,
+    "accuracy": 0.5082946250829462,
+    "macro_f1": 0.4876954694096509,
+    "per_class_f1": {
+      "generic": 0.644808743169399,
+      "probing": 0.43081312410841655,
+      "focus": 0.546617915904936,
+      "telling": 0.32854209445585214
+    },
+    "confusion_matrix": [
+      [
+        236,
+        30,
+        52,
+        53
+      ],
+      [
+        46,
+        151,
+        116,
+        55
+      ],
+      [
+        58,
+        112,
+        299,
+        85
+      ],
+      [
+        21,
+        40,
+        73,
+        80
+      ]
+    ]
+  },
+  "truncated": {
+    "examples": 343,
+    "accuracy": 0.34110787172011664,
+    "macro_f1": 0.20240565272569394,
+    "per_class_f1": {
+      "generic": 0.02666666666666667,
+      "probing": 0.0,
+      "focus": 0.3425414364640884,
+      "telling": 0.44041450777202074
+    },
+    "confusion_matrix": [
+      [
+        1,
+        0,
+        5,
+        65
+      ],
+      [
+        0,
+        0,
+        4,
+        40
+      ],
+      [
+        1,
+        0,
+        31,
+        92
+      ],
+      [
+        2,
+        0,
+        17,
+        85
+      ]
+    ]
+  },
+  "epoch_history": [
+    {
+      "eval_loss": 1.220560073852539,
+      "eval_accuracy": 0.41135135135135137,
+      "eval_macro_f1": 0.4190388006095037,
+      "eval_runtime": 18.1018,
+      "eval_samples_per_second": 102.2,
+      "eval_steps_per_second": 3.204,
+      "epoch": 1.0,
+      "step": 932
+    },
+    {
+      "eval_loss": 1.1970242261886597,
+      "eval_accuracy": 0.47675675675675677,
+      "eval_macro_f1": 0.4739965549662406,
+      "eval_runtime": 18.2483,
+      "eval_samples_per_second": 101.379,
+      "eval_steps_per_second": 3.178,
+      "epoch": 2.0,
+      "step": 1864
+    },
+    {
+      "eval_loss": 1.207478404045105,
+      "eval_accuracy": 0.4772972972972973,
+      "eval_macro_f1": 0.4720959134970202,
+      "eval_runtime": 18.0958,
+      "eval_samples_per_second": 102.234,
+      "eval_steps_per_second": 3.205,
+      "epoch": 3.0,
+      "step": 2796
+    }
+  ]
+}
