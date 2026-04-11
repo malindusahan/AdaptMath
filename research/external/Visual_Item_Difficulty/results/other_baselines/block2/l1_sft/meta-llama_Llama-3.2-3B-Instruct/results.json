@@ -1,0 +1,70 @@
+{
+  "model": "meta-llama/Llama-3.2-3B-Instruct",
+  "z_mean": -0.17762995278269406,
+  "z_std": 0.7966070309181654,
+  "val_method": "stratified_holdout_20pct",
+  "best_config": {
+    "lr": 2e-05,
+    "epochs": 5
+  },
+  "best_val_rmse": 0.8967138705462016,
+  "final_train_frac": 0.9,
+  "search_results": [
+    {
+      "lr": 1e-05,
+      "epochs": 3,
+      "val_metrics": {
+        "rmse": 1.2472855483198824,
+        "mae": 0.875048717114757,
+        "pearson": 0.06837317461992572,
+        "spearman": -0.034461417854866866,
+        "parse_rate": 1.0,
+        "parse_fails": 0
+      }
+    },
+    {
+      "lr": 1e-05,
+      "epochs": 5,
+      "val_metrics": {
+        "rmse": 0.9438329205862248,
+        "mae": 0.7306902200406472,
+        "pearson": -0.18682918216975028,
+        "spearman": -0.18880138503207566,
+        "parse_rate": 1.0,
+        "parse_fails": 0
+      }
+    },
+    {
+      "lr": 2e-05,
+      "epochs": 3,
+      "val_metrics": {
+        "rmse": 0.9340265414115574,
+        "mae": 0.7246146380617402,
+        "pearson": -0.1540425808840389,
+        "spearman": -0.10498458490886947,
+        "parse_rate": 1.0,
+        "parse_fails": 0
+      }
+    },
+    {
+      "lr": 2e-05,
+      "epochs": 5,
+      "val_metrics": {
+        "rmse": 0.8967138705462016,
+        "mae": 0.6981686868137296,
+        "pearson": 0.13390036348001894,
+        "spearman": 0.07764485995584601,
+        "parse_rate": 1.0,
+        "parse_fails": 0
+      }
+    }
+  ],
+  "test_metrics": {
+    "rmse": 0.8697852632924454,
+    "mae": 0.7122374422757853,
+    "pearson": 0.17703448575873332,
+    "spearman": 0.0843631156368013,
+    "parse_rate": 1.0,
+    "parse_fails": 0
+  }
+}
