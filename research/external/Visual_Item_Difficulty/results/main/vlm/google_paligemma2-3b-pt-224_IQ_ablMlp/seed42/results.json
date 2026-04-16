@@ -1,0 +1,78 @@
+{
+  "mode": "final",
+  "model": "google/paligemma2-3b-pt-224",
+  "family": "paligemma",
+  "route": "I+Q",
+  "config_id": "r8_lr5e-05_mse",
+  "seed": 42,
+  "epochs": 6,
+  "provenance": {
+    "timestamp": "2026-07-26T13:32:30.686008",
+    "git_commit": "bc3199114ffe32a798108a9569fcf891ebff7c3b",
+    "split_sha256": "5308b5da23248bab12ef6b0698d2445faba296a9c44abdf9ea0889ce260eca79",
+    "hostname": "internal-cluster-node",
+    "cuda_visible": "0",
+    "versions": {
+      "torch": "2.6.0+cu124",
+      "transformers": "5.12.1",
+      "peft": "0.19.1"
+    },
+    "args": {
+      "model_name": "google/paligemma2-3b-pt-224",
+      "input_mode": "image_text",
+      "lora_rs": "8,16,32",
+      "lrs": "2e-4,5e-5",
+      "losses": "mse,huber",
+      "batch_size": 1,
+      "grad_accum": 4,
+      "max_epochs": 10,
+      "patience": 3,
+      "val_frac": 0.2,
+      "seed": 42,
+      "smoke": false,
+      "out_suffix": "_ablMlp",
+      "text_field": "text",
+      "run_mode": "final",
+      "folds": "0,1,2,3,4",
+      "lora_r": 8,
+      "lr": 5e-05,
+      "loss": "mse",
+      "epochs": 6,
+      "lora_scope": "llm",
+      "lora_targets": "attn_mlp",
+      "pool": "all"
+    }
+  },
+  "epoch_history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.6125568762344991
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.4687009470866742
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.31242666239143174
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.21467876152238669
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.1400274212587531
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.09879373019780438
+    }
+  ],
+  "test_metrics": {
+    "rmse": 0.5491385447436067,
+    "mae": 0.44129460355955363,
+    "pearson": 0.7426147996964934,
+    "spearman": 0.73725397575185
+  }
+}
