@@ -1,0 +1,7 @@
+{
+  "topic": null,
+  "skill_id": null,
+  "confidence": 0.1145,
+  "is_math": false,
+  "model_version": "phase16-minilm-ft-v2"
+}
