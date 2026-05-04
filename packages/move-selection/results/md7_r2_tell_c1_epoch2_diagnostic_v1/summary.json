@@ -1,0 +1,424 @@
+{
+  "diagnostic": "md7_r2_tell_c1_epoch2_diagnostic_v1",
+  "decision": "A. TARGETED RECALIBRATION SUCCESS",
+  "decision_code": "A",
+  "decision_reason": "The targeted recoverable-state correction passes while persistent-state sensitivity, hard-negative safety, and policy stability are retained.",
+  "models": {
+    "baseline": {
+      "path": "pedagogical-move-selection/models/candidates/md7r1_epoch3",
+      "hashes": {
+        "model.safetensors": "d32d37f7f664d038f80fefb92f874804b49e5ac3d848985636ae64e6a2a60a13",
+        "config.json": "9877dd11007c8af1d2841a2c1bb470023ef2ceeb748b47c24686ea82479e9127",
+        "tokenizer.json": "80d0fb9a6bbc3ab2b24ec149d6b47981036a5f96c753667be38709975753550b",
+        "tokenizer_config.json": "bb5706f71e3d5cb4bf9878ad9b14a2079e6fbd618fc0a0ba2ac1b257d7824cc9"
+      },
+      "id2label": {
+        "0": "generic",
+        "1": "probing",
+        "2": "focus",
+        "3": "telling"
+      }
+    },
+    "candidate": {
+      "path": "pedagogical-move-selection/models/candidates/md7_r2_tell_c1/epoch2",
+      "hashes": {
+        "model.safetensors": "ad770256a71efcce7485705099511494e41806b2e29bc3829f9ba8aeaf731cd5",
+        "config.json": "419efd3794d791c4927dec0518ebe7d81765a22c3d8b8d28956589d625da52c0",
+        "tokenizer.json": "80d0fb9a6bbc3ab2b24ec149d6b47981036a5f96c753667be38709975753550b",
+        "tokenizer_config.json": "bb5706f71e3d5cb4bf9878ad9b14a2079e6fbd618fc0a0ba2ac1b257d7824cc9"
+      },
+      "id2label": {
+        "0": "generic",
+        "1": "probing",
+        "2": "focus",
+        "3": "telling"
+      }
+    }
+  },
+  "frozen_inputs": {
+    "v1_analysis": {
+      "path": "pedagogical-move-selection/results/md7_telling_real_state_diagnostic_v1/analysis.py",
+      "sha256": "adb98cf8c978479d7aedb437c01bbbbe62e13b6bebd94acf5a932f0397dafd2c"
+    },
+    "v1_challenge": {
+      "path": "pedagogical-move-selection/results/md7_telling_real_state_diagnostic_v1/telling_boundary_challenge.csv",
+      "sha256": "c415a0207fb3f4b960606317fc2d32c19cacf73f477d4900649321654bee141e"
+    },
+    "v1_real_predictions": {
+      "path": "pedagogical-move-selection/results/md7_telling_real_state_diagnostic_v1/real_state_predictions.csv",
+      "sha256": "ef6616a300770c48d31bf7d3325159f4da180b26d2e7a2b236f84a183d6ac8b7"
+    },
+    "ablation_analysis": {
+      "path": "pedagogical-move-selection/results/md7_telling_epoch_ablation_v1/analysis.py",
+      "sha256": "32a663ef84bc6eee4a655a3f8742685535a1d2f693ed335914d26cad52c8377a"
+    },
+    "ablation_summary": {
+      "path": "pedagogical-move-selection/results/md7_telling_epoch_ablation_v1/summary.json",
+      "sha256": "2c7c4a5c2979ebbb868bdb78f3ffd266886e7698998e2b98381946a9500f5853"
+    },
+    "ablation_epoch_comparison": {
+      "path": "pedagogical-move-selection/results/md7_telling_epoch_ablation_v1/epoch_comparison.csv",
+      "sha256": "de0d8fd4019bb3843e3ea69e98b366f9e906cac07aa580483eb0c25eee826a23"
+    },
+    "mathdial_validation": {
+      "path": "pedagogical-move-selection/data/processed/mathdial/validation.jsonl",
+      "sha256": "225e6b8f671bf1e335af175343722aa9ac2a603a96d67bcb5220be1e92c0b2b6"
+    },
+    "synthetic_challenge": {
+      "path": "pedagogical-move-selection/results/md7_r2_tell_c1_preparation_v1/telling_boundary_challenge_val_v1.jsonl",
+      "sha256": "bc4d947d924fab5f47dc990e384a6715d1bf6bb77cee0b8aa76d2368297bfb4f"
+    },
+    "turn_outcomes": {
+      "path": "pedagogical-move-selection/results/md_self_improvement_turn_data_v1/turn_outcomes.jsonl",
+      "sha256": "f983cf66bb2ae25b9ef1d49e2910f5b8b8d106f284645815a8fa170013b2e33a"
+    },
+    "assessment_outcomes": {
+      "path": "pedagogical-move-selection/results/md_self_improvement_turn_data_v1/assessment_outcomes.jsonl",
+      "sha256": "a891d5ba39913777912d86ebee905b4bd730300073052681d04b73c48e9319f0"
+    },
+    "attempt_summaries": {
+      "path": "pedagogical-move-selection/results/md_self_improvement_turn_data_v1/attempt_summaries.jsonl",
+      "sha256": "26fec928a845e4d5f931b916d33724dd6b864411ad82dfe37bb4cd1c9ff60946"
+    },
+    "policy_state": {
+      "path": "adaptive-math-tutor/backend/runtime/adaptive_demo_md7r1_real_v1/policy_state.json",
+      "sha256": "539e36ee8d2e4bc8d2d08a74badf31dce2cf97216adbb40927c06528a6b9b590"
+    }
+  },
+  "inference_contract": {
+    "first_sequence": "Problem:\n<problem>",
+    "second_sequence": "Conversation:\n<formatted dialogue>\n\nNext teacher pedagogical move:",
+    "dialogue_format": "{user}: {text}",
+    "tokenizer_truncation_side": "left",
+    "truncation": "only_second",
+    "max_length": 512,
+    "move_order": [
+      "generic",
+      "probing",
+      "focus",
+      "telling"
+    ]
+  },
+  "baseline_safety": {
+    "status": "PASS",
+    "mathdial_validation": {
+      "accuracy": 0.5162162162162162,
+      "macro_f1": 0.4611286390258053,
+      "per_class_f1": {
+        "generic": 0.6105263157894737,
+        "probing": 0.3333333333333333,
+        "focus": 0.6004672897196262,
+        "telling": 0.300187617260788
+      },
+      "prediction_distribution": {
+        "generic": 413,
+        "probing": 188,
+        "focus": 1034,
+        "telling": 215
+      }
+    },
+    "expected": {
+      "accuracy": 0.5162162162162162,
+      "macro_f1": 0.4611286390258053,
+      "per_class_f1": {
+        "generic": 0.6105263157894737,
+        "probing": 0.3333333333333333,
+        "focus": 0.6004672897196262,
+        "telling": 0.300187617260788
+      },
+      "prediction_distribution": {
+        "generic": 413,
+        "probing": 188,
+        "focus": 1034,
+        "telling": 215
+      }
+    },
+    "deltas": {
+      "accuracy": 0.0,
+      "macro_f1": 0.0,
+      "per_class_f1": {
+        "generic": 0.0,
+        "probing": 0.0,
+        "focus": 0.0,
+        "telling": 0.0
+      },
+      "prediction_distribution_match": true
+    },
+    "real_state_parity_max_abs_error": 1.2516975402832031e-06,
+    "real_state_parity_rows_failed_at_1e_5": 0
+  },
+  "candidate_validation_reference": {
+    "mathdial": {
+      "observed": {
+        "accuracy": 0.5070270270270271,
+        "macro_f1": 0.46257164850045035,
+        "per_class_f1": {
+          "generic": 0.6036866359447005,
+          "probing": 0.30664395229982966,
+          "focus": 0.5921299188007495,
+          "telling": 0.34782608695652173
+        },
+        "prediction_distribution": {
+          "generic": 426,
+          "probing": 175,
+          "focus": 923,
+          "telling": 326
+        }
+      },
+      "expected": {
+        "accuracy": 0.5070270270270271,
+        "macro_f1": 0.46257164850045035,
+        "per_class_f1": {
+          "generic": 0.6036866359447005,
+          "probing": 0.30664395229982966,
+          "focus": 0.5921299188007495,
+          "telling": 0.34782608695652173
+        },
+        "prediction_distribution": {
+          "generic": 426,
+          "probing": 175,
+          "focus": 923,
+          "telling": 326
+        }
+      },
+      "exact_match": true,
+      "deltas": {
+        "accuracy": 0.0,
+        "macro_f1": 0.0,
+        "per_class_f1": {
+          "generic": 0.0,
+          "probing": 0.0,
+          "focus": 0.0,
+          "telling": 0.0
+        },
+        "prediction_distribution_match": true
+      }
+    },
+    "synthetic_telling_challenge": {
+      "observed": {
+        "telling_precision": 0.9925558312655087,
+        "telling_recall": 1.0,
+        "telling_false_trigger_rate_on_non_telling": 0.0075,
+        "telling_tp": 400,
+        "telling_fp": 3,
+        "telling_fn": 0
+      },
+      "full_metrics": {
+        "accuracy": 0.79125,
+        "macro_f1": 0.6847397909089745,
+        "per_class_f1": {
+          "generic": 0.6666666666666666,
+          "probing": 0.3805970149253731,
+          "focus": 0.6954314720812182,
+          "telling": 0.9962640099626401
+        },
+        "prediction_distribution": {
+          "generic": 55,
+          "probing": 108,
+          "focus": 234,
+          "telling": 403
+        }
+      },
+      "expected": {
+        "telling_precision": 0.9925558312655087,
+        "telling_recall": 1.0,
+        "telling_false_trigger_rate_on_non_telling": 0.0075,
+        "telling_fp": 3
+      },
+      "exact_match": true
+    }
+  },
+  "challenge": {
+    "n": 48,
+    "telling_plausible": {
+      "baseline": {
+        "n": 24,
+        "top1_telling_count": 19,
+        "top1_telling_rate": 0.7916666666666666,
+        "mean_telling_probability": 0.7761732943666478,
+        "median_telling_probability": 0.9734310805797577,
+        "minimum_telling_probability": 0.00369112566113472,
+        "maximum_telling_probability": 0.9976131916046143,
+        "top1_distribution": {
+          "generic": 5,
+          "probing": 0,
+          "focus": 0,
+          "telling": 19
+        }
+      },
+      "candidate": {
+        "n": 24,
+        "top1_telling_count": 24,
+        "top1_telling_rate": 1.0,
+        "mean_telling_probability": 0.9754333595434824,
+        "median_telling_probability": 0.9987752139568329,
+        "minimum_telling_probability": 0.7347378730773926,
+        "maximum_telling_probability": 0.999219536781311,
+        "top1_distribution": {
+          "generic": 0,
+          "probing": 0,
+          "focus": 0,
+          "telling": 24
+        }
+      },
+      "sensitivity_gain": 0.20833333333333337
+    },
+    "hard_non_telling": {
+      "baseline": {
+        "n": 24,
+        "top1_telling_count": 0,
+        "top1_telling_rate": 0.0,
+        "mean_telling_probability": 0.0015298576969750381,
+        "median_telling_probability": 0.0011220607557334006,
+        "minimum_telling_probability": 0.00041464794776402414,
+        "maximum_telling_probability": 0.004041509702801704,
+        "top1_distribution": {
+          "generic": 11,
+          "probing": 12,
+          "focus": 1,
+          "telling": 0
+        }
+      },
+      "candidate": {
+        "n": 24,
+        "top1_telling_count": 0,
+        "top1_telling_rate": 0.0,
+        "mean_telling_probability": 0.007378788774682714,
+        "median_telling_probability": 0.000548978365259245,
+        "minimum_telling_probability": 0.0001134165795519948,
+        "maximum_telling_probability": 0.09984207153320312,
+        "top1_distribution": {
+          "generic": 2,
+          "probing": 13,
+          "focus": 9,
+          "telling": 0
+        }
+      },
+      "false_trigger_change": 0.0
+    },
+    "recoverable_after_one_scaffold": {
+      "n": 4,
+      "baseline_false_telling_count": 0,
+      "candidate_false_telling_count": 0,
+      "candidate_false_telling_rate": 0.0
+    }
+  },
+  "real_states": {
+    "n": 87,
+    "baseline_top1_telling_count": 0,
+    "candidate_top1_telling_count": 5,
+    "candidate_top1_telling_rate": 0.05747126436781609,
+    "policy_displacement_count": 20,
+    "policy_displacement_rate": 0.22988505747126436,
+    "focus_to_telling_count": 2,
+    "probing_to_telling_count": 3,
+    "generic_to_telling_count": 0,
+    "telling_to_other_count": 0,
+    "top1_transitions": {
+      "focus -> focus": 30,
+      "focus -> generic": 2,
+      "focus -> probing": 2,
+      "focus -> telling": 2,
+      "generic -> focus": 2,
+      "generic -> generic": 19,
+      "probing -> focus": 9,
+      "probing -> probing": 18,
+      "probing -> telling": 3
+    },
+    "telling_probability_delta": {
+      "count": 87,
+      "min": -0.015761353075504303,
+      "median": 0.010343752801418304,
+      "mean": 0.052146280204794296,
+      "max": 0.7895446624606848
+    }
+  },
+  "semantic_inspection": {
+    "candidate_telling_real_states_inspected": 5,
+    "candidate_telling_hard_negative_states_inspected": 0,
+    "largest_telling_probability_increases_inspected": 10,
+    "largest_focus_probability_decreases_inspected": 10,
+    "candidate_telling_assessment": {
+      "persistent_unresolved_or_sustained_uncertainty": 3,
+      "latest_response_shows_correct_progress_concerning": 2,
+      "one_scaffold_cases": 0
+    },
+    "concerning_action_event_ids": [
+      "a6d964ef-ca38-47e1-a1f5-6009be1aa0b5:1:action:7",
+      "bf4054b0-35ba-46ac-8cef-3d83a59f61c0:1:action:6"
+    ],
+    "interpretation": "Residual telling sensitivity remains on two already-recovering real states, but neither is a recoverable-after-one-scaffold case; no frozen hard negative becomes telling."
+  },
+  "observational_outcome_join": {
+    "n": 5,
+    "evaluator_category_distribution": {
+      "incorrect": 1,
+      "correct": 4
+    },
+    "mastery_before": {
+      "count": 5,
+      "min": 0.32068980617750237,
+      "median": 0.5011149420546538,
+      "mean": 0.5988346829562902,
+      "max": 0.8968774044034007
+    },
+    "immediate_delta_mastery": {
+      "count": 5,
+      "min": -0.08146860088791191,
+      "median": 0.023544549322920605,
+      "mean": 0.06240842654594188,
+      "max": 0.18042513587715142
+    },
+    "causal_interpretation": false
+  },
+  "historical_failed_candidates": {
+    "old tell epoch1": {
+      "mathdial_macro_f1": 0.425292,
+      "telling_plausible": "23/24",
+      "hard_negative": "2/24",
+      "recoverable": "2/4",
+      "real_telling": "0/87",
+      "displacement": "15/87",
+      "displacement_rate": 0.172414,
+      "mean_real_delta": 0.024483
+    },
+    "old tell epoch2": {
+      "mathdial_macro_f1": 0.441921,
+      "telling_plausible": "24/24",
+      "hard_negative": "3/24",
+      "recoverable": "3/4",
+      "real_telling": "5/87",
+      "displacement": "20/87",
+      "displacement_rate": 0.229885,
+      "mean_real_delta": 0.038394
+    },
+    "old tell epoch3": {
+      "mathdial_macro_f1": 0.449797,
+      "telling_plausible": "24/24",
+      "hard_negative": "3/24",
+      "recoverable": "3/4",
+      "real_telling": "4/87",
+      "displacement": "24/87",
+      "displacement_rate": 0.275862,
+      "mean_real_delta": 0.020975
+    }
+  },
+  "claims_not_entitled": [
+    "candidate telling would have caused better learning",
+    "candidate would have improved a historical outcome",
+    "negative BKT proves telling was needed",
+    "offline or synthetic performance proves production effectiveness"
+  ],
+  "recommended_next_experiment": "Run one preregistered blinded expert review on a fresh untouched set of baseline-candidate disagreement states before any live experiment.",
+  "side_effects": {
+    "training": 0,
+    "production_changes": 0,
+    "tutor_api_calls": 0,
+    "bkt_updates": 0,
+    "lints_updates": 0,
+    "authoritative_data_writes": 0,
+    "mathdial_test_use": 0,
+    "mrbench_v3_test_use": 0,
+    "protected_input_hash_changes": {}
+  }
+}
