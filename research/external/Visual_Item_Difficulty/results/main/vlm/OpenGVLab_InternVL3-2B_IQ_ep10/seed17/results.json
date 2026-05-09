@@ -1,0 +1,91 @@
+{
+  "mode": "final",
+  "model": "OpenGVLab/InternVL3-2B",
+  "family": "internvl",
+  "route": "I+Q",
+  "config_id": "r8_lr5e-05_mse",
+  "seed": 17,
+  "epochs": 10,
+  "provenance": {
+    "timestamp": "2026-07-25T08:41:31.310894",
+    "git_commit": "051943d6ea6b53c4966e6e1122101a85592a5b13",
+    "split_sha256": "5308b5da23248bab12ef6b0698d2445faba296a9c44abdf9ea0889ce260eca79",
+    "hostname": "internal-cluster-node",
+    "cuda_visible": "1",
+    "versions": {
+      "torch": "2.6.0+cu124",
+      "transformers": "5.12.1",
+      "peft": "0.19.1"
+    },
+    "args": {
+      "model_name": "OpenGVLab/InternVL3-2B",
+      "input_mode": "image_text",
+      "lora_rs": "8,16,32",
+      "lrs": "2e-4,5e-5",
+      "losses": "mse,huber",
+      "batch_size": 1,
+      "grad_accum": 4,
+      "max_epochs": 10,
+      "patience": 3,
+      "val_frac": 0.2,
+      "seed": 17,
+      "smoke": false,
+      "out_suffix": "_ep10",
+      "text_field": "text",
+      "run_mode": "final",
+      "folds": "0,1,2,3,4",
+      "lora_r": 8,
+      "lr": 5e-05,
+      "loss": "mse",
+      "epochs": 10
+    }
+  },
+  "epoch_history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.6287867901337727
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.5200643113241616
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.4602304160096529
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.36554646481205044
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.35114469846803176
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.27296319408901326
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.22311116525577698
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.20399142652743898
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.1865119909341384
+    },
+    {
+      "epoch": 10,
+      "train_loss": 0.17724808272275
+    }
+  ],
+  "test_metrics": {
+    "rmse": 0.5878334785711227,
+    "mae": 0.46265644341128753,
+    "pearson": 0.7020912254373541,
+    "spearman": 0.6953078255392852
+  }
+}
