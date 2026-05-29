@@ -1,0 +1,92 @@
+{
+  "decision": "S+K+L",
+  "dimension": 11,
+  "support": "qualified_limited",
+  "ordered_features": [
+    "selector_p_generic",
+    "selector_p_probing",
+    "selector_p_focus",
+    "selector_p_telling",
+    "mastery_before",
+    "previous_mastery_delta",
+    "previous_mastery_delta_missing",
+    "previous_reasoning_probability",
+    "previous_uncertainty_probability",
+    "previous_clarification_probability",
+    "previous_learner_signals_missing"
+  ],
+  "metrics": {
+    "S": {
+      "dimension": 4,
+      "MAE_mean": 0.1649083209330182,
+      "MAE_SE": 0.0279473922243475,
+      "RMSE_mean": 0.2095904773333607,
+      "RMSE_SE": 0.0305324698032613,
+      "R2_mean": -0.2517050416959512,
+      "R2_SE": 0.0472174552202508
+    },
+    "S+K": {
+      "dimension": 7,
+      "MAE_mean": 0.1625888919102352,
+      "MAE_SE": 0.0251049743666094,
+      "RMSE_mean": 0.2052301530821355,
+      "RMSE_SE": 0.0285411242584738,
+      "R2_mean": -0.2052541314478286,
+      "R2_SE": 0.0266956579602238
+    },
+    "S+K+L": {
+      "dimension": 11,
+      "MAE_mean": 0.1616273034876302,
+      "MAE_SE": 0.0259345065099216,
+      "RMSE_mean": 0.2046320420681585,
+      "RMSE_SE": 0.0291333411838116,
+      "R2_mean": -0.1948852942438591,
+      "R2_SE": 0.0297619546456266
+    },
+    "S+K+L+H+Q": {
+      "dimension": 22,
+      "MAE_mean": 0.168005782186833,
+      "MAE_SE": 0.0243891006346089,
+      "RMSE_mean": 0.209044571709494,
+      "RMSE_SE": 0.0284449101315972,
+      "R2_mean": -0.2570096112554379,
+      "R2_SE": 0.0535819047995817
+    }
+  },
+  "bootstrap_skl_minus_s": {
+    "MAE": {
+      "mean_difference": -0.0031237117201978,
+      "CI95_low": -0.0091281802790922,
+      "CI95_high": 0.0031938669172526
+    },
+    "RMSE": {
+      "mean_difference": -0.0052150334390858,
+      "CI95_low": -0.0094135531762596,
+      "CI95_high": 0.0003077849544502
+    }
+  },
+  "real_coverage": {
+    "S": 84,
+    "K": 70,
+    "L": 3,
+    "H": 70,
+    "Q": 70,
+    "N": 84
+  },
+  "reward": "HEADROOM_NORMALIZED",
+  "original_manifest_sha256": "b90b8efc87079e59ab88e041c5e8e4c9a6150350d6847a1976367311996834a0",
+  "decision_amendment_sha256": "647e84090ce6b88919d39a1b70c19a40a63f365863196b055d603aec720a34fd",
+  "manifest_sha256": "a860d385797eaaced4788463fb789197c614bef7d7934f8006705276fdb57dfa",
+  "decision_label": "B — S+K+L FINAL ARCHITECTURE FROZEN WITH QUALIFIED / LIMITED SUPPORT",
+  "safety": {
+    "neural_training": 0,
+    "protected_mathdial_test_use": 0,
+    "mrbench_v3_official_test_use": 0,
+    "authoritative_historical_rewrites": 0,
+    "fabricated_L_signals": 0,
+    "fabricated_rewards": 0,
+    "fabricated_propensities": 0,
+    "handwritten_inferred_rules": 0,
+    "LIVE_updates": 0
+  }
+}
