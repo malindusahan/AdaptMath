@@ -1,0 +1,73 @@
+question,skill_name,canonical_name,source
+Evaluate: 18 - 3(4 + 2) + 24 / 6,Order of Operations All,math :: number sense & operations :: order of operations all,disambiguation_order_of_ops
+Evaluate: 20 - 4(3 + 1) + 30 / 5,Order of Operations All,math :: number sense & operations :: order of operations all,disambiguation_order_of_ops
+Calculate the value of 15 - 2(3 + 4) + 16 / 4,Order of Operations All,math :: number sense & operations :: order of operations all,disambiguation_order_of_ops
+Evaluate: 12 + 4(5 - 2) - 18 / 3,Order of Operations All,math :: number sense & operations :: order of operations all,disambiguation_order_of_ops
+What is the result of 25 - 5(2 + 1) + 40 / 8?,Order of Operations All,math :: number sense & operations :: order of operations all,disambiguation_order_of_ops
+Compute: 10 + 3(6 - 2) / 4 - 5,Order of Operations All,math :: number sense & operations :: order of operations all,disambiguation_order_of_ops
+Evaluate the numerical expression: 30 - 2(8 - 3) + 12 / 4,Order of Operations All,math :: number sense & operations :: order of operations all,disambiguation_order_of_ops
+What is the value of 50 - 4(6 + 2) + 18 / 2?,Order of Operations All,math :: number sense & operations :: order of operations all,disambiguation_order_of_ops
+Follow order of operations to evaluate: 16 - 2(5 + 1) + 20 / 4,Order of Operations All,math :: number sense & operations :: order of operations all,disambiguation_order_of_ops
+Evaluate: 14 + 3(7 - 4) - 24 / 6,Order of Operations All,math :: number sense & operations :: order of operations all,disambiguation_order_of_ops
+Simplify following PEMDAS rules: 22 - 3(4 + 1) + 36 / 9,Order of Operations All,math :: number sense & operations :: order of operations all,disambiguation_order_of_ops
+Evaluate the expression using BODMAS: 18 - 2(3 + 5) + 15 / 3,Order of Operations All,math :: number sense & operations :: order of operations all,disambiguation_order_of_ops
+Calculate: 8 + 6(4 - 1) - 10 / 2,Order of Operations All,math :: number sense & operations :: order of operations all,disambiguation_order_of_ops
+Evaluate: 45 / 5 + 3(2 + 4) - 12,Order of Operations All,math :: number sense & operations :: order of operations all,disambiguation_order_of_ops
+What is 100 - 5(10 + 2) + 32 / 4 following order of operations?,Order of Operations All,math :: number sense & operations :: order of operations all,disambiguation_order_of_ops
+Evaluate: 7 + 2(9 - 3) - 16 / 4,Order of Operations All,math :: number sense & operations :: order of operations all,disambiguation_order_of_ops
+Compute the expression value: 24 - 4(2 + 3) + 18 / 6,Order of Operations All,math :: number sense & operations :: order of operations all,disambiguation_order_of_ops
+Evaluate: 35 - 3(6 + 2) + 28 / 7,Order of Operations All,math :: number sense & operations :: order of operations all,disambiguation_order_of_ops
+Simplify using correct order of operations: 19 - 2(4 + 3) + 21 / 3,Order of Operations All,math :: number sense & operations :: order of operations all,disambiguation_order_of_ops
+Evaluate: 12 - 2(3 + 1) + 50 / 10,Order of Operations All,math :: number sense & operations :: order of operations all,disambiguation_order_of_ops
+Expand and simplify the algebraic expression 3(x + 2),Distributive Property,math :: algebra & functions :: distributive property,disambiguation_distributive
+Apply the distributive property to 4(2y - 5),Distributive Property,math :: algebra & functions :: distributive property,disambiguation_distributive
+What is the expanded form of 5(a + 3b)?,Distributive Property,math :: algebra & functions :: distributive property,disambiguation_distributive
+Use distributive property to multiply 6(3x - 4),Distributive Property,math :: algebra & functions :: distributive property,disambiguation_distributive
+Expand the expression -2(4x + 7) using distributive law,Distributive Property,math :: algebra & functions :: distributive property,disambiguation_distributive
+How do I distribute the coefficient in 7(x - 3)?,Distributive Property,math :: algebra & functions :: distributive property,disambiguation_distributive
+Expand using distributive property: 8(2a + 5b),Distributive Property,math :: algebra & functions :: distributive property,disambiguation_distributive
+Apply distributive property: -3(2x - 9),Distributive Property,math :: algebra & functions :: distributive property,disambiguation_distributive
+What is 4(3m + 2n - 5) in expanded form?,Distributive Property,math :: algebra & functions :: distributive property,disambiguation_distributive
+Multiply out the brackets in 5(2x + 1) using distribution,Distributive Property,math :: algebra & functions :: distributive property,disambiguation_distributive
+Use the distributive property to simplify 2(5x - 8),Distributive Property,math :: algebra & functions :: distributive property,disambiguation_distributive
+Expand the brackets: -4(3y + 2),Distributive Property,math :: algebra & functions :: distributive property,disambiguation_distributive
+Apply distributive law to 9(x - 4),Distributive Property,math :: algebra & functions :: distributive property,disambiguation_distributive
+What is the distributed form of 6(2a - 7b)?,Distributive Property,math :: algebra & functions :: distributive property,disambiguation_distributive
+Distribute the outer number: 3(4x + 5),Distributive Property,math :: algebra & functions :: distributive property,disambiguation_distributive
+"A number is multiplied by 5, then 8 is subtracted. The result is 42. What is the original number?",Equation Solving Two or Fewer Steps,math :: algebra & functions :: equation solving two or fewer steps,disambiguation_verbal_equations
+"A number is multiplied by 4, then 7 is added. The result is 31. What is the number?",Equation Solving Two or Fewer Steps,math :: algebra & functions :: equation solving two or fewer steps,disambiguation_verbal_equations
+"Think of a number, multiply it by 3, subtract 5, and the answer is 22. What is the number?",Equation Solving Two or Fewer Steps,math :: algebra & functions :: equation solving two or fewer steps,disambiguation_verbal_equations
+"If you multiply a number by 6 and subtract 9, you get 45. Find the original number.",Equation Solving Two or Fewer Steps,math :: algebra & functions :: equation solving two or fewer steps,disambiguation_verbal_equations
+A certain number multiplied by 7 minus 12 equals 30. What is the original number?,Equation Solving Two or Fewer Steps,math :: algebra & functions :: equation solving two or fewer steps,disambiguation_verbal_equations
+"A number is multiplied by 2, then 15 is subtracted. The result is 25. Find the number.",Equation Solving Two or Fewer Steps,math :: algebra & functions :: equation solving two or fewer steps,disambiguation_verbal_equations
+Multiply an unknown number by 8 and add 4 to get 68. What was the starting number?,Equation Solving Two or Fewer Steps,math :: algebra & functions :: equation solving two or fewer steps,disambiguation_verbal_equations
+"A number is multiplied by 5, then 10 is subtracted to give 40. Find the number.",Equation Solving Two or Fewer Steps,math :: algebra & functions :: equation solving two or fewer steps,disambiguation_verbal_equations
+"If 3 times a number minus 4 equals 26, what is the value of the number?",Equation Solving Two or Fewer Steps,math :: algebra & functions :: equation solving two or fewer steps,disambiguation_verbal_equations
+A number multiplied by 9 plus 3 gives 84. What is the original number?,Equation Solving Two or Fewer Steps,math :: algebra & functions :: equation solving two or fewer steps,disambiguation_verbal_equations
+"A number is divided by 4, then 6 is added. The result is 14. What is the original number?",Equation Solving Two or Fewer Steps,math :: algebra & functions :: equation solving two or fewer steps,disambiguation_verbal_equations
+Solve the mystery number: multiply by 5 and subtract 8 to get 42.,Equation Solving Two or Fewer Steps,math :: algebra & functions :: equation solving two or fewer steps,disambiguation_verbal_equations
+A number times 7 minus 5 gives 51. What is the number?,Equation Solving Two or Fewer Steps,math :: algebra & functions :: equation solving two or fewer steps,disambiguation_verbal_equations
+"If you take a number, multiply by 4, and subtract 11, the result is 29. Find the number.",Equation Solving Two or Fewer Steps,math :: algebra & functions :: equation solving two or fewer steps,disambiguation_verbal_equations
+A number is multiplied by 3 and 8 is subtracted resulting in 19. What is the number?,Equation Solving Two or Fewer Steps,math :: algebra & functions :: equation solving two or fewer steps,disambiguation_verbal_equations
+A map uses a scale where 2 cm represents 15 km. Two towns are 8.4 cm apart on the map. What is the actual distance between the towns?,Scale Factor,math :: proportional reasoning & percents :: scale factor,disambiguation_scale_factor
+"On a map with a scale of 1 cm to 25 km, two cities are 4.5 cm apart. What is the real distance?",Scale Factor,math :: proportional reasoning & percents :: scale factor,disambiguation_scale_factor
+"A blueprint has a scale of 1 inch to 8 feet. If a room is 3.5 inches on the plan, what is its actual length?",Scale Factor,math :: proportional reasoning & percents :: scale factor,disambiguation_scale_factor
+"A model car has a scale factor of 1:24. If the model is 18 cm long, what is the actual car length?",Scale Factor,math :: proportional reasoning & percents :: scale factor,disambiguation_scale_factor
+A map scale is 3 cm represents 50 km. Two stations are 12 cm apart on the map. What is the true distance?,Scale Factor,math :: proportional reasoning & percents :: scale factor,disambiguation_scale_factor
+"On a drawing, 2 inches represents 15 feet. What actual distance is represented by 7 inches?",Scale Factor,math :: proportional reasoning & percents :: scale factor,disambiguation_scale_factor
+"A scale drawing uses 1 cm = 4 metres. If a garden wall is 6.5 cm on paper, what is the real wall length?",Scale Factor,math :: proportional reasoning & percents :: scale factor,disambiguation_scale_factor
+"Using a map scale of 2 cm to 15 km, find the actual distance for 8.4 cm on the map.",Scale Factor,math :: proportional reasoning & percents :: scale factor,disambiguation_scale_factor
+What is the scale factor if 5 cm on a map represents 100 km in reality?,Scale Factor,math :: proportional reasoning & percents :: scale factor,disambiguation_scale_factor
+A building blueprint scale is 1 cm : 5 m. How wide is a hall measuring 4.2 cm on the blueprint?,Scale Factor,math :: proportional reasoning & percents :: scale factor,disambiguation_scale_factor
+"On a map where 2 cm = 15 km, how many kilometres apart are two points separated by 8.4 cm?",Scale Factor,math :: proportional reasoning & percents :: scale factor,disambiguation_scale_factor
+"A miniature sculpture has a scale of 1:50. If the real statue is 15 metres high, how tall is the model?",Scale Factor,math :: proportional reasoning & percents :: scale factor,disambiguation_scale_factor
+"The first three terms of a sequence are 5, 12, and 21. The differences between consecutive terms increase by 2 each time. What are the next three terms?",Recognize Quadratic Pattern,math :: algebra & functions :: recognize quadratic pattern,disambiguation_quadratic_pattern
+"Find the next term in the quadratic sequence: 2, 6, 12, 20, 30 where second difference is 2.",Recognize Quadratic Pattern,math :: algebra & functions :: recognize quadratic pattern,disambiguation_quadratic_pattern
+"What is the formula and next term for the sequence 3, 8, 15, 24 where difference increases by 2?",Recognize Quadratic Pattern,math :: algebra & functions :: recognize quadratic pattern,disambiguation_quadratic_pattern
+"The sequence 1, 4, 9, 16, 25 has constant second differences of 2. Recognize this quadratic sequence.",Recognize Quadratic Pattern,math :: algebra & functions :: recognize quadratic pattern,disambiguation_quadratic_pattern
+"In the sequence 5, 12, 21, 32, the first differences are 7, 9, 11 (increasing by 2). What type of quadratic pattern is this?",Recognize Quadratic Pattern,math :: algebra & functions :: recognize quadratic pattern,disambiguation_quadratic_pattern
+"Find the next terms in 4, 11, 22, 37 where difference grows by 4 each step.",Recognize Quadratic Pattern,math :: algebra & functions :: recognize quadratic pattern,disambiguation_quadratic_pattern
+"What are the next three terms in the quadratic pattern 5, 12, 21 with second difference equal to 2?",Recognize Quadratic Pattern,math :: algebra & functions :: recognize quadratic pattern,disambiguation_quadratic_pattern
+"Recognize the quadratic sequence: 2, 7, 14, 23, 34 with second differences equal to 2.",Recognize Quadratic Pattern,math :: algebra & functions :: recognize quadratic pattern,disambiguation_quadratic_pattern
+"The terms 5, 12, 21 have differences that increase by 2 each step. Find the 4th and 5th terms.",Recognize Quadratic Pattern,math :: algebra & functions :: recognize quadratic pattern,disambiguation_quadratic_pattern
+"Identify the quadratic rule for sequence 6, 13, 22, 33 where differences are 7, 9, 11.",Recognize Quadratic Pattern,math :: algebra & functions :: recognize quadratic pattern,disambiguation_quadratic_pattern
