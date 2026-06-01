@@ -1,0 +1,63 @@
+{
+  "architecture_version": "adaptmath_turn_lints_v1_skl_final_amendment_1",
+  "support_label": "qualified_limited",
+  "algorithm": "direct_disjoint_turn_lints_v1",
+  "arms": [
+    "generic",
+    "probing",
+    "focus",
+    "telling"
+  ],
+  "context_preset": "S+K+L",
+  "ordered_context_features": [
+    "selector_p_generic",
+    "selector_p_probing",
+    "selector_p_focus",
+    "selector_p_telling",
+    "mastery_before",
+    "previous_mastery_delta",
+    "previous_mastery_delta_missing",
+    "previous_reasoning_probability",
+    "previous_uncertainty_probability",
+    "previous_clarification_probability",
+    "previous_learner_signals_missing"
+  ],
+  "context_dimension": 11,
+  "diagnostic_logged_context": "S+K+L+H+Q",
+  "reward_mode": "headroom_normalized",
+  "selector_name": "MD7-R2-TELL-C1 Epoch 2",
+  "selector_sha256": "ad770256a71efcce7485705099511494e41806b2e29bc3829f9ba8aeaf731cd5",
+  "cold_start_behavior_policy": "md7_r2_probability_proportional_v1",
+  "tau_gate": "none",
+  "action_eligibility": "none",
+  "anchor_mode": "none",
+  "P1": "inactive",
+  "P2": "not_used",
+  "handwritten_inferred_state_action_rules": "none",
+  "MRB1_role": "auxiliary diagnostic; not frozen policy context or reward",
+  "student_model_role": "previous learner-state L context provider plus diagnostics; valid linked BKT update supplies reward",
+  "formal_assessment_role": "separate external policy-health evaluation",
+  "learner_agency": "explicit requests may override above policy and are non-randomized with null propensity",
+  "update_timing": "immediate after valid linked turn-level BKT evidence in future LIVE mode",
+  "live_enabled": false,
+  "warmstart_posterior_updates_enabled": false,
+  "runtime_lineage": "adaptive-math-tutor/backend/runtime/turn_lints_randomized_warmstart_skl_final_v1",
+  "experiment_evidence_paths": [
+    "pedagogical-move-selection/results/turn_lints_final_architecture_selection_v1/context_ablation_results.csv",
+    "pedagogical-move-selection/results/turn_lints_final_architecture_selection_v1/context_bootstrap_comparisons.csv",
+    "pedagogical-move-selection/results/turn_lints_final_architecture_selection_v1/context_feature_coverage.csv",
+    "pedagogical-move-selection/results/turn_lints_final_architecture_selection_v1/reward_experiment_results.csv"
+  ],
+  "original_evidence_hashes": {
+    "FINAL_ARCHITECTURE.json": "b90b8efc87079e59ab88e041c5e8e4c9a6150350d6847a1976367311996834a0",
+    "analysis.py": "586ba4ff25ba4462eca712320753a07dc88a884e0de16f9d93bc005e29ab53e5",
+    "derived_analysis_dataset.csv": "d8f219b7e0cf351fb0bc2fc460f5183ff057a87a8fdce8d372ff2ae27dd67786",
+    "context_ablation_results.csv": "c411e48c6b9983ba36c0944f4157abd9d058f7a462d74d345583588727b1a7b0",
+    "context_bootstrap_comparisons.csv": "cd5007259ea88b5d6c10c08ddd4a85debd14230e7da9feabf2383c5737ce0b87",
+    "context_feature_coverage.csv": "7f3a51ea0fd239d16dbd14dffd5dcebb26623a20b66e714dea730bd753773e52"
+  },
+  "decision_amendment_sha256": "647e84090ce6b88919d39a1b70c19a40a63f365863196b055d603aec720a34fd",
+  "manifest_hash_note": "Final manifest SHA-256 is stored in FINAL_ARCHITECTURE.sha256 to avoid a self-referential hash.",
+  "empirical_limitation": "S+K+L advantage over S is nominal and uncertain; bootstrap intervals cross zero and real L coverage is 3/84.",
+  "decision_label": "B — S+K+L FINAL ARCHITECTURE FROZEN WITH QUALIFIED / LIMITED SUPPORT"
+}

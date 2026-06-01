@@ -1,0 +1,484 @@
+{
+  "architecture": {
+    "architecture_version": "adaptmath_turn_lints_v1_final",
+    "freeze_status": "qualified_limited",
+    "algorithm": "direct_disjoint_linear_thompson_sampling",
+    "arms": [
+      "generic",
+      "probing",
+      "focus",
+      "telling"
+    ],
+    "context_preset": "S",
+    "ordered_context_features": [
+      "selector_p_generic",
+      "selector_p_probing",
+      "selector_p_focus",
+      "selector_p_telling"
+    ],
+    "context_dimension": 4,
+    "context_schema_id": "turn_lints_context_v1:S:e59e0e51ea8d",
+    "reward_mode": "headroom_normalized",
+    "reward_decision_label": "HEADROOM_NORMALIZED",
+    "selector_name": "MD7-R2-TELL-C1 Epoch 2",
+    "selector_sha256": "ad770256a71efcce7485705099511494e41806b2e29bc3829f9ba8aeaf731cd5",
+    "cold_start_behavior_policy": "md7_r2_probability_proportional_v1",
+    "known_behavior_propensity_logging": true,
+    "mrb1_role": "previous-turn four-head auxiliary context only if selected; never scalar reward",
+    "mrb1_selected_in_context": false,
+    "student_model_role": "pre-action BKT state and prior valid learner-signal probabilities per selected blocks; linked valid BKT posterior update supplies reward",
+    "formal_assessment_role": "separate external policy-health signal; never Tutor-action reward",
+    "learner_agency_semantics": "explicit interaction requests are handled above the policy, logged non-randomized when overriding; inferred learner state never maps to handwritten actions",
+    "turn_update_timing": "immediate after valid linked BKT evidence in future LIVE mode",
+    "tau_gate": "none",
+    "action_eligibility_threshold": "none",
+    "p1_anchor": "inactive",
+    "p2": "not_used",
+    "handwritten_pedagogical_action_rules": "none",
+    "tutor_realization": "existing generic/probing/focus/telling contract",
+    "experiment_artifact_path": "pedagogical-move-selection/results/turn_lints_final_architecture_selection_v1",
+    "analysis_script_sha256": "586ba4ff25ba4462eca712320753a07dc88a884e0de16f9d93bc005e29ab53e5",
+    "derived_dataset_sha256": "d8f219b7e0cf351fb0bc2fc460f5183ff057a87a8fdce8d372ff2ae27dd67786",
+    "architecture_manifest_sha256": null,
+    "architecture_manifest_hash_note": "Self-hash is stored in FINAL_ARCHITECTURE.sha256 after this JSON is finalized.",
+    "selection_metrics": {
+      "grouped_MAE_mean": 0.16490832093301827,
+      "grouped_MAE_SE": 0.02794739222434752,
+      "grouped_RMSE_mean": 0.20959047733336078,
+      "grouped_RMSE_SE": 0.03053246980326138,
+      "grouped_R2_mean": -0.2517050416959512,
+      "grouped_R2_SE": 0.04721745522025084,
+      "delta_MAE_vs_S": 0.0,
+      "delta_RMSE_vs_S": 0.0,
+      "delta_MAE_vs_full": -0.0030974612538147983,
+      "delta_RMSE_vs_full": 0.0005459056238667492
+    },
+    "current_runtime_at_analysis": {
+      "mode": "SHADOW",
+      "context_blocks": "S+K+L+H+Q",
+      "reward_mode": "raw_delta",
+      "live_update_count_across_direct_states": 0
+    },
+    "randomized_warmstart": {
+      "treatment_count": 8,
+      "scientifically_valid_observation_count": 3,
+      "attempt_count": 1,
+      "standalone_context_selection": "insufficient"
+    },
+    "limitations": [
+      "Only 3/84 included rows contain real non-missing L signals; missing-indicator representation permits evaluation but does not establish substantive L value.",
+      "Telling has 0 included observations, so telling-specific reward interactions are not empirically established.",
+      "Only 3 scientifically valid randomized observations from 1 attempt(s) exist; insufficient for standalone context selection.",
+      "The primary context evidence is observational and policy-bound; no causal action-effect claim is made.",
+      "Grouped R2 is sensitive to small heterogeneous held-out attempt groups and is interpreted with MAE/RMSE and fold stability."
+    ],
+    "decision_label": "B. FINAL ARCHITECTURE FROZEN WITH QUALIFIED / LIMITED SUPPORT"
+  },
+  "architecture_manifest_sha256": "b90b8efc87079e59ab88e041c5e8e4c9a6150350d6847a1976367311996834a0",
+  "reward": {
+    "selected": "HEADROOM_NORMALIZED",
+    "reason": "HEADROOM_NORMALIZED preserved sign, stayed finite and bounded without tuned constants, reduced absolute-reward mastery dependence from |rho|=0.742 to 0.025, and introduced no strong turn/relative-position artifact (maximum |rho|=0.155).",
+    "predeclared_criteria": [
+      "Preserve the sign/direction of the BKT posterior belief update.",
+      "Avoid mechanical domination by starting mastery/headroom.",
+      "Avoid a strong artificial dependence on turn or relative attempt position.",
+      "Remain finite and stable at mastery boundaries.",
+      "Use no arbitrary clipping or tuned weighting constants.",
+      "Retain usable contextual-bandit reward variation."
+    ],
+    "scientific_semantics": "BKT posterior belief update, not measured learning",
+    "candidates": {
+      "RAW_DELTA": {
+        "reward": "RAW_DELTA",
+        "N": 84,
+        "min": -0.1710836699786672,
+        "P1": -0.1576590235802853,
+        "P5": -0.13156083170691238,
+        "Q1": -0.019717992202646306,
+        "median": 0.022657459335950647,
+        "mean": 0.02466573859733395,
+        "Q3": 0.06579323701785256,
+        "P95": 0.12690776069261822,
+        "P99": 0.2691976693981105,
+        "max": 0.5565306848534494,
+        "SD": 0.09263472277284822,
+        "IQR": 0.08551122922049886,
+        "positive_proportion": 0.6785714285714286,
+        "zero_proportion": 0.0,
+        "negative_proportion": 0.32142857142857145,
+        "nonfinite_count": 0,
+        "boundary_before_le_0_01_N": 0,
+        "boundary_before_ge_0_99_N": 0,
+        "sign_mismatch_count": 0,
+        "spearman_reward_vs_mastery_before_rho": -0.4142776869430776,
+        "spearman_reward_vs_mastery_before_p": 8.944184403251536e-05,
+        "spearman_absolute_reward_vs_mastery_before_rho": -0.7416257043008072,
+        "spearman_absolute_reward_vs_mastery_before_p": 7.091850232198662e-16,
+        "spearman_reward_vs_turn_index_rho": -0.06658137821888446,
+        "spearman_reward_vs_turn_index_p": 0.5473384659213415,
+        "spearman_absolute_reward_vs_turn_index_rho": -0.024219753908692083,
+        "spearman_absolute_reward_vs_turn_index_p": 0.8268964578420483,
+        "spearman_reward_vs_relative_attempt_position_rho": 0.015060797807435326,
+        "spearman_reward_vs_relative_attempt_position_p": 0.891841921652949,
+        "spearman_absolute_reward_vs_relative_attempt_position_rho": -0.17073975157452775,
+        "spearman_absolute_reward_vs_relative_attempt_position_p": 0.12046274160504425,
+        "correlations": {
+          "reward_vs_mastery_before": {
+            "n": 84,
+            "rho": -0.4142776869430776,
+            "p_value": 8.944184403251536e-05
+          },
+          "absolute_reward_vs_mastery_before": {
+            "n": 84,
+            "rho": -0.7416257043008072,
+            "p_value": 7.091850232198662e-16
+          },
+          "reward_vs_turn_index": {
+            "n": 84,
+            "rho": -0.06658137821888446,
+            "p_value": 0.5473384659213415
+          },
+          "absolute_reward_vs_turn_index": {
+            "n": 84,
+            "rho": -0.024219753908692083,
+            "p_value": 0.8268964578420483
+          },
+          "reward_vs_relative_attempt_position": {
+            "n": 84,
+            "rho": 0.015060797807435326,
+            "p_value": 0.891841921652949
+          },
+          "absolute_reward_vs_relative_attempt_position": {
+            "n": 84,
+            "rho": -0.17073975157452775,
+            "p_value": 0.12046274160504425
+          }
+        },
+        "per_attempt_mean": {
+          "N": 14,
+          "mean": 0.021834940077229848,
+          "SD": 0.049656284337702826,
+          "min": -0.06816845899575452,
+          "max": 0.12311298682290818
+        },
+        "per_learner_mean": {
+          "N": 3,
+          "values": {
+            "psn_9a081eb5df240169b9f3c83b": 0.06989076487691051,
+            "psn_b94f4a505b4ee07be23867fc": 0.01632495724816407,
+            "psn_f78c0817d43053e5bd31da20": 0.019497410268218027
+          }
+        }
+      },
+      "HEADROOM_NORMALIZED": {
+        "reward": "HEADROOM_NORMALIZED",
+        "N": 84,
+        "min": -0.26215185494826826,
+        "P1": -0.23177533199796846,
+        "P5": -0.16987183058002941,
+        "Q1": -0.02368862141937151,
+        "median": 0.1775562124314644,
+        "mean": 0.14744802180779332,
+        "Q3": 0.23931671680694172,
+        "P95": 0.5400022555658863,
+        "P99": 0.692354584342238,
+        "max": 0.7005239752859275,
+        "SD": 0.20819256625143093,
+        "IQR": 0.2630053382263132,
+        "positive_proportion": 0.6785714285714286,
+        "zero_proportion": 0.0,
+        "negative_proportion": 0.32142857142857145,
+        "nonfinite_count": 0,
+        "boundary_before_le_0_01_N": 0,
+        "boundary_before_ge_0_99_N": 0,
+        "sign_mismatch_count": 0,
+        "spearman_reward_vs_mastery_before_rho": 0.11749578564383438,
+        "spearman_reward_vs_mastery_before_p": 0.28713705921731136,
+        "spearman_absolute_reward_vs_mastery_before_rho": -0.0246837333390494,
+        "spearman_absolute_reward_vs_mastery_before_p": 0.8236333464342482,
+        "spearman_reward_vs_turn_index_rho": -0.04273894258161201,
+        "spearman_reward_vs_turn_index_p": 0.6994847969561919,
+        "spearman_absolute_reward_vs_turn_index_rho": -0.0384762658936822,
+        "spearman_absolute_reward_vs_turn_index_p": 0.7282265382099371,
+        "spearman_reward_vs_relative_attempt_position_rho": 0.15487773960763965,
+        "spearman_reward_vs_relative_attempt_position_p": 0.1595126392533972,
+        "spearman_absolute_reward_vs_relative_attempt_position_rho": 0.09075018099726014,
+        "spearman_absolute_reward_vs_relative_attempt_position_p": 0.4116619858733611,
+        "correlations": {
+          "reward_vs_mastery_before": {
+            "n": 84,
+            "rho": 0.11749578564383438,
+            "p_value": 0.28713705921731136
+          },
+          "absolute_reward_vs_mastery_before": {
+            "n": 84,
+            "rho": -0.0246837333390494,
+            "p_value": 0.8236333464342482
+          },
+          "reward_vs_turn_index": {
+            "n": 84,
+            "rho": -0.04273894258161201,
+            "p_value": 0.6994847969561919
+          },
+          "absolute_reward_vs_turn_index": {
+            "n": 84,
+            "rho": -0.0384762658936822,
+            "p_value": 0.7282265382099371
+          },
+          "reward_vs_relative_attempt_position": {
+            "n": 84,
+            "rho": 0.15487773960763965,
+            "p_value": 0.1595126392533972
+          },
+          "absolute_reward_vs_relative_attempt_position": {
+            "n": 84,
+            "rho": 0.09075018099726014,
+            "p_value": 0.4116619858733611
+          }
+        },
+        "per_attempt_mean": {
+          "N": 14,
+          "mean": 0.15301230245007633,
+          "SD": 0.13976238426986884,
+          "min": -0.10700226717051267,
+          "max": 0.4472197085278315
+        },
+        "per_learner_mean": {
+          "N": 3,
+          "values": {
+            "psn_9a081eb5df240169b9f3c83b": 0.21573789415111894,
+            "psn_b94f4a505b4ee07be23867fc": 0.17189563268100275,
+            "psn_f78c0817d43053e5bd31da20": 0.12397213406464211
+          }
+        }
+      }
+    }
+  },
+  "context": {
+    "selected": "S",
+    "ordered_features": [
+      "selector_p_generic",
+      "selector_p_probing",
+      "selector_p_focus",
+      "selector_p_telling"
+    ],
+    "dimension": 4,
+    "selection_rule_result": {
+      "lowest_mae_context": "S+K+L",
+      "lowest_mae": 0.16162730348763021,
+      "lowest_mae_se": 0.025934506509921615,
+      "one_se_threshold": 0.18756180999755184,
+      "eligible_contexts": [
+        "S",
+        "S+K",
+        "S+L",
+        "S+Q",
+        "S+H",
+        "S+K+L",
+        "S+K+Q",
+        "S+K+H",
+        "S+K+L+Q",
+        "S+K+L+H",
+        "K+L+H+Q",
+        "S+K+H+Q",
+        "S+L+H+Q",
+        "S+K+L+H+Q"
+      ],
+      "selected_context": "S",
+      "selected_dimension": 4,
+      "selection_rule": "smallest dimension within one SE of lowest mean grouped MAE; then RMSE; then preregistered order"
+    },
+    "metrics": {
+      "candidate_order": 0,
+      "blocks": "S",
+      "context_dimension": 4,
+      "ordered_features": "[\"selector_p_generic\",\"selector_p_probing\",\"selector_p_focus\",\"selector_p_telling\"]",
+      "N": 84,
+      "attempt_count": 14,
+      "fold_count": 5,
+      "MAE_mean": 0.16490832093301827,
+      "MAE_SD": 0.06249226880749011,
+      "MAE_SE": 0.02794739222434752,
+      "RMSE_mean": 0.20959047733336078,
+      "RMSE_SD": 0.06827267800105208,
+      "RMSE_SE": 0.03053246980326138,
+      "R2_mean": -0.2517050416959512,
+      "R2_SD": 0.10558143959703319,
+      "R2_SE": 0.04721745522025084,
+      "OOF_MAE": 0.1630063981694982,
+      "OOF_RMSE": 0.21642896334828682,
+      "OOF_R2": -0.09370831845423222,
+      "ridge_grid": "[0.01, 0.1, 1.0, 10.0, 100.0]",
+      "selected_alphas": "[100.0,100.0,100.0,100.0,100.0]"
+    }
+  },
+  "data": {
+    "candidate_turns": 109,
+    "valid_linked_bkt_outcomes": 106,
+    "included_reward": 84,
+    "included_context": 84,
+    "attempts": 18,
+    "learners": 3,
+    "skills": 14,
+    "exclusions": {
+      "downstream_mastery_state_contaminated_by:4220e000-557f-487a-949f-a6b3662998ac:1:action:1": 6,
+      "downstream_mastery_state_contaminated_by:a6d964ef-ca38-47e1-a1f5-6009be1aa0b5:1:action:3": 4,
+      "downstream_mastery_state_contaminated_by:00efa9aa-9749-4384-bc1c-a5c7d17012c8:1:action:4": 3,
+      "no_scientifically_resolved_reward:censored": 3,
+      "downstream_mastery_state_contaminated_by:44442f3f-ef9b-4c06-8cd8-0c1eba70feef:1:action:1": 2,
+      "downstream_mastery_state_contaminated_by:eef1d04e-fe55-4457-9edf-f1c05786fd69:1:action:4": 2,
+      "interaction_management_request": 1,
+      "no_knowledge_evidence_problem_repetition": 1,
+      "interaction_management_acknowledgement": 1,
+      "no_knowledge_evidence_metacognitive_or_social": 1,
+      "no_knowledge_evidence_transcript_echo": 1
+    },
+    "action_support_included": {
+      "generic": 23,
+      "probing": 27,
+      "focus": 34,
+      "telling": 0
+    }
+  },
+  "runtime": {
+    "current_mode": "SHADOW",
+    "live_update_count": 0
+  },
+  "randomized_warmstart": {
+    "treatment_count": 8,
+    "scientifically_valid_observation_count": 3,
+    "attempt_count": 1,
+    "standalone_context_selection": "insufficient"
+  },
+  "mrb1": {
+    "complete_current_rows": 84,
+    "head_correlations": {
+      "Mistake_Identification__Mistake_Location": {
+        "n": 84,
+        "rho": 0.9657838660578386,
+        "p_value": 7.886638737427866e-50
+      },
+      "Mistake_Identification__Providing_Guidance": {
+        "n": 84,
+        "rho": 0.9492643328259766,
+        "p_value": 5.865497911655675e-43
+      },
+      "Mistake_Identification__Actionability": {
+        "n": 84,
+        "rho": 0.7693556570268898,
+        "p_value": 1.2449779520141095e-17
+      },
+      "Mistake_Location__Providing_Guidance": {
+        "n": 84,
+        "rho": 0.9365195332318618,
+        "p_value": 4.442344623674381e-39
+      },
+      "Mistake_Location__Actionability": {
+        "n": 84,
+        "rho": 0.7645662100456619,
+        "p_value": 2.602970229428794e-17
+      },
+      "Providing_Guidance__Actionability": {
+        "n": 84,
+        "rho": 0.8110400811770674,
+        "p_value": 8.674098220099804e-21
+      }
+    },
+    "role_constraint": "four separate previous-turn Q features only; never scalar reward"
+  },
+  "bootstrap": [
+    {
+      "comparison": "best_larger_context_vs_S",
+      "first_context": "S+K+L",
+      "second_context": "S",
+      "metric": "MAE",
+      "difference_definition": "first minus second; negative favors first",
+      "attempt_count": 14,
+      "bootstrap_replicates": 5000,
+      "mean_difference": -0.0031237117,
+      "median_difference": -0.003199918,
+      "CI95_low": -0.0091281803,
+      "CI95_high": 0.0031938669,
+      "seed": 20260829
+    },
+    {
+      "comparison": "best_larger_context_vs_S",
+      "first_context": "S+K+L",
+      "second_context": "S",
+      "metric": "RMSE",
+      "difference_definition": "first minus second; negative favors first",
+      "attempt_count": 14,
+      "bootstrap_replicates": 5000,
+      "mean_difference": -0.0052150334,
+      "median_difference": -0.0054782632,
+      "CI95_low": -0.0094135532,
+      "CI95_high": 0.000307785,
+      "seed": 20260829
+    },
+    {
+      "comparison": "selected_context_vs_second_best",
+      "first_context": "S",
+      "second_context": "S+K+L",
+      "metric": "MAE",
+      "difference_definition": "first minus second; negative favors first",
+      "attempt_count": 14,
+      "bootstrap_replicates": 5000,
+      "mean_difference": 0.0031112962,
+      "median_difference": 0.0032072514,
+      "CI95_low": -0.0033636447,
+      "CI95_high": 0.0091215383,
+      "seed": 20260829
+    },
+    {
+      "comparison": "selected_context_vs_second_best",
+      "first_context": "S",
+      "second_context": "S+K+L",
+      "metric": "RMSE",
+      "difference_definition": "first minus second; negative favors first",
+      "attempt_count": 14,
+      "bootstrap_replicates": 5000,
+      "mean_difference": 0.0051916948,
+      "median_difference": 0.005459224,
+      "CI95_low": -0.0003146794,
+      "CI95_high": 0.0093796595,
+      "seed": 20260829
+    },
+    {
+      "comparison": "selected_context_vs_full",
+      "first_context": "S",
+      "second_context": "S+K+L+H+Q",
+      "metric": "MAE",
+      "difference_definition": "first minus second; negative favors first",
+      "attempt_count": 14,
+      "bootstrap_replicates": 5000,
+      "mean_difference": -0.0034311124,
+      "median_difference": -0.0034277532,
+      "CI95_low": -0.0128637924,
+      "CI95_high": 0.0058273091,
+      "seed": 20260829
+    },
+    {
+      "comparison": "selected_context_vs_full",
+      "first_context": "S",
+      "second_context": "S+K+L+H+Q",
+      "metric": "RMSE",
+      "difference_definition": "first minus second; negative favors first",
+      "attempt_count": 14,
+      "bootstrap_replicates": 5000,
+      "mean_difference": 0.0009290495,
+      "median_difference": 0.0012153551,
+      "CI95_low": -0.0061138819,
+      "CI95_high": 0.0063948772,
+      "seed": 20260829
+    }
+  ],
+  "decision_label": "B. FINAL ARCHITECTURE FROZEN WITH QUALIFIED / LIMITED SUPPORT",
+  "safety": {
+    "neural_training": 0,
+    "protected_mathdial_final_test_use": 0,
+    "mrbench_v3_official_test_use": 0,
+    "authoritative_historical_rewrites": 0,
+    "external_tutor_api_calls": 0,
+    "live_activation": 0
+  }
+}
