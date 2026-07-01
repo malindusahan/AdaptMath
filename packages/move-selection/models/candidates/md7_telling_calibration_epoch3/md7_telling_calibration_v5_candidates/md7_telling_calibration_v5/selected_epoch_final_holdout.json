@@ -1,0 +1,21 @@
+{
+  "selected_epoch": 3,
+  "selection_basis": "Epoch 3 selected using validation only: telling challenge performance + MathDial validation retention.",
+  "synthetic_final_holdout": {
+    "accuracy": 1.0,
+    "macro_f1": 1.0,
+    "weighted_f1": 1.0,
+    "per_class_f1": {
+      "generic": 1.0,
+      "probing": 1.0,
+      "focus": 1.0,
+      "telling": 1.0
+    },
+    "pred_distribution": {
+      "generic": 300,
+      "probing": 300,
+      "focus": 300,
+      "telling": 300
+    }
+  }
+}
