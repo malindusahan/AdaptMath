@@ -1,0 +1,303 @@
+{
+  "action_event_id": "814d1ca7-5897-4101-b23d-d7225937f156:1:action:2",
+  "action_turn_index": 2,
+  "actual_move": "focus",
+  "actual_selector_move": "probing",
+  "actual_treatment_move": "focus",
+  "anchor_gamma": 0.0,
+  "anchor_mode": "none",
+  "anchor_scores": {
+    "focus": 0.0,
+    "generic": 0.0,
+    "probing": 0.0,
+    "telling": 0.0
+  },
+  "anchor_selector_sha256": "ad770256a71efcce7485705099511494e41806b2e29bc3829f9ba8aeaf731cd5",
+  "anchor_selector_version": "MD7-R2-TELL-C1 Epoch 2",
+  "assignment_random_draw": null,
+  "assignment_rng_source": null,
+  "assignment_seed": null,
+  "attempt_id": "814d1ca7-5897-4101-b23d-d7225937f156:1",
+  "behavior_policy": "turn_lints_live_v1",
+  "behavior_propensity": null,
+  "collection_lineage": "turn_lints_live_skl_final_v1",
+  "configured_reward_mode": "headroom_normalized",
+  "context": {
+    "available_blocks": [
+      "S",
+      "K",
+      "L",
+      "H",
+      "Q"
+    ],
+    "context_dimension": 11,
+    "enabled_blocks": [
+      "S",
+      "K",
+      "L"
+    ],
+    "feature_names": [
+      "selector_p_generic",
+      "selector_p_probing",
+      "selector_p_focus",
+      "selector_p_telling",
+      "mastery_before",
+      "previous_mastery_delta",
+      "previous_mastery_delta_missing",
+      "previous_reasoning_probability",
+      "previous_uncertainty_probability",
+      "previous_clarification_probability",
+      "previous_learner_signals_missing"
+    ],
+    "feature_values": {
+      "mastery_before": 0.8683494828628041,
+      "previous_clarification_probability": 0.3039013783424071,
+      "previous_learner_signals_missing": 0.0,
+      "previous_mastery_delta": -0.02776716422336989,
+      "previous_mastery_delta_missing": 0.0,
+      "previous_reasoning_probability": 0.003923462576389089,
+      "previous_uncertainty_probability": 0.8378965314179221,
+      "selector_p_focus": 0.0007220918778330088,
+      "selector_p_generic": 0.00024905672762542963,
+      "selector_p_probing": 0.996181845664978,
+      "selector_p_telling": 0.0028469767421483994
+    },
+    "missingness": {
+      "previous_learner_signals": "zeros_with_shared_missing_indicator",
+      "previous_mastery_delta": "zero_with_missing_indicator",
+      "previous_move": "zero_one_hot_with_missing_indicator",
+      "previous_mrb1_scores": "zeros_with_shared_missing_indicator"
+    },
+    "schema_id": "turn_lints_context_v1:S+K+L:fd7363f6eee1",
+    "schema_version": "turn_lints_context_v1",
+    "vector": [
+      0.00024905672762542963,
+      0.996181845664978,
+      0.0007220918778330088,
+      0.0028469767421483994,
+      0.8683494828628041,
+      -0.02776716422336989,
+      0.0,
+      0.003923462576389089,
+      0.8378965314179221,
+      0.3039013783424071,
+      0.0
+    ]
+  },
+  "contextual_ts_reward_scores": {
+    "focus": 0.11189233107970417,
+    "generic": -0.012581782489758312,
+    "probing": 0.042870288656641865,
+    "telling": -0.08301213508048828
+  },
+  "current_response_mrb1": {
+    "Actionability": 0.9485401511192322,
+    "Mistake_Identification": 0.8317047357559204,
+    "Mistake_Location": 0.7601779699325562,
+    "Providing_Guidance": 0.8191916942596436
+  },
+  "decision_source": "turn_lints_posterior_sample",
+  "diagnostic_logged_context": {
+    "available_blocks": [
+      "S",
+      "K",
+      "L",
+      "H",
+      "Q"
+    ],
+    "context_dimension": 22,
+    "enabled_blocks": [
+      "S",
+      "K",
+      "L",
+      "H",
+      "Q"
+    ],
+    "feature_names": [
+      "selector_p_generic",
+      "selector_p_probing",
+      "selector_p_focus",
+      "selector_p_telling",
+      "mastery_before",
+      "previous_mastery_delta",
+      "previous_mastery_delta_missing",
+      "previous_reasoning_probability",
+      "previous_uncertainty_probability",
+      "previous_clarification_probability",
+      "previous_learner_signals_missing",
+      "previous_move_generic",
+      "previous_move_probing",
+      "previous_move_focus",
+      "previous_move_telling",
+      "previous_move_missing",
+      "prior_tutor_turn_count",
+      "previous_mistake_identification",
+      "previous_mistake_location",
+      "previous_providing_guidance",
+      "previous_actionability",
+      "previous_mrb1_missing"
+    ],
+    "feature_values": {
+      "mastery_before": 0.8683494828628041,
+      "previous_actionability": 0.5060994625091553,
+      "previous_clarification_probability": 0.3039013783424071,
+      "previous_learner_signals_missing": 0.0,
+      "previous_mastery_delta": -0.02776716422336989,
+      "previous_mastery_delta_missing": 0.0,
+      "previous_mistake_identification": 0.4747283458709717,
+      "previous_mistake_location": 0.25674721598625183,
+      "previous_move_focus": 0.0,
+      "previous_move_generic": 1.0,
+      "previous_move_missing": 0.0,
+      "previous_move_probing": 0.0,
+      "previous_move_telling": 0.0,
+      "previous_mrb1_missing": 0.0,
+      "previous_providing_guidance": 0.2627355456352234,
+      "previous_reasoning_probability": 0.003923462576389089,
+      "previous_uncertainty_probability": 0.8378965314179221,
+      "prior_tutor_turn_count": 1.0,
+      "selector_p_focus": 0.0007220918778330088,
+      "selector_p_generic": 0.00024905672762542963,
+      "selector_p_probing": 0.996181845664978,
+      "selector_p_telling": 0.0028469767421483994
+    },
+    "missingness": {
+      "previous_learner_signals": "zeros_with_shared_missing_indicator",
+      "previous_mastery_delta": "zero_with_missing_indicator",
+      "previous_move": "zero_one_hot_with_missing_indicator",
+      "previous_mrb1_scores": "zeros_with_shared_missing_indicator"
+    },
+    "schema_id": "turn_lints_context_v1:S+K+L+H+Q:d94e366c42d2",
+    "schema_version": "turn_lints_context_v1",
+    "vector": [
+      0.00024905672762542963,
+      0.996181845664978,
+      0.0007220918778330088,
+      0.0028469767421483994,
+      0.8683494828628041,
+      -0.02776716422336989,
+      0.0,
+      0.003923462576389089,
+      0.8378965314179221,
+      0.3039013783424071,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.4747283458709717,
+      0.25674721598625183,
+      0.2627355456352234,
+      0.5060994625091553,
+      0.0
+    ]
+  },
+  "explicit_learner_agency": {
+    "inferred_learner_state_used": false,
+    "request_category": null,
+    "triggered": false
+  },
+  "full_behavior_probability_vector": {
+    "focus": 0.0007220918778330088,
+    "generic": 0.00024905672762542963,
+    "probing": 0.996181845664978,
+    "telling": 0.0028469767421483994
+  },
+  "hypothetical_arm": null,
+  "hypothetical_is_observed_treatment": false,
+  "md7_raw_probabilities": {
+    "focus": 0.0007220918778330088,
+    "generic": 0.00024905672762542963,
+    "probing": 0.996181845664978,
+    "telling": 0.0028469767421483994
+  },
+  "observation_origin": "live_tutor",
+  "policy_context": {
+    "available_blocks": [
+      "S",
+      "K",
+      "L",
+      "H",
+      "Q"
+    ],
+    "context_dimension": 11,
+    "enabled_blocks": [
+      "S",
+      "K",
+      "L"
+    ],
+    "feature_names": [
+      "selector_p_generic",
+      "selector_p_probing",
+      "selector_p_focus",
+      "selector_p_telling",
+      "mastery_before",
+      "previous_mastery_delta",
+      "previous_mastery_delta_missing",
+      "previous_reasoning_probability",
+      "previous_uncertainty_probability",
+      "previous_clarification_probability",
+      "previous_learner_signals_missing"
+    ],
+    "feature_values": {
+      "mastery_before": 0.8683494828628041,
+      "previous_clarification_probability": 0.3039013783424071,
+      "previous_learner_signals_missing": 0.0,
+      "previous_mastery_delta": -0.02776716422336989,
+      "previous_mastery_delta_missing": 0.0,
+      "previous_reasoning_probability": 0.003923462576389089,
+      "previous_uncertainty_probability": 0.8378965314179221,
+      "selector_p_focus": 0.0007220918778330088,
+      "selector_p_generic": 0.00024905672762542963,
+      "selector_p_probing": 0.996181845664978,
+      "selector_p_telling": 0.0028469767421483994
+    },
+    "missingness": {
+      "previous_learner_signals": "zeros_with_shared_missing_indicator",
+      "previous_mastery_delta": "zero_with_missing_indicator",
+      "previous_move": "zero_one_hot_with_missing_indicator",
+      "previous_mrb1_scores": "zeros_with_shared_missing_indicator"
+    },
+    "schema_id": "turn_lints_context_v1:S+K+L:fd7363f6eee1",
+    "schema_version": "turn_lints_context_v1",
+    "vector": [
+      0.00024905672762542963,
+      0.996181845664978,
+      0.0007220918778330088,
+      0.0028469767421483994,
+      0.8683494828628041,
+      -0.02776716422336989,
+      0.0,
+      0.003923462576389089,
+      0.8378965314179221,
+      0.3039013783424071,
+      0.0
+    ]
+  },
+  "policy_lineage": "direct_disjoint_turn_lints_v1",
+  "policy_mode": "LIVE",
+  "policy_scores": {
+    "focus": 0.11189233107970417,
+    "generic": -0.012581782489758312,
+    "probing": 0.042870288656641865,
+    "telling": -0.08301213508048828
+  },
+  "posterior_initialization_observation": false,
+  "randomized_assignment": false,
+  "real_live_observation": true,
+  "reward_attribution": "actual_treatment_move",
+  "reward_mode": "headroom_normalized",
+  "schema_version": "adaptmath_turn_lints_event_v4",
+  "selected_arm": "focus",
+  "selector_sha256": "ad770256a71efcce7485705099511494e41806b2e29bc3829f9ba8aeaf731cd5",
+  "selector_version": "MD7-R2-TELL-C1 Epoch 2",
+  "shadow_hypothetical_move": null,
+  "shadow_moves_are_observed_treatments": false,
+  "shadow_p0_move": null,
+  "shadow_p1_move": null,
+  "synthetic_initialization": false,
+  "treatment_assignment_source": "turn_lints_posterior_sample",
+  "tutor_response": "To begin solving for x, your goal is to isolate the term that contains x. What operation could you use to remove the constant term from the left side of the equation?"
+}
