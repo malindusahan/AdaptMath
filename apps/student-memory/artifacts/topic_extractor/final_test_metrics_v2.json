@@ -1,0 +1,1015 @@
+{
+  "model_name": "Fine-Tuned MiniLM v2 (Merged 37.5K)",
+  "base_architecture": "sentence-transformers/all-MiniLM-L6-v2",
+  "loss_function": "MultipleNegativesRankingLoss",
+  "total_training_samples": 29955,
+  "total_validation_samples": 3717,
+  "total_test_samples": 3827,
+  "benchmark": {
+    "test_accuracy": 0.9879801411026914,
+    "test_top3_accuracy": 0.9994773974392475,
+    "test_macro_f1": 0.9852781003875881,
+    "test_weighted_f1": 0.988143160612924,
+    "realworld_slice_accuracy": 1.0,
+    "realworld_slice_top3_accuracy": 1.0,
+    "v1_regression_test_accuracy": 0.9782270606531882
+  },
+  "recommended_threshold": 0.25,
+  "top_confused_pairs": [
+    [
+      [
+        "math :: number sense & operations :: estimation",
+        "math :: number sense & operations :: rounding"
+      ],
+      6
+    ],
+    [
+      [
+        "math :: number sense & operations :: absolute value",
+        "math :: number sense & operations :: absolute value (advanced)"
+      ],
+      5
+    ],
+    [
+      [
+        "math :: number sense & operations :: order of operations +,-,/,* () positive reals",
+        "math :: number sense & operations :: order of operations all"
+      ],
+      4
+    ],
+    [
+      [
+        "math :: geometry & measurement :: area rectangle",
+        "math :: geometry & measurement :: reading a ruler or scale"
+      ],
+      3
+    ],
+    [
+      [
+        "math :: algebra & functions :: parts of a polyomial, terms, coefficient, monomial, exponent, variable",
+        "math :: algebra & functions :: polynomial factors"
+      ],
+      3
+    ],
+    [
+      [
+        "math :: number sense & operations :: ordering real numbers",
+        "math :: number sense & operations :: ordering integers"
+      ],
+      3
+    ],
+    [
+      [
+        "math :: proportional reasoning & percents :: finding percents",
+        "math :: proportional reasoning & percents :: percent of"
+      ],
+      2
+    ],
+    [
+      [
+        "math :: number sense & operations :: ordering integers",
+        "math :: number sense & operations :: ordering real numbers"
+      ],
+      2
+    ],
+    [
+      [
+        "math :: geometry & measurement :: volume rectangular prism",
+        "math :: geometry & measurement :: reading a ruler or scale"
+      ],
+      2
+    ],
+    [
+      [
+        "math :: number sense & operations :: order of operations all",
+        "math :: number sense & operations :: order of operations +,-,/,* () positive reals"
+      ],
+      2
+    ],
+    [
+      [
+        "math :: proportional reasoning & percents :: percent of",
+        "math :: proportional reasoning & percents :: finding percents"
+      ],
+      2
+    ],
+    [
+      [
+        "math :: geometry & measurement :: area rectangle",
+        "math :: geometry & measurement :: volume rectangular prism"
+      ],
+      1
+    ],
+    [
+      [
+        "math :: statistics & probability :: venn diagram",
+        "math :: statistics & probability :: probability of two distinct events"
+      ],
+      1
+    ],
+    [
+      [
+        "math :: number sense & operations :: subtraction whole numbers",
+        "math :: number sense & operations :: addition and subtraction integers"
+      ],
+      1
+    ],
+    [
+      [
+        "math :: number sense & operations :: ordering integers",
+        "math :: number sense & operations :: number line"
+      ],
+      1
+    ]
+  ],
+  "per_skill_metrics": [
+    {
+      "canonical_name": "math :: algebra & functions :: algebraic simplification",
+      "display_name": "Algebraic Simplification",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: algebra & functions :: algebraic solving",
+      "display_name": "Algebraic Solving",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: algebra & functions :: choose an equation from given information",
+      "display_name": "Choose an Equation from Given Information",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: algebra & functions :: distributive property",
+      "display_name": "Distributive Property",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: algebra & functions :: equation solving more than two steps",
+      "display_name": "Equation Solving More Than Two Steps",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: algebra & functions :: equation solving two or fewer steps",
+      "display_name": "Equation Solving Two or Fewer Steps",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: algebra & functions :: finding slope from equation",
+      "display_name": "Finding Slope From Equation",
+      "precision": 0.9743589743589743,
+      "recall": 1.0,
+      "f1": 0.987012987012987,
+      "test_support": 38
+    },
+    {
+      "canonical_name": "math :: algebra & functions :: finding slope from ordered pairs",
+      "display_name": "Finding Slope from Ordered Pairs",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 38
+    },
+    {
+      "canonical_name": "math :: algebra & functions :: finding slope from situation",
+      "display_name": "Finding Slope From Situation",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 38
+    },
+    {
+      "canonical_name": "math :: algebra & functions :: intercept",
+      "display_name": "Intercept",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: algebra & functions :: linear equations",
+      "display_name": "Linear Equations",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 39
+    },
+    {
+      "canonical_name": "math :: algebra & functions :: parts of a polyomial, terms, coefficient, monomial, exponent, variable",
+      "display_name": "Parts of a Polyomial, Terms, Coefficient, Monomial, Exponent, Variable",
+      "precision": 1.0,
+      "recall": 0.9117647058823529,
+      "f1": 0.9538461538461539,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: algebra & functions :: pattern finding",
+      "display_name": "Pattern Finding",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: algebra & functions :: polynomial factors",
+      "display_name": "Polynomial Factors",
+      "precision": 0.918918918918919,
+      "recall": 1.0,
+      "f1": 0.9577464788732394,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: algebra & functions :: quadratic formula to solve quadratic equation",
+      "display_name": "Quadratic Formula to Solve Quadratic Equation",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: algebra & functions :: recognize linear pattern",
+      "display_name": "Recognize Linear Pattern",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: algebra & functions :: recognize quadratic pattern",
+      "display_name": "Recognize Quadratic Pattern",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: algebra & functions :: simplifying expressions positive exponents",
+      "display_name": "Simplifying Expressions positive exponents",
+      "precision": 0.9444444444444444,
+      "recall": 1.0,
+      "f1": 0.9714285714285714,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: algebra & functions :: slope",
+      "display_name": "Slope",
+      "precision": 1.0,
+      "recall": 0.9743589743589743,
+      "f1": 0.987012987012987,
+      "test_support": 39
+    },
+    {
+      "canonical_name": "math :: algebra & functions :: solving for a variable",
+      "display_name": "Solving for a variable",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: algebra & functions :: solving inequalities",
+      "display_name": "Solving Inequalities",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: algebra & functions :: solving systems of linear equations",
+      "display_name": "Solving Systems of Linear Equations",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 39
+    },
+    {
+      "canonical_name": "math :: algebra & functions :: solving systems of linear equations by graphing",
+      "display_name": "Solving Systems of Linear Equations by Graphing",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 38
+    },
+    {
+      "canonical_name": "math :: algebra & functions :: write linear equation from graph",
+      "display_name": "Write Linear Equation from Graph",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: algebra & functions :: write linear equation from ordered pairs",
+      "display_name": "Write Linear Equation from Ordered Pairs",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: algebra & functions :: write linear equation from situation",
+      "display_name": "Write Linear Equation from Situation",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: geometry & measurement :: angles - obtuse, acute, and right",
+      "display_name": "Angles - Obtuse, Acute, and Right",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: geometry & measurement :: angles on parallel lines cut by a transversal",
+      "display_name": "Angles on Parallel Lines Cut by a Transversal",
+      "precision": 1.0,
+      "recall": 0.9714285714285714,
+      "f1": 0.9855072463768116,
+      "test_support": 35
+    },
+    {
+      "canonical_name": "math :: geometry & measurement :: area circle",
+      "display_name": "Area Circle",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 35
+    },
+    {
+      "canonical_name": "math :: geometry & measurement :: area irregular figure",
+      "display_name": "Area Irregular Figure",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: geometry & measurement :: area parallelogram",
+      "display_name": "Area Parallelogram",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: geometry & measurement :: area rectangle",
+      "display_name": "Area Rectangle",
+      "precision": 0.967741935483871,
+      "recall": 0.8823529411764706,
+      "f1": 0.9230769230769231,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: geometry & measurement :: area trapezoid",
+      "display_name": "Area Trapezoid",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: geometry & measurement :: area triangle",
+      "display_name": "Area Triangle",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: geometry & measurement :: calculations with similar figures",
+      "display_name": "Calculations with Similar Figures",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: geometry & measurement :: circumference",
+      "display_name": "Circumference",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 35
+    },
+    {
+      "canonical_name": "math :: geometry & measurement :: complementary and supplementary angles",
+      "display_name": "Complementary and Supplementary Angles",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 35
+    },
+    {
+      "canonical_name": "math :: geometry & measurement :: congruence",
+      "display_name": "Congruence",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 35
+    },
+    {
+      "canonical_name": "math :: geometry & measurement :: effect of changing dimensions of a shape prportionally",
+      "display_name": "Effect of Changing Dimensions of a Shape Prportionally",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: geometry & measurement :: interior angles figures with more than 3 sides",
+      "display_name": "Interior Angles Figures with More than 3 Sides",
+      "precision": 0.9722222222222222,
+      "recall": 1.0,
+      "f1": 0.9859154929577465,
+      "test_support": 35
+    },
+    {
+      "canonical_name": "math :: geometry & measurement :: interior angles triangle",
+      "display_name": "Interior Angles Triangle",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 35
+    },
+    {
+      "canonical_name": "math :: geometry & measurement :: midpoint",
+      "display_name": "Midpoint",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: geometry & measurement :: nets of 3d figures",
+      "display_name": "Nets of 3D Figures",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: geometry & measurement :: perimeter of a polygon",
+      "display_name": "Perimeter of a Polygon",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 35
+    },
+    {
+      "canonical_name": "math :: geometry & measurement :: pythagorean theorem",
+      "display_name": "Pythagorean Theorem",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 39
+    },
+    {
+      "canonical_name": "math :: geometry & measurement :: reading a ruler or scale",
+      "display_name": "Reading a Ruler or Scale",
+      "precision": 0.8717948717948718,
+      "recall": 1.0,
+      "f1": 0.9315068493150684,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: geometry & measurement :: reflection",
+      "display_name": "Reflection",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: geometry & measurement :: rotations",
+      "display_name": "Rotations",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: geometry & measurement :: surface area cylinder",
+      "display_name": "Surface Area Cylinder",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: geometry & measurement :: surface area rectangular prism",
+      "display_name": "Surface Area Rectangular Prism",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: geometry & measurement :: translations",
+      "display_name": "Translations",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: geometry & measurement :: unit conversion within a system",
+      "display_name": "Unit Conversion Within a System",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: geometry & measurement :: volume cylinder",
+      "display_name": "Volume Cylinder",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: geometry & measurement :: volume rectangular prism",
+      "display_name": "Volume Rectangular Prism",
+      "precision": 0.96875,
+      "recall": 0.9117647058823529,
+      "f1": 0.9393939393939394,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: geometry & measurement :: volume sphere",
+      "display_name": "Volume Sphere",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: number sense & operations :: absolute value",
+      "display_name": "Absolute Value",
+      "precision": 1.0,
+      "recall": 0.8529411764705882,
+      "f1": 0.9206349206349206,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: number sense & operations :: absolute value (advanced)",
+      "display_name": "Absolute Value (Advanced)",
+      "precision": 0.4444444444444444,
+      "recall": 1.0,
+      "f1": 0.6153846153846154,
+      "test_support": 4
+    },
+    {
+      "canonical_name": "math :: number sense & operations :: addition and subtraction fractions",
+      "display_name": "Addition and Subtraction Fractions",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: number sense & operations :: addition and subtraction integers",
+      "display_name": "Addition and Subtraction Integers",
+      "precision": 0.9714285714285714,
+      "recall": 1.0,
+      "f1": 0.9855072463768116,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: number sense & operations :: addition and subtraction positive decimals",
+      "display_name": "Addition and Subtraction Positive Decimals",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: number sense & operations :: addition whole numbers",
+      "display_name": "Addition Whole Numbers",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 35
+    },
+    {
+      "canonical_name": "math :: number sense & operations :: computation with real numbers",
+      "display_name": "Computation with Real Numbers",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: number sense & operations :: divisibility rules",
+      "display_name": "Divisibility Rules",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: number sense & operations :: division fractions",
+      "display_name": "Division Fractions",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: number sense & operations :: equivalent fractions",
+      "display_name": "Equivalent Fractions",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: number sense & operations :: estimation",
+      "display_name": "Estimation",
+      "precision": 1.0,
+      "recall": 0.8235294117647058,
+      "f1": 0.9032258064516129,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: number sense & operations :: exponents",
+      "display_name": "Exponents",
+      "precision": 1.0,
+      "recall": 0.9705882352941176,
+      "f1": 0.9850746268656716,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: number sense & operations :: fraction of",
+      "display_name": "Fraction Of",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: number sense & operations :: greatest common factor",
+      "display_name": "Greatest Common Factor",
+      "precision": 0.975609756097561,
+      "recall": 1.0,
+      "f1": 0.9876543209876543,
+      "test_support": 40
+    },
+    {
+      "canonical_name": "math :: number sense & operations :: least common multiple",
+      "display_name": "Least Common Multiple",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 36
+    },
+    {
+      "canonical_name": "math :: number sense & operations :: multiplication and division integers",
+      "display_name": "Multiplication and Division Integers",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: number sense & operations :: multiplication and division positive decimals",
+      "display_name": "Multiplication and Division Positive Decimals",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: number sense & operations :: multiplication fractions",
+      "display_name": "Multiplication Fractions",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: number sense & operations :: multiplication whole numbers",
+      "display_name": "Multiplication Whole Numbers",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 35
+    },
+    {
+      "canonical_name": "math :: number sense & operations :: number line",
+      "display_name": "Number Line",
+      "precision": 0.9722222222222222,
+      "recall": 1.0,
+      "f1": 0.9859154929577465,
+      "test_support": 35
+    },
+    {
+      "canonical_name": "math :: number sense & operations :: order of operations +,-,/,* () positive reals",
+      "display_name": "Order of Operations +,-,/,* () positive reals",
+      "precision": 0.9444444444444444,
+      "recall": 0.8947368421052632,
+      "f1": 0.918918918918919,
+      "test_support": 38
+    },
+    {
+      "canonical_name": "math :: number sense & operations :: order of operations all",
+      "display_name": "Order of Operations All",
+      "precision": 0.9090909090909091,
+      "recall": 0.9302325581395349,
+      "f1": 0.9195402298850575,
+      "test_support": 43
+    },
+    {
+      "canonical_name": "math :: number sense & operations :: ordering fractions",
+      "display_name": "Ordering Fractions",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: number sense & operations :: ordering integers",
+      "display_name": "Ordering Integers",
+      "precision": 0.9117647058823529,
+      "recall": 0.9117647058823529,
+      "f1": 0.9117647058823529,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: number sense & operations :: ordering positive decimals",
+      "display_name": "Ordering Positive Decimals",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: number sense & operations :: ordering real numbers",
+      "display_name": "Ordering Real Numbers",
+      "precision": 0.9393939393939394,
+      "recall": 0.9117647058823529,
+      "f1": 0.9253731343283582,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: number sense & operations :: prime number",
+      "display_name": "Prime Number",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: number sense & operations :: rounding",
+      "display_name": "Rounding",
+      "precision": 0.85,
+      "recall": 1.0,
+      "f1": 0.918918918918919,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: number sense & operations :: scientific notation",
+      "display_name": "Scientific Notation",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: number sense & operations :: square root",
+      "display_name": "Square Root",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: number sense & operations :: subtraction whole numbers",
+      "display_name": "Subtraction Whole Numbers",
+      "precision": 1.0,
+      "recall": 0.9714285714285714,
+      "f1": 0.9855072463768116,
+      "test_support": 35
+    },
+    {
+      "canonical_name": "math :: proportional reasoning & percents :: conversion of fraction decimals percents",
+      "display_name": "Conversion of Fraction Decimals Percents",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: proportional reasoning & percents :: finding percents",
+      "display_name": "Finding Percents",
+      "precision": 0.9393939393939394,
+      "recall": 0.9117647058823529,
+      "f1": 0.9253731343283582,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: proportional reasoning & percents :: percent discount",
+      "display_name": "Percent Discount",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: proportional reasoning & percents :: percent of",
+      "display_name": "Percent Of",
+      "precision": 0.9411764705882353,
+      "recall": 0.9411764705882353,
+      "f1": 0.9411764705882353,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: proportional reasoning & percents :: percents",
+      "display_name": "Percents",
+      "precision": 0.9714285714285714,
+      "recall": 1.0,
+      "f1": 0.9855072463768116,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: proportional reasoning & percents :: proportion",
+      "display_name": "Proportion",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: proportional reasoning & percents :: rate",
+      "display_name": "Rate",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: proportional reasoning & percents :: scale factor",
+      "display_name": "Scale Factor",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: proportional reasoning & percents :: unit rate",
+      "display_name": "Unit Rate",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: statistics & probability :: box and whisker",
+      "display_name": "Box and Whisker",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 35
+    },
+    {
+      "canonical_name": "math :: statistics & probability :: circle graph",
+      "display_name": "Circle Graph",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 35
+    },
+    {
+      "canonical_name": "math :: statistics & probability :: counting methods",
+      "display_name": "Counting Methods",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 35
+    },
+    {
+      "canonical_name": "math :: statistics & probability :: d.4.8-understanding-concept-of-probabilities",
+      "display_name": "D.4.8-understanding-concept-of-probabilities",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: statistics & probability :: histogram as table or graph",
+      "display_name": "Histogram as Table or Graph",
+      "precision": 1.0,
+      "recall": 0.9714285714285714,
+      "f1": 0.9855072463768116,
+      "test_support": 35
+    },
+    {
+      "canonical_name": "math :: statistics & probability :: interpreting coordinate graphs",
+      "display_name": "Interpreting Coordinate Graphs",
+      "precision": 0.9714285714285714,
+      "recall": 1.0,
+      "f1": 0.9855072463768116,
+      "test_support": 34
+    },
+    {
+      "canonical_name": "math :: statistics & probability :: mean",
+      "display_name": "Mean",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 35
+    },
+    {
+      "canonical_name": "math :: statistics & probability :: median",
+      "display_name": "Median",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 35
+    },
+    {
+      "canonical_name": "math :: statistics & probability :: mode",
+      "display_name": "Mode",
+      "precision": 1.0,
+      "recall": 0.9714285714285714,
+      "f1": 0.9855072463768116,
+      "test_support": 35
+    },
+    {
+      "canonical_name": "math :: statistics & probability :: probability of a single event",
+      "display_name": "Probability of a Single Event",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 35
+    },
+    {
+      "canonical_name": "math :: statistics & probability :: probability of two distinct events",
+      "display_name": "Probability of Two Distinct Events",
+      "precision": 0.9722222222222222,
+      "recall": 1.0,
+      "f1": 0.9859154929577465,
+      "test_support": 35
+    },
+    {
+      "canonical_name": "math :: statistics & probability :: range",
+      "display_name": "Range",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 35
+    },
+    {
+      "canonical_name": "math :: statistics & probability :: scatter plot",
+      "display_name": "Scatter Plot",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 35
+    },
+    {
+      "canonical_name": "math :: statistics & probability :: stem and leaf plot",
+      "display_name": "Stem and Leaf Plot",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 35
+    },
+    {
+      "canonical_name": "math :: statistics & probability :: table",
+      "display_name": "Table",
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "test_support": 35
+    },
+    {
+      "canonical_name": "math :: statistics & probability :: venn diagram",
+      "display_name": "Venn Diagram",
+      "precision": 1.0,
+      "recall": 0.9714285714285714,
+      "f1": 0.9855072463768116,
+      "test_support": 35
+    }
+  ]
+}
