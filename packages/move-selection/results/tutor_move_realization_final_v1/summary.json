@@ -1,0 +1,22 @@
+{
+  "cases_per_move": {
+    "focus": 10,
+    "generic": 10,
+    "probing": 10,
+    "telling": 10
+  },
+  "evidence_scope": "deterministic contract/integration evidence; not learner effectiveness",
+  "external_llm_calls": 0,
+  "failed_cases": 0,
+  "generated_at": "2026-08-29T04:23:57.878718Z",
+  "model_retraining": 0,
+  "passed_per_move": {
+    "focus": 10,
+    "generic": 10,
+    "probing": 10,
+    "telling": 10
+  },
+  "policy_selection_changes": 0,
+  "schema_version": "adaptmath_tutor_move_realization_final_v1",
+  "total_cases": 40
+}
