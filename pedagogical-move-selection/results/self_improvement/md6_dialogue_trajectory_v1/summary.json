@@ -1,0 +1,107 @@
+{
+  "audit_name": "md6_dialogue_trajectory_v1",
+  "purpose": "Describe how frozen MD6 probabilities evolve across one cumulative tutoring dialogue and four matched preceding-teacher-message variants.",
+  "trajectory_summary": {
+    "argmax_sequence": [
+      "probing",
+      "probing",
+      "probing",
+      "probing",
+      "probing",
+      "telling"
+    ],
+    "argmax_changes_at_any_point": true,
+    "first_checkpoint_different_from_checkpoint_1": 6,
+    "checkpoint_1_to_6_change": {
+      "probing": -0.44686661660671234,
+      "focus": 0.020494982600212097,
+      "telling": 0.2902284562587738
+    },
+    "alternative_available_checkpoint_count": 0
+  },
+  "teacher_history_control_deltas_relative_to_generic": [
+    {
+      "teacher_variant": "PROBING",
+      "delta_p_generic": -0.010437212884426117,
+      "delta_p_probing": 0.03063023090362549,
+      "delta_p_focus": 0.013499781489372253,
+      "delta_p_telling": -0.03369288146495819
+    },
+    {
+      "teacher_variant": "FOCUS",
+      "delta_p_generic": 0.007091544568538666,
+      "delta_p_probing": 0.03714221715927124,
+      "delta_p_focus": -0.010835066437721252,
+      "delta_p_telling": -0.03339873254299164
+    },
+    {
+      "teacher_variant": "TELLING",
+      "delta_p_generic": 0.0074891597032547,
+      "delta_p_probing": -0.028953969478607178,
+      "delta_p_focus": -0.005221128463745117,
+      "delta_p_telling": 0.026685908436775208
+    }
+  ],
+  "validation_assertions": [
+    {
+      "assertion": "exactly 6 trajectory checkpoints",
+      "status": "PASS"
+    },
+    {
+      "assertion": "trajectory histories are cumulative",
+      "status": "PASS"
+    },
+    {
+      "assertion": "trajectory history length strictly increases",
+      "status": "PASS"
+    },
+    {
+      "assertion": "each checkpoint ends with the specified Student turn",
+      "status": "PASS"
+    },
+    {
+      "assertion": "exactly 4 matched teacher-history variants",
+      "status": "PASS"
+    },
+    {
+      "assertion": "problem is identical in all control variants",
+      "status": "PASS"
+    },
+    {
+      "assertion": "control common prefix is identical",
+      "status": "PASS"
+    },
+    {
+      "assertion": "final student text is exactly identical across controls",
+      "status": "PASS"
+    },
+    {
+      "assertion": "only the manipulated Teacher utterance differs after the prefix",
+      "status": "PASS"
+    },
+    {
+      "assertion": "6 trajectory and 4 control predictions produced",
+      "status": "PASS"
+    },
+    {
+      "assertion": "canonical move order unchanged",
+      "status": "PASS"
+    },
+    {
+      "assertion": "gap threshold equals 0.10",
+      "status": "PASS"
+    },
+    {
+      "assertion": "all probabilities are finite and within [0,1]",
+      "status": "PASS"
+    },
+    {
+      "assertion": "all probability vectors sum approximately to 1",
+      "status": "PASS"
+    },
+    {
+      "assertion": "baseline is always eligible",
+      "status": "PASS"
+    }
+  ]
+}

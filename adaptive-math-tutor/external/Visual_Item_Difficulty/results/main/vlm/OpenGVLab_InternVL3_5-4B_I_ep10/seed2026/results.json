@@ -1,0 +1,91 @@
+{
+  "mode": "final",
+  "model": "OpenGVLab/InternVL3_5-4B",
+  "family": "internvl",
+  "route": "I",
+  "config_id": "r8_lr5e-05_mse",
+  "seed": 2026,
+  "epochs": 10,
+  "provenance": {
+    "timestamp": "2026-07-25T11:51:28.322429",
+    "git_commit": "051943d6ea6b53c4966e6e1122101a85592a5b13",
+    "split_sha256": "5308b5da23248bab12ef6b0698d2445faba296a9c44abdf9ea0889ce260eca79",
+    "hostname": "internal-cluster-node",
+    "cuda_visible": "0",
+    "versions": {
+      "torch": "2.6.0+cu124",
+      "transformers": "5.12.1",
+      "peft": "0.19.1"
+    },
+    "args": {
+      "model_name": "OpenGVLab/InternVL3_5-4B",
+      "input_mode": "image_only",
+      "lora_rs": "8,16,32",
+      "lrs": "2e-4,5e-5",
+      "losses": "mse,huber",
+      "batch_size": 1,
+      "grad_accum": 4,
+      "max_epochs": 10,
+      "patience": 3,
+      "val_frac": 0.2,
+      "seed": 2026,
+      "smoke": false,
+      "out_suffix": "_ep10",
+      "text_field": "text_vd",
+      "run_mode": "final",
+      "folds": "0,1,2,3,4",
+      "lora_r": 8,
+      "lr": 5e-05,
+      "loss": "mse",
+      "epochs": 10
+    }
+  },
+  "epoch_history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.6731271606707196
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.5205479153381255
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.44057007914055596
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.33331964447891566
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.278168259884043
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.21834666978138875
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.16496095514486753
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.13413070582668732
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.13144007890337792
+    },
+    {
+      "epoch": 10,
+      "train_loss": 0.12229555621226554
+    }
+  ],
+  "test_metrics": {
+    "rmse": 0.5518580787447741,
+    "mae": 0.4459103089756794,
+    "pearson": 0.7404392645842243,
+    "spearman": 0.7335537710596756
+  }
+}

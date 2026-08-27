@@ -1,0 +1,206 @@
+{
+  "base_experiment": "context_ablation_v1",
+  "base_experiment_manifest_sha256": "509193f02a815dfa658b0ccd13e8a03324733ab8827fdb379170229785065886",
+  "base_seed": 20260823,
+  "bootstrap_method": "Nonparametric seed-cluster bootstrap. Seeds, not state rows or state-mastery rows, are resampled; percentile 95% intervals.",
+  "bootstrap_resamples": 5000,
+  "bootstrap_seed": 620241,
+  "context_ablation_py_sha256": "b04bc922e6f5a728547f5ec22a698c1e8c3d0f794f5217acdd7d31ead40a01c5",
+  "deterministic_core_result_hashes": {
+    "arm_ranges_internal_logical_sha256": "7a644a8c21d60424346652c93eb2a5e53feb55eed1f4227056d7f0c16f0ee560",
+    "raw_mastery_sweep_logical_sha256": "a8222c632c746313ce1d0e8056b50d305e50f83d2abe6b3e864cc9c9927e7e81",
+    "state_level_summary_logical_sha256": "840fe37cf376ca8a2ef103642bc2c4a855006db269ea95ebfb74ceaec60c3c2f"
+  },
+  "diagnostic_name": "e2_mastery_signal_diagnostic_v1",
+  "environment": "E2_MASTERY",
+  "environment_index": 2,
+  "environment_reconstruction_strategy": "Direct imports of context_ablation.generate_hidden_environment, generate_exogenous_world, hidden_arm_utility, and the canonical eligible_arms function. For each seed, generate 67 unchanged three-turn attempts and flatten/take the first 200 MD6 draws. Use an empty quality placeholder, which is ignored exactly by E2.",
+  "gap_threshold": 0.1,
+  "mastery_blind_oracle": "Canonical-order argmax among current eligible arms of utility averaged uniformly over the same 21-point mastery grid.",
+  "mastery_grid": [
+    0.0,
+    0.05,
+    0.1,
+    0.15000000000000002,
+    0.2,
+    0.25,
+    0.30000000000000004,
+    0.35000000000000003,
+    0.4,
+    0.45,
+    0.5,
+    0.55,
+    0.6000000000000001,
+    0.65,
+    0.7000000000000001,
+    0.75,
+    0.8,
+    0.8500000000000001,
+    0.9,
+    0.9500000000000001,
+    1.0
+  ],
+  "matplotlib_version": "3.11.1",
+  "number_of_seeds": 50,
+  "numpy_version": "2.5.2",
+  "output_file_sha256": {
+    "figures/mastery_information_advantage.pdf": "435579a52606d298c41345e95a17d73c09e1d8307425462a349dda56d9689b3e",
+    "figures/mastery_information_advantage.png": "559699cbc3f22f2233ea094021e1f2e356f11e0a776494a89b192dbf9a9218b3",
+    "figures/mastery_signal_by_eligible_count.pdf": "d07f0ad727f8d10f0013c456681fdab512edffb76a3833f3c6389538b2a63770",
+    "figures/mastery_signal_by_eligible_count.png": "64e6d5dc23d0f832b0a21dbbb38c625cabe2a19bb638acb67b754b287cf4ee98",
+    "figures/mastery_utility_range.pdf": "e7c51a7785888d853b24b263f1f70ea5123bbd1abffb13ddd2d2bc8ff754b867",
+    "figures/mastery_utility_range.png": "88d9fba52c401231545b0c333b326e1fa8a4ef3d985a6f24635a16c5e91e5edb",
+    "figures/optimal_arm_by_mastery.pdf": "22e12f6bd3af67bdd6dc39ed9cefdf922ad802446e1f27adacdc821f74b120e9",
+    "figures/optimal_arm_by_mastery.png": "1e8de1bad8952f6ba04a65949488c2c5af2280683094b104fecc6077137e0777",
+    "figures/representative_mastery_sweeps.pdf": "54979bb239456bc679fee01429b3c28808dab7b9bdb0ee4d2ee490b5fbc028c1",
+    "figures/representative_mastery_sweeps.png": "bf9d559bde7ec48da5e53f5f2303400d6312115a372ec30876c195528582fb26",
+    "raw_mastery_sweep.csv.gz": "dddeb86f994dd5ab929855395fd4486706696cf475071821308afb1bbcd9bd13",
+    "state_level_summary.csv": "f6fbde3a575240f22a56998766d39f502ba03ab55c3ba0f621eb52a18ab2e1ee",
+    "summary_statistics.csv": "593c644a9bff26f573d0d192a98b394854a996f7b7d2355aec9f2924bfc45708"
+  },
+  "pandas_version": "3.0.5",
+  "python_version": "3.12.7",
+  "relevant_base_configuration": {
+    "canonical_source_sha256": {
+      "conservative_overlay.py": "a920b73460890bc143d9482ce5d03d898114e875ef8dc69520f7dfc7692329d6",
+      "lints_policy.py": "c2914ded0b164c55572b22165a73170b479bb38f2045ea5897fe786076aca699",
+      "reward.py": "92b91769e558bc3178e5aca23af4fbddc28762eb93b9e9fc40eff96d178c07fc",
+      "turn_context_builder.py": "d752a62c0f1fe94217c41cdff3fecd4ad02f93f1953d221ebc1624f2fb961de8",
+      "turn_level_controller.py": "078190cecaf9e05dfac383ad4fd6e7d7208d56a881d407852b25902bcfecd009"
+    },
+    "hidden_utility_generator": {
+      "arm_intercept_bounds": [
+        -0.15,
+        0.15
+      ],
+      "e4_non_circularity": "Bounded arm-specific parameters, sparse zero coefficients, tanh nonlinearity, and weak mastery/quality interactions; parameters are generated before policy outcomes.",
+      "form": "0.5 + 0.24*tanh(latent_arm_score)",
+      "interaction_coefficient_bounds": [
+        -0.3,
+        0.3
+      ],
+      "mastery_coefficient_bounds": [
+        -0.55,
+        0.55
+      ],
+      "md6_coefficient_bounds": [
+        -0.75,
+        0.75
+      ],
+      "quality_coefficient_bounds": [
+        -0.48,
+        0.48
+      ],
+      "sparsity": "Deterministic seed-index masks set selected mastery, quality, and interaction coefficients to zero."
+    },
+    "md6_generator": "Dirichlet(alpha=[4.5,5.0,5.5,6.0]) independently per turn.",
+    "rng_strategy": {
+      "base_seed": 20260823,
+      "coefficient_stream": "Independent per environment and numerical seed.",
+      "construction": "NumPy SeedSequence with explicit stream components.",
+      "exogenous_streams": "Independent spawned MD6, mastery, MRB1 attempt, MRB1 turn, and evaluator streams, shared exactly across C0-C4.",
+      "policy_streams": "Independent deterministic LinTS stream per environment, seed, and context condition; posterior sampling advances once per turn."
+    }
+  },
+  "representative_sweep_selection": "First state_index with eligible_arm_count > 1, independently for predeclared seeds [0,10,20,30,40].",
+  "reused_function_source_sha256": {
+    "eligible_arms": "53d933f75585b8e9cb9d4f59b9bf4a8740ab1376b20d7e31040434d1a795cc22",
+    "generate_exogenous_world": "82a8d419f01b6d12caa7dbbf471238c24bb4bb993096d34f5b50fc1fdd245162",
+    "generate_hidden_environment": "c17d3b7010d1df1dd7482a5b7b1dccca389d2754f349c8edec28ca4f41959240",
+    "hidden_arm_utility": "c01bc09fe469c2b1c1398464060ccb0bba51cc7e744b5219d8b4541b1a0bb6f3"
+  },
+  "sanity_checks": [
+    {
+      "check": "all eligible-arm utilities are finite and in [0,1]",
+      "status": "PASS"
+    },
+    {
+      "check": "eligible arms match the canonical 0.10 mask",
+      "status": "PASS"
+    },
+    {
+      "check": "mastery-aware oracle is always eligible",
+      "status": "PASS"
+    },
+    {
+      "check": "mastery-blind oracle is always eligible",
+      "status": "PASS"
+    },
+    {
+      "check": "mastery-information advantage is nonnegative",
+      "status": "PASS"
+    },
+    {
+      "check": "changing mastery does not change MD6 probabilities",
+      "status": "PASS"
+    },
+    {
+      "check": "changing mastery does not change the eligible-arm set",
+      "status": "PASS"
+    },
+    {
+      "check": "prescribed seed/state/mastery-grid row counts",
+      "status": "PASS"
+    },
+    {
+      "check": "deterministic in-memory rerun has identical logical result hashes",
+      "status": "PASS"
+    }
+  ],
+  "seed_list": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49
+  ],
+  "states_per_seed": 200,
+  "timestamp": "2026-08-23T15:34:53.783922+00:00",
+  "timestamp_timezone": "UTC",
+  "total_base_states": 10000
+}

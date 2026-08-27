@@ -1,0 +1,61 @@
+{
+  "experiment": "SI2-C_final_answer_anchor",
+  "transitions": 12498,
+  "flag_counts": {
+    "reply_mentions_answer": 3056,
+    "reply_final_answer_correct": 1692,
+    "first_final_answer_attainment": 1373,
+    "autonomous_final_attainment": 1105,
+    "ultra_strict_autonomous": 911
+  },
+  "by_outcome": {
+    "clean_success": {
+      "transitions": 7889,
+      "first_final_answer_attainment": 1114,
+      "autonomous_final_attainment": 970,
+      "ultra_strict_autonomous": 816
+    },
+    "revealed_success": {
+      "transitions": 2438,
+      "first_final_answer_attainment": 199,
+      "autonomous_final_attainment": 105,
+      "ultra_strict_autonomous": 76
+    },
+    "failure": {
+      "transitions": 2171,
+      "first_final_answer_attainment": 60,
+      "autonomous_final_attainment": 30,
+      "ultra_strict_autonomous": 19
+    }
+  },
+  "anchor_precision": {
+    "autonomous_final_attainment": {
+      "n": 1105,
+      "clean": 970,
+      "revealed": 105,
+      "failure": 30,
+      "clean_precision": 0.8778280542986425
+    },
+    "ultra_strict_autonomous": {
+      "n": 911,
+      "clean": 816,
+      "revealed": 76,
+      "failure": 19,
+      "clean_precision": 0.8957189901207464
+    }
+  },
+  "autonomous_move_counts": {
+    "probing": 248,
+    "telling": 226,
+    "focus": 570,
+    "generic": 61
+  },
+  "removed_by_final_answer_requirement": {
+    "count": 1364,
+    "outcomes": {
+      "revealed_success": 361,
+      "failure": 307,
+      "clean_success": 696
+    }
+  }
+}

@@ -1,0 +1,1107 @@
+﻿
+============================================================
+src/self_improvement/reward.py
+============================================================
+"""Final-candidate success-only primary reward implementation.
+
+The reward is one only for a completed-attempt evaluator score of three and is
+zero for scores zero through two. MRB1 is context, not reward, while mastery
+values remain separately available as learner-state outcomes and metadata.
+"""
+
+from __future__ import annotations
+
+
+def primary_reward(evaluator_score: int) -> float:
+    """Return the completed-attempt evaluator outcome on a [0, 1] scale.
+
+    ``evaluator_score`` must be a non-boolean integer in ``{0, 1, 2, 3}``.
+    The score becomes available only after the tutoring attempt is complete.
+    Current context, actions, mastery, MD6 probabilities, and MRB1 scores are
+    deliberately absent from this API.
+
+    Raises:
+        TypeError: If the score is not an integer rating or is a boolean.
+        ValueError: If the integer is outside ``{0, 1, 2, 3}``.
+    """
+
+    if type(evaluator_score) is not int:
+        raise TypeError(
+            "evaluator_score must be a non-boolean integer in {0, 1, 2, 3}; "
+            f"got {evaluator_score!r}."
+        )
+
+    if evaluator_score not in {0, 1, 2, 3}:
+        raise ValueError(
+            "evaluator_score must be one of {0, 1, 2, 3}; "
+            f"got {evaluator_score}."
+        )
+
+    return float(evaluator_score == 3)
+
+
+__all__ = ("primary_reward",)
+
+
+============================================================
+src/self_improvement/adaptive_tutor_pipeline.py
+============================================================
+"""Working orchestration layer for the frozen adaptive tutor policy."""
+
+from __future__ import annotations
+
+import copy
+from collections.abc import Mapping, MutableSequence, Sequence
+from pathlib import Path
+from typing import Protocol, runtime_checkable
+
+from .conservative_overlay import DEFAULT_GAP_THRESHOLD
+from .context_builder import MOVE_ORDER
+from .experience_logger import ExperienceLogger, SCHEMA_VERSION
+from .lints_policy import DEFAULT_EXPLORATION_SCALE, DEFAULT_RIDGE_LAMBDA
+from .md6_inference import FrozenMD6Inference
+from .mrb1_inference import FrozenMRB1Inference
+from .reward import primary_reward
+from .state_io import load_policy_state, save_policy_state
+from .turn_context_builder import TURN_FEATURE_NAMES, validate_mastery_probability
+from .turn_level_controller import AttemptCompletion, TurnLevelAttemptController
+
+
+@runtime_checkable
+class TutorMemoryAdapter(Protocol):
+    """Minimal bridge to one authoritative host tutoring memory object."""
+
+    def get_attempt_id(self, memory: object) -> str | int: ...
+
+    def get_problem(self, memory: object) -> str: ...
+
+    def get_conversation_history(
+        self,
+        memory: object,
+    ) -> Sequence[Mapping[str, object]]: ...
+
+    def get_mastery_before(self, memory: object) -> object: ...
+
+    def append_tutor_response(self, memory: object, response: str) -> None: ...
+
+
+@runtime_checkable
+class TutorAgent(Protocol):
+    """Injected external tutor-agent contract."""
+
+    def generate(
+        self,
+        *,
+        problem: str,
+        conversation_history: Sequence[Mapping[str, object]],
+        pedagogical_move: str,
+    ) -> str: ...
+
+
+@runtime_checkable
+class MD6Predictor(Protocol):
+    def predict_probabilities(
+        self,
+        problem: str,
+        conversation_history: Sequence[Mapping[str, object]],
+    ) -> Mapping[str, float]: ...
+
+
+@runtime_checkable
+class MRB1Scorer(Protocol):
+    def score_response(
+        self,
+        conversation_history: Sequence[Mapping[str, object]],
+        tutor_response: str,
+    ) -> Mapping[str, float]: ...
+
+
+class MappingTutorMemoryAdapter:
+    """Default adapter for one mutable mapping-backed host memory.
+
+    Required keys are ``attempt_id``, ``problem``, ``conversation_history``,
+    and ``mastery_before``. Conversation history is the single authoritative
+    mutable list, whose turns use the already validated MD6 ``user``/``text``
+    fields. This adapter appends the completed tutor response as a ``teacher``
+    turn; the host remains responsible for appending subsequent student turns.
+    """
+
+    @staticmethod
+    def _mapping(memory: object) -> Mapping[str, object]:
+        if not isinstance(memory, Mapping):
+            raise TypeError("memory must be a mapping for MappingTutorMemoryAdapter.")
+        return memory
+
+    def get_attempt_id(self, memory: object) -> str | int:
+        value = self._mapping(memory).get("attempt_id")
+        if isinstance(value, bool) or not isinstance(value, (str, int)):
+            raise TypeError("memory.attempt_id must be a string or integer.")
+        if isinstance(value, str) and not value.strip():
+            raise ValueError("memory.attempt_id cannot be empty or whitespace.")
+        return value
+
+    def get_problem(self, memory: object) -> str:
+        value = self._mapping(memory).get("problem")
+        if not isinstance(value, str):
+            raise TypeError("memory.problem must be a string.")
+        if not value.strip():
+            raise ValueError("memory.problem cannot be empty or whitespace.")
+        return value
+
+    def get_conversation_history(
+        self,
+        memory: object,
+    ) -> Sequence[Mapping[str, object]]:
+        value = self._mapping(memory).get("conversation_history")
+        if isinstance(value, (str, bytes)) or not isinstance(value, Sequence):
+            raise TypeError("memory.conversation_history must be a turn sequence.")
+        for index, turn in enumerate(value):
+            if not isinstance(turn, Mapping):
+                raise TypeError(
+                    f"memory.conversation_history[{index}] must be a mapping."
+                )
+        return value
+
+    def get_mastery_before(self, memory: object) -> object:
+        mapping = self._mapping(memory)
+        if "mastery_before" not in mapping:
+            raise ValueError("memory.mastery_before is required.")
+        return mapping["mastery_before"]
+
+    def append_tutor_response(self, memory: object, response: str) -> None:
+        if not isinstance(response, str) or not response.strip():
+            raise ValueError("tutor response must be a non-empty string.")
+        mapping = self._mapping(memory)
+        history = mapping.get("conversation_history")
+        if not isinstance(history, MutableSequence):
+            raise TypeError(
+                "memory.conversation_history must be mutable so the tutor "
+                "response can become authoritative history."
+            )
+        history.append({"user": "teacher", "text": response})
+
+
+class AdaptiveTutorPipeline:
+    """Run real tutor turns through MD6, LinTS/overlay, tutor, and MRB1."""
+
+    def __init__(
+        self,
+        *,
+        md6: MD6Predictor | FrozenMD6Inference,
+        mrb1: MRB1Scorer | FrozenMRB1Inference,
+        controller: TurnLevelAttemptController,
+        experience_logger: ExperienceLogger,
+        policy_state_path: str | Path,
+        memory_adapter: TutorMemoryAdapter | None = None,
+    ) -> None:
+        if not isinstance(controller, TurnLevelAttemptController):
+            raise TypeError("controller must be a TurnLevelAttemptController.")
+        if not isinstance(experience_logger, ExperienceLogger):
+            raise TypeError("experience_logger must be an ExperienceLogger.")
+        if not isinstance(md6, MD6Predictor):
+            raise TypeError("md6 must expose predict_probabilities().")
+        if not isinstance(mrb1, MRB1Scorer):
+            raise TypeError("mrb1 must expose score_response().")
+        adapter = MappingTutorMemoryAdapter() if memory_adapter is None else memory_adapter
+        if not isinstance(adapter, TutorMemoryAdapter):
+            raise TypeError("memory_adapter does not satisfy TutorMemoryAdapter.")
+
+        policy = controller.policy
+        if policy.context_dim != len(TURN_FEATURE_NAMES) or len(TURN_FEATURE_NAMES) != 9:
+            raise ValueError("AdaptiveTutorPipeline requires the frozen 9-D C3 context.")
+        if policy.ridge_lambda != DEFAULT_RIDGE_LAMBDA:
+            raise ValueError("AdaptiveTutorPipeline requires ridge_lambda=1.0.")
+        if policy.exploration_scale != DEFAULT_EXPLORATION_SCALE:
+            raise ValueError("AdaptiveTutorPipeline requires exploration_scale=0.20.")
+        if controller.gap_threshold != DEFAULT_GAP_THRESHOLD:
+            raise ValueError("AdaptiveTutorPipeline requires gap_threshold=0.10.")
+        if experience_logger.data_mode != policy.data_mode:
+            raise ValueError("Logger and policy data modes must match.")
+        if SCHEMA_VERSION != "turn_lints_v2":
+            raise RuntimeError("AdaptiveTutorPipeline requires turn_lints_v2 logging.")
+
+        self.md6 = md6
+        self.mrb1 = mrb1
+        self.controller = controller
+        self.experience_logger = experience_logger
+        self.policy_state_path = Path(policy_state_path)
+        self.memory_adapter = adapter
+
+        self._active_attempt_id: str | int | None = None
+        self._pending_completion: AttemptCompletion | None = None
+        self._pending_record: dict[str, object] | None = None
+
+    @property
+    def active_attempt_id(self) -> str | int | None:
+        return self._active_attempt_id
+
+    def _require_matching_attempt(self, memory: object) -> str | int:
+        if self._active_attempt_id is None:
+            raise RuntimeError("No adaptive tutoring attempt is active.")
+        attempt_id = self.memory_adapter.get_attempt_id(memory)
+        if attempt_id != self._active_attempt_id:
+            raise ValueError(
+                f"Memory attempt_id {attempt_id!r} does not match active "
+                f"attempt {self._active_attempt_id!r}."
+            )
+        return attempt_id
+
+    def load_persisted_policy_state(self) -> None:
+        """Load the configured v2 state before an attempt starts."""
+
+        if self._active_attempt_id is not None or self.controller.is_active:
+            raise RuntimeError("Cannot load policy state during an active attempt.")
+        load_policy_state(
+            self.controller.policy,
+            self.policy_state_path,
+            expected_data_mode=self.controller.policy.data_mode,
+        )
+
+    def start_attempt(self, memory: object) -> dict[str, object]:
+        """Read attempt identity/mastery from host memory and start cleanly."""
+
+        if self._active_attempt_id is not None:
+            raise RuntimeError("An adaptive tutoring attempt is already active.")
+        attempt_id = self.memory_adapter.get_attempt_id(memory)
+        mastery_before = self.memory_adapter.get_mastery_before(memory)
+        validated_mastery = validate_mastery_probability(mastery_before)
+        self.controller.start_attempt(validated_mastery)
+        self._active_attempt_id = attempt_id
+        self._pending_completion = None
+        self._pending_record = None
+        return {
+            "attempt_id": attempt_id,
+            "mastery_before": validated_mastery,
+        }
+
+    def run_tutor_turn(
+        self,
+        memory: object,
+        tutor_agent: TutorAgent,
+    ) -> dict[str, object]:
+        """Run one complete MD6 -> action -> tutor -> MRB1 turn."""
+
+        attempt_id = self._require_matching_attempt(memory)
+        if self._pending_completion is not None or not self.controller.is_active:
+            raise RuntimeError("The active attempt has already entered completion.")
+        if not isinstance(tutor_agent, TutorAgent):
+            raise TypeError("tutor_agent must expose generate().")
+
+        problem = self.memory_adapter.get_problem(memory)
+        authoritative_history = self.memory_adapter.get_conversation_history(memory)
+        history_snapshot = copy.deepcopy(list(authoritative_history))
+
+        md6_probabilities = dict(
+            self.md6.predict_probabilities(problem, history_snapshot)
+        )
+        decision = self.controller.select_turn(md6_probabilities)
+        if decision.final_move not in MOVE_ORDER:
+            raise RuntimeError("Controller returned a non-canonical final move.")
+
+        tutor_response = tutor_agent.generate(
+            problem=problem,
+            conversation_history=copy.deepcopy(history_snapshot),
+            pedagogical_move=decision.final_move,
+        )
+        if not isinstance(tutor_response, str) or not tutor_response.strip():
+            raise ValueError("Tutor agent must return a non-empty string response.")
+
+        mrb1_scores = dict(
+            self.mrb1.score_response(history_snapshot, tutor_response)
+        )
+        self.controller.record_mrb1_scores(mrb1_scores)
+        self.memory_adapter.append_tutor_response(memory, tutor_response)
+
+        return {
+            "attempt_id": attempt_id,
+            "turn_index": decision.turn_index,
+            "tutor_response": tutor_response,
+            "pedagogical_move": decision.final_move,
+            "selected_arm": decision.selected_arm,
+            "base_move": decision.base_move,
+            "overridden": decision.overridden,
+            "eligible_arms": list(decision.eligible_arms),
+            "context": list(decision.context),
+            "md6_probabilities": dict(decision.md6_probabilities),
+            "mrb1_scores": mrb1_scores,
+        }
+
+    def finish_attempt(
+        self,
+        memory: object,
+        evaluator_score: int,
+        mastery_after: object,
+        *,
+        metadata: Mapping[str, object] | None = None,
+    ) -> dict[str, object]:
+        """Finish, log, and atomically persist one completed attempt.
+
+        If logging or state persistence raises, the exception is propagated.
+        A completed controller result and successful log are retained so a
+        caller may retry the unfinished finalization stage without applying a
+        second posterior update or appending a second experience record.
+        """
+
+        attempt_id = self._require_matching_attempt(memory)
+        expected_reward = primary_reward(evaluator_score)
+        validated_mastery_after = validate_mastery_probability(mastery_after)
+
+        if self._pending_completion is None:
+            if not self.controller.is_active:
+                raise RuntimeError("Controller is not active for attempt completion.")
+            self._pending_completion = self.controller.finish_attempt(
+                evaluator_score,
+                validated_mastery_after,
+            )
+        else:
+            completion = self._pending_completion
+            if (
+                completion.evaluator_score != evaluator_score
+                or completion.mastery_after != validated_mastery_after
+            ):
+                raise ValueError(
+                    "Retry inputs must match the already completed attempt."
+                )
+
+        completion = self._pending_completion
+        if completion is None:
+            raise RuntimeError("Internal completion state is unavailable.")
+        if completion.reward != expected_reward:
+            raise RuntimeError("Controller reward differs from the frozen mapping.")
+
+        if self._pending_record is None:
+            self._pending_record = self.experience_logger.append_attempt(
+                attempt_id,
+                completion,
+                metadata=metadata,
+            )
+
+        save_policy_state(self.controller.policy, self.policy_state_path)
+        record = self._pending_record
+        result = {
+            "attempt_id": attempt_id,
+            "evaluator_score": completion.evaluator_score,
+            "reward": completion.reward,
+            "mastery_before": completion.mastery_before,
+            "mastery_after": completion.mastery_after,
+            "mastery_delta": completion.mastery_delta,
+            "turn_count": completion.turn_count,
+            "sample_weight_per_turn": completion.sample_weight_per_turn,
+            "total_attempt_weight": completion.total_attempt_weight,
+            "experience_record": copy.deepcopy(record),
+            "policy_state_path": str(self.policy_state_path),
+        }
+        self._active_attempt_id = None
+        self._pending_completion = None
+        self._pending_record = None
+        return result
+
+    def abort_attempt(self, memory: object | None = None) -> None:
+        """Abort the active pre-completion attempt without a posterior update."""
+
+        if self._active_attempt_id is None:
+            raise RuntimeError("No adaptive tutoring attempt is active.")
+        if memory is not None:
+            self._require_matching_attempt(memory)
+        if self._pending_completion is not None or not self.controller.is_active:
+            raise RuntimeError("A completed attempt cannot be aborted.")
+        self.controller.abort_attempt()
+        self._active_attempt_id = None
+        self._pending_completion = None
+        self._pending_record = None
+
+
+__all__ = (
+    "AdaptiveTutorPipeline",
+    "MD6Predictor",
+    "MRB1Scorer",
+    "MappingTutorMemoryAdapter",
+    "TutorAgent",
+    "TutorMemoryAdapter",
+)
+
+
+============================================================
+src/self_improvement/attempt_experience_logger.py
+============================================================
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+
+SCHEMA_VERSION = (
+    "self_improvement_attempt_v1"
+)
+
+
+class AttemptExperienceLogger:
+
+    def __init__(
+        self,
+        path,
+        data_origin,
+    ):
+
+        self.path = Path(
+            path
+        )
+
+
+        self.data_origin = (
+            str(
+                data_origin
+            )
+            .strip()
+            .lower()
+        )
+
+
+        if self.data_origin not in {
+            "synthetic",
+            "real",
+        }:
+
+            raise ValueError(
+                "data_origin must be "
+                "'synthetic' or 'real'."
+            )
+
+
+        self.path.parent.mkdir(
+            parents=True,
+            exist_ok=True,
+        )
+
+
+    def validate_record(
+        self,
+        record,
+    ):
+
+        errors = []
+
+
+        if (
+            record.get(
+                "schema_version"
+            )
+            !=
+            SCHEMA_VERSION
+        ):
+
+            errors.append(
+                "Invalid schema_version."
+            )
+
+
+        if (
+            record.get(
+                "data_origin"
+            )
+            !=
+            self.data_origin
+        ):
+
+            errors.append(
+                "Record data_origin does not "
+                "match logger data_origin."
+            )
+
+
+        required = [
+            "episode_id",
+            "attempt_index",
+            "problem",
+            "mastery_before",
+            "policy",
+            "trajectory",
+            "external_feedback",
+        ]
+
+
+        for key in required:
+
+            if key not in record:
+
+                errors.append(
+                    f"Missing required field: {key}"
+                )
+
+
+        if errors:
+
+            return errors
+
+
+        mastery_before = (
+            record[
+                "mastery_before"
+            ]
+        )
+
+
+        if (
+            "skill_id"
+            not in mastery_before
+        ):
+
+            errors.append(
+                "mastery_before.skill_id missing."
+            )
+
+
+        if (
+            "mastery"
+            not in mastery_before
+        ):
+
+            errors.append(
+                "mastery_before.mastery missing."
+            )
+
+
+        else:
+
+            mastery_value = float(
+                mastery_before[
+                    "mastery"
+                ]
+            )
+
+
+            if not (
+                0.0
+                <=
+                mastery_value
+                <=
+                1.0
+            ):
+
+                errors.append(
+                    "mastery_before.mastery "
+                    "must be in [0, 1]."
+                )
+
+
+        policy = (
+            record[
+                "policy"
+            ]
+        )
+
+
+        for key in [
+            "base_selector_version",
+            "bandit_algorithm",
+            "selected_arm",
+            "max_probability_gap",
+        ]:
+
+            if key not in policy:
+
+                errors.append(
+                    f"policy.{key} missing."
+                )
+
+
+        trajectory = (
+            record[
+                "trajectory"
+            ]
+        )
+
+
+        if not isinstance(
+            trajectory,
+            list,
+        ):
+
+            errors.append(
+                "trajectory must be a list."
+            )
+
+
+        else:
+
+            for (
+                expected_turn_index,
+                turn,
+            ) in enumerate(
+                trajectory
+            ):
+
+                if (
+                    turn.get(
+                        "turn_index"
+                    )
+                    !=
+                    expected_turn_index
+                ):
+
+                    errors.append(
+                        "trajectory turn_index "
+                        "sequence invalid."
+                    )
+
+
+                for key in [
+                    "history_before",
+                    "base_move_probs",
+                    "base_move",
+                    "final_move",
+                    "overridden",
+                    "teacher_response",
+                    "student_response",
+                ]:
+
+                    if key not in turn:
+
+                        errors.append(
+                            "trajectory turn missing "
+                            f"field: {key}"
+                        )
+
+
+        external = (
+            record[
+                "external_feedback"
+            ]
+        )
+
+
+        if (
+            "evaluator_score"
+            not in external
+        ):
+
+            errors.append(
+                "external_feedback."
+                "evaluator_score missing."
+            )
+
+
+        else:
+
+            evaluator_score = int(
+                external[
+                    "evaluator_score"
+                ]
+            )
+
+
+            if evaluator_score not in {
+                0,
+                1,
+                2,
+                3,
+            }:
+
+                errors.append(
+                    "evaluator_score must be "
+                    "0, 1, 2, or 3."
+                )
+
+
+        mastery_after = (
+            external.get(
+                "mastery_after"
+            )
+        )
+
+
+        if not isinstance(
+            mastery_after,
+            dict,
+        ):
+
+            errors.append(
+                "external_feedback.mastery_after "
+                "must be an object."
+            )
+
+
+        else:
+
+            before_skill = (
+                mastery_before.get(
+                    "skill_id"
+                )
+            )
+
+
+            after_skill = (
+                mastery_after.get(
+                    "skill_id"
+                )
+            )
+
+
+            if (
+                before_skill
+                !=
+                after_skill
+            ):
+
+                errors.append(
+                    "skill_id must be identical "
+                    "before and after attempt."
+                )
+
+
+            if (
+                "mastery"
+                not in mastery_after
+            ):
+
+                errors.append(
+                    "mastery_after.mastery missing."
+                )
+
+
+            else:
+
+                value = float(
+                    mastery_after[
+                        "mastery"
+                    ]
+                )
+
+
+                if not (
+                    0.0
+                    <=
+                    value
+                    <=
+                    1.0
+                ):
+
+                    errors.append(
+                        "mastery_after.mastery "
+                        "must be in [0, 1]."
+                    )
+
+
+        return errors
+
+
+    def append(
+        self,
+        record,
+    ):
+
+        errors = self.validate_record(
+            record
+        )
+
+
+        if errors:
+
+            raise ValueError(
+                "Attempt record failed validation:\n"
+                +
+                "\n".join(
+                    f"- {error}"
+                    for error
+                    in errors
+                )
+            )
+
+
+        with self.path.open(
+            "a",
+            encoding="utf-8",
+        ) as f:
+
+            f.write(
+                json.dumps(
+                    record,
+                    ensure_ascii=False,
+                )
+            )
+
+            f.write(
+                "\n"
+            )
+
+
+        return self.path
+
+
+============================================================
+src/self_improvement/state_io.py
+============================================================
+"""Safe versioned persistence for canonical true-LinTS policy state.
+
+This module provides reproducible policy-state persistence only. Synthetic
+learned posterior state must never seed real tutoring. The authoritative state
+payload and all posterior/configuration validation remain in
+``TrueDisjointLinTS.state_dict`` and ``TrueDisjointLinTS.load_state_dict``.
+
+State persistence does not establish educational efficacy or an optimal
+context, reward, threshold, hyperparameter configuration, or credit-assignment
+scheme. Policy snapshots remain separate from attempt trajectory logs.
+"""
+
+from __future__ import annotations
+
+import hashlib
+import json
+import os
+from collections.abc import Mapping
+from pathlib import Path
+from tempfile import NamedTemporaryFile
+from typing import Final
+
+from .lints_policy import (
+    DEFAULT_EXPLORATION_SCALE,
+    DEFAULT_RIDGE_LAMBDA,
+    TrueDisjointLinTS,
+)
+from .turn_context_builder import TURN_FEATURE_NAMES
+
+
+POLICY_STATE_SCHEMA_VERSION: Final[str] = "turn_lints_state_v2"
+POLICY_CLASS_NAME: Final[str] = "TrueDisjointLinTS"
+DATA_MODES: Final[tuple[str, ...]] = ("synthetic", "real")
+
+_ENVELOPE_FIELDS: Final[frozenset[str]] = frozenset(
+    {"schema_version", "policy_class", "policy_state"}
+)
+
+
+def _validate_policy(policy: object) -> TrueDisjointLinTS:
+    if not isinstance(policy, TrueDisjointLinTS):
+        raise TypeError("policy must be a TrueDisjointLinTS instance.")
+    if policy.context_dim != len(TURN_FEATURE_NAMES):
+        raise ValueError(
+            "Canonical persisted policy must use the 9-D C3 turn context."
+        )
+    if policy.ridge_lambda != DEFAULT_RIDGE_LAMBDA:
+        raise ValueError(
+            "Canonical persisted policy must use ridge_lambda=1.0."
+        )
+    if policy.exploration_scale != DEFAULT_EXPLORATION_SCALE:
+        raise ValueError(
+            "Canonical persisted policy must use exploration_scale=0.20."
+        )
+    return policy
+
+
+def _validate_data_mode(value: object, name: str) -> str:
+    if not isinstance(value, str) or value not in DATA_MODES:
+        raise ValueError(f"{name} must be exactly 'synthetic' or 'real'.")
+    return value
+
+
+def _reject_nonstandard_constant(value: str) -> object:
+    raise ValueError(f"State JSON contains forbidden non-finite value {value!r}.")
+
+
+def _object_without_duplicate_keys(
+    pairs: list[tuple[str, object]],
+) -> dict[str, object]:
+    result: dict[str, object] = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError(f"State JSON contains duplicate key {key!r}.")
+        result[key] = value
+    return result
+
+
+def _serialize_envelope(policy: TrueDisjointLinTS) -> str:
+    """Build and serialize the complete state before any filesystem write."""
+
+    policy_state = policy.state_dict()
+    if not isinstance(policy_state, Mapping):
+        raise TypeError("policy.state_dict() must return a mapping.")
+
+    state_mode = _validate_data_mode(
+        policy_state.get("data_mode"),
+        "policy_state.data_mode",
+    )
+    if state_mode != policy.data_mode:
+        raise ValueError(
+            "policy.state_dict() data_mode does not match policy.data_mode."
+        )
+
+    envelope = {
+        "schema_version": POLICY_STATE_SCHEMA_VERSION,
+        "policy_class": POLICY_CLASS_NAME,
+        "policy_state": policy_state,
+    }
+    try:
+        serialized = json.dumps(
+            envelope,
+            ensure_ascii=False,
+            allow_nan=False,
+            indent=2,
+        )
+    except TypeError as exc:
+        raise TypeError(
+            "Canonical policy state contains a non-JSON-serializable object."
+        ) from exc
+    except (ValueError, OverflowError) as exc:
+        raise ValueError(
+            "Canonical policy state contains an invalid JSON numeric value."
+        ) from exc
+    return serialized + "\n"
+
+
+def save_policy_state(
+    policy: TrueDisjointLinTS,
+    path: str | Path,
+) -> Path:
+    """Atomically replace one JSON state file with a canonical snapshot.
+
+    Serialization completes before a temporary file is created. The temporary
+    file is written, flushed, and ``fsync``-ed in the destination directory,
+    then ``os.replace`` atomically installs it. On any failure before replace,
+    a pre-existing valid destination remains unchanged and the temporary file
+    is removed where practical.
+    """
+
+    validated_policy = _validate_policy(policy)
+    serialized = _serialize_envelope(validated_policy)
+    destination = Path(path)
+    if destination.exists() and not destination.is_file():
+        raise ValueError(f"State destination is not a regular file: {destination}.")
+
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    temporary_path: Path | None = None
+    try:
+        with NamedTemporaryFile(
+            mode="w",
+            encoding="utf-8",
+            newline="\n",
+            prefix=f".{destination.name}.",
+            suffix=".tmp",
+            dir=destination.parent,
+            delete=False,
+        ) as handle:
+            temporary_path = Path(handle.name)
+            handle.write(serialized)
+            handle.flush()
+            os.fsync(handle.fileno())
+
+        os.replace(temporary_path, destination)
+        temporary_path = None
+    finally:
+        if temporary_path is not None:
+            try:
+                temporary_path.unlink(missing_ok=True)
+            except OSError:
+                pass
+    return destination
+
+
+def _read_state_envelope(path: Path) -> dict[str, object]:
+    if not path.exists():
+        raise FileNotFoundError(f"Policy state file does not exist: {path}.")
+    if not path.is_file():
+        raise ValueError(f"Policy state path is not a regular file: {path}.")
+
+    try:
+        serialized = path.read_text(encoding="utf-8")
+    except UnicodeError as exc:
+        raise ValueError("Policy state file is not valid UTF-8.") from exc
+
+    try:
+        envelope = json.loads(
+            serialized,
+            parse_constant=_reject_nonstandard_constant,
+            object_pairs_hook=_object_without_duplicate_keys,
+        )
+    except json.JSONDecodeError as exc:
+        raise ValueError("Policy state file contains malformed JSON.") from exc
+
+    if not isinstance(envelope, dict):
+        raise ValueError("Policy state file must contain one top-level object.")
+    actual_fields = set(envelope)
+    if actual_fields != _ENVELOPE_FIELDS:
+        missing = sorted(_ENVELOPE_FIELDS - actual_fields)
+        extra = sorted(actual_fields - _ENVELOPE_FIELDS)
+        raise ValueError(
+            "Policy state envelope fields are incompatible; "
+            f"missing={missing}, extra={extra}."
+        )
+    if envelope["schema_version"] != POLICY_STATE_SCHEMA_VERSION:
+        raise ValueError(
+            "Unsupported policy state schema version: "
+            f"{envelope['schema_version']!r}."
+        )
+    if envelope["policy_class"] != POLICY_CLASS_NAME:
+        raise ValueError(
+            f"policy_class must be exactly {POLICY_CLASS_NAME!r}."
+        )
+    if not isinstance(envelope["policy_state"], Mapping):
+        raise TypeError("policy_state must be a mapping.")
+    return envelope
+
+
+def load_policy_state(
+    policy: TrueDisjointLinTS,
+    path: str | Path,
+    expected_data_mode: str,
+) -> None:
+    """Validate a versioned file and atomically load its canonical payload.
+
+    File-level schema, policy class, and hard data-mode checks complete before
+    delegating to ``policy.load_state_dict``. That canonical method remains
+    authoritative for configuration, posterior, counts, shapes, and RNG state
+    and performs its own validate-before-mutate commit.
+    """
+
+    validated_policy = _validate_policy(policy)
+    expected_mode = _validate_data_mode(
+        expected_data_mode,
+        "expected_data_mode",
+    )
+    if validated_policy.data_mode != expected_mode:
+        raise ValueError(
+            "expected_data_mode must match the receiving policy; "
+            f"expected={expected_mode!r}, policy={validated_policy.data_mode!r}."
+        )
+
+    envelope = _read_state_envelope(Path(path))
+    policy_state = envelope["policy_state"]
+    if not isinstance(policy_state, Mapping):
+        raise TypeError("policy_state must be a mapping.")
+    state_mode = _validate_data_mode(
+        policy_state.get("data_mode"),
+        "policy_state.data_mode",
+    )
+    if state_mode != expected_mode:
+        raise ValueError(
+            "Synthetic/real policy-state barrier triggered: "
+            f"state={state_mode!r}, expected={expected_mode!r}."
+        )
+
+    validated_policy.load_state_dict(
+        policy_state,
+        expected_data_mode=expected_mode,
+    )
+
+
+def sha256_file(path: str | Path) -> str:
+    """Return the lowercase SHA256 hex digest of one state file."""
+
+    source = Path(path)
+    if not source.is_file():
+        raise FileNotFoundError(f"Cannot hash non-file policy state: {source}.")
+    digest = hashlib.sha256()
+    with source.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+__all__ = (
+    "DATA_MODES",
+    "POLICY_CLASS_NAME",
+    "POLICY_STATE_SCHEMA_VERSION",
+    "load_policy_state",
+    "save_policy_state",
+    "sha256_file",
+)
+

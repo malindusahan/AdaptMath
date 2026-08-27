@@ -1,0 +1,47 @@
+{
+  "accuracy": 0.4745945945945946,
+  "macro_f1": 0.4057544666174765,
+  "per_class_f1": {
+    "generic": 0.5623529411764706,
+    "probing": 0.19439252336448598,
+    "focus": 0.582995951417004,
+    "telling": 0.2832764505119454
+  },
+  "confusion_matrix": [
+    [
+      239,
+      17,
+      126,
+      60
+    ],
+    [
+      67,
+      52,
+      245,
+      48
+    ],
+    [
+      62,
+      35,
+      504,
+      77
+    ],
+    [
+      40,
+      19,
+      176,
+      83
+    ]
+  ],
+  "experiment": "MD1_mathdial_tfidf_logreg",
+  "configuration": {
+    "ngram_range": [
+      1,
+      2
+    ],
+    "min_df": 2,
+    "max_features": 50000,
+    "sublinear_tf": true,
+    "class_weight": null
+  }
+}

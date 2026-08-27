@@ -1,0 +1,177 @@
+{
+  "model": "google/paligemma2-3b-pt-224",
+  "family": "paligemma",
+  "input_mode": "image_text",
+  "mode_tag": "R2",
+  "val_method": "stratified_holdout_20pct",
+  "best_config": {
+    "lora_r": 16,
+    "lr": 5e-05,
+    "loss": "huber"
+  },
+  "best_val_rmse": 0.6467514058040044,
+  "search_results": [
+    {
+      "lora_r": 8,
+      "lr": 0.0002,
+      "loss": "mse",
+      "val_metrics": {
+        "rmse": 0.6616627044430805,
+        "mae": 0.5251569300365779,
+        "pearson": 0.5859204194379567,
+        "spearman": 0.5646100026909622
+      },
+      "val_rmse": 0.6616627044430805,
+      "status": "ok"
+    },
+    {
+      "lora_r": 8,
+      "lr": 0.0002,
+      "loss": "huber",
+      "val_metrics": {
+        "rmse": 0.6714341127143056,
+        "mae": 0.5224672454387793,
+        "pearson": 0.5968661760501547,
+        "spearman": 0.5667704609233845
+      },
+      "val_rmse": 0.6714341127143056,
+      "status": "ok"
+    },
+    {
+      "lora_r": 8,
+      "lr": 5e-05,
+      "loss": "mse",
+      "val_metrics": {
+        "rmse": 0.6856763074946156,
+        "mae": 0.5454541191138373,
+        "pearson": 0.5451205197673801,
+        "spearman": 0.509868142851651
+      },
+      "val_rmse": 0.6856763074946156,
+      "status": "ok"
+    },
+    {
+      "lora_r": 8,
+      "lr": 5e-05,
+      "loss": "huber",
+      "val_metrics": {
+        "rmse": 0.6743225322829485,
+        "mae": 0.5241927282570719,
+        "pearson": 0.5845308004568417,
+        "spearman": 0.5571829469880444
+      },
+      "val_rmse": 0.6743225322829485,
+      "status": "ok"
+    },
+    {
+      "lora_r": 16,
+      "lr": 0.0002,
+      "loss": "mse",
+      "val_metrics": {
+        "rmse": 0.6813664447705383,
+        "mae": 0.5275350382554864,
+        "pearson": 0.5720921644293718,
+        "spearman": 0.5563218390804598
+      },
+      "val_rmse": 0.6813664447705383,
+      "status": "ok"
+    },
+    {
+      "lora_r": 16,
+      "lr": 0.0002,
+      "loss": "huber",
+      "val_metrics": {
+        "rmse": 0.6778926807160914,
+        "mae": 0.5343282187814152,
+        "pearson": 0.6001637401637793,
+        "spearman": 0.5818244723791951
+      },
+      "val_rmse": 0.6778926807160914,
+      "status": "ok"
+    },
+    {
+      "lora_r": 16,
+      "lr": 5e-05,
+      "loss": "mse",
+      "val_metrics": {
+        "rmse": 0.6773666116900483,
+        "mae": 0.526081484397568,
+        "pearson": 0.593837543959415,
+        "spearman": 0.5514165993926115
+      },
+      "val_rmse": 0.6773666116900483,
+      "status": "ok"
+    },
+    {
+      "lora_r": 16,
+      "lr": 5e-05,
+      "loss": "huber",
+      "val_metrics": {
+        "rmse": 0.6467514058040044,
+        "mae": 0.5011101529916808,
+        "pearson": 0.6320450146356714,
+        "spearman": 0.6152923538230886
+      },
+      "val_rmse": 0.6467514058040044,
+      "status": "ok"
+    },
+    {
+      "lora_r": 32,
+      "lr": 0.0002,
+      "loss": "mse",
+      "val_metrics": {
+        "rmse": 0.665857883464916,
+        "mae": 0.5055114604747691,
+        "pearson": 0.5940597258789343,
+        "spearman": 0.584446238419252
+      },
+      "val_rmse": 0.665857883464916,
+      "status": "ok"
+    },
+    {
+      "lora_r": 32,
+      "lr": 0.0002,
+      "loss": "huber",
+      "val_metrics": {
+        "rmse": 0.6658266216099036,
+        "mae": 0.5017157528194918,
+        "pearson": 0.5982598653900286,
+        "spearman": 0.6324299388767155
+      },
+      "val_rmse": 0.6658266216099036,
+      "status": "ok"
+    },
+    {
+      "lora_r": 32,
+      "lr": 5e-05,
+      "loss": "mse",
+      "val_metrics": {
+        "rmse": 0.6596483139922233,
+        "mae": 0.5128244869595018,
+        "pearson": 0.6123225072232452,
+        "spearman": 0.5941490793065006
+      },
+      "val_rmse": 0.6596483139922233,
+      "status": "ok"
+    },
+    {
+      "lora_r": 32,
+      "lr": 5e-05,
+      "loss": "huber",
+      "val_metrics": {
+        "rmse": 0.6837036507594954,
+        "mae": 0.53267446008983,
+        "pearson": 0.5819621329612804,
+        "spearman": 0.5545227386306847
+      },
+      "val_rmse": 0.6837036507594954,
+      "status": "ok"
+    }
+  ],
+  "test_metrics": {
+    "rmse": 0.5773989799429998,
+    "mae": 0.46373260216649426,
+    "pearson": 0.7139038940788619,
+    "spearman": 0.722579121398205
+  }
+}

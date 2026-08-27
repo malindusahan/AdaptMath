@@ -1,0 +1,58 @@
+{
+  "experiment": "SI5-A_attempt_level_contextual_bandit_simulation",
+  "simulation_only": true,
+  "real_training_data_used": false,
+  "algorithm": "disjoint_LinUCB",
+  "arms": [
+    "baseline",
+    "probing_bias",
+    "focus_bias",
+    "telling_bias",
+    "generic_bias"
+  ],
+  "primary_reward": "evaluator_score / 3",
+  "mastery_in_primary_reward": false,
+  "update_timing": "once_after_attempt",
+  "policy_fixed_within_attempt": true,
+  "attempts": 900,
+  "timing_validation_passed": true,
+  "mid_attempt_updates": 0,
+  "policy_freeze_errors": 0,
+  "total_turns": 4576,
+  "overrides": 616,
+  "override_rate": 0.1346153846153846,
+  "early_summary": {
+    "mean_reward": 0.6044444444444443,
+    "success_3_of_3_rate": 0.24,
+    "mean_mastery_delta": 0.05363869701146149
+  },
+  "late_summary": {
+    "mean_reward": 0.6777777777777777,
+    "success_3_of_3_rate": 0.31333333333333335,
+    "mean_mastery_delta": 0.06445523419346927
+  },
+  "bandit_update_counts": {
+    "fraction_multiplication": {
+      "baseline": 17,
+      "probing_bias": 162,
+      "focus_bias": 116,
+      "telling_bias": 3,
+      "generic_bias": 2
+    },
+    "word_problem_reasoning": {
+      "baseline": 36,
+      "probing_bias": 105,
+      "focus_bias": 146,
+      "telling_bias": 11,
+      "generic_bias": 2
+    },
+    "basic_division": {
+      "baseline": 28,
+      "probing_bias": 160,
+      "focus_bias": 64,
+      "telling_bias": 42,
+      "generic_bias": 6
+    }
+  },
+  "research_warning": "Synthetic outcomes are for implementation validation only. Reset bandit before real integrated tutoring experiments."
+}

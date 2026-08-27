@@ -1,0 +1,48 @@
+{
+  "seed": 42,
+  "selected_random_state": 197,
+  "combined_dialogues": 2861,
+  "groups": 1111,
+  "total_examples": 18607,
+  "teacher_turns": 18609,
+  "student_turns": 16739,
+  "unlabeled_teacher_turns": 2,
+  "global_label_distribution": {
+    "probing": 4252,
+    "generic": 4456,
+    "telling": 3091,
+    "focus": 6808
+  },
+  "train_examples": 14905,
+  "validation_examples": 1850,
+  "test_examples": 1852,
+  "train_label_distribution": {
+    "probing": 3413,
+    "generic": 3579,
+    "focus": 5443,
+    "telling": 2470
+  },
+  "validation_label_distribution": {
+    "generic": 442,
+    "probing": 412,
+    "focus": 678,
+    "telling": 318
+  },
+  "test_label_distribution": {
+    "probing": 427,
+    "telling": 303,
+    "generic": 435,
+    "focus": 687
+  },
+  "leakage_checks": {
+    "Train / Validation qid overlap": 0,
+    "Train / Test qid overlap": 0,
+    "Validation / Test qid overlap": 0,
+    "Train / Validation question overlap": 0,
+    "Train / Test question overlap": 0,
+    "Validation / Test question overlap": 0,
+    "Train / Validation group overlap": 0,
+    "Train / Test group overlap": 0,
+    "Validation / Test group overlap": 0
+  }
+}

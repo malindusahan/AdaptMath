@@ -1,0 +1,411 @@
+{
+  "experiment": "si7c_real_frozen_overlay_validation",
+  "data_origin": "real_saved_validation_predictions",
+  "learning_performed": false,
+  "educational_claim_allowed": false,
+  "frozen_selector": "context_routed_MD4_MD3_hybrid",
+  "examples": 1850,
+  "max_probability_gap": 0.15,
+  "arm_to_move": {
+    "baseline": null,
+    "probing_bias": "probing",
+    "focus_bias": "focus",
+    "telling_bias": "telling",
+    "generic_bias": "generic"
+  },
+  "results_by_arm": {
+    "baseline": {
+      "examples": 1850,
+      "override_count": 0,
+      "override_rate": 0.0,
+      "unchanged_count": 1850,
+      "already_preferred_count": 0,
+      "blocked_by_gap_count": 0,
+      "final_move_counts": {
+        "generic": 405,
+        "probing": 342,
+        "focus": 675,
+        "telling": 428
+      },
+      "route_override_counts": {},
+      "mean_gap_when_overridden": null,
+      "max_gap_when_overridden": null,
+      "mean_gap_when_blocked": null,
+      "sample_overrides": []
+    },
+    "probing_bias": {
+      "examples": 1850,
+      "override_count": 238,
+      "override_rate": 0.12864864864864864,
+      "unchanged_count": 1612,
+      "already_preferred_count": 342,
+      "blocked_by_gap_count": 1270,
+      "final_move_counts": {
+        "generic": 383,
+        "probing": 580,
+        "focus": 523,
+        "telling": 364
+      },
+      "route_override_counts": {
+        "short_md4": 211,
+        "long_md3": 27
+      },
+      "mean_gap_when_overridden": 0.08542847126584344,
+      "max_gap_when_overridden": 0.14971893802704006,
+      "mean_gap_when_blocked": 0.42231213747653834,
+      "sample_overrides": [
+        {
+          "example_id": "mathdial_0016_turn_004",
+          "route": "short_md4",
+          "base_move": "focus",
+          "preferred_move": "probing",
+          "final_move": "probing",
+          "probability_gap": 0.07777485570134007,
+          "probabilities": {
+            "generic": 0.03940931124054799,
+            "probing": 0.42593179898429584,
+            "focus": 0.5037066546856359,
+            "telling": 0.030952235089520313
+          }
+        },
+        {
+          "example_id": "mathdial_0016_turn_006",
+          "route": "short_md4",
+          "base_move": "focus",
+          "preferred_move": "probing",
+          "final_move": "probing",
+          "probability_gap": 0.12753382420192527,
+          "probabilities": {
+            "generic": 0.04180201919229343,
+            "probing": 0.3990907996825188,
+            "focus": 0.5266246238844441,
+            "telling": 0.032482557240743615
+          }
+        },
+        {
+          "example_id": "mathdial_0024_turn_010",
+          "route": "short_md4",
+          "base_move": "focus",
+          "preferred_move": "probing",
+          "final_move": "probing",
+          "probability_gap": 0.02813476449853619,
+          "probabilities": {
+            "generic": 0.14492931119781632,
+            "probing": 0.2961342467129639,
+            "focus": 0.3242690112115001,
+            "telling": 0.2346674308777197
+          }
+        },
+        {
+          "example_id": "mathdial_0034_turn_006",
+          "route": "short_md4",
+          "base_move": "focus",
+          "preferred_move": "probing",
+          "final_move": "probing",
+          "probability_gap": 0.14046606526126015,
+          "probabilities": {
+            "generic": 0.033748187376172745,
+            "probing": 0.35395443703200247,
+            "focus": 0.4944205022932626,
+            "telling": 0.11787687329856211
+          }
+        },
+        {
+          "example_id": "mathdial_0034_turn_008",
+          "route": "short_md4",
+          "base_move": "focus",
+          "preferred_move": "probing",
+          "final_move": "probing",
+          "probability_gap": 0.1319574669464782,
+          "probabilities": {
+            "generic": 0.04061615703424285,
+            "probing": 0.3045347826897612,
+            "focus": 0.4364922496362394,
+            "telling": 0.21835681063975657
+          }
+        }
+      ]
+    },
+    "focus_bias": {
+      "examples": 1850,
+      "override_count": 312,
+      "override_rate": 0.16864864864864865,
+      "unchanged_count": 1538,
+      "already_preferred_count": 675,
+      "blocked_by_gap_count": 863,
+      "final_move_counts": {
+        "generic": 364,
+        "focus": 987,
+        "probing": 228,
+        "telling": 271
+      },
+      "route_override_counts": {
+        "short_md4": 227,
+        "long_md3": 85
+      },
+      "mean_gap_when_overridden": 0.07639034292873105,
+      "max_gap_when_overridden": 0.14919353198380164,
+      "mean_gap_when_blocked": 0.47541785502131106,
+      "sample_overrides": [
+        {
+          "example_id": "mathdial_0016_turn_002",
+          "route": "short_md4",
+          "base_move": "probing",
+          "preferred_move": "focus",
+          "final_move": "focus",
+          "probability_gap": 0.13690116287538306,
+          "probabilities": {
+            "generic": 0.05481134814262809,
+            "probing": 0.5276154004535988,
+            "focus": 0.3907142375782157,
+            "telling": 0.026859013825557405
+          }
+        },
+        {
+          "example_id": "mathdial_0016_turn_016",
+          "route": "long_md3",
+          "base_move": "generic",
+          "preferred_move": "focus",
+          "final_move": "focus",
+          "probability_gap": 0.13064574678583046,
+          "probabilities": {
+            "generic": 0.36179548217322544,
+            "probing": 0.051476631423580006,
+            "focus": 0.23114973538739497,
+            "telling": 0.3555781510157996
+          }
+        },
+        {
+          "example_id": "mathdial_0021_turn_008",
+          "route": "short_md4",
+          "base_move": "telling",
+          "preferred_move": "focus",
+          "final_move": "focus",
+          "probability_gap": 0.018933325582742855,
+          "probabilities": {
+            "generic": 0.15447777164404605,
+            "probing": 0.09878187405805572,
+            "focus": 0.3639035143575777,
+            "telling": 0.38283683994032053
+          }
+        },
+        {
+          "example_id": "mathdial_0024_turn_006",
+          "route": "short_md4",
+          "base_move": "probing",
+          "preferred_move": "focus",
+          "final_move": "focus",
+          "probability_gap": 0.048609643088065646,
+          "probabilities": {
+            "generic": 0.07702285624244386,
+            "probing": 0.4139301684365384,
+            "focus": 0.36532052534847276,
+            "telling": 0.143726449972545
+          }
+        },
+        {
+          "example_id": "mathdial_0024_turn_008",
+          "route": "short_md4",
+          "base_move": "probing",
+          "preferred_move": "focus",
+          "final_move": "focus",
+          "probability_gap": 0.015596001178324104,
+          "probabilities": {
+            "generic": 0.1384752885643178,
+            "probing": 0.3405983790309445,
+            "focus": 0.32500237785262037,
+            "telling": 0.1959239545521174
+          }
+        }
+      ]
+    },
+    "telling_bias": {
+      "examples": 1850,
+      "override_count": 244,
+      "override_rate": 0.1318918918918919,
+      "unchanged_count": 1606,
+      "already_preferred_count": 428,
+      "blocked_by_gap_count": 1178,
+      "final_move_counts": {
+        "generic": 340,
+        "probing": 299,
+        "focus": 539,
+        "telling": 672
+      },
+      "route_override_counts": {
+        "long_md3": 85,
+        "short_md4": 159
+      },
+      "mean_gap_when_overridden": 0.07506027535924796,
+      "max_gap_when_overridden": 0.14979505315728409,
+      "mean_gap_when_blocked": 0.5102088871355289,
+      "sample_overrides": [
+        {
+          "example_id": "mathdial_0016_turn_014",
+          "route": "long_md3",
+          "base_move": "focus",
+          "preferred_move": "telling",
+          "final_move": "telling",
+          "probability_gap": 0.04526060870208526,
+          "probabilities": {
+            "generic": 0.31570473666159143,
+            "probing": 0.057423968509852534,
+            "focus": 0.33606595176532067,
+            "telling": 0.2908053430632354
+          }
+        },
+        {
+          "example_id": "mathdial_0016_turn_016",
+          "route": "long_md3",
+          "base_move": "generic",
+          "preferred_move": "telling",
+          "final_move": "telling",
+          "probability_gap": 0.006217331157425843,
+          "probabilities": {
+            "generic": 0.36179548217322544,
+            "probing": 0.051476631423580006,
+            "focus": 0.23114973538739497,
+            "telling": 0.3555781510157996
+          }
+        },
+        {
+          "example_id": "mathdial_0024_turn_008",
+          "route": "short_md4",
+          "base_move": "probing",
+          "preferred_move": "telling",
+          "final_move": "telling",
+          "probability_gap": 0.14467442447882709,
+          "probabilities": {
+            "generic": 0.1384752885643178,
+            "probing": 0.3405983790309445,
+            "focus": 0.32500237785262037,
+            "telling": 0.1959239545521174
+          }
+        },
+        {
+          "example_id": "mathdial_0024_turn_010",
+          "route": "short_md4",
+          "base_move": "focus",
+          "preferred_move": "telling",
+          "final_move": "telling",
+          "probability_gap": 0.08960158033378038,
+          "probabilities": {
+            "generic": 0.14492931119781632,
+            "probing": 0.2961342467129639,
+            "focus": 0.3242690112115001,
+            "telling": 0.2346674308777197
+          }
+        },
+        {
+          "example_id": "mathdial_0043_turn_006",
+          "route": "short_md4",
+          "base_move": "focus",
+          "preferred_move": "telling",
+          "final_move": "telling",
+          "probability_gap": 0.01877555251121521,
+          "probabilities": {
+            "generic": 0.1898883581161499,
+            "probing": 0.1709860861301422,
+            "focus": 0.32895055413246155,
+            "telling": 0.31017500162124634
+          }
+        }
+      ]
+    },
+    "generic_bias": {
+      "examples": 1850,
+      "override_count": 162,
+      "override_rate": 0.08756756756756756,
+      "unchanged_count": 1688,
+      "already_preferred_count": 405,
+      "blocked_by_gap_count": 1283,
+      "final_move_counts": {
+        "generic": 567,
+        "probing": 323,
+        "focus": 622,
+        "telling": 338
+      },
+      "route_override_counts": {
+        "long_md3": 69,
+        "short_md4": 93
+      },
+      "mean_gap_when_overridden": 0.08681853376838765,
+      "max_gap_when_overridden": 0.14968436358477855,
+      "mean_gap_when_blocked": 0.4228514268587906,
+      "sample_overrides": [
+        {
+          "example_id": "mathdial_0016_turn_014",
+          "route": "long_md3",
+          "base_move": "focus",
+          "preferred_move": "generic",
+          "final_move": "generic",
+          "probability_gap": 0.020361215103729235,
+          "probabilities": {
+            "generic": 0.31570473666159143,
+            "probing": 0.057423968509852534,
+            "focus": 0.33606595176532067,
+            "telling": 0.2908053430632354
+          }
+        },
+        {
+          "example_id": "mathdial_0043_turn_006",
+          "route": "short_md4",
+          "base_move": "focus",
+          "preferred_move": "generic",
+          "final_move": "generic",
+          "probability_gap": 0.13906219601631165,
+          "probabilities": {
+            "generic": 0.1898883581161499,
+            "probing": 0.1709860861301422,
+            "focus": 0.32895055413246155,
+            "telling": 0.31017500162124634
+          }
+        },
+        {
+          "example_id": "mathdial_0052_turn_016",
+          "route": "long_md3",
+          "base_move": "telling",
+          "preferred_move": "generic",
+          "final_move": "generic",
+          "probability_gap": 0.08468192878873593,
+          "probabilities": {
+            "generic": 0.3218426728385886,
+            "probing": 0.11016511254135603,
+            "focus": 0.16146761299273082,
+            "telling": 0.4065246016273245
+          }
+        },
+        {
+          "example_id": "mathdial_0072_turn_004",
+          "route": "short_md4",
+          "base_move": "focus",
+          "preferred_move": "generic",
+          "final_move": "generic",
+          "probability_gap": 0.14404231739170306,
+          "probabilities": {
+            "generic": 0.22743955932377455,
+            "probing": 0.07489013895065007,
+            "focus": 0.3714818767154776,
+            "telling": 0.32618842501009776
+          }
+        },
+        {
+          "example_id": "mathdial_0210_turn_013",
+          "route": "long_md3",
+          "base_move": "telling",
+          "preferred_move": "generic",
+          "final_move": "generic",
+          "probability_gap": 0.08724814523386737,
+          "probabilities": {
+            "generic": 0.2724938650057634,
+            "probing": 0.08889339731792513,
+            "focus": 0.2788707274366807,
+            "telling": 0.35974201023963076
+          }
+        }
+      ]
+    }
+  },
+  "total_blocked_proposals": 4594,
+  "validation_passed": true
+}

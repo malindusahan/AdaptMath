@@ -1,0 +1,819 @@
+{
+  "experiment": "AdaptMath GenAI Router unseen validation",
+  "timestamp_utc": "2026-08-22T07:10:50.205064+00:00",
+  "model": "openai/gpt-oss-120b",
+  "methodology": {
+    "description": "Frozen holdout behavioral validation of the Router after V3 development.",
+    "validation_status": "unseen holdout; Router prompt and benchmark must not be tuned from these results",
+    "benchmark_fingerprint_sha256": "ee976a18ac5451639a5ee1f8c51897f49a740b0a8d688f66ff9bf360db85687e",
+    "router_source_sha256": "76048a6c095d3b7d61d1036b3ba914f26db765c2a1e2d66d8fd29e3222021094",
+    "development_question_exact_overlap": false,
+    "gold_route_labels_used": false,
+    "why_no_accuracy_metric": "The three AdaptMath workflows do not have independently established ground-truth route labels. Assigning labels ourselves would create circular evidence.",
+    "evaluated_properties": [
+      "structured route validity",
+      "repeated-run stability",
+      "problem-complexity sensitivity under controlled learner context",
+      "learner-context sensitivity while holding the mathematical problem and complexity score constant",
+      "latency",
+      "qualitative grounding of Router reasons"
+    ],
+    "workflow_depth_definition": {
+      "direct_tutor": 1,
+      "planned_tutor": 2,
+      "planned_tutor_evaluate": 3
+    },
+    "workflow_depth_note": "Workflow depth is used only for directional sensitivity analysis. It does not imply that a deeper route is universally more correct.",
+    "limitations": [
+      "This remains a small controlled holdout rather than a population-level routing benchmark.",
+      "No independent expert-labelled optimal workflow dataset exists for these custom workflows.",
+      "The mathematical complexity model is itself an estimated signal and has known generalization limitations.",
+      "Hosted-model behavior may vary across provider or model versions.",
+      "Router reasons require manual qualitative grounding review after the quantitative run, without prompt retuning."
+    ]
+  },
+  "summary": {
+    "number_of_cases": 12,
+    "repeats_per_case": 3,
+    "total_router_calls": 36,
+    "call_success_rate": 1.0,
+    "valid_route_rate": 1.0,
+    "mean_repeat_stability": 1.0,
+    "unanimous_case_rate": 1.0,
+    "unique_modal_route_case_rate": 1.0,
+    "route_distribution": {
+      "direct_tutor": 27,
+      "planned_tutor_evaluate": 9
+    },
+    "mean_latency_seconds": 3.7076564916577706,
+    "median_latency_seconds": 2.25931504991604,
+    "maximum_latency_seconds": 16.76547840004787
+  },
+  "problem_sensitivity": {
+    "number_of_problem_cases": 6,
+    "usable_unique_modal_cases": 6,
+    "distinct_modal_routes": [
+      "direct_tutor"
+    ],
+    "number_of_distinct_modal_routes": 1,
+    "complexity_score_to_workflow_depth_spearman": null,
+    "pairwise_nondecreasing_depth_rate": 1.0,
+    "pairwise_strict_increase_rate": 0.0,
+    "ordered_by_complexity_score": [
+      {
+        "case_id": "unseen_problem_discount",
+        "complexity_score": 0.14205611400457913,
+        "modal_route": "direct_tutor",
+        "workflow_depth": 1
+      },
+      {
+        "case_id": "unseen_problem_division",
+        "complexity_score": 0.18555638147763448,
+        "modal_route": "direct_tutor",
+        "workflow_depth": 1
+      },
+      {
+        "case_id": "unseen_problem_multistep_linear",
+        "complexity_score": 0.22773626903964828,
+        "modal_route": "direct_tutor",
+        "workflow_depth": 1
+      },
+      {
+        "case_id": "unseen_problem_quadratic",
+        "complexity_score": 0.24687340910172675,
+        "modal_route": "direct_tutor",
+        "workflow_depth": 1
+      },
+      {
+        "case_id": "unseen_problem_ratio",
+        "complexity_score": 0.34127432206689173,
+        "modal_route": "direct_tutor",
+        "workflow_depth": 1
+      },
+      {
+        "case_id": "unseen_problem_right_triangle",
+        "complexity_score": 0.38631387374686704,
+        "modal_route": "direct_tutor",
+        "workflow_depth": 1
+      }
+    ],
+    "interpretation_note": "These are sensitivity metrics, not routing accuracy. No gold workflow labels were assigned."
+  },
+  "learner_context_summary": {
+    "number_of_pairs": 3,
+    "comparable_pairs": 3,
+    "route_change_rate": 1.0,
+    "struggling_more_support_rate": 1.0,
+    "struggling_same_or_more_support_rate": 1.0,
+    "interpretation_note": "These controlled pairs measure whether relevant learner evidence affects workflow depth. They are directional behavioral tests, not gold-label routing accuracy."
+  },
+  "learner_context_pairs": [
+    {
+      "strong_case": "unseen_decimal_strong",
+      "struggling_case": "unseen_decimal_struggling",
+      "same_question": true,
+      "same_complexity_score": true,
+      "strong_modal_route": "direct_tutor",
+      "struggling_modal_route": "planned_tutor_evaluate",
+      "strong_workflow_depth": 1,
+      "struggling_workflow_depth": 3,
+      "workflow_depth_difference": 2,
+      "route_changed": true,
+      "struggling_received_more_support": true,
+      "struggling_received_same_or_more_support": true,
+      "comparable": true
+    },
+    {
+      "strong_case": "unseen_proportion_strong",
+      "struggling_case": "unseen_proportion_struggling",
+      "same_question": true,
+      "same_complexity_score": true,
+      "strong_modal_route": "direct_tutor",
+      "struggling_modal_route": "planned_tutor_evaluate",
+      "strong_workflow_depth": 1,
+      "struggling_workflow_depth": 3,
+      "workflow_depth_difference": 2,
+      "route_changed": true,
+      "struggling_received_more_support": true,
+      "struggling_received_same_or_more_support": true,
+      "comparable": true
+    },
+    {
+      "strong_case": "unseen_quadratic_strong",
+      "struggling_case": "unseen_quadratic_struggling",
+      "same_question": true,
+      "same_complexity_score": true,
+      "strong_modal_route": "direct_tutor",
+      "struggling_modal_route": "planned_tutor_evaluate",
+      "strong_workflow_depth": 1,
+      "struggling_workflow_depth": 3,
+      "workflow_depth_difference": 2,
+      "route_changed": true,
+      "struggling_received_more_support": true,
+      "struggling_received_same_or_more_support": true,
+      "comparable": true
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "unseen_problem_division",
+      "group": "problem_sensitivity",
+      "learner_condition": null,
+      "question": "What is 96 divided by 8?",
+      "age": 16,
+      "topic": "arithmetic",
+      "subtopic": "division",
+      "complexity_score": 0.18555638147763448,
+      "runs": [
+        {
+          "repeat": 1,
+          "route": "direct_tutor",
+          "reason": "The problem is a basic division calculation with a low complexity score and no evidence of learner difficulty or misconceptions. Explicit planning would not add value, and a follow‑up assessment would provide little additional insight for such a straightforward task. direct_tutor is therefore appropriate.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 1.2732363999821246
+        },
+        {
+          "repeat": 2,
+          "route": "direct_tutor",
+          "reason": "The problem is a single-step arithmetic division with a low complexity score, requiring only a straightforward explanation. No learner history or prior errors are available, and the task does not involve multiple reasoning steps or hidden misconceptions, so neither planning nor post‑tutoring assessment adds clear value.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 1.138324899948202
+        },
+        {
+          "repeat": 3,
+          "route": "direct_tutor",
+          "reason": "The problem is a basic division calculation with a low complexity score and no supplied learner history or known misconceptions. Explicit pedagogical planning would not add significant value, and a post‑tutoring assessment is unlikely to provide meaningful new evidence for such a straightforward task. direct_tutor is therefore appropriate.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 1.0037763000000268
+        }
+      ],
+      "routes": [
+        "direct_tutor",
+        "direct_tutor",
+        "direct_tutor"
+      ],
+      "reasons": [
+        "The problem is a basic division calculation with a low complexity score and no evidence of learner difficulty or misconceptions. Explicit planning would not add value, and a follow‑up assessment would provide little additional insight for such a straightforward task. direct_tutor is therefore appropriate.",
+        "The problem is a single-step arithmetic division with a low complexity score, requiring only a straightforward explanation. No learner history or prior errors are available, and the task does not involve multiple reasoning steps or hidden misconceptions, so neither planning nor post‑tutoring assessment adds clear value.",
+        "The problem is a basic division calculation with a low complexity score and no supplied learner history or known misconceptions. Explicit pedagogical planning would not add significant value, and a post‑tutoring assessment is unlikely to provide meaningful new evidence for such a straightforward task. direct_tutor is therefore appropriate."
+      ],
+      "modal_route": "direct_tutor",
+      "tied_modal_routes": [
+        "direct_tutor"
+      ],
+      "has_unique_modal_route": true,
+      "modal_workflow_depth": 1,
+      "valid_output_rate": 1.0,
+      "repeat_stability": 1.0,
+      "unanimous": true
+    },
+    {
+      "case_id": "unseen_problem_discount",
+      "group": "problem_sensitivity",
+      "learner_condition": null,
+      "question": "A shirt costs GBP 60 and is reduced by 15%. What is the sale price?",
+      "age": 16,
+      "topic": "percentage",
+      "subtopic": "percentage decrease",
+      "complexity_score": 0.14205611400457913,
+      "runs": [
+        {
+          "repeat": 1,
+          "route": "direct_tutor",
+          "reason": "The problem is a basic percentage decrease with a low complexity score and no evidence of learner difficulty; a single tutoring interaction suffices, and neither explicit planning nor post‑tutoring assessment adds clear value.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 0.866067000082694
+        },
+        {
+          "repeat": 2,
+          "route": "direct_tutor",
+          "reason": "The problem is a basic percentage decrease with a low complexity score and no evidence of learner difficulty; a single tutoring interaction can cover it, and neither explicit planning nor post‑tutoring assessment adds clear value.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 0.9295974000124261
+        },
+        {
+          "repeat": 3,
+          "route": "direct_tutor",
+          "reason": "The problem is a basic percentage decrease with a low complexity score and no evidence of learner difficulty; a single tutoring interaction can cover it, and there is no clear benefit from planning or post‑tutoring assessment.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 0.8826814000494778
+        }
+      ],
+      "routes": [
+        "direct_tutor",
+        "direct_tutor",
+        "direct_tutor"
+      ],
+      "reasons": [
+        "The problem is a basic percentage decrease with a low complexity score and no evidence of learner difficulty; a single tutoring interaction suffices, and neither explicit planning nor post‑tutoring assessment adds clear value.",
+        "The problem is a basic percentage decrease with a low complexity score and no evidence of learner difficulty; a single tutoring interaction can cover it, and neither explicit planning nor post‑tutoring assessment adds clear value.",
+        "The problem is a basic percentage decrease with a low complexity score and no evidence of learner difficulty; a single tutoring interaction can cover it, and there is no clear benefit from planning or post‑tutoring assessment."
+      ],
+      "modal_route": "direct_tutor",
+      "tied_modal_routes": [
+        "direct_tutor"
+      ],
+      "has_unique_modal_route": true,
+      "modal_workflow_depth": 1,
+      "valid_output_rate": 1.0,
+      "repeat_stability": 1.0,
+      "unanimous": true
+    },
+    {
+      "case_id": "unseen_problem_ratio",
+      "group": "problem_sensitivity",
+      "learner_condition": null,
+      "question": "If 4 pens cost GBP 6, how much do 10 pens cost at the same rate?",
+      "age": 16,
+      "topic": "ratio and proportion",
+      "subtopic": "direct proportion",
+      "complexity_score": 0.34127432206689173,
+      "runs": [
+        {
+          "repeat": 1,
+          "route": "direct_tutor",
+          "reason": "The problem is a straightforward direct proportion requiring a single scaling calculation; it does not demand extensive sequencing or multi‑step reasoning. No learner history or known misconceptions are provided, so there is no evidence that planning or a separate assessment would add significant value. Direct tutoring can address the task in one coherent interaction.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 1.2488392000086606
+        },
+        {
+          "repeat": 2,
+          "route": "direct_tutor",
+          "reason": "The problem involves a single-step direct proportion calculation, which can be explained coherently in one tutoring interaction. No learner history indicates difficulty, and the task’s conceptual demands are modest, so a post‑tutoring assessment would not provide significant additional insight.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 1.1223048999672756
+        },
+        {
+          "repeat": 3,
+          "route": "direct_tutor",
+          "reason": "The problem is a straightforward direct proportion (scale 4 pens → £6 to 10 pens) with modest complexity and no supplied learner history or known misconceptions. A single coherent tutoring interaction can cover the concept without needing explicit pedagogical sequencing, and a follow‑up assessment would not provide significant additional insight for this simple task.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 1.1025848999852315
+        }
+      ],
+      "routes": [
+        "direct_tutor",
+        "direct_tutor",
+        "direct_tutor"
+      ],
+      "reasons": [
+        "The problem is a straightforward direct proportion requiring a single scaling calculation; it does not demand extensive sequencing or multi‑step reasoning. No learner history or known misconceptions are provided, so there is no evidence that planning or a separate assessment would add significant value. Direct tutoring can address the task in one coherent interaction.",
+        "The problem involves a single-step direct proportion calculation, which can be explained coherently in one tutoring interaction. No learner history indicates difficulty, and the task’s conceptual demands are modest, so a post‑tutoring assessment would not provide significant additional insight.",
+        "The problem is a straightforward direct proportion (scale 4 pens → £6 to 10 pens) with modest complexity and no supplied learner history or known misconceptions. A single coherent tutoring interaction can cover the concept without needing explicit pedagogical sequencing, and a follow‑up assessment would not provide significant additional insight for this simple task."
+      ],
+      "modal_route": "direct_tutor",
+      "tied_modal_routes": [
+        "direct_tutor"
+      ],
+      "has_unique_modal_route": true,
+      "modal_workflow_depth": 1,
+      "valid_output_rate": 1.0,
+      "repeat_stability": 1.0,
+      "unanimous": true
+    },
+    {
+      "case_id": "unseen_problem_multistep_linear",
+      "group": "problem_sensitivity",
+      "learner_condition": null,
+      "question": "Solve 4(2x - 3) = 3x + 17.",
+      "age": 16,
+      "topic": "algebra",
+      "subtopic": "linear equations",
+      "complexity_score": 0.22773626903964828,
+      "runs": [
+        {
+          "repeat": 1,
+          "route": "direct_tutor",
+          "reason": "The problem is a straightforward linear equation requiring basic distribution and solving steps; its low complexity score and simple algebraic structure mean a single coherent tutoring interaction is sufficient. Learner history is unavailable, providing no evidence of difficulty, and there are no indications of persistent misconceptions. A post‑tutoring assessment would not yield substantially new insight for such a simple task, so direct tutoring without planning or evaluation is appropriate.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 1.424616300035268
+        },
+        {
+          "repeat": 2,
+          "route": "direct_tutor",
+          "reason": "The equation is a straightforward linear equation with low complexity; it can be taught in a single interaction. No learner history is available, but the problem does not demand explicit pedagogical sequencing or a follow‑up assessment to uncover hidden misconceptions. Therefore direct tutoring is sufficient.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 1.2931414999766275
+        },
+        {
+          "repeat": 3,
+          "route": "direct_tutor",
+          "reason": "The equation is a straightforward linear problem requiring basic distribution and solving steps; its low complexity and single‑step nature mean a planner would add little value. Learner history is unavailable, providing no evidence of difficulty, and the problem does not demand a follow‑up assessment to reveal hidden misconceptions. Therefore direct tutoring is sufficient.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 2.708223999943584
+        }
+      ],
+      "routes": [
+        "direct_tutor",
+        "direct_tutor",
+        "direct_tutor"
+      ],
+      "reasons": [
+        "The problem is a straightforward linear equation requiring basic distribution and solving steps; its low complexity score and simple algebraic structure mean a single coherent tutoring interaction is sufficient. Learner history is unavailable, providing no evidence of difficulty, and there are no indications of persistent misconceptions. A post‑tutoring assessment would not yield substantially new insight for such a simple task, so direct tutoring without planning or evaluation is appropriate.",
+        "The equation is a straightforward linear equation with low complexity; it can be taught in a single interaction. No learner history is available, but the problem does not demand explicit pedagogical sequencing or a follow‑up assessment to uncover hidden misconceptions. Therefore direct tutoring is sufficient.",
+        "The equation is a straightforward linear problem requiring basic distribution and solving steps; its low complexity and single‑step nature mean a planner would add little value. Learner history is unavailable, providing no evidence of difficulty, and the problem does not demand a follow‑up assessment to reveal hidden misconceptions. Therefore direct tutoring is sufficient."
+      ],
+      "modal_route": "direct_tutor",
+      "tied_modal_routes": [
+        "direct_tutor"
+      ],
+      "has_unique_modal_route": true,
+      "modal_workflow_depth": 1,
+      "valid_output_rate": 1.0,
+      "repeat_stability": 1.0,
+      "unanimous": true
+    },
+    {
+      "case_id": "unseen_problem_right_triangle",
+      "group": "problem_sensitivity",
+      "learner_condition": null,
+      "question": "A right triangle has legs of 9 cm and 12 cm. Find both its area and the length of its hypotenuse.",
+      "age": 16,
+      "topic": "geometry",
+      "subtopic": "right triangles",
+      "complexity_score": 0.38631387374686704,
+      "runs": [
+        {
+          "repeat": 1,
+          "route": "direct_tutor",
+          "reason": "The problem involves applying two basic formulas (area of a right triangle and the Pythagorean theorem) and does not require extensive sequencing or scaffolding. The moderate complexity score and lack of any learner history mean there is no clear need for a pedagogical plan, and a post‑tutoring assessment would not add substantial new insight for such a straightforward task.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 2.6650484999408945
+        },
+        {
+          "repeat": 2,
+          "route": "direct_tutor",
+          "reason": "The problem requires applying two basic formulas (area of a right triangle and the Pythagorean theorem) in a single, straightforward tutoring interaction. The moderate complexity score and lack of any learner history or known misconceptions mean that explicit pedagogical planning would add little benefit, and a post‑tutoring assessment is not essential for gaining new evidence of understanding.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 3.0174930000212044
+        },
+        {
+          "repeat": 3,
+          "route": "direct_tutor",
+          "reason": "The problem involves a single geometric concept (right‑triangle area and Pythagorean theorem) with a straightforward two‑step solution, and the complexity score is moderate. Learner information is unavailable, providing no evidence of prior difficulty or misconception. Because the task can be taught clearly in one interaction and there is no clear need to verify understanding after tutoring, the simplest workflow suffices.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 2.5357499999227002
+        }
+      ],
+      "routes": [
+        "direct_tutor",
+        "direct_tutor",
+        "direct_tutor"
+      ],
+      "reasons": [
+        "The problem involves applying two basic formulas (area of a right triangle and the Pythagorean theorem) and does not require extensive sequencing or scaffolding. The moderate complexity score and lack of any learner history mean there is no clear need for a pedagogical plan, and a post‑tutoring assessment would not add substantial new insight for such a straightforward task.",
+        "The problem requires applying two basic formulas (area of a right triangle and the Pythagorean theorem) in a single, straightforward tutoring interaction. The moderate complexity score and lack of any learner history or known misconceptions mean that explicit pedagogical planning would add little benefit, and a post‑tutoring assessment is not essential for gaining new evidence of understanding.",
+        "The problem involves a single geometric concept (right‑triangle area and Pythagorean theorem) with a straightforward two‑step solution, and the complexity score is moderate. Learner information is unavailable, providing no evidence of prior difficulty or misconception. Because the task can be taught clearly in one interaction and there is no clear need to verify understanding after tutoring, the simplest workflow suffices."
+      ],
+      "modal_route": "direct_tutor",
+      "tied_modal_routes": [
+        "direct_tutor"
+      ],
+      "has_unique_modal_route": true,
+      "modal_workflow_depth": 1,
+      "valid_output_rate": 1.0,
+      "repeat_stability": 1.0,
+      "unanimous": true
+    },
+    {
+      "case_id": "unseen_problem_quadratic",
+      "group": "problem_sensitivity",
+      "learner_condition": null,
+      "question": "Solve 2x^2 - 7x - 4 = 0.",
+      "age": 16,
+      "topic": "algebra",
+      "subtopic": "quadratic equations",
+      "complexity_score": 0.24687340910172675,
+      "runs": [
+        {
+          "repeat": 1,
+          "route": "direct_tutor",
+          "reason": "The quadratic equation is a standard, single‑step problem with a low complexity score and no evidence of learner difficulty; explicit planning would not add significant pedagogical value, and a follow‑up assessment is unlikely to provide essential new insight. Hence direct_tutor is appropriate.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 16.76547840004787
+        },
+        {
+          "repeat": 2,
+          "route": "direct_tutor",
+          "reason": "The task is a standard quadratic‑equation solve (identify a, b, c, compute discriminant, apply formula). The problem‑side evidence shows a single coherent teaching sequence with modest complexity. Learner‑side evidence is unknown (no history, no prior errors). Neither explicit planning nor a follow‑up assessment would add clear pedagogical benefit for this straightforward problem, so the simplest workflow suffices.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 1.727288999943994
+        },
+        {
+          "repeat": 3,
+          "route": "direct_tutor",
+          "reason": "The quadratic equation can be addressed in a single, coherent tutoring interaction; it does not require extensive sequencing of concepts. Learner history is unavailable, providing no evidence of prior difficulty, and the problem’s modest complexity does not create a clear need for a follow‑up assessment to reveal hidden misconceptions. Therefore, direct_tutor is sufficient.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 14.36202310002409
+        }
+      ],
+      "routes": [
+        "direct_tutor",
+        "direct_tutor",
+        "direct_tutor"
+      ],
+      "reasons": [
+        "The quadratic equation is a standard, single‑step problem with a low complexity score and no evidence of learner difficulty; explicit planning would not add significant pedagogical value, and a follow‑up assessment is unlikely to provide essential new insight. Hence direct_tutor is appropriate.",
+        "The task is a standard quadratic‑equation solve (identify a, b, c, compute discriminant, apply formula). The problem‑side evidence shows a single coherent teaching sequence with modest complexity. Learner‑side evidence is unknown (no history, no prior errors). Neither explicit planning nor a follow‑up assessment would add clear pedagogical benefit for this straightforward problem, so the simplest workflow suffices.",
+        "The quadratic equation can be addressed in a single, coherent tutoring interaction; it does not require extensive sequencing of concepts. Learner history is unavailable, providing no evidence of prior difficulty, and the problem’s modest complexity does not create a clear need for a follow‑up assessment to reveal hidden misconceptions. Therefore, direct_tutor is sufficient."
+      ],
+      "modal_route": "direct_tutor",
+      "tied_modal_routes": [
+        "direct_tutor"
+      ],
+      "has_unique_modal_route": true,
+      "modal_workflow_depth": 1,
+      "valid_output_rate": 1.0,
+      "repeat_stability": 1.0,
+      "unanimous": true
+    },
+    {
+      "case_id": "unseen_decimal_strong",
+      "group": "learner_context_decimal",
+      "learner_condition": "strong",
+      "question": "Calculate 6.4 - 2.75.",
+      "age": 11,
+      "topic": "decimals",
+      "subtopic": "decimal subtraction",
+      "complexity_score": 0.3787744139511432,
+      "runs": [
+        {
+          "repeat": 1,
+          "route": "direct_tutor",
+          "reason": "The problem is a single-step decimal subtraction (6.4 − 2.75) with a moderate complexity score and no inherent need for extensive sequencing. The learner, age 11, has a record of successful recent decimal addition and subtraction attempts and no reported errors, indicating competence with this subtopic. Because the task is straightforward and the learner’s history shows proficiency, a post‑tutoring assessment would provide little additional diagnostic value. Therefore, direct tutoring without prior planning or follow‑up evaluation is appropriate.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 2.325202099978924
+        },
+        {
+          "repeat": 2,
+          "route": "direct_tutor",
+          "reason": "The task is a single-step decimal subtraction (6.4 − 2.75) with a moderate complexity score and no inherent need for multi‑stage sequencing. The learner, age 11, has a record of successful recent decimal addition/subtraction attempts and no documented errors, indicating competence with this subtopic. Because the problem is straightforward and the learner’s history shows proficiency, a post‑tutoring assessment would provide little additional diagnostic value. Therefore, direct tutoring without prior planning or evaluation is sufficient.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 14.569443400017917
+        },
+        {
+          "repeat": 3,
+          "route": "direct_tutor",
+          "reason": "The problem is a single-step decimal subtraction with a moderate complexity score and no inherent need for extensive sequencing. The learner (age 11) has a history of successful decimal operations and no recorded errors, indicating competence with this subtopic. Because the task is straightforward and the learner has demonstrated proficiency, a planner would add little value, and a post‑tutoring assessment is unlikely to provide meaningful new evidence. Therefore, direct_tutor is the appropriate workflow.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 2.3187870999099687
+        }
+      ],
+      "routes": [
+        "direct_tutor",
+        "direct_tutor",
+        "direct_tutor"
+      ],
+      "reasons": [
+        "The problem is a single-step decimal subtraction (6.4 − 2.75) with a moderate complexity score and no inherent need for extensive sequencing. The learner, age 11, has a record of successful recent decimal addition and subtraction attempts and no reported errors, indicating competence with this subtopic. Because the task is straightforward and the learner’s history shows proficiency, a post‑tutoring assessment would provide little additional diagnostic value. Therefore, direct tutoring without prior planning or follow‑up evaluation is appropriate.",
+        "The task is a single-step decimal subtraction (6.4 − 2.75) with a moderate complexity score and no inherent need for multi‑stage sequencing. The learner, age 11, has a record of successful recent decimal addition/subtraction attempts and no documented errors, indicating competence with this subtopic. Because the problem is straightforward and the learner’s history shows proficiency, a post‑tutoring assessment would provide little additional diagnostic value. Therefore, direct tutoring without prior planning or evaluation is sufficient.",
+        "The problem is a single-step decimal subtraction with a moderate complexity score and no inherent need for extensive sequencing. The learner (age 11) has a history of successful decimal operations and no recorded errors, indicating competence with this subtopic. Because the task is straightforward and the learner has demonstrated proficiency, a planner would add little value, and a post‑tutoring assessment is unlikely to provide meaningful new evidence. Therefore, direct_tutor is the appropriate workflow."
+      ],
+      "modal_route": "direct_tutor",
+      "tied_modal_routes": [
+        "direct_tutor"
+      ],
+      "has_unique_modal_route": true,
+      "modal_workflow_depth": 1,
+      "valid_output_rate": 1.0,
+      "repeat_stability": 1.0,
+      "unanimous": true
+    },
+    {
+      "case_id": "unseen_decimal_struggling",
+      "group": "learner_context_decimal",
+      "learner_condition": "struggling",
+      "question": "Calculate 6.4 - 2.75.",
+      "age": 11,
+      "topic": "decimals",
+      "subtopic": "decimal subtraction",
+      "complexity_score": 0.3787744139511432,
+      "runs": [
+        {
+          "repeat": 1,
+          "route": "planned_tutor_evaluate",
+          "reason": "The subtraction of decimals is a straightforward single-step task, but the learner has a documented difficulty repeatedly misaligning decimal places, with prior errors and targeted teaching already applied. A pedagogical plan can explicitly address this misconception, and a follow‑up assessment would provide meaningful evidence that the learner can now correctly align and subtract decimals, enabling remediation if needed.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 1.342547900043428
+        },
+        {
+          "repeat": 2,
+          "route": "planned_tutor_evaluate",
+          "reason": "The subtraction problem is straightforward, but the learner has a documented difficulty misaligning decimal places and a recent error of aligning digits without aligning the decimal point. A planner can create a targeted sequence to address this specific misconception, and a follow‑up assessment would provide valuable evidence that the learner has corrected the alignment skill.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 2.49479559995234
+        },
+        {
+          "repeat": 3,
+          "route": "planned_tutor_evaluate",
+          "reason": "The problem involves decimal subtraction that requires careful alignment of place values; while its intrinsic complexity is moderate, the learner has a documented recurring difficulty misaligning decimal places despite prior explanations and worked examples. Explicit pedagogical planning can target this misconception, and a follow‑up assessment would provide essential evidence that the learner can now apply the correct alignment independently.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 2.499769899994135
+        }
+      ],
+      "routes": [
+        "planned_tutor_evaluate",
+        "planned_tutor_evaluate",
+        "planned_tutor_evaluate"
+      ],
+      "reasons": [
+        "The subtraction of decimals is a straightforward single-step task, but the learner has a documented difficulty repeatedly misaligning decimal places, with prior errors and targeted teaching already applied. A pedagogical plan can explicitly address this misconception, and a follow‑up assessment would provide meaningful evidence that the learner can now correctly align and subtract decimals, enabling remediation if needed.",
+        "The subtraction problem is straightforward, but the learner has a documented difficulty misaligning decimal places and a recent error of aligning digits without aligning the decimal point. A planner can create a targeted sequence to address this specific misconception, and a follow‑up assessment would provide valuable evidence that the learner has corrected the alignment skill.",
+        "The problem involves decimal subtraction that requires careful alignment of place values; while its intrinsic complexity is moderate, the learner has a documented recurring difficulty misaligning decimal places despite prior explanations and worked examples. Explicit pedagogical planning can target this misconception, and a follow‑up assessment would provide essential evidence that the learner can now apply the correct alignment independently."
+      ],
+      "modal_route": "planned_tutor_evaluate",
+      "tied_modal_routes": [
+        "planned_tutor_evaluate"
+      ],
+      "has_unique_modal_route": true,
+      "modal_workflow_depth": 3,
+      "valid_output_rate": 1.0,
+      "repeat_stability": 1.0,
+      "unanimous": true
+    },
+    {
+      "case_id": "unseen_proportion_strong",
+      "group": "learner_context_proportion",
+      "learner_condition": "strong",
+      "question": "A recipe uses 3 cups of flour for 8 muffins. How many cups of flour are needed for 20 muffins at the same rate?",
+      "age": 13,
+      "topic": "ratio and proportion",
+      "subtopic": "direct proportion",
+      "complexity_score": 0.17369386233195883,
+      "runs": [
+        {
+          "repeat": 1,
+          "route": "direct_tutor",
+          "reason": "The problem is a straightforward direct‑proportion calculation with a low complexity score, and the learner has a documented record of successfully solving similar direct‑proportion tasks. No prior errors or misconceptions are indicated, and a post‑tutoring assessment would add little new evidence. Therefore, a single tutoring interaction without prior planning or evaluation is sufficient.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 2.1998429999221116
+        },
+        {
+          "repeat": 2,
+          "route": "direct_tutor",
+          "reason": "The problem is a straightforward direct‑proportion calculation with a low complexity signal, and the learner has a documented record of successfully solving similar direct‑proportion tasks. No hidden multi‑step reasoning or known misconceptions are indicated, so a single tutoring interaction suffices without additional planning or post‑tutoring assessment.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 1.2099434999981895
+        },
+        {
+          "repeat": 3,
+          "route": "direct_tutor",
+          "reason": "The problem is a straightforward direct‑proportion calculation with a low complexity signal, and the learner has a documented record of successfully solving similar direct‑proportion tasks. No evident misconceptions or prior difficulties are present, so explicit pedagogical planning would add little value, and a post‑tutoring assessment is unlikely to provide meaningful new evidence. direct_tutor is therefore appropriate.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 2.3491769999964163
+        }
+      ],
+      "routes": [
+        "direct_tutor",
+        "direct_tutor",
+        "direct_tutor"
+      ],
+      "reasons": [
+        "The problem is a straightforward direct‑proportion calculation with a low complexity score, and the learner has a documented record of successfully solving similar direct‑proportion tasks. No prior errors or misconceptions are indicated, and a post‑tutoring assessment would add little new evidence. Therefore, a single tutoring interaction without prior planning or evaluation is sufficient.",
+        "The problem is a straightforward direct‑proportion calculation with a low complexity signal, and the learner has a documented record of successfully solving similar direct‑proportion tasks. No hidden multi‑step reasoning or known misconceptions are indicated, so a single tutoring interaction suffices without additional planning or post‑tutoring assessment.",
+        "The problem is a straightforward direct‑proportion calculation with a low complexity signal, and the learner has a documented record of successfully solving similar direct‑proportion tasks. No evident misconceptions or prior difficulties are present, so explicit pedagogical planning would add little value, and a post‑tutoring assessment is unlikely to provide meaningful new evidence. direct_tutor is therefore appropriate."
+      ],
+      "modal_route": "direct_tutor",
+      "tied_modal_routes": [
+        "direct_tutor"
+      ],
+      "has_unique_modal_route": true,
+      "modal_workflow_depth": 1,
+      "valid_output_rate": 1.0,
+      "repeat_stability": 1.0,
+      "unanimous": true
+    },
+    {
+      "case_id": "unseen_proportion_struggling",
+      "group": "learner_context_proportion",
+      "learner_condition": "struggling",
+      "question": "A recipe uses 3 cups of flour for 8 muffins. How many cups of flour are needed for 20 muffins at the same rate?",
+      "age": 13,
+      "topic": "ratio and proportion",
+      "subtopic": "direct proportion",
+      "complexity_score": 0.17369386233195883,
+      "runs": [
+        {
+          "repeat": 1,
+          "route": "planned_tutor_evaluate",
+          "reason": "The problem is a straightforward direct proportion (low complexity), but the learner has a documented misconception about proportional reasoning (treating changes additively) and a prior error. Planning can structure instruction to target this specific difficulty, and a follow‑up assessment would provide essential evidence that the misconception has been corrected. Therefore both planning and post‑tutoring verification add meaningful value.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 1.1261898999800906
+        },
+        {
+          "repeat": 2,
+          "route": "planned_tutor_evaluate",
+          "reason": "The problem is a straightforward direct‑proportion calculation, but the learner has a documented difficulty treating proportional changes additively and has previously made that error. A planner can structure a lesson that explicitly addresses this misconception (e.g., using ratio tables, multiplicative reasoning). Because the learner’s misunderstanding is known, a short post‑tutoring assessment would provide meaningful evidence of whether the concept has been corrected and allow remediation if needed. Hence, a planned tutoring session with subsequent evaluation is appropriate.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 16.699347599991597
+        },
+        {
+          "repeat": 3,
+          "route": "planned_tutor_evaluate",
+          "reason": "The problem is a simple direct proportion (low complexity), but the learner has a documented misconception about proportional reasoning (treating changes additively) and a prior error of adding differences instead of scaling. Planning can explicitly target this misconception, and a follow‑up assessment would provide valuable evidence that the learner has corrected the error before moving on.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 2.353698300081305
+        }
+      ],
+      "routes": [
+        "planned_tutor_evaluate",
+        "planned_tutor_evaluate",
+        "planned_tutor_evaluate"
+      ],
+      "reasons": [
+        "The problem is a straightforward direct proportion (low complexity), but the learner has a documented misconception about proportional reasoning (treating changes additively) and a prior error. Planning can structure instruction to target this specific difficulty, and a follow‑up assessment would provide essential evidence that the misconception has been corrected. Therefore both planning and post‑tutoring verification add meaningful value.",
+        "The problem is a straightforward direct‑proportion calculation, but the learner has a documented difficulty treating proportional changes additively and has previously made that error. A planner can structure a lesson that explicitly addresses this misconception (e.g., using ratio tables, multiplicative reasoning). Because the learner’s misunderstanding is known, a short post‑tutoring assessment would provide meaningful evidence of whether the concept has been corrected and allow remediation if needed. Hence, a planned tutoring session with subsequent evaluation is appropriate.",
+        "The problem is a simple direct proportion (low complexity), but the learner has a documented misconception about proportional reasoning (treating changes additively) and a prior error of adding differences instead of scaling. Planning can explicitly target this misconception, and a follow‑up assessment would provide valuable evidence that the learner has corrected the error before moving on."
+      ],
+      "modal_route": "planned_tutor_evaluate",
+      "tied_modal_routes": [
+        "planned_tutor_evaluate"
+      ],
+      "has_unique_modal_route": true,
+      "modal_workflow_depth": 3,
+      "valid_output_rate": 1.0,
+      "repeat_stability": 1.0,
+      "unanimous": true
+    },
+    {
+      "case_id": "unseen_quadratic_strong",
+      "group": "learner_context_quadratic",
+      "learner_condition": "strong",
+      "question": "Solve x^2 + x - 12 = 0.",
+      "age": 16,
+      "topic": "algebra",
+      "subtopic": "quadratic equations",
+      "complexity_score": 0.23317064843745822,
+      "runs": [
+        {
+          "repeat": 1,
+          "route": "direct_tutor",
+          "reason": "The quadratic is a straightforward factoring problem with low complexity, and the learner (age 16) has recent successful experience solving similar equations using factoring. No prior errors are recorded, and the task does not demand multi‑step reasoning or justification that would benefit from a detailed pedagogical plan or post‑tutoring assessment. Therefore direct tutoring is sufficient.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 1.3456979000475258
+        },
+        {
+          "repeat": 2,
+          "route": "direct_tutor",
+          "reason": "The quadratic is simple to factor, the complexity score is low, and the learner has recent successful experience with similar factoring tasks and no known misconceptions. Planning would add little, and a follow‑up assessment would not provide meaningful new evidence. direct_tutor is appropriate.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 0.9125332999974489
+        },
+        {
+          "repeat": 3,
+          "route": "direct_tutor",
+          "reason": "The quadratic is a straightforward factoring problem with low complexity, and the learner (age 16) has recently succeeded at similar tasks using factoring. No prior errors or misconceptions are reported, and a post‑tutoring check would add little new evidence. Hence a simple direct tutoring interaction is sufficient.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 2.694471800001338
+        }
+      ],
+      "routes": [
+        "direct_tutor",
+        "direct_tutor",
+        "direct_tutor"
+      ],
+      "reasons": [
+        "The quadratic is a straightforward factoring problem with low complexity, and the learner (age 16) has recent successful experience solving similar equations using factoring. No prior errors are recorded, and the task does not demand multi‑step reasoning or justification that would benefit from a detailed pedagogical plan or post‑tutoring assessment. Therefore direct tutoring is sufficient.",
+        "The quadratic is simple to factor, the complexity score is low, and the learner has recent successful experience with similar factoring tasks and no known misconceptions. Planning would add little, and a follow‑up assessment would not provide meaningful new evidence. direct_tutor is appropriate.",
+        "The quadratic is a straightforward factoring problem with low complexity, and the learner (age 16) has recently succeeded at similar tasks using factoring. No prior errors or misconceptions are reported, and a post‑tutoring check would add little new evidence. Hence a simple direct tutoring interaction is sufficient."
+      ],
+      "modal_route": "direct_tutor",
+      "tied_modal_routes": [
+        "direct_tutor"
+      ],
+      "has_unique_modal_route": true,
+      "modal_workflow_depth": 1,
+      "valid_output_rate": 1.0,
+      "repeat_stability": 1.0,
+      "unanimous": true
+    },
+    {
+      "case_id": "unseen_quadratic_struggling",
+      "group": "learner_context_quadratic",
+      "learner_condition": "struggling",
+      "question": "Solve x^2 + x - 12 = 0.",
+      "age": 16,
+      "topic": "algebra",
+      "subtopic": "quadratic equations",
+      "complexity_score": 0.23317064843745822,
+      "runs": [
+        {
+          "repeat": 1,
+          "route": "planned_tutor_evaluate",
+          "reason": "Problem is a straightforward quadratic factoring task (low complexity, single-step solution). Learner history shows a specific, unresolved misconception: repeatedly reporting only one root after factoring, indicating difficulty applying the zero‑product principle despite prior explanations. A planner can create a focused pedagogical sequence to address this gap, and a follow‑up assessment would meaningfully verify that the learner now extracts both factors and states both roots, providing new evidence of mastery.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 14.743645000038669
+        },
+        {
+          "repeat": 2,
+          "route": "planned_tutor_evaluate",
+          "reason": "The quadratic is straightforward (simple factoring, low complexity), but the learner has a documented misconception—only reporting one root after factoring and difficulty applying the zero‑product principle. A planner can create a focused sequence that revisits zero‑product reasoning for both factors. After tutoring, a brief assessment (e.g., asking for both roots) would provide concrete evidence that the misconception is resolved, making post‑tutoring verification valuable.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 3.5819226999301463
+        },
+        {
+          "repeat": 3,
+          "route": "planned_tutor_evaluate",
+          "reason": "The quadratic is straightforward, but the learner has a documented difficulty applying the zero‑product principle to both factors, repeatedly reporting only one root. A planner can create a targeted sequence to address this misconception, and a follow‑up assessment is valuable to verify that the learner can now correctly identify both solutions.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 2.642141499905847
+        }
+      ],
+      "routes": [
+        "planned_tutor_evaluate",
+        "planned_tutor_evaluate",
+        "planned_tutor_evaluate"
+      ],
+      "reasons": [
+        "Problem is a straightforward quadratic factoring task (low complexity, single-step solution). Learner history shows a specific, unresolved misconception: repeatedly reporting only one root after factoring, indicating difficulty applying the zero‑product principle despite prior explanations. A planner can create a focused pedagogical sequence to address this gap, and a follow‑up assessment would meaningfully verify that the learner now extracts both factors and states both roots, providing new evidence of mastery.",
+        "The quadratic is straightforward (simple factoring, low complexity), but the learner has a documented misconception—only reporting one root after factoring and difficulty applying the zero‑product principle. A planner can create a focused sequence that revisits zero‑product reasoning for both factors. After tutoring, a brief assessment (e.g., asking for both roots) would provide concrete evidence that the misconception is resolved, making post‑tutoring verification valuable.",
+        "The quadratic is straightforward, but the learner has a documented difficulty applying the zero‑product principle to both factors, repeatedly reporting only one root. A planner can create a targeted sequence to address this misconception, and a follow‑up assessment is valuable to verify that the learner can now correctly identify both solutions."
+      ],
+      "modal_route": "planned_tutor_evaluate",
+      "tied_modal_routes": [
+        "planned_tutor_evaluate"
+      ],
+      "has_unique_modal_route": true,
+      "modal_workflow_depth": 3,
+      "valid_output_rate": 1.0,
+      "repeat_stability": 1.0,
+      "unanimous": true
+    }
+  ]
+}

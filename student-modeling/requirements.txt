@@ -1,0 +1,13 @@
+fastapi
+uvicorn[standard]
+pyBKT
+pandas
+numpy
+scikit-learn<1.5pytest
+pytest-asyncio
+httpx
+pydantic
+google-genai
+python-dotenv
+streamlit
+sentence-transformers

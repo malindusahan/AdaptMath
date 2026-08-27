@@ -1,0 +1,58 @@
+{
+  "model": "meta-llama/Llama-3.2-3B-Instruct",
+  "val_method": "stratified_holdout_20pct",
+  "best_config": {
+    "lora_r": 16,
+    "lr": 5e-05
+  },
+  "best_val_rmse": 0.6575793014795671,
+  "final_train_frac": 0.9,
+  "search_results": [
+    {
+      "lora_r": 8,
+      "lr": 0.0002,
+      "val_metrics": {
+        "rmse": 0.6626726770014196,
+        "mae": 0.5091367559186344,
+        "pearson": 0.6035706456594162,
+        "spearman": 0.5922577172951986
+      }
+    },
+    {
+      "lora_r": 8,
+      "lr": 5e-05,
+      "val_metrics": {
+        "rmse": 0.6667751956196712,
+        "mae": 0.5134858229550822,
+        "pearson": 0.5968011397784919,
+        "spearman": 0.5986622073578596
+      }
+    },
+    {
+      "lora_r": 16,
+      "lr": 0.0002,
+      "val_metrics": {
+        "rmse": 0.6657821230348705,
+        "mae": 0.5092216258354741,
+        "pearson": 0.6047418278385119,
+        "spearman": 0.5968323530542421
+      }
+    },
+    {
+      "lora_r": 16,
+      "lr": 5e-05,
+      "val_metrics": {
+        "rmse": 0.6575793014795671,
+        "mae": 0.4957053332172077,
+        "pearson": 0.6157817080977782,
+        "spearman": 0.6085649482950833
+      }
+    }
+  ],
+  "test_metrics": {
+    "rmse": 0.5385057344386424,
+    "mae": 0.4490962298747537,
+    "pearson": 0.7563323050038795,
+    "spearman": 0.7534994489056841
+  }
+}

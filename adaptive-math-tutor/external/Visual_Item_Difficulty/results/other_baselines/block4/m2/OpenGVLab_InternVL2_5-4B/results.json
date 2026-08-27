@@ -1,0 +1,62 @@
+{
+  "model": "OpenGVLab/InternVL2_5-4B",
+  "family": "internvl",
+  "input_mode": "image_text",
+  "mode_tag": "M2",
+  "embedding_dim": 2048,
+  "best_regressor": "lgbm",
+  "best_cv_rmse": 0.5988628940141848,
+  "cv_metrics": {
+    "ridge": {
+      "rmse": 0.6269796778770965,
+      "mae": 0.48881224266129686,
+      "pearson": 0.6191423141958586,
+      "spearman": 0.6325228323385684
+    },
+    "xgb": {
+      "rmse": 0.5994908876391194,
+      "mae": 0.4666779131764226,
+      "pearson": 0.6590283764485023,
+      "spearman": 0.6588132873001488
+    },
+    "lgbm": {
+      "rmse": 0.5988628940141848,
+      "mae": 0.462353824230786,
+      "pearson": 0.658948476020675,
+      "spearman": 0.6610919237838564
+    },
+    "mlp": {
+      "rmse": 0.6933689725609011,
+      "mae": 0.529965595983307,
+      "pearson": 0.5734571437764903,
+      "spearman": 0.5709246132286875
+    }
+  },
+  "test_metrics": {
+    "ridge": {
+      "rmse": 0.606461442092956,
+      "mae": 0.4970939337907919,
+      "pearson": 0.6731079636543882,
+      "spearman": 0.6802590143284521
+    },
+    "xgb": {
+      "rmse": 0.5646400914104175,
+      "mae": 0.4458737106656821,
+      "pearson": 0.7354877380457445,
+      "spearman": 0.7283065658951345
+    },
+    "lgbm": {
+      "rmse": 0.5827800023583042,
+      "mae": 0.45191942696535536,
+      "pearson": 0.7058856171645034,
+      "spearman": 0.6987679105652652
+    },
+    "mlp": {
+      "rmse": 0.6007310816670056,
+      "mae": 0.48396111382012597,
+      "pearson": 0.6945970919483668,
+      "spearman": 0.6817666509211148
+    }
+  },
+  "embedding_cache": "results/block4/embeddings/OpenGVLab_InternVL2_5-4B_image_text/embeddings.npy"
+}

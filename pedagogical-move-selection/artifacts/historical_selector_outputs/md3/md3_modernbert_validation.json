@@ -1,0 +1,154 @@
+{
+  "experiment": "MD3_modernbert_long_context",
+  "model": "answerdotai/ModernBERT-base",
+  "max_length": 1792,
+  "epochs": 3,
+  "loss": "ordinary_cross_entropy",
+  "effective_global_batch_size": 16,
+  "best_validation_macro_f1": 0.4560921970871581,
+  "best_checkpoint": "/kaggle/working/md3_modernbert_checkpoints/checkpoint-2796",
+  "best_checkpoint_consistency_difference": 0.0,
+  "overall": {
+    "examples": 1850,
+    "accuracy": 0.4843243243243243,
+    "macro_f1": 0.4560921970871581,
+    "per_class_f1": {
+      "generic": 0.5991471215351812,
+      "probing": 0.33468286099865047,
+      "focus": 0.5490753911806543,
+      "telling": 0.34146341463414637
+    },
+    "confusion_matrix": [
+      [
+        281,
+        28,
+        69,
+        64
+      ],
+      [
+        76,
+        124,
+        156,
+        56
+      ],
+      [
+        87,
+        133,
+        386,
+        72
+      ],
+      [
+        52,
+        44,
+        117,
+        105
+      ]
+    ]
+  },
+  "le512": {
+    "examples": 1503,
+    "accuracy": 0.4870259481037924,
+    "macro_f1": 0.4420539180683053,
+    "per_class_f1": {
+      "generic": 0.6391251518833536,
+      "probing": 0.3435225618631732,
+      "focus": 0.5390693590869183,
+      "telling": 0.24649859943977592
+    },
+    "confusion_matrix": [
+      [
+        263,
+        27,
+        54,
+        27
+      ],
+      [
+        69,
+        118,
+        143,
+        37
+      ],
+      [
+        77,
+        132,
+        307,
+        35
+      ],
+      [
+        43,
+        43,
+        84,
+        44
+      ]
+    ]
+  },
+  "gt512": {
+    "examples": 347,
+    "accuracy": 0.47262247838616717,
+    "macro_f1": 0.3999735542907059,
+    "per_class_f1": {
+      "generic": 0.3130434782608696,
+      "probing": 0.2222222222222222,
+      "focus": 0.5917602996254682,
+      "telling": 0.4728682170542636
+    },
+    "confusion_matrix": [
+      [
+        18,
+        1,
+        15,
+        37
+      ],
+      [
+        7,
+        6,
+        13,
+        19
+      ],
+      [
+        10,
+        1,
+        79,
+        37
+      ],
+      [
+        9,
+        1,
+        33,
+        61
+      ]
+    ]
+  },
+  "epoch_history": [
+    {
+      "eval_loss": 2.424307346343994,
+      "eval_accuracy": 0.47297297297297297,
+      "eval_macro_f1": 0.42561511699185595,
+      "eval_runtime": 36.4483,
+      "eval_samples_per_second": 50.757,
+      "eval_steps_per_second": 25.378,
+      "epoch": 1.0,
+      "step": 932
+    },
+    {
+      "eval_loss": 2.357633590698242,
+      "eval_accuracy": 0.48486486486486485,
+      "eval_macro_f1": 0.4466180433434029,
+      "eval_runtime": 33.2333,
+      "eval_samples_per_second": 55.667,
+      "eval_steps_per_second": 27.833,
+      "epoch": 2.0,
+      "step": 1864
+    },
+    {
+      "eval_loss": 2.455815553665161,
+      "eval_accuracy": 0.4843243243243243,
+      "eval_macro_f1": 0.4560921970871581,
+      "eval_runtime": 33.5095,
+      "eval_samples_per_second": 55.208,
+      "eval_steps_per_second": 27.604,
+      "epoch": 3.0,
+      "step": 2796
+    }
+  ]
+}

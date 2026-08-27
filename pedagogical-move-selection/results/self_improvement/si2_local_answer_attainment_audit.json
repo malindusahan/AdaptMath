@@ -1,0 +1,110 @@
+{
+  "experiment": "SI2-B_local_answer_attainment_audit",
+  "scope": "custom_train_only",
+  "dialogues": 2285,
+  "transitions": 12498,
+  "ambiguity": {
+    "answer_in_problem": 135,
+    "answer_in_problem_rate": 0.058823529411764705,
+    "answer_in_incorrect_solution": 500,
+    "answer_in_incorrect_solution_rate": 0.2178649237472767
+  },
+  "transition_flags": {
+    "student_reply_contains_answer": {
+      "count": 3056,
+      "rate": 0.24451912305968956
+    },
+    "first_student_attainment": {
+      "count": 1670,
+      "rate": 0.13362137942070731
+    },
+    "autonomous_first_attainment": {
+      "count": 1386,
+      "rate": 0.11089774363898224
+    },
+    "teacher_exposed_first_attainment": {
+      "count": 177,
+      "rate": 0.014162265962554009
+    },
+    "current_teacher_exposes_answer": {
+      "count": 808,
+      "rate": 0.06465034405504881
+    }
+  },
+  "attainment_by_outcome": {
+    "clean_success": {
+      "transitions": 7889,
+      "reply_contains_answer": 2022,
+      "first_attainment": 1276,
+      "autonomous_first_attainment": 1138,
+      "teacher_exposed_first_attainment": 58
+    },
+    "revealed_success": {
+      "transitions": 2438,
+      "reply_contains_answer": 637,
+      "first_attainment": 258,
+      "autonomous_first_attainment": 159,
+      "teacher_exposed_first_attainment": 84
+    },
+    "failure": {
+      "transitions": 2171,
+      "reply_contains_answer": 397,
+      "first_attainment": 136,
+      "autonomous_first_attainment": 89,
+      "teacher_exposed_first_attainment": 35
+    }
+  },
+  "dialogue_outcome_summary": {
+    "clean_success": {
+      "dialogues": 1695,
+      "attained": 1276,
+      "autonomous": 1138,
+      "teacher_exposed": 58,
+      "no_attainment": 419
+    },
+    "revealed_success": {
+      "dialogues": 330,
+      "attained": 258,
+      "autonomous": 159,
+      "teacher_exposed": 84,
+      "no_attainment": 72
+    },
+    "failure": {
+      "dialogues": 260,
+      "attained": 136,
+      "autonomous": 89,
+      "teacher_exposed": 35,
+      "no_attainment": 124
+    }
+  },
+  "high_confidence_autonomous": {
+    "count": 1386,
+    "outcomes": {
+      "clean_success": 1138,
+      "revealed_success": 159,
+      "failure": 89
+    }
+  },
+  "first_attainment_by_move": {
+    "generic": {
+      "first_attainments": 334,
+      "autonomous": 253,
+      "teacher_exposed": 7
+    },
+    "probing": {
+      "first_attainments": 317,
+      "autonomous": 286,
+      "teacher_exposed": 20
+    },
+    "focus": {
+      "first_attainments": 636,
+      "autonomous": 593,
+      "teacher_exposed": 27
+    },
+    "telling": {
+      "first_attainments": 383,
+      "autonomous": 254,
+      "teacher_exposed": 123
+    }
+  }
+}

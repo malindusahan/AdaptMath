@@ -1,0 +1,91 @@
+{
+  "mode": "final",
+  "model": "OpenGVLab/InternVL2_5-4B",
+  "family": "internvl",
+  "route": "I+Q",
+  "config_id": "r8_lr5e-05_mse",
+  "seed": 42,
+  "epochs": 10,
+  "provenance": {
+    "timestamp": "2026-07-25T10:33:14.707081",
+    "git_commit": "051943d6ea6b53c4966e6e1122101a85592a5b13",
+    "split_sha256": "5308b5da23248bab12ef6b0698d2445faba296a9c44abdf9ea0889ce260eca79",
+    "hostname": "internal-cluster-node",
+    "cuda_visible": "1",
+    "versions": {
+      "torch": "2.6.0+cu124",
+      "transformers": "5.12.1",
+      "peft": "0.19.1"
+    },
+    "args": {
+      "model_name": "OpenGVLab/InternVL2_5-4B",
+      "input_mode": "image_text",
+      "lora_rs": "8,16,32",
+      "lrs": "2e-4,5e-5",
+      "losses": "mse,huber",
+      "batch_size": 1,
+      "grad_accum": 4,
+      "max_epochs": 10,
+      "patience": 3,
+      "val_frac": 0.2,
+      "seed": 42,
+      "smoke": false,
+      "out_suffix": "_ep10",
+      "text_field": "text",
+      "run_mode": "final",
+      "folds": "0,1,2,3,4",
+      "lora_r": 8,
+      "lr": 5e-05,
+      "loss": "mse",
+      "epochs": 10
+    }
+  },
+  "epoch_history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.5931982252267819
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.48253886379604277
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.37229226799025056
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.2826802759196226
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.2304638861509458
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.1657824111184482
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.11612393430476216
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.09079284263430397
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.07843575376466232
+    },
+    {
+      "epoch": 10,
+      "train_loss": 0.07334462253704589
+    }
+  ],
+  "test_metrics": {
+    "rmse": 0.5608256056078027,
+    "mae": 0.4422697491613331,
+    "pearson": 0.7327869062407072,
+    "spearman": 0.7231065973862383
+  }
+}

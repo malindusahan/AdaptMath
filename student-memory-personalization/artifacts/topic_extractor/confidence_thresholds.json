@@ -1,0 +1,22 @@
+{
+  "min_similarity": 0.33,
+  "min_margin": 0.02,
+  "tfidf_support_threshold": 0.15,
+  "validation_coverage": 0.984399375975039,
+  "validation_covered_accuracy": 0.9920760697305864,
+  "validation_abstention_rate": 0.015600624024960985,
+  "validation_macro_f1": 0.9838584330338452,
+  "vague_input_abstention_rate": 1.0,
+  "vague_inputs_tested": [
+    "Can you help me?",
+    "I don't understand this",
+    "What should I do?",
+    "Please explain",
+    "Help",
+    "Tell me the answer",
+    "I am stuck on problem 4",
+    "Why did I get this wrong?",
+    "Hello tutor",
+    "What is next?"
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "model": "Qwen/Qwen3-8B",
+  "z_mean": -0.17762995278269406,
+  "z_std": 0.7966070309181654,
+  "val_method": "stratified_holdout_20pct",
+  "best_config": {
+    "lr": 2e-05,
+    "epochs": 3
+  },
+  "best_val_rmse": 0.8227130039682572,
+  "final_train_frac": 0.9,
+  "search_results": [
+    {
+      "lr": 2e-05,
+      "epochs": 3,
+      "val_metrics": {
+        "rmse": 0.8227130039682572,
+        "mae": 0.6667867115545374,
+        "pearson": 0.17213742675753826,
+        "spearman": 0.053842527406033645,
+        "parse_rate": 1.0,
+        "parse_fails": 0
+      }
+    }
+  ],
+  "test_metrics": {
+    "rmse": 0.7646320732699035,
+    "mae": 0.6230022738896961,
+    "pearson": 0.36644190183565734,
+    "spearman": 0.3385355555346235,
+    "parse_rate": 1.0,
+    "parse_fails": 0
+  }
+}

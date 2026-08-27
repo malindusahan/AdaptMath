@@ -1,0 +1,102 @@
+{
+  "experiment": "SI3-A_contrastive_pair_feasibility",
+  "negative_sampling": {
+    "same_teacher_move": true,
+    "different_qid": true,
+    "different_source_dialogue": true,
+    "exclude_exact_response": true,
+    "length_ratio_min": 0.7,
+    "length_ratio_max": 1.3,
+    "negatives_per_positive": 3
+  },
+  "source_split_overlap": {
+    "group": 0,
+    "qid": 0,
+    "source": 0
+  },
+  "duplication": {
+    "train": {
+      "responses": 9989,
+      "unique": 9739,
+      "unique_rate": 0.9749724697166884,
+      "repeated_examples": 402,
+      "maximum_frequency": 61
+    },
+    "validation": {
+      "responses": 2509,
+      "unique": 2442,
+      "unique_rate": 0.9732961339178956,
+      "repeated_examples": 118,
+      "maximum_frequency": 11
+    }
+  },
+  "availability": {
+    "train": {
+      "minimum": 1,
+      "median": 717.0,
+      "p10": 244.0,
+      "p90": 1292.0,
+      "insufficient": 1,
+      "by_move": {
+        "generic": {
+          "contexts": 1880,
+          "minimum": 21,
+          "median": 714.0,
+          "p10": 118.0
+        },
+        "probing": {
+          "contexts": 2528,
+          "minimum": 7,
+          "median": 668.0,
+          "p10": 313.0
+        },
+        "focus": {
+          "contexts": 3931,
+          "minimum": 16,
+          "median": 1116.0,
+          "p10": 484.0
+        },
+        "telling": {
+          "contexts": 1650,
+          "minimum": 1,
+          "median": 543.0,
+          "p10": 186.0
+        }
+      }
+    },
+    "validation": {
+      "minimum": 2,
+      "median": 191.0,
+      "p10": 64.0,
+      "p90": 339.0,
+      "insufficient": 2,
+      "by_move": {
+        "generic": {
+          "contexts": 472,
+          "minimum": 5,
+          "median": 193.0,
+          "p10": 30.0
+        },
+        "probing": {
+          "contexts": 601,
+          "minimum": 2,
+          "median": 168.0,
+          "p10": 87.0
+        },
+        "focus": {
+          "contexts": 997,
+          "minimum": 4,
+          "median": 288.0,
+          "p10": 113.0
+        },
+        "telling": {
+          "contexts": 439,
+          "minimum": 2,
+          "median": 151.0,
+          "p10": 43.800000000000004
+        }
+      }
+    }
+  },
+  "validation_passed": false
+}

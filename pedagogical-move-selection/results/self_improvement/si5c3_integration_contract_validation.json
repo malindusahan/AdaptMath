@@ -1,0 +1,13 @@
+{
+  "experiment": "SI5-C3_integration_contract_validation",
+  "simulation_only": true,
+  "real_external_components_used": false,
+  "algorithm": "linucb",
+  "attempts": 2,
+  "bandit_updates": 2,
+  "tutor_move_contract_passed": true,
+  "feedback_context_passed": true,
+  "update_timing_passed": true,
+  "logging_passed": true,
+  "overall_validation_passed": true
+}

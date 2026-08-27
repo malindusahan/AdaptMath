@@ -1,0 +1,80 @@
+{
+  "model_name": "student_learning_state_behavioural_decision_tree",
+  "model_type": "DecisionTreeClassifier",
+  "research_role": "Behavioural-signal model",
+  "target_states": [
+    "NEEDS_SUPPORT",
+    "DEVELOPING",
+    "STRONG"
+  ],
+  "cold_start_output": "UNAVAILABLE",
+  "feature_count": 12,
+  "features": [
+    "previous_interaction_count",
+    "previous_skill_interaction_count",
+    "recent_accuracy_change_5_vs_10",
+    "recent_attempt_log_mean_10",
+    "recent_multi_attempt_rate_10",
+    "recent_hint_usage_rate_10",
+    "recent_hint_available_rate_10",
+    "recent_response_log_mean_10",
+    "recent_response_median_ms_10",
+    "recent_skill_accuracy_change_3_vs_previous_2",
+    "has_full_skill_window_5",
+    "has_recent_hint_usage_evidence"
+  ],
+  "excluded_direct_label_features": [
+    "recent_skill_accuracy_5",
+    "recent_accuracy_10",
+    "has_skill_history"
+  ],
+  "hyperparameters": {
+    "max_depth": 15,
+    "min_samples_leaf": 100,
+    "class_weight": null,
+    "random_state": 42
+  },
+  "preprocessing": {
+    "imputation": "Median imputation",
+    "imputer_fit_scope": "Final deployment training data = original train + validation",
+    "scaling": "None"
+  },
+  "deployment_training_rows": 282088,
+  "deployment_training_students": 3425,
+  "held_out_test_rows": 50973,
+  "held_out_test_students": 605,
+  "held_out_test_used_for_fitting": false,
+  "locked_validation_macro_f1": 0.8756,
+  "locked_test_metrics": {
+    "accuracy": 0.8758,
+    "balanced_accuracy": 0.8731,
+    "macro_precision": 0.8706,
+    "macro_recall": 0.8731,
+    "macro_f1": 0.8717,
+    "weighted_f1": 0.876
+  },
+  "methodological_note": "The target learning states are derived heuristic research labels. The behavioural model intentionally excludes the direct historical accuracy variables used to construct those labels. Held-out test performance reflects association/generalization under the derived-label framework, not external ground-truth validation.",
+  "artifact_files": {
+    "model": "learning_state_model.joblib",
+    "imputer": "learning_state_imputer.joblib",
+    "metadata": "learning_state_model_metadata.json"
+  },
+  "final_refit_tree": {
+    "actual_depth": 15,
+    "leaf_nodes": 810
+  },
+  "final_imputation_values": {
+    "previous_interaction_count": 112.0,
+    "previous_skill_interaction_count": 6.0,
+    "recent_accuracy_change_5_vs_10": 0.0,
+    "recent_attempt_log_mean_10": 0.7742402021815782,
+    "recent_multi_attempt_rate_10": 0.2,
+    "recent_hint_usage_rate_10": 0.1,
+    "recent_hint_available_rate_10": 0.8,
+    "recent_response_log_mean_10": 9.90517972834584,
+    "recent_response_median_ms_10": 19514.75,
+    "recent_skill_accuracy_change_3_vs_previous_2": 0.0,
+    "has_full_skill_window_5": 1.0,
+    "has_recent_hint_usage_evidence": 1.0
+  }
+}

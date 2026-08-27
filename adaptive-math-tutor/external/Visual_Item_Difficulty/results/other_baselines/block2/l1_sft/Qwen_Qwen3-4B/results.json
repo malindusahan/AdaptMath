@@ -1,0 +1,70 @@
+{
+  "model": "Qwen/Qwen3-4B",
+  "z_mean": -0.17762995278269406,
+  "z_std": 0.7966070309181654,
+  "val_method": "stratified_holdout_20pct",
+  "best_config": {
+    "lr": 2e-05,
+    "epochs": 5
+  },
+  "best_val_rmse": 0.7851880063745152,
+  "final_train_frac": 0.9,
+  "search_results": [
+    {
+      "lr": 1e-05,
+      "epochs": 3,
+      "val_metrics": {
+        "rmse": 0.8155325955890554,
+        "mae": 0.6480011890636881,
+        "pearson": null,
+        "spearman": null,
+        "parse_rate": 0.0,
+        "parse_fails": 116
+      }
+    },
+    {
+      "lr": 1e-05,
+      "epochs": 5,
+      "val_metrics": {
+        "rmse": 0.8570705760638844,
+        "mae": 0.6901493527395736,
+        "pearson": 0.0967119855742438,
+        "spearman": 0.003437218900561024,
+        "parse_rate": 1.0,
+        "parse_fails": 0
+      }
+    },
+    {
+      "lr": 2e-05,
+      "epochs": 3,
+      "val_metrics": {
+        "rmse": 0.8383698227025188,
+        "mae": 0.658637559115633,
+        "pearson": 0.12861373134674903,
+        "spearman": 0.07971530733729952,
+        "parse_rate": 1.0,
+        "parse_fails": 0
+      }
+    },
+    {
+      "lr": 2e-05,
+      "epochs": 5,
+      "val_metrics": {
+        "rmse": 0.7851880063745152,
+        "mae": 0.63171875537655,
+        "pearson": 0.29072949560227834,
+        "spearman": 0.09224819977022818,
+        "parse_rate": 1.0,
+        "parse_fails": 0
+      }
+    }
+  ],
+  "test_metrics": {
+    "rmse": 0.7456982355480529,
+    "mae": 0.5941176365579526,
+    "pearson": 0.42241413175663123,
+    "spearman": 0.3818748100406488,
+    "parse_rate": 1.0,
+    "parse_fails": 0
+  }
+}

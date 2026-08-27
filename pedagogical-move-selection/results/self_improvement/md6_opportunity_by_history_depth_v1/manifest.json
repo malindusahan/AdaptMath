@@ -1,0 +1,113 @@
+{
+  "audit_name": "md6_opportunity_by_history_depth_v1",
+  "timestamp_utc": "2026-08-25T06:52:19.774017+00:00",
+  "purpose": "Measure how frozen MD6 prediction behavior and conservative-overlay opportunity vary with dialogue-history depth on MathDial validation.",
+  "interpretation_boundary": "Descriptive analysis only; no significance tests.",
+  "input_artifact": "results/self_improvement/md6_validation_vs_demo_v1/mathdial_validation_predictions.csv.gz",
+  "input_artifact_sha256": "fd5c07f24d86c2b598b9c35298d075f00841b9910a9a5ceec926e8125c82737d",
+  "input_manifest": "results/self_improvement/md6_validation_vs_demo_v1/manifest.json",
+  "input_manifest_sha256": "8c88a747629e3dccd169e8f27091ca08fe5f46a3f3d50bab93dafadf13a39bf9",
+  "validation_n": 1850,
+  "history_depth_bins": [
+    "0 turns",
+    "1-2 turns",
+    "3-4 turns",
+    "5-8 turns",
+    "9+ turns"
+  ],
+  "student_turn_groups": [
+    "0 prior student turns",
+    "1 prior student turn",
+    "2 prior student turns",
+    "3+ prior student turns"
+  ],
+  "gap_threshold": 0.1,
+  "md6_rerun": false,
+  "cpu_only": true,
+  "training_performed": false,
+  "mrb1_loaded": false,
+  "lints_state_loaded": false,
+  "policy_updates": false,
+  "dataset_files_opened": [],
+  "held_out_test_untouched": true,
+  "source_file_sha256": {
+    "experiments/audit_md6_opportunity_by_history_depth_v1.py": "3690937a6892c4bc71f5cead89f7e0d5ef5abafd94cd46a782216c574223943c",
+    "src/self_improvement/conservative_overlay.py": "a920b73460890bc143d9482ce5d03d898114e875ef8dc69520f7dfc7692329d6",
+    "src/self_improvement/context_builder.py": "1fc38b5c146b8d90fe35aeb78d50dba31ca26df4a05a8b473ff071b56d4ea58f"
+  },
+  "validation_assertions": [
+    {
+      "assertion": "input manifest identifies 1,850 frozen-MD6 validation rows",
+      "status": "PASS"
+    },
+    {
+      "assertion": "input manifest records held-out test untouched",
+      "status": "PASS"
+    },
+    {
+      "assertion": "input manifest threshold and class order match this audit",
+      "status": "PASS"
+    },
+    {
+      "assertion": "canonical artifact has exactly 1,850 unique rows",
+      "status": "PASS"
+    },
+    {
+      "assertion": "canonical move-probability columns exist in canonical order",
+      "status": "PASS"
+    },
+    {
+      "assertion": "all probabilities are finite, bounded, and sum approximately to 1",
+      "status": "PASS"
+    },
+    {
+      "assertion": "stored argmax, gap, entropy, and eligibility match recomputation",
+      "status": "PASS"
+    },
+    {
+      "assertion": "baseline is always eligible at frozen threshold 0.10",
+      "status": "PASS"
+    },
+    {
+      "assertion": "serialized histories parse safely and counts match parsed length",
+      "status": "PASS"
+    },
+    {
+      "assertion": "every row is assigned exactly one fixed history-depth bin",
+      "status": "PASS"
+    },
+    {
+      "assertion": "history-depth bin counts sum to 1,850",
+      "status": "PASS"
+    },
+    {
+      "assertion": "every row is assigned exactly one fixed student-turn group",
+      "status": "PASS"
+    },
+    {
+      "assertion": "student-turn group counts sum to 1,850",
+      "status": "PASS"
+    },
+    {
+      "assertion": "threshold remains exactly 0.10",
+      "status": "PASS"
+    }
+  ],
+  "output_files": [
+    "results/self_improvement/md6_opportunity_by_history_depth_v1/row_level_history_depth.csv.gz",
+    "results/self_improvement/md6_opportunity_by_history_depth_v1/history_depth_summary.csv",
+    "results/self_improvement/md6_opportunity_by_history_depth_v1/student_turn_summary.csv",
+    "results/self_improvement/md6_opportunity_by_history_depth_v1/base_move_opportunity_summary.csv",
+    "results/self_improvement/md6_opportunity_by_history_depth_v1/base_move_by_depth_summary.csv",
+    "results/self_improvement/md6_opportunity_by_history_depth_v1/summary.json",
+    "results/self_improvement/md6_opportunity_by_history_depth_v1/figures/alternative_availability_by_history_depth.png",
+    "results/self_improvement/md6_opportunity_by_history_depth_v1/figures/argmax_distribution_by_history_depth.png",
+    "results/self_improvement/md6_opportunity_by_history_depth_v1/figures/mean_move_probabilities_by_history_depth.png",
+    "results/self_improvement/md6_opportunity_by_history_depth_v1/figures/alternative_availability_by_student_turn_count.png",
+    "results/self_improvement/md6_opportunity_by_history_depth_v1/manifest.json"
+  ],
+  "runtime_seconds": 0.8456418999703601,
+  "python_version": "3.12.7",
+  "numpy_version": "2.1.3",
+  "matplotlib_version": "3.10.5"
+}

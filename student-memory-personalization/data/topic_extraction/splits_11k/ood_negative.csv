@@ -1,0 +1,42 @@
+skill_name,question,clean_question,canonical_name
+__OUT_OF_DOMAIN__,"Hello there, how are you doing today?","-h-e-l-l-o- -t-h-e-r-e-,- -h-o-w- -a-r-e- -y-o-u- -d-o-i-n-g- -t-o-d-a-y-?-",__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,"Hi, who are you?","-h-i-,- -w-h-o- -a-r-e- -y-o-u-?-",__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,Good morning tutor,-g-o-o-d- -m-o-r-n-i-n-g- -t-u-t-o-r-,__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,What is your name and what do you do?,-w-h-a-t- -i-s- -y-o-u-r- -n-a-m-e- -a-n-d- -w-h-a-t- -d-o- -y-o-u- -d-o-?-,__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,Tell me a funny joke or story,-t-e-l-l- -m-e- -a- -f-u-n-n-y- -j-o-k-e- -o-r- -s-t-o-r-y-,__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,How was your day?,-h-o-w- -w-a-s- -y-o-u-r- -d-a-y-?-,__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,Can you write a poem about the autumn leaves?,-c-a-n- -y-o-u- -w-r-i-t-e- -a- -p-o-e-m- -a-b-o-u-t- -t-h-e- -a-u-t-u-m-n- -l-e-a-v-e-s-?-,__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,What is the meaning of life?,-w-h-a-t- -i-s- -t-h-e- -m-e-a-n-i-n-g- -o-f- -l-i-f-e-?-,__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,Are you a robot or a human?,-a-r-e- -y-o-u- -a- -r-o-b-o-t- -o-r- -a- -h-u-m-a-n-?-,__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,I am feeling bored right now,-i- -a-m- -f-e-e-l-i-n-g- -b-o-r-e-d- -r-i-g-h-t- -n-o-w-,__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,What is the process of photosynthesis in green plants?,-w-h-a-t- -i-s- -t-h-e- -p-r-o-c-e-s-s- -o-f- -p-h-o-t-o-s-y-n-t-h-e-s-i-s- -i-n- -g-r-e-e-n- -p-l-a-n-t-s-?-,__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,How do cells divide in mitosis and meiosis?,-h-o-w- -d-o- -c-e-l-l-s- -d-i-v-i-d-e- -i-n- -m-i-t-o-s-i-s- -a-n-d- -m-e-i-o-s-i-s-?-,__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,Explain Newton's third law of motion in physics,-e-x-p-l-a-i-n- -n-e-w-t-o-n-'-s- -t-h-i-r-d- -l-a-w- -o-f- -m-o-t-i-o-n- -i-n- -p-h-y-s-i-c-s-,__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,What is the chemical formula for water and table salt?,-w-h-a-t- -i-s- -t-h-e- -c-h-e-m-i-c-a-l- -f-o-r-m-u-l-a- -f-o-r- -w-a-t-e-r- -a-n-d- -t-a-b-l-e- -s-a-l-t-?-,__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,How does the human digestive system work?,-h-o-w- -d-o-e-s- -t-h-e- -h-u-m-a-n- -d-i-g-e-s-t-i-v-e- -s-y-s-t-e-m- -w-o-r-k-?-,__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,What is the difference between DNA and RNA?,-w-h-a-t- -i-s- -t-h-e- -d-i-f-f-e-r-e-n-c-e- -b-e-t-w-e-e-n- -d-n-a- -a-n-d- -r-n-a-?-,__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,What were the main causes of World War 1?,-w-h-a-t- -w-e-r-e- -t-h-e- -m-a-i-n- -c-a-u-s-e-s- -o-f- -w-o-r-l-d- -w-a-r- -1-?-,__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,Who was the first president of the United States?,-w-h-o- -w-a-s- -t-h-e- -f-i-r-s-t- -p-r-e-s-i-d-e-n-t- -o-f- -t-h-e- -u-n-i-t-e-d- -s-t-a-t-e-s-?-,__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,What is the capital city of Australia?,-w-h-a-t- -i-s- -t-h-e- -c-a-p-i-t-a-l- -c-i-t-y- -o-f- -a-u-s-t-r-a-l-i-a-?-,__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,Which country has the longest coastline in the world?,-w-h-i-c-h- -c-o-u-n-t-r-y- -h-a-s- -t-h-e- -l-o-n-g-e-s-t- -c-o-a-s-t-l-i-n-e- -i-n- -t-h-e- -w-o-r-l-d-?-,__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,Tell me about the ancient Egyptian pyramids,-t-e-l-l- -m-e- -a-b-o-u-t- -t-h-e- -a-n-c-i-e-n-t- -e-g-y-p-t-i-a-n- -p-y-r-a-m-i-d-s-,__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,When did the French Revolution start?,-w-h-e-n- -d-i-d- -t-h-e- -f-r-e-n-c-h- -r-e-v-o-l-u-t-i-o-n- -s-t-a-r-t-?-,__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,What is a metaphor versus a simile?,-w-h-a-t- -i-s- -a- -m-e-t-a-p-h-o-r- -v-e-r-s-u-s- -a- -s-i-m-i-l-e-?-,__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,Can you check my essay for grammar mistakes?,-c-a-n- -y-o-u- -c-h-e-c-k- -m-y- -e-s-s-a-y- -f-o-r- -g-r-a-m-m-a-r- -m-i-s-t-a-k-e-s-?-,__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,Who wrote Romeo and Juliet and Hamlet?,-w-h-o- -w-r-o-t-e- -r-o-m-e-o- -a-n-d- -j-u-l-i-e-t- -a-n-d- -h-a-m-l-e-t-?-,__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,What is the theme of The Great Gatsby?,-w-h-a-t- -i-s- -t-h-e- -t-h-e-m-e- -o-f- -t-h-e- -g-r-e-a-t- -g-a-t-s-b-y-?-,__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,How do I write a persuasive introduction paragraph?,-h-o-w- -d-o- -i- -w-r-i-t-e- -a- -p-e-r-s-u-a-s-i-v-e- -i-n-t-r-o-d-u-c-t-i-o-n- -p-a-r-a-g-r-a-p-h-?-,__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,How do I create a React web application with Vite?,-h-o-w- -d-o- -i- -c-r-e-a-t-e- -a- -r-e-a-c-t- -w-e-b- -a-p-p-l-i-c-a-t-i-o-n- -w-i-t-h- -v-i-t-e-?-,__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,What is the difference between SQL and NoSQL databases?,-w-h-a-t- -i-s- -t-h-e- -d-i-f-f-e-r-e-n-c-e- -b-e-t-w-e-e-n- -s-q-l- -a-n-d- -n-o-s-q-l- -d-a-t-a-b-a-s-e-s-?-,__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,Explain binary search tree traversal in Python,-e-x-p-l-a-i-n- -b-i-n-a-r-y- -s-e-a-r-c-h- -t-r-e-e- -t-r-a-v-e-r-s-a-l- -i-n- -p-y-t-h-o-n-,__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,How does TCP/IP network protocol work?,-h-o-w- -d-o-e-s- -t-c-p-/-i-p- -n-e-t-w-o-r-k- -p-r-o-t-o-c-o-l- -w-o-r-k-?-,__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,I don't understand anything,-i- -d-o-n-'-t- -u-n-d-e-r-s-t-a-n-d- -a-n-y-t-h-i-n-g-,__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,Help me please,-h-e-l-p- -m-e- -p-l-e-a-s-e-,__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,Can you tell me the answer right now?,-c-a-n- -y-o-u- -t-e-l-l- -m-e- -t-h-e- -a-n-s-w-e-r- -r-i-g-h-t- -n-o-w-?-,__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,What should I do next?,-w-h-a-t- -s-h-o-u-l-d- -i- -d-o- -n-e-x-t-?-,__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,I have no idea what is going on,-i- -h-a-v-e- -n-o- -i-d-e-a- -w-h-a-t- -i-s- -g-o-i-n-g- -o-n-,__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,Why did I get problem 3 wrong?,-w-h-y- -d-i-d- -i- -g-e-t- -p-r-o-b-l-e-m- -3- -w-r-o-n-g-?-,__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,Give me some hints,-g-i-v-e- -m-e- -s-o-m-e- -h-i-n-t-s-,__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,I am confused about this question,-i- -a-m- -c-o-n-f-u-s-e-d- -a-b-o-u-t- -t-h-i-s- -q-u-e-s-t-i-o-n-,__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,Is this right or wrong?,-i-s- -t-h-i-s- -r-i-g-h-t- -o-r- -w-r-o-n-g-?-,__OUT_OF_DOMAIN__
+__OUT_OF_DOMAIN__,What is the next step?,-w-h-a-t- -i-s- -t-h-e- -n-e-x-t- -s-t-e-p-?-,__OUT_OF_DOMAIN__

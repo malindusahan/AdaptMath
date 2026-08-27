@@ -1,0 +1,26 @@
+{
+  "unauthorized_401": {
+    "error": {
+      "code": "UNAUTHORIZED",
+      "message": "Invalid or missing X-Service-Key header."
+    }
+  },
+  "validation_error_422": {
+    "error": {
+      "code": "VALIDATION_ERROR",
+      "message": "Field 'question' is required and must not be empty."
+    }
+  },
+  "student_not_found_404": {
+    "error": {
+      "code": "STUDENT_NOT_FOUND",
+      "message": "Student 's999' does not exist."
+    }
+  },
+  "internal_error_500": {
+    "error": {
+      "code": "INTERNAL_SERVER_ERROR",
+      "message": "An unexpected error occurred while updating student memory."
+    }
+  }
+}

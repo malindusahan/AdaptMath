@@ -1,0 +1,51 @@
+item_id,gold_beta,has_figure,q_char_len,d_char_len,pred_QD,pred_IQ,category,SE_beta,n_answers,correct_rate,text,visual_description,QD_abs_error,IQ_abs_error,abs_advantage_IQ,winner,difficulty_quintile,figure_group,description_length_tertile,IQ_seed_wins_out_of_3
+178,-2.09771969083656,False,72,0,-0.6261604130268097,-1.3023326396942139,Parser-nonvisual,0.0573889154783229,2903,0.8580778504994833,"What number belongs in the box?
+□ + 6 = 4  (A) −1  (B) 2  (C) 10  (D) −2",,1.4715592778097504,0.7953870511423462,0.6761722266674042,I+Q,easiest,parser-nonvisual,no-description,3
+3,-1.73519573366773,False,71,0,-0.7418482700983683,-1.3322168986002605,Parser-nonvisual,0.0538374171186446,2672,0.8087574850299402,"What number belongs in the box?
+□ + 7 = 2  (A) 9  (B) −5  (C) −6  (D) 5",,0.9933474635693617,0.40297883506746945,0.5903686285018922,I+Q,easiest,parser-nonvisual,no-description,3
+93,1.32855392605542,True,143,379,0.2599086016416549,0.6984354654947916,Geometry diagrams,0.0569816721245717,2290,0.2279475982532751,Which calculation could the following diagram represent an efficient way of doing?  (A) 34 × 10  (B) 34 × 5  (C) (2 × 17) + (2 × 5)  (D) 17 × 5,An area-model style diagram made of three equal rectangles in an L-shape: two rectangles stacked vertically on the left and one rectangle to the right of the top-left rectangle. The top of the left rectangle is labeled 17 and the top of the right rectangle is labeled 17. The two left-side row heights are each labeled 5. The top-right rectangle is shaded with diagonal hatching.,1.068645324413765,0.6301184605606284,0.43852686385313666,I+Q,hardest,parser-visual,long-D,3
+529,-1.18766327976809,False,77,0,-0.6417726278305054,-1.0788023869196575,Parser-nonvisual,0.0471031996082594,2887,0.7273986837547627,"What number belongs in the box?
+(−8) + 3 = □  (A) −5  (B) −11  (C) 11  (D) −6",,0.5458906519375846,0.10886089284843248,0.4370297590891521,I+Q,easiest,parser-nonvisual,no-description,3
+120,0.57532087865642,False,112,0,-0.1459325850009918,0.2711153974135716,Parser-nonvisual,0.0519629824949718,2143,0.3658422771815212,"a = 1
+b = 4
+
+(−a)^b ★ −b^a
+
+What symbol should replace the star?  (A) >  (B) <  (C) =  (D) Need more information",,0.7212534636574118,0.3042054812428484,0.4170479824145634,I+Q,hardest,parser-nonvisual,no-description,3
+824,1.00029323049655,True,255,506,0.5316325724124908,0.9409500360488892,Geometry diagrams,0.0535626906278565,2161,0.3058769088385007,"p, q and r are 3 angles on a straight line.
+
+Jo and Paul are arguing about them!
+
+Jo says p, q and r must all be acute.
+
+Paul says one of the angles must be obtuse.
+
+Who is correct?  (A) Only Jo  (B) Only Paul  (C) Both Jo and Paul  (D) Neither is correct","A vertical straight line passes through a point marked with a red dot. Two diagonal rays extend from the point to the left, one up-left and one down-left, forming three adjacent angles on the left side of the vertical line. The top angle between the vertical upward ray and the up-left diagonal ray is shaded orange and labeled q°. The middle angle between the two diagonal rays is shaded blue and labeled p°. The bottom angle between the down-left diagonal ray and the vertical downward ray is labeled r°.",0.4686606580840591,0.059343194447660785,0.4093174636363983,I+Q,hardest,parser-visual,long-D,3
+387,0.79212587505939,True,260,147,0.3061390817165375,0.7107126116752625,Plots/tables/number lines,0.100795034130642,554,0.3321299638989169,"Jo and Paul are talking about how to transform the blue line on to the red line.
+Jo says you can rotate 180° about point (3,3)
+Paul says you can reflect in the line x = y
+Who is correct?  (A) Only Jo  (B) Only Paul  (C) Both Jo and Paul  (D) Neither is correct","A coordinate grid with x- and y-axes marked from 0 to 7. A blue line segment runs from (1,6) to (2,4). A red line segment runs from (4,2) to (6,1).",0.48598679334285255,0.08141326338412758,0.404573529958725,I+Q,hardest,parser-visual,short-D,3
+756,-0.538357305925728,True,153,356,-0.09686766999463241,-0.6200258533159891,Geometry diagrams,0.0875972040493096,657,0.6057838660578386,"Rectangle P has been enlarged by a scale factor of 2 to give rectangle Q.
+What length should replace the star?  (A) 10 cm  (B) 14 cm  (C) 7 cm  (D) 15 cm","Two yellow rectangles are shown. Smaller rectangle P has a horizontal double-headed arrow above it labeled 5 cm and a vertical double-headed arrow to its left labeled 7 cm. Larger rectangle Q is to the right, representing the enlargement. A horizontal dotted double-headed arrow beneath rectangle Q is marked with a red star, indicating the unknown length.",0.4414896359310955,0.08166854739026119,0.35982108854083433,I+Q,easy,parser-visual,long-D,2
+453,-0.0254747249366837,False,147,0,-0.668955405553182,-0.3113129536310831,Parser-nonvisual,0.0461575297855199,2531,0.4938759383642829,"8 × 6 = 21 + 27
+3 × 8 × 6 = ★
+What should replace the star to preserve equality?  (A) 21 + 27 + 3  (B) 21 + 27 × 3  (C) 3 × 21 + 27  (D) 3(21 + 27)",,0.6434806806164983,0.2858382286943994,0.3576424519220989,I+Q,middle,parser-nonvisual,no-description,3
+261,-0.003608590382021,False,124,0,-0.5831593672434489,-0.23174066344896949,Parser-nonvisual,0.049703596972879,2149,0.4625407166123778,3 hours + 700 minutes =  (A) 11 hours and 40 minutes  (B) 10 hours  (C) 14 hours and 66 minutes  (D) 14 hours and 40 minutes,,0.5795507768614279,0.2281320730669485,0.35141870379447937,I+Q,middle,parser-nonvisual,no-description,3
+110,1.17997512259206,True,230,69,0.5257368882497152,0.8606466253598531,Plots/tables/number lines,0.0744243418903725,1155,0.2727272727272727,"The line segment is one side of a square.
+Jo says a vertex of the square could be (−2, 4).
+Paul says a vertex of the square could be (1, 5).
+Who is correct?  (A) Only Jo  (B) Only Paul  (C) Both Jo and Paul  (D) Neither is correct","A coordinate grid showing a green line segment from (0, 1) to (3, 3).",0.6542382343423448,0.3193284972322069,0.33490973711013794,I+Q,hardest,parser-visual,short-D,3
+250,-1.09705414675025,False,43,0,-0.7092615763346354,-1.0437486171722412,Parser-nonvisual,0.0504758423137114,2355,0.6997876857749469,12 ÷ (−4) =  (A) −16  (B) 16  (C) −3  (D) 3,,0.38779257041561455,0.053305529578008715,0.33448704083760583,I+Q,easiest,parser-nonvisual,no-description,3
+754,-0.0970831732819005,True,228,156,0.2730618764956792,-0.0515164410074552,Plots/tables/number lines,0.0450429131432293,2653,0.4990576705616283,"Tom and Katie are trying to write calculations based on the diagram on the left.
+Tom writes: 15 − 20 = −5
+Katie writes: (−5) + 20 = 15
+Who is correct?  (A) Only Tom  (B) Only Katie  (C) Both Tom and Katie  (D) Neither is correct","A horizontal number line with tick marks labeled −5 on the left and 15 on the right. Above the line is a red arrow pointing left from 15 to −5, labeled −20.",0.37014504977757967,0.0455667322744453,0.3245783175031344,I+Q,middle,parser-visual,short-D,3
+709,0.956599191356118,False,266,0,0.385841170946757,0.7096307078997294,Parser-nonvisual,0.0548489136154138,2135,0.297423887587822,"Jo and Paul are talking about statements that can be made about the equation on the right.
+2x = y
+Jo says this is always true: 2x + 1 > y
+Paul says this is always true: −2x < y
+Who is correct?  (A) Only Jo  (B) Only Paul  (C) Both Jo and Paul  (D) Neither is correct",,0.570758020409361,0.24696848345638867,0.3237895369529723,I+Q,hardest,parser-nonvisual,no-description,3
+634,-1.91086631695104,False,204,0,-0.6710877021153768,-0.9870193004608154,Parser-nonvisual,0.0544207569567903,2842,0.830752990851513,"Tom and Katie are arguing about the factors of 12
+Tom says 1 is a factor of 12
+Katie says 12 is a factor of 12
+Who is correct?  (A) Only Tom  (B) Only Katie  (C) Both Tom and Katie  (D) Neither is correct",,1.239778614835663,0.9238470164902246,0.3159315983454385,I+Q,easiest,parser-nonvisual,no-description,3

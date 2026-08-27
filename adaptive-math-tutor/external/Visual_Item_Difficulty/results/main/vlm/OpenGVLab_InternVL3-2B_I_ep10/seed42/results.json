@@ -1,0 +1,91 @@
+{
+  "mode": "final",
+  "model": "OpenGVLab/InternVL3-2B",
+  "family": "internvl",
+  "route": "I",
+  "config_id": "r8_lr5e-05_mse",
+  "seed": 42,
+  "epochs": 10,
+  "provenance": {
+    "timestamp": "2026-07-25T08:20:52.149984",
+    "git_commit": "051943d6ea6b53c4966e6e1122101a85592a5b13",
+    "split_sha256": "5308b5da23248bab12ef6b0698d2445faba296a9c44abdf9ea0889ce260eca79",
+    "hostname": "internal-cluster-node",
+    "cuda_visible": "1",
+    "versions": {
+      "torch": "2.6.0+cu124",
+      "transformers": "5.12.1",
+      "peft": "0.19.1"
+    },
+    "args": {
+      "model_name": "OpenGVLab/InternVL3-2B",
+      "input_mode": "image_only",
+      "lora_rs": "8,16,32",
+      "lrs": "2e-4,5e-5",
+      "losses": "mse,huber",
+      "batch_size": 1,
+      "grad_accum": 4,
+      "max_epochs": 10,
+      "patience": 3,
+      "val_frac": 0.2,
+      "seed": 42,
+      "smoke": false,
+      "out_suffix": "_ep10",
+      "text_field": "text_vd",
+      "run_mode": "final",
+      "folds": "0,1,2,3,4",
+      "lora_r": 8,
+      "lr": 5e-05,
+      "loss": "mse",
+      "epochs": 10
+    }
+  },
+  "epoch_history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.6214328385185902
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.5476659934065269
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.45478667000005857
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.3696920378941866
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.2936761210722031
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.23751177776310534
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.19767377039290396
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.15904996981451264
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.15701759710007435
+    },
+    {
+      "epoch": 10,
+      "train_loss": 0.14856059721885134
+    }
+  ],
+  "test_metrics": {
+    "rmse": 0.5514947984878441,
+    "mae": 0.438906473909483,
+    "pearson": 0.7444961453347747,
+    "spearman": 0.7290466068335695
+  }
+}

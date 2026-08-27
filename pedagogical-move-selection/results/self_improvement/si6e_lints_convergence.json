@@ -1,0 +1,102 @@
+{
+  "experiment": "si6e_true_lints_convergence",
+  "data_origin": "synthetic",
+  "educational_claim_allowed": false,
+  "configuration": {
+    "n_runs": 10,
+    "attempts_per_run": 3000,
+    "total_decisions": 30000,
+    "early_window": 600,
+    "late_window": 600,
+    "alpha": 0.35,
+    "reward_noise_std": 0.05,
+    "arms": [
+      "baseline",
+      "probing_bias",
+      "focus_bias",
+      "telling_bias",
+      "generic_bias"
+    ],
+    "contexts": [
+      "fraction_low",
+      "fraction_high",
+      "word_low",
+      "word_high",
+      "division_low",
+      "division_high"
+    ]
+  },
+  "planted_optimal_policy": {
+    "fraction_low": "probing_bias",
+    "fraction_high": "focus_bias",
+    "word_low": "focus_bias",
+    "word_high": "probing_bias",
+    "division_low": "telling_bias",
+    "division_high": "probing_bias"
+  },
+  "early": {
+    "optimal_arm_rate": 0.7671666666666667,
+    "mean_expected_regret": 0.05295333333333334,
+    "mean_realized_reward": 0.7382807247315419,
+    "mean_selected_expected_reward": 0.7387199999999999,
+    "mean_baseline_expected_reward": 0.5582,
+    "expected_uplift_vs_baseline": 0.1805199999999999
+  },
+  "late": {
+    "optimal_arm_rate": 0.9731666666666666,
+    "mean_expected_regret": 0.005783333333333334,
+    "mean_realized_reward": 0.7866551917059825,
+    "mean_selected_expected_reward": 0.7858866666666666,
+    "mean_baseline_expected_reward": 0.5582666666666667,
+    "expected_uplift_vs_baseline": 0.22761999999999993
+  },
+  "overall": {
+    "optimal_arm_rate": 0.9230333333333334,
+    "mean_expected_regret": 0.017358666666666668,
+    "mean_realized_reward": 0.7745398442470064,
+    "mean_selected_expected_reward": 0.7743079999999999,
+    "mean_baseline_expected_reward": 0.5583333333333333,
+    "expected_uplift_vs_baseline": 0.21597466666666654
+  },
+  "cumulative_expected_regret": 520.7600000000001,
+  "late_context_results": {
+    "fraction_low": {
+      "planted_optimal_arm": "probing_bias",
+      "late_examples": 979,
+      "late_optimal_arm_rate": 0.9642492339121552
+    },
+    "fraction_high": {
+      "planted_optimal_arm": "focus_bias",
+      "late_examples": 968,
+      "late_optimal_arm_rate": 0.9741735537190083
+    },
+    "word_low": {
+      "planted_optimal_arm": "focus_bias",
+      "late_examples": 1025,
+      "late_optimal_arm_rate": 0.9795121951219512
+    },
+    "word_high": {
+      "planted_optimal_arm": "probing_bias",
+      "late_examples": 1018,
+      "late_optimal_arm_rate": 0.9666011787819253
+    },
+    "division_low": {
+      "planted_optimal_arm": "telling_bias",
+      "late_examples": 997,
+      "late_optimal_arm_rate": 0.9769307923771314
+    },
+    "division_high": {
+      "planted_optimal_arm": "probing_bias",
+      "late_examples": 1013,
+      "late_optimal_arm_rate": 0.9772951628825272
+    }
+  },
+  "validation_checks": {
+    "late_optimal_rate_above_85_percent": true,
+    "optimal_rate_improves_by_at_least_10_points": true,
+    "late_regret_lower_than_early_regret": true,
+    "late_policy_beats_baseline_expectation": true,
+    "all_contexts_above_75_percent_optimal": true
+  },
+  "validation_passed": true
+}

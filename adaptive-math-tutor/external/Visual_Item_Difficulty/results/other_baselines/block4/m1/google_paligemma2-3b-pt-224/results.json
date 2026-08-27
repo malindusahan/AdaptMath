@@ -1,0 +1,62 @@
+{
+  "model": "google/paligemma2-3b-pt-224",
+  "family": "paligemma",
+  "input_mode": "image_only",
+  "mode_tag": "M1",
+  "embedding_dim": 2304,
+  "best_regressor": "xgb",
+  "best_cv_rmse": 0.6145218436437949,
+  "cv_metrics": {
+    "ridge": {
+      "rmse": 0.6460909373722888,
+      "mae": 0.5128457111194807,
+      "pearson": 0.586275732613819,
+      "spearman": 0.5923160827797779
+    },
+    "xgb": {
+      "rmse": 0.6145218436437949,
+      "mae": 0.47882820906333334,
+      "pearson": 0.6377084484905491,
+      "spearman": 0.6454507685916079
+    },
+    "lgbm": {
+      "rmse": 0.6327346381499456,
+      "mae": 0.48723816138791953,
+      "pearson": 0.6067726052776095,
+      "spearman": 0.6226839618101287
+    },
+    "mlp": {
+      "rmse": 0.7145792409707034,
+      "mae": 0.549666386353825,
+      "pearson": 0.5503224141022713,
+      "spearman": 0.5664186340297253
+    }
+  },
+  "test_metrics": {
+    "ridge": {
+      "rmse": 0.6354596994853339,
+      "mae": 0.5189581312061883,
+      "pearson": 0.6320802069519273,
+      "spearman": 0.6390804597701149
+    },
+    "xgb": {
+      "rmse": 0.5844272387901431,
+      "mae": 0.47075502708301287,
+      "pearson": 0.7102167945402571,
+      "spearman": 0.7126909148165642
+    },
+    "lgbm": {
+      "rmse": 0.6064937698569204,
+      "mae": 0.4798898135331561,
+      "pearson": 0.6777121341275254,
+      "spearman": 0.6648795465281058
+    },
+    "mlp": {
+      "rmse": 0.6037599339889017,
+      "mae": 0.4667819515487128,
+      "pearson": 0.6868318464650366,
+      "spearman": 0.6743504959848842
+    }
+  },
+  "embedding_cache": "results/block4/embeddings/google_paligemma2-3b-pt-224_image_only/embeddings.npy"
+}

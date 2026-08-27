@@ -1,0 +1,28 @@
+{
+  "model": "Qwen/Qwen3-VL-8B-Instruct",
+  "family": "qwen-vl",
+  "input_mode": "image_only",
+  "mode_tag": "S1",
+  "val_method": "stratified_holdout_20pct",
+  "best_config": {
+    "lora_r": 16,
+    "lr": 0.0002
+  },
+  "best_val_rmse": 0.7343687387316874,
+  "search_results": [
+    {
+      "lora_r": 16,
+      "lr": 0.0002,
+      "val_rmse": 0.7343687387316874
+    }
+  ],
+  "test_metrics": {
+    "rmse": 0.7239573502875689,
+    "mae": 0.573471266183575,
+    "pearson": 0.5334656667163475,
+    "spearman": 0.49768178460080204
+  },
+  "parse_rate": 1.0,
+  "mean_diff": -0.17762995278269406,
+  "std_diff": 0.7966070309181654
+}

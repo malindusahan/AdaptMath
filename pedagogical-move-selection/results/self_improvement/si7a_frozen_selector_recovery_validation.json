@@ -1,0 +1,133 @@
+{
+  "experiment": "si7a_frozen_selector_recovery",
+  "status": "passed",
+  "architecture": "context_routed_hybrid",
+  "routing_rule": {
+    "tokenizer_source": "MD4_DistilRoBERTa",
+    "threshold": 512,
+    "le_threshold_model": "MD4_weighted_DistilRoBERTa",
+    "gt_threshold_model": "MD3_ModernBERT"
+  },
+  "artifact_counts": {
+    "md3_predictions": 1850,
+    "md4_predictions": 1850,
+    "short_md4": 1507,
+    "long_md3": 343
+  },
+  "md3_metrics": {
+    "examples": 1850,
+    "accuracy": 0.4843243243243243,
+    "macro_f1": 0.4560921970871581,
+    "per_class_f1": {
+      "generic": 0.5991471215351812,
+      "probing": 0.33468286099865047,
+      "focus": 0.5490753911806543,
+      "telling": 0.34146341463414637
+    },
+    "confusion_matrix": [
+      [
+        281,
+        28,
+        69,
+        64
+      ],
+      [
+        76,
+        124,
+        156,
+        56
+      ],
+      [
+        87,
+        133,
+        386,
+        72
+      ],
+      [
+        52,
+        44,
+        117,
+        105
+      ]
+    ]
+  },
+  "md4_metrics": {
+    "examples": 1850,
+    "accuracy": 0.4772972972972973,
+    "macro_f1": 0.4720959134970202,
+    "per_class_f1": {
+      "generic": 0.587360594795539,
+      "probing": 0.4053691275167785,
+      "focus": 0.5176470588235295,
+      "telling": 0.37800687285223367
+    },
+    "confusion_matrix": [
+      [
+        237,
+        30,
+        57,
+        118
+      ],
+      [
+        46,
+        151,
+        120,
+        95
+      ],
+      [
+        59,
+        112,
+        330,
+        177
+      ],
+      [
+        23,
+        40,
+        90,
+        165
+      ]
+    ]
+  },
+  "recovered_hybrid_metrics": {
+    "examples": 1850,
+    "accuracy": 0.5005405405405405,
+    "macro_f1": 0.48676777751987244,
+    "per_class_f1": {
+      "generic": 0.5997638724911453,
+      "probing": 0.41644562334217505,
+      "focus": 0.5528455284552846,
+      "telling": 0.3780160857908847
+    },
+    "confusion_matrix": [
+      [
+        254,
+        31,
+        67,
+        90
+      ],
+      [
+        53,
+        157,
+        128,
+        74
+      ],
+      [
+        68,
+        113,
+        374,
+        123
+      ],
+      [
+        30,
+        41,
+        106,
+        141
+      ]
+    ]
+  },
+  "expected_frozen_metrics": {
+    "accuracy": 0.5005405405405405,
+    "macro_f1": 0.48676777751987244
+  },
+  "recovered_predictions_file": "artifacts\\frozen_selector\\recovered_context_routed_hybrid_validation_predictions.jsonl"
+}

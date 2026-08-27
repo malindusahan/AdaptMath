@@ -1,0 +1,68 @@
+{
+  "experiment": "SI3-D_retrieval_hard_negative_feasibility",
+  "retrieval_input": "problem + recent_history + move + teacher_text",
+  "student_reply_used_for_retrieval": false,
+  "tfidf_fit": "SI_train_only",
+  "candidate_constraints": {
+    "same_move": true,
+    "different_qid": true,
+    "different_group": true,
+    "different_source": true,
+    "different_response_text": true,
+    "response_length_min": 0.5,
+    "response_length_max": 1.5
+  },
+  "train": {
+    "contexts": 9989,
+    "sufficient": 9989,
+    "insufficient": 0,
+    "coverage": 1.0,
+    "mean_similarity": 0.10909524277015241,
+    "median_similarity": 0.10131341279110406,
+    "by_move": {
+      "generic": {
+        "contexts": 1880,
+        "coverage": 1.0
+      },
+      "probing": {
+        "contexts": 2528,
+        "coverage": 1.0
+      },
+      "focus": {
+        "contexts": 3931,
+        "coverage": 1.0
+      },
+      "telling": {
+        "contexts": 1650,
+        "coverage": 1.0
+      }
+    }
+  },
+  "validation": {
+    "contexts": 2509,
+    "sufficient": 2509,
+    "insufficient": 0,
+    "coverage": 1.0,
+    "mean_similarity": 0.12543162065693064,
+    "median_similarity": 0.11698215050731842,
+    "by_move": {
+      "generic": {
+        "contexts": 472,
+        "coverage": 1.0
+      },
+      "probing": {
+        "contexts": 601,
+        "coverage": 1.0
+      },
+      "focus": {
+        "contexts": 997,
+        "coverage": 1.0
+      },
+      "telling": {
+        "contexts": 439,
+        "coverage": 1.0
+      }
+    }
+  },
+  "structural_validation_passed": true
+}

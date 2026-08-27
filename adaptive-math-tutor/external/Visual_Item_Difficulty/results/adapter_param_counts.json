@@ -1,0 +1,14 @@
+{
+  "llm/meta-llama_Llama-3.1-8B_vd_qwen25vl7b/seed42": {
+    "lora_adapter.pt": 13631488,
+    "regression_head.pt": 1057281
+  },
+  "vlm/Qwen_Qwen2.5-VL-7B-Instruct_IQ_ablMlp/seed42": {
+    "lora_adapter.pt": 23794688,
+    "regression_head.pt": 925185
+  },
+  "llm/meta-llama_Llama-3.1-8B_text_ablMlp/seed42": {
+    "lora_adapter.pt": 41943040,
+    "regression_head.pt": 1057281
+  }
+}

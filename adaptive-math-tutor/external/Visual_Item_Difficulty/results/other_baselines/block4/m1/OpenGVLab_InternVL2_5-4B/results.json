@@ -1,0 +1,62 @@
+{
+  "model": "OpenGVLab/InternVL2_5-4B",
+  "family": "internvl",
+  "input_mode": "image_only",
+  "mode_tag": "M1",
+  "embedding_dim": 2048,
+  "best_regressor": "xgb",
+  "best_cv_rmse": 0.5990358951344553,
+  "cv_metrics": {
+    "ridge": {
+      "rmse": 0.6291673003845139,
+      "mae": 0.49028145213750146,
+      "pearson": 0.6148070324039228,
+      "spearman": 0.6334848672619984
+    },
+    "xgb": {
+      "rmse": 0.5990358951344553,
+      "mae": 0.4638028055212503,
+      "pearson": 0.6601482877369468,
+      "spearman": 0.6640895955756972
+    },
+    "lgbm": {
+      "rmse": 0.605442321336435,
+      "mae": 0.4676378087573498,
+      "pearson": 0.6492516037032752,
+      "spearman": 0.6542780325211103
+    },
+    "mlp": {
+      "rmse": 0.6665616467884339,
+      "mae": 0.5164155711279159,
+      "pearson": 0.589725416210142,
+      "spearman": 0.604612195431718
+    }
+  },
+  "test_metrics": {
+    "ridge": {
+      "rmse": 0.615131237901225,
+      "mae": 0.5000921048526784,
+      "pearson": 0.6610541142522461,
+      "spearman": 0.6624980318060147
+    },
+    "xgb": {
+      "rmse": 0.5619582588043005,
+      "mae": 0.4441058157696672,
+      "pearson": 0.7330716787997031,
+      "spearman": 0.7201857975122027
+    },
+    "lgbm": {
+      "rmse": 0.5875983912582592,
+      "mae": 0.45896002029977423,
+      "pearson": 0.7011603153654361,
+      "spearman": 0.6995040151157297
+    },
+    "mlp": {
+      "rmse": 0.5999293992878106,
+      "mae": 0.46189854957920407,
+      "pearson": 0.7082641215723733,
+      "spearman": 0.7104589828373483
+    }
+  },
+  "embedding_cache": "results/block4/embeddings/OpenGVLab_InternVL2_5-4B_image_only/embeddings.npy"
+}

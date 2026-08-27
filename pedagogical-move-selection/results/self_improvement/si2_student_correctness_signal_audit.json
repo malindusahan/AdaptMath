@@ -1,0 +1,10 @@
+{
+  "experiment": "SI2-A_ground_truth_answer_extraction_audit",
+  "custom_train_dialogues": 2295,
+  "extraction_methods": {
+    "final_line": 2295
+  },
+  "successful_extractions": 2295,
+  "failed_extractions": 0,
+  "extraction_rate": 1.0
+}

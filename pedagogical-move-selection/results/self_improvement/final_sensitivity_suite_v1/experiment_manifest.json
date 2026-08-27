@@ -1,0 +1,233 @@
+{
+  "attempts_per_seed": 500,
+  "base_seed": 20260823,
+  "bootstrap_method": "Nonparametric percentile bootstrap across the 50 paired seed units; attempts are never resampled as independent units.",
+  "bootstrap_resamples": 2000,
+  "bootstrap_seed": 314159,
+  "canonical_source_sha256": {
+    "conservative_overlay.py": "a920b73460890bc143d9482ce5d03d898114e875ef8dc69520f7dfc7692329d6",
+    "lints_policy.py": "c2914ded0b164c55572b22165a73170b479bb38f2045ea5897fe786076aca699",
+    "reward.py": "92b91769e558bc3178e5aca23af4fbddc28762eb93b9e9fc40eff96d178c07fc",
+    "turn_context_builder.py": "d752a62c0f1fe94217c41cdff3fecd4ad02f93f1953d221ebc1624f2fb961de8",
+    "turn_level_controller.py": "078190cecaf9e05dfac383ad4fd6e7d7208d56a881d407852b25902bcfecd009"
+  },
+  "checkpoints": [
+    100,
+    500
+  ],
+  "context": {
+    "dimension": 9,
+    "features": [
+      "md6_p_generic",
+      "md6_p_probing",
+      "md6_p_focus",
+      "md6_p_telling",
+      "running_mistake_identification",
+      "running_mistake_location",
+      "running_providing_guidance",
+      "running_actionability",
+      "has_within_attempt_quality"
+    ],
+    "mastery_before_observed_by_policy": false,
+    "name": "C3"
+  },
+  "credit_conditions": {
+    "C_EQUAL": [
+      0.3333333333333333,
+      0.3333333333333333,
+      0.3333333333333333
+    ],
+    "C_RECENCY": [
+      0.16666666666666666,
+      0.3333333333333333,
+      0.5
+    ]
+  },
+  "elapsed_seconds": 1157.5311615999963,
+  "environments": [
+    "E3_QUALITY",
+    "E4_MIXED"
+  ],
+  "experiment_name": "final_sensitivity_suite_v1",
+  "experiment_source_sha256": {
+    "final_sensitivity_suite.py": "dace77d408b4d94e9daba373e432219665be1510f37c2c4c022250a9fad54ab2",
+    "plot_final_sensitivity_suite.py": "1221517bc0c161ebff8390dfb52e6a29f7854c1ec383c1c995704cea735e126d"
+  },
+  "external_evaluation_metrics": [
+    "cumulative_regret",
+    "mean_evaluator_fraction",
+    "optimal_arm_rate"
+  ],
+  "gap_threshold": 0.1,
+  "git_commit": null,
+  "holm_correction_scope": "Study C only: four pre-specified alternative-minus-H_BASE comparisons within each environment and metric.",
+  "lints_conditions": {
+    "H_BASE": {
+      "exploration_scale": 0.1,
+      "ridge_lambda": 1.0
+    },
+    "H_EXP_HIGH": {
+      "exploration_scale": 0.2,
+      "ridge_lambda": 1.0
+    },
+    "H_EXP_LOW": {
+      "exploration_scale": 0.05,
+      "ridge_lambda": 1.0
+    },
+    "H_RIDGE_HIGH": {
+      "exploration_scale": 0.1,
+      "ridge_lambda": 2.0
+    },
+    "H_RIDGE_LOW": {
+      "exploration_scale": 0.1,
+      "ridge_lambda": 0.5
+    }
+  },
+  "numpy_version": "2.5.2",
+  "paired_difference_definition": "metric(condition_a) - metric(condition_b)",
+  "pandas_version": "3.0.5",
+  "permutation_method": "Two-sided Monte Carlo paired sign-flip test of the seed-level mean difference, with +1 correction.",
+  "permutation_resamples": 50000,
+  "permutation_seed": 271828,
+  "python_version": "3.12.7",
+  "result_file_sha256": {
+    "credit/paired_comparison.csv": "44ebc027cfb9db8eca26c1a181ac58d1263f10e24a8052a29e5bc4043df5ba59",
+    "credit/raw_attempt_metrics.csv": "4dbd3445af67e5532704f080330f4398dd6ba692ae2e593b71013b8599056e0f",
+    "credit/summary.csv": "e2f8a3c0e2ba9caa642b45d95309e50228af5e5eaf6bfc8732f990417d1e187f",
+    "lints/paired_comparisons.csv": "e0d27e7cb7c72f5854bf938a25c619aa8f4522cb03409174abd778504ee5e0e3",
+    "lints/raw_attempt_metrics.csv": "8ae7eff38d36f9d2706b42d7fb839de59bb9f622d999ad6e606699b0d46b0d07",
+    "lints/summary.csv": "fa34a36155dac482b4d4480461cf31a5cc9588b6c49b19b1c67bec37249e0f20",
+    "reward/paired_comparison.csv": "d00b71629807f63264539264df23573ba1f5f3c76c48092e9f5efe00eb71be7f",
+    "reward/raw_attempt_metrics.csv": "86a1a3380d80c4df6208e93365c7aeb5a9d1118dd687aa8f593b705e73593134",
+    "reward/summary.csv": "6420a6980f9b65718007a96a59efec922c95384e02dca42a683cd4d68aeaa54d"
+  },
+  "reused_context_ablation_sha256": "b04bc922e6f5a728547f5ec22a698c1e8c3d0f794f5217acdd7d31ead40a01c5",
+  "reward_conditions": {
+    "R_LINEAR": "evaluator_score / 3",
+    "R_SUCCESS_ONLY": "1 if evaluator_score == 3 else 0"
+  },
+  "rng_strategy": {
+    "policy": "One deterministic SeedSequence-derived LinTS stream per study, environment, and seed, shared across conditions within that study.",
+    "worlds": "Exact context_ablation.py hidden-environment and exogenous-world generators with original environment indices and seeds; each environment/seed world is shared across all nine suite conditions."
+  },
+  "sanity_checks": [
+    {
+      "check": "context dimension equals 9",
+      "status": "PASS"
+    },
+    {
+      "check": "mastery absent from policy context",
+      "status": "PASS"
+    },
+    {
+      "check": "gap threshold fixed at 0.10",
+      "status": "PASS"
+    },
+    {
+      "check": "R_LINEAR mapping exact",
+      "status": "PASS"
+    },
+    {
+      "check": "R_SUCCESS_ONLY mapping exact",
+      "status": "PASS"
+    },
+    {
+      "check": "equal credit weights sum to one",
+      "status": "PASS"
+    },
+    {
+      "check": "recency credit weights exact and sum to one",
+      "status": "PASS"
+    },
+    {
+      "check": "hyperparameter configurations exactly match specification",
+      "status": "PASS"
+    },
+    {
+      "check": "policy selected arm always eligible",
+      "status": "PASS"
+    },
+    {
+      "check": "oracle arm always eligible",
+      "status": "PASS"
+    },
+    {
+      "check": "regret nonnegative",
+      "status": "PASS"
+    },
+    {
+      "check": "evaluator score support exact",
+      "status": "PASS"
+    },
+    {
+      "check": "evaluator fraction support exact",
+      "status": "PASS"
+    },
+    {
+      "check": "no posterior update before attempt completion",
+      "status": "PASS"
+    },
+    {
+      "check": "deterministic rerun succeeds",
+      "status": "PASS"
+    }
+  ],
+  "seed_list": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49
+  ],
+  "timestamp": "2026-08-23T17:37:22.804433+00:00",
+  "timestamp_timezone": "UTC",
+  "total_attempts": 450000,
+  "total_runs": 900,
+  "total_turns": 1350000,
+  "turns_per_attempt": 3
+}

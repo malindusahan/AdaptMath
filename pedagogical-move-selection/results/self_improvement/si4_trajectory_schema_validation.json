@@ -1,0 +1,31 @@
+{
+  "experiment": "SI4-A_trajectory_schema_validation",
+  "source_path": "data\\synthetic\\self_improvement\\trajectory_schema_example.jsonl",
+  "synthetic_only": true,
+  "records": 1,
+  "validation_errors": 0,
+  "validation_passed": true,
+  "forbidden_runtime_fields": [
+    "ground_truth",
+    "self-correctness",
+    "self-typical-confusion",
+    "self-typical-interactions",
+    "student_incorrect_solution",
+    "student_profile",
+    "teacher_described_confusion"
+  ],
+  "derived_examples": [
+    {
+      "episode_id": "synthetic_episode_001",
+      "attempt_index": 0,
+      "skill_id": "fraction_multiplication",
+      "num_tutoring_turns": 2,
+      "evaluator_score": 3,
+      "evaluation_rate": 1.0,
+      "requires_reteach": false,
+      "mastery_before": 0.42,
+      "mastery_after": 0.67,
+      "mastery_delta": 0.25000000000000006
+    }
+  ]
+}

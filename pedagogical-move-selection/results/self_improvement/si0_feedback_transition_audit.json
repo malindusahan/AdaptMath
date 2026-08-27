@@ -1,0 +1,76 @@
+{
+  "global": {
+    "teacher_segments": 18609,
+    "labeled_teacher_moves": 18607,
+    "teacher_without_immediate_student_reply": 2916,
+    "teacher_to_student_transitions": 15691,
+    "teacher_student_teacher_chains": 14250,
+    "unlabeled_teacher_segments": 2
+  },
+  "teacher_to_student_coverage": 0.8432847852958564,
+  "teacher_student_teacher_coverage": 0.7658408125974095,
+  "split_stats": {
+    "train": {
+      "labeled_teacher_moves": 14905,
+      "teacher_without_student_reply": 2354,
+      "teacher_to_student_transitions": 12551
+    },
+    "test": {
+      "labeled_teacher_moves": 1852,
+      "teacher_to_student_transitions": 1536,
+      "teacher_without_student_reply": 316
+    },
+    "validation": {
+      "labeled_teacher_moves": 1850,
+      "teacher_to_student_transitions": 1604,
+      "teacher_without_student_reply": 246
+    }
+  },
+  "move_summary": {
+    "generic": {
+      "total": 4456,
+      "student_reply": 2938,
+      "student_reply_rate": 0.6593357271095153,
+      "next_teacher_move": 2558,
+      "next_teacher_move_rate": 0.5740574506283662
+    },
+    "probing": {
+      "total": 4252,
+      "student_reply": 3882,
+      "student_reply_rate": 0.9129821260583255,
+      "next_teacher_move": 3769,
+      "next_teacher_move_rate": 0.886406396989652
+    },
+    "focus": {
+      "total": 6808,
+      "student_reply": 6237,
+      "student_reply_rate": 0.9161280846063454,
+      "next_teacher_move": 5847,
+      "next_teacher_move_rate": 0.8588425381903643
+    },
+    "telling": {
+      "total": 3091,
+      "student_reply": 2634,
+      "student_reply_rate": 0.8521514073115497,
+      "next_teacher_move": 2076,
+      "next_teacher_move_rate": 0.6716273050792624
+    }
+  },
+  "student_reply_length": {
+    "count": 15691,
+    "minimum_words": 1,
+    "median_words": 32,
+    "p90_words": 79,
+    "p95_words": 92,
+    "maximum_words": 214
+  },
+  "train_self_improvement_pool": {
+    "usable_transitions": 12551,
+    "move_counts": {
+      "probing": 3135,
+      "generic": 2361,
+      "focus": 4951,
+      "telling": 2104
+    }
+  }
+}

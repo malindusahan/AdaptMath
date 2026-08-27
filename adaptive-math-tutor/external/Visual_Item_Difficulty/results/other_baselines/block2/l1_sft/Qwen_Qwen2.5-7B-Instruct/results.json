@@ -1,0 +1,34 @@
+{
+  "model": "Qwen/Qwen2.5-7B-Instruct",
+  "z_mean": -0.17762995278269406,
+  "z_std": 0.7966070309181654,
+  "val_method": "stratified_holdout_20pct",
+  "best_config": {
+    "lr": 2e-05,
+    "epochs": 3
+  },
+  "best_val_rmse": 0.9539124748188043,
+  "final_train_frac": 0.9,
+  "search_results": [
+    {
+      "lr": 2e-05,
+      "epochs": 3,
+      "val_metrics": {
+        "rmse": 0.9539124748188043,
+        "mae": 0.7622492685484581,
+        "pearson": -0.010895233201163528,
+        "spearman": 0.027816483217547382,
+        "parse_rate": 1.0,
+        "parse_fails": 0
+      }
+    }
+  ],
+  "test_metrics": {
+    "rmse": 0.8987158984821757,
+    "mae": 0.7431816173584993,
+    "pearson": 0.13785972186525491,
+    "spearman": 0.03308764281228972,
+    "parse_rate": 1.0,
+    "parse_fails": 0
+  }
+}

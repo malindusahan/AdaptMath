@@ -1,0 +1,63 @@
+{
+  "audit_name": "md6_validation_vs_demo_v1",
+  "timestamp_utc": "2026-08-25T05:14:19.628505+00:00",
+  "purpose": "Compare frozen MD6 prediction and conservative-eligibility distributions between actual MathDial validation inputs and 24 fixed hand-written cases.",
+  "interpretation_boundary": "Descriptive evidence only. Hand-written cases are not gold-labeled, and distribution differences alone are not claimed to establish domain shift.",
+  "dataset_scope": "MathDial validation only",
+  "dataset_paths_opened": [
+    "data\\processed\\mathdial\\validation.jsonl"
+  ],
+  "existing_artifacts_read": [
+    "results\\self_improvement\\md6_gap_threshold_audit\\md6_validation_probabilities.csv",
+    "results\\self_improvement\\md6_gap_threshold_audit\\audit_manifest.json"
+  ],
+  "held_out_test_untouched": true,
+  "mathdial_validation_n": 1850,
+  "handwritten_demo_n": 24,
+  "frozen_md6": true,
+  "frozen_model_path": "D:\\Research\\pedagogical-move-selection\\models\\frozen\\md6",
+  "frozen_gap_threshold": 0.1,
+  "model_changes": false,
+  "mathdial_validation_probability_source": "All 1,850 rows from the existing canonical frozen-MD6 validation probability artifact. Its PASS reproduction manifest, artifact hash, model hashes, tokenizer hashes, dataset scope, class order, row IDs, labels, and live public-wrapper parity were verified.",
+  "handwritten_inference_api": "FrozenMD6Inference.predict_probabilities",
+  "cpu_only": true,
+  "cpu_threads": 8,
+  "public_wrapper_parity_cases": 2,
+  "runtime_seconds": 20.262265300028957,
+  "canonical_move_order": [
+    "generic",
+    "probing",
+    "focus",
+    "telling"
+  ],
+  "source_file_sha256": {
+    "experiments\\audit_md6_validation_vs_demo_v1.py": "02c0613a8be87212be3dcd93369d12f3d78b91cfad3afa6119165ae9aef12d2c",
+    "experiments\\audit_md6_move_behavior_v1.py": "0554a0626b2114d98d3ccc402d4c6b382e3673ba198540fd434faf3e02a5fb38",
+    "src\\self_improvement\\md6_inference.py": "dff49117eec0dc53b2ce06fb98df7ecc7de1712931f3e31cbf0e097e5b4df429",
+    "src\\self_improvement\\conservative_overlay.py": "a920b73460890bc143d9482ce5d03d898114e875ef8dc69520f7dfc7692329d6",
+    "src\\self_improvement\\context_builder.py": "1fc38b5c146b8d90fe35aeb78d50dba31ca26df4a05a8b473ff071b56d4ea58f"
+  },
+  "validation_dataset_sha256": "225e6b8f671bf1e335af175343722aa9ac2a603a96d67bcb5220be1e92c0b2b6",
+  "frozen_model_file_sha256": {
+    "config.json": "9877dd11007c8af1d2841a2c1bb470023ef2ceeb748b47c24686ea82479e9127",
+    "model.safetensors": "674f1abbaf8c6c23d4b736a80f40b3532e4681c125695ebbe3863e404acb56e7",
+    "tokenizer.json": "80d0fb9a6bbc3ab2b24ec149d6b47981036a5f96c753667be38709975753550b",
+    "tokenizer_config.json": "4903bcd294e8ff8b840eb9c21909d2f910b466d250ac6e298a7438a7da63ef0d"
+  },
+  "output_files": [
+    "results\\self_improvement\\md6_validation_vs_demo_v1\\mathdial_validation_predictions.csv.gz",
+    "results\\self_improvement\\md6_validation_vs_demo_v1\\handwritten_demo_predictions.csv",
+    "results\\self_improvement\\md6_validation_vs_demo_v1\\group_summary.csv",
+    "results\\self_improvement\\md6_validation_vs_demo_v1\\summary.json",
+    "results\\self_improvement\\md6_validation_vs_demo_v1\\figures\\argmax_distribution_mathdial.png",
+    "results\\self_improvement\\md6_validation_vs_demo_v1\\figures\\argmax_distribution_demo.png",
+    "results\\self_improvement\\md6_validation_vs_demo_v1\\figures\\top1_gap_mathdial.png",
+    "results\\self_improvement\\md6_validation_vs_demo_v1\\figures\\top1_gap_demo.png",
+    "results\\self_improvement\\md6_validation_vs_demo_v1\\figures\\probing_probability_mathdial.png",
+    "results\\self_improvement\\md6_validation_vs_demo_v1\\figures\\probing_probability_demo.png",
+    "results\\self_improvement\\md6_validation_vs_demo_v1\\manifest.json"
+  ],
+  "python_version": "3.12.7",
+  "numpy_version": "2.1.3",
+  "matplotlib_version": "3.10.5"
+}

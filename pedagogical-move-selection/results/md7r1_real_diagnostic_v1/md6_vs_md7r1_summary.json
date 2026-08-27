@@ -1,0 +1,1072 @@
+{
+  "audit_name": "md7r1_real_diagnostic_v1",
+  "diagnostic_only": true,
+  "models": {
+    "md6": {
+      "path": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\pedagogical-move-selection\\models\\frozen\\md6",
+      "required_artifacts_present": true,
+      "architecture": "RobertaForSequenceClassification",
+      "id2label": {
+        "0": "generic",
+        "1": "probing",
+        "2": "focus",
+        "3": "telling"
+      },
+      "label2id": {
+        "focus": 2,
+        "generic": 0,
+        "probing": 1,
+        "telling": 3
+      },
+      "hashes": {
+        "config.json": "9877dd11007c8af1d2841a2c1bb470023ef2ceeb748b47c24686ea82479e9127",
+        "model.safetensors": "674f1abbaf8c6c23d4b736a80f40b3532e4681c125695ebbe3863e404acb56e7",
+        "tokenizer.json": "80d0fb9a6bbc3ab2b24ec149d6b47981036a5f96c753667be38709975753550b"
+      }
+    },
+    "md7r1_epoch3": {
+      "path": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\pedagogical-move-selection\\models\\candidates\\md7r1_epoch3",
+      "required_artifacts_present": true,
+      "architecture": "RobertaForSequenceClassification",
+      "id2label": {
+        "0": "generic",
+        "1": "probing",
+        "2": "focus",
+        "3": "telling"
+      },
+      "label2id": {
+        "focus": 2,
+        "generic": 0,
+        "probing": 1,
+        "telling": 3
+      },
+      "hashes": {
+        "config.json": "9877dd11007c8af1d2841a2c1bb470023ef2ceeb748b47c24686ea82479e9127",
+        "model.safetensors": "d32d37f7f664d038f80fefb92f874804b49e5ac3d848985636ae64e6a2a60a13",
+        "tokenizer.json": "80d0fb9a6bbc3ab2b24ec149d6b47981036a5f96c753667be38709975753550b"
+      }
+    }
+  },
+  "model_contract": {
+    "input_pair": [
+      "Problem:\n<problem>",
+      "Conversation:\n<formatted current-session history>\n\nNext teacher pedagogical move:"
+    ],
+    "shared_inference_implementation": "src/self_improvement/md6_inference.py",
+    "truncation_side": "left",
+    "truncation": "only_second",
+    "max_length": 512,
+    "label_order": [
+      "generic",
+      "probing",
+      "focus",
+      "telling"
+    ],
+    "probability_sum_abs_tolerance": 1e-06,
+    "device": "cpu"
+  },
+  "case_sources": {
+    "controlled_20": {
+      "status": "UNAVAILABLE",
+      "exact_source": null,
+      "reason": "No exact artifact for the historical 20-state, 2-generic/18-probing audit was found. The repository's 24-case MD6 behavior audit was not substituted.",
+      "nonmatching_artifact_checked": "results/self_improvement/md6_move_behavior_v1/raw_cases.csv"
+    },
+    "handwritten_24": {
+      "definition_source": "experiments/audit_md6_move_behavior_v1.py",
+      "exact_serialized_case_and_saved_output_source": "results/self_improvement/md6_validation_vs_demo_v1/handwritten_demo_predictions.csv"
+    },
+    "genuine_live_turns": {
+      "exact_checkpoint_source_read_only": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\adaptive-math-tutor\\backend\\runtime\\adaptive_demo\\checkpoints.sqlite3",
+      "completed_attempt_md6_corroboration": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\adaptive-math-tutor\\backend\\runtime\\adaptive_demo\\attempts.jsonl",
+      "runtime_log_corroboration": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\_local_runtime_logs\\tutor.stderr.log",
+      "history_projection_contract": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\adaptive-math-tutor\\backend\\app\\integrations\\tutor_state_memory_adapter.py",
+      "preserved_pre_fix_inspector": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\_forensics\\20260826_same_attempt_failure_pre_fix\\inspect_checkpoint_snapshot.py",
+      "post_fix_inspector": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\_forensics\\20260826_same_attempt_failure_pre_fix\\inspect_live_retest.py",
+      "recovery": {
+        "checkpoint_db_sha256": "3112553ac0559faffbc445fc1fc3e8c8673412c997963e8884aa49d1e7943664",
+        "checkpoint_wal_sha256": "0f1bbc280bfddb212c23529f78b25cdd0fd4539ab6d6e702ac5aac06bc052272",
+        "manual_thread_ids": [
+          "4e578ab1-225b-4251-9f67-b837f0b3c7a8",
+          "9c909170-00a6-4a33-8ad8-9ef003c2102e",
+          "9ab73ef2-3342-4141-b5ef-1c8c57736883"
+        ],
+        "recovered_case_count": 13,
+        "saved_md6_probability_count": 12
+      }
+    }
+  },
+  "case_availability": {
+    "controlled_20": {
+      "expected": 20,
+      "recovered": 0,
+      "status": "UNAVAILABLE"
+    },
+    "handwritten_24": {
+      "expected": 24,
+      "recovered": 24,
+      "status": "AVAILABLE"
+    },
+    "genuine_live_turns": {
+      "expected": "all exact preserved manual move-selection states",
+      "recovered": 13,
+      "status": "AVAILABLE"
+    },
+    "combined_available": {
+      "expected": "all available cases",
+      "recovered": 37,
+      "status": "AVAILABLE"
+    }
+  },
+  "md6_reproduction": {
+    "status": "PASS",
+    "scope": "all exactly recovered cases with historical saved outputs",
+    "controlled_20": {
+      "status": "UNAVAILABLE",
+      "expected_distribution": {
+        "generic": 2,
+        "probing": 18,
+        "focus": 0,
+        "telling": 0
+      },
+      "observed_distribution": null,
+      "reason": "No exact 20-state artifact was found; no replacement was invented."
+    },
+    "handwritten_24": {
+      "status": "PASS",
+      "expected_distribution": {
+        "generic": 0,
+        "probing": 24,
+        "focus": 0,
+        "telling": 0
+      },
+      "observed_distribution": {
+        "generic": 0,
+        "probing": 24,
+        "focus": 0,
+        "telling": 0
+      }
+    },
+    "saved_probability_comparisons": {
+      "n": 36,
+      "max_abs_difference": 1.1920928955078125e-07,
+      "all_match_at_1e-6": true,
+      "rows": [
+        {
+          "case_id": "demo_01",
+          "case_set": "handwritten_24",
+          "max_abs_difference": 1.4901161193847656e-08,
+          "current_move": "probing",
+          "saved_move": "probing",
+          "probabilities_match_at_1e-6": true,
+          "argmax_matches": true
+        },
+        {
+          "case_id": "demo_02",
+          "case_set": "handwritten_24",
+          "max_abs_difference": 5.960464477539063e-08,
+          "current_move": "probing",
+          "saved_move": "probing",
+          "probabilities_match_at_1e-6": true,
+          "argmax_matches": true
+        },
+        {
+          "case_id": "demo_03",
+          "case_set": "handwritten_24",
+          "max_abs_difference": 1.1920928955078125e-07,
+          "current_move": "probing",
+          "saved_move": "probing",
+          "probabilities_match_at_1e-6": true,
+          "argmax_matches": true
+        },
+        {
+          "case_id": "demo_04",
+          "case_set": "handwritten_24",
+          "max_abs_difference": 1.4901161193847656e-08,
+          "current_move": "probing",
+          "saved_move": "probing",
+          "probabilities_match_at_1e-6": true,
+          "argmax_matches": true
+        },
+        {
+          "case_id": "demo_05",
+          "case_set": "handwritten_24",
+          "max_abs_difference": 5.960464477539063e-08,
+          "current_move": "probing",
+          "saved_move": "probing",
+          "probabilities_match_at_1e-6": true,
+          "argmax_matches": true
+        },
+        {
+          "case_id": "demo_06",
+          "case_set": "handwritten_24",
+          "max_abs_difference": 1.4901161193847656e-08,
+          "current_move": "probing",
+          "saved_move": "probing",
+          "probabilities_match_at_1e-6": true,
+          "argmax_matches": true
+        },
+        {
+          "case_id": "demo_07",
+          "case_set": "handwritten_24",
+          "max_abs_difference": 4.470348358154297e-08,
+          "current_move": "probing",
+          "saved_move": "probing",
+          "probabilities_match_at_1e-6": true,
+          "argmax_matches": true
+        },
+        {
+          "case_id": "demo_08",
+          "case_set": "handwritten_24",
+          "max_abs_difference": 1.4901161193847656e-08,
+          "current_move": "probing",
+          "saved_move": "probing",
+          "probabilities_match_at_1e-6": true,
+          "argmax_matches": true
+        },
+        {
+          "case_id": "demo_09",
+          "case_set": "handwritten_24",
+          "max_abs_difference": 5.960464477539063e-08,
+          "current_move": "probing",
+          "saved_move": "probing",
+          "probabilities_match_at_1e-6": true,
+          "argmax_matches": true
+        },
+        {
+          "case_id": "demo_10",
+          "case_set": "handwritten_24",
+          "max_abs_difference": 1.4901161193847656e-08,
+          "current_move": "probing",
+          "saved_move": "probing",
+          "probabilities_match_at_1e-6": true,
+          "argmax_matches": true
+        },
+        {
+          "case_id": "demo_11",
+          "case_set": "handwritten_24",
+          "max_abs_difference": 2.9802322387695312e-08,
+          "current_move": "probing",
+          "saved_move": "probing",
+          "probabilities_match_at_1e-6": true,
+          "argmax_matches": true
+        },
+        {
+          "case_id": "demo_12",
+          "case_set": "handwritten_24",
+          "max_abs_difference": 1.4901161193847656e-08,
+          "current_move": "probing",
+          "saved_move": "probing",
+          "probabilities_match_at_1e-6": true,
+          "argmax_matches": true
+        },
+        {
+          "case_id": "demo_13",
+          "case_set": "handwritten_24",
+          "max_abs_difference": 1.4901161193847656e-08,
+          "current_move": "probing",
+          "saved_move": "probing",
+          "probabilities_match_at_1e-6": true,
+          "argmax_matches": true
+        },
+        {
+          "case_id": "demo_14",
+          "case_set": "handwritten_24",
+          "max_abs_difference": 5.960464477539063e-08,
+          "current_move": "probing",
+          "saved_move": "probing",
+          "probabilities_match_at_1e-6": true,
+          "argmax_matches": true
+        },
+        {
+          "case_id": "demo_15",
+          "case_set": "handwritten_24",
+          "max_abs_difference": 1.4901161193847656e-08,
+          "current_move": "probing",
+          "saved_move": "probing",
+          "probabilities_match_at_1e-6": true,
+          "argmax_matches": true
+        },
+        {
+          "case_id": "demo_16",
+          "case_set": "handwritten_24",
+          "max_abs_difference": 1.4901161193847656e-08,
+          "current_move": "probing",
+          "saved_move": "probing",
+          "probabilities_match_at_1e-6": true,
+          "argmax_matches": true
+        },
+        {
+          "case_id": "demo_17",
+          "case_set": "handwritten_24",
+          "max_abs_difference": 1.1920928955078125e-07,
+          "current_move": "probing",
+          "saved_move": "probing",
+          "probabilities_match_at_1e-6": true,
+          "argmax_matches": true
+        },
+        {
+          "case_id": "demo_18",
+          "case_set": "handwritten_24",
+          "max_abs_difference": 2.9802322387695312e-08,
+          "current_move": "probing",
+          "saved_move": "probing",
+          "probabilities_match_at_1e-6": true,
+          "argmax_matches": true
+        },
+        {
+          "case_id": "demo_19",
+          "case_set": "handwritten_24",
+          "max_abs_difference": 5.960464477539063e-08,
+          "current_move": "probing",
+          "saved_move": "probing",
+          "probabilities_match_at_1e-6": true,
+          "argmax_matches": true
+        },
+        {
+          "case_id": "demo_20",
+          "case_set": "handwritten_24",
+          "max_abs_difference": 2.9802322387695312e-08,
+          "current_move": "probing",
+          "saved_move": "probing",
+          "probabilities_match_at_1e-6": true,
+          "argmax_matches": true
+        },
+        {
+          "case_id": "demo_21",
+          "case_set": "handwritten_24",
+          "max_abs_difference": 2.9802322387695312e-08,
+          "current_move": "probing",
+          "saved_move": "probing",
+          "probabilities_match_at_1e-6": true,
+          "argmax_matches": true
+        },
+        {
+          "case_id": "demo_22",
+          "case_set": "handwritten_24",
+          "max_abs_difference": 5.960464477539063e-08,
+          "current_move": "probing",
+          "saved_move": "probing",
+          "probabilities_match_at_1e-6": true,
+          "argmax_matches": true
+        },
+        {
+          "case_id": "demo_23",
+          "case_set": "handwritten_24",
+          "max_abs_difference": 5.960464477539063e-08,
+          "current_move": "probing",
+          "saved_move": "probing",
+          "probabilities_match_at_1e-6": true,
+          "argmax_matches": true
+        },
+        {
+          "case_id": "demo_24",
+          "case_set": "handwritten_24",
+          "max_abs_difference": 1.4901161193847656e-08,
+          "current_move": "probing",
+          "saved_move": "probing",
+          "probabilities_match_at_1e-6": true,
+          "argmax_matches": true
+        },
+        {
+          "case_id": "live_4e578ab1_turn_01",
+          "case_set": "genuine_live_turns",
+          "max_abs_difference": 0.0,
+          "current_move": "generic",
+          "saved_move": "generic",
+          "probabilities_match_at_1e-6": true,
+          "argmax_matches": true
+        },
+        {
+          "case_id": "live_4e578ab1_turn_02",
+          "case_set": "genuine_live_turns",
+          "max_abs_difference": 0.0,
+          "current_move": "probing",
+          "saved_move": "probing",
+          "probabilities_match_at_1e-6": true,
+          "argmax_matches": true
+        },
+        {
+          "case_id": "live_4e578ab1_turn_03",
+          "case_set": "genuine_live_turns",
+          "max_abs_difference": 0.0,
+          "current_move": "probing",
+          "saved_move": "probing",
+          "probabilities_match_at_1e-6": true,
+          "argmax_matches": true
+        },
+        {
+          "case_id": "live_4e578ab1_turn_04",
+          "case_set": "genuine_live_turns",
+          "max_abs_difference": 0.0,
+          "current_move": "probing",
+          "saved_move": "probing",
+          "probabilities_match_at_1e-6": true,
+          "argmax_matches": true
+        },
+        {
+          "case_id": "live_9ab73ef2_turn_01",
+          "case_set": "genuine_live_turns",
+          "max_abs_difference": 0.0,
+          "current_move": "generic",
+          "saved_move": "generic",
+          "probabilities_match_at_1e-6": true,
+          "argmax_matches": true
+        },
+        {
+          "case_id": "live_9ab73ef2_turn_02",
+          "case_set": "genuine_live_turns",
+          "max_abs_difference": 0.0,
+          "current_move": "probing",
+          "saved_move": "probing",
+          "probabilities_match_at_1e-6": true,
+          "argmax_matches": true
+        },
+        {
+          "case_id": "live_9ab73ef2_turn_03",
+          "case_set": "genuine_live_turns",
+          "max_abs_difference": 0.0,
+          "current_move": "probing",
+          "saved_move": "probing",
+          "probabilities_match_at_1e-6": true,
+          "argmax_matches": true
+        },
+        {
+          "case_id": "live_9ab73ef2_turn_04",
+          "case_set": "genuine_live_turns",
+          "max_abs_difference": 0.0,
+          "current_move": "probing",
+          "saved_move": "probing",
+          "probabilities_match_at_1e-6": true,
+          "argmax_matches": true
+        },
+        {
+          "case_id": "live_9ab73ef2_turn_05",
+          "case_set": "genuine_live_turns",
+          "max_abs_difference": 0.0,
+          "current_move": "probing",
+          "saved_move": "probing",
+          "probabilities_match_at_1e-6": true,
+          "argmax_matches": true
+        },
+        {
+          "case_id": "live_9ab73ef2_turn_06",
+          "case_set": "genuine_live_turns",
+          "max_abs_difference": 0.0,
+          "current_move": "focus",
+          "saved_move": "focus",
+          "probabilities_match_at_1e-6": true,
+          "argmax_matches": true
+        },
+        {
+          "case_id": "live_9ab73ef2_turn_07",
+          "case_set": "genuine_live_turns",
+          "max_abs_difference": 0.0,
+          "current_move": "focus",
+          "saved_move": "focus",
+          "probabilities_match_at_1e-6": true,
+          "argmax_matches": true
+        },
+        {
+          "case_id": "live_9c909170_turn_01",
+          "case_set": "genuine_live_turns",
+          "max_abs_difference": 0.0,
+          "current_move": "generic",
+          "saved_move": "generic",
+          "probabilities_match_at_1e-6": true,
+          "argmax_matches": true
+        }
+      ]
+    }
+  },
+  "case_set_summaries": {
+    "controlled_20": {
+      "available": false,
+      "n": 0
+    },
+    "handwritten_24": {
+      "available": true,
+      "n": 24,
+      "md6": {
+        "counts": {
+          "generic": 0,
+          "probing": 24,
+          "focus": 0,
+          "telling": 0
+        },
+        "percentages": {
+          "generic": 0.0,
+          "probing": 100.0,
+          "focus": 0.0,
+          "telling": 0.0
+        },
+        "probing_rate": 100.0,
+        "focus_rate": 0.0,
+        "telling_rate": 0.0,
+        "mean_probabilities": {
+          "generic": 0.11061126211037238,
+          "probing": 0.5599450009564558,
+          "focus": 0.16713318477074304,
+          "telling": 0.16231054409096637
+        },
+        "maximum_single_class_share": 100.0
+      },
+      "md7": {
+        "counts": {
+          "generic": 14,
+          "probing": 3,
+          "focus": 1,
+          "telling": 6
+        },
+        "percentages": {
+          "generic": 58.333333333333336,
+          "probing": 12.5,
+          "focus": 4.166666666666667,
+          "telling": 25.0
+        },
+        "probing_rate": 12.5,
+        "focus_rate": 4.166666666666667,
+        "telling_rate": 25.0,
+        "mean_probabilities": {
+          "generic": 0.5867992677594884,
+          "probing": 0.11555089477769798,
+          "focus": 0.06024691143829841,
+          "telling": 0.2374029211253704
+        },
+        "maximum_single_class_share": 58.333333333333336
+      },
+      "argmax_changed_count": 21,
+      "argmax_changed_percentage": 87.5,
+      "probing_rate_change_percentage_points": -87.5,
+      "transition_matrix": {
+        "generic": {
+          "generic": 0,
+          "probing": 0,
+          "focus": 0,
+          "telling": 0
+        },
+        "probing": {
+          "generic": 14,
+          "probing": 3,
+          "focus": 1,
+          "telling": 6
+        },
+        "focus": {
+          "generic": 0,
+          "probing": 0,
+          "focus": 0,
+          "telling": 0
+        },
+        "telling": {
+          "generic": 0,
+          "probing": 0,
+          "focus": 0,
+          "telling": 0
+        }
+      }
+    },
+    "genuine_live_turns": {
+      "available": true,
+      "n": 13,
+      "md6": {
+        "counts": {
+          "generic": 3,
+          "probing": 8,
+          "focus": 2,
+          "telling": 0
+        },
+        "percentages": {
+          "generic": 23.076923076923077,
+          "probing": 61.53846153846154,
+          "focus": 15.384615384615385,
+          "telling": 0.0
+        },
+        "probing_rate": 61.53846153846154,
+        "focus_rate": 15.384615384615385,
+        "telling_rate": 0.0,
+        "mean_probabilities": {
+          "generic": 0.2847706199838565,
+          "probing": 0.33914921948542964,
+          "focus": 0.22671360293259987,
+          "telling": 0.14936656605165738
+        },
+        "maximum_single_class_share": 61.53846153846154
+      },
+      "md7": {
+        "counts": {
+          "generic": 4,
+          "probing": 3,
+          "focus": 6,
+          "telling": 0
+        },
+        "percentages": {
+          "generic": 30.76923076923077,
+          "probing": 23.076923076923077,
+          "focus": 46.15384615384615,
+          "telling": 0.0
+        },
+        "probing_rate": 23.076923076923077,
+        "focus_rate": 46.15384615384615,
+        "telling_rate": 0.0,
+        "mean_probabilities": {
+          "generic": 0.3243781037140602,
+          "probing": 0.3117799755508223,
+          "focus": 0.3312603432344846,
+          "telling": 0.03258154936394511
+        },
+        "maximum_single_class_share": 46.15384615384615
+      },
+      "argmax_changed_count": 5,
+      "argmax_changed_percentage": 38.46153846153846,
+      "probing_rate_change_percentage_points": -38.46153846153847,
+      "transition_matrix": {
+        "generic": {
+          "generic": 3,
+          "probing": 0,
+          "focus": 0,
+          "telling": 0
+        },
+        "probing": {
+          "generic": 1,
+          "probing": 3,
+          "focus": 4,
+          "telling": 0
+        },
+        "focus": {
+          "generic": 0,
+          "probing": 0,
+          "focus": 2,
+          "telling": 0
+        },
+        "telling": {
+          "generic": 0,
+          "probing": 0,
+          "focus": 0,
+          "telling": 0
+        }
+      }
+    },
+    "combined_available": {
+      "available": true,
+      "n": 37,
+      "md6": {
+        "counts": {
+          "generic": 3,
+          "probing": 32,
+          "focus": 2,
+          "telling": 0
+        },
+        "percentages": {
+          "generic": 8.108108108108109,
+          "probing": 86.48648648648648,
+          "focus": 5.405405405405405,
+          "telling": 0.0
+        },
+        "probing_rate": 86.48648648648648,
+        "focus_rate": 5.405405405405405,
+        "telling_rate": 0.0,
+        "mean_probabilities": {
+          "generic": 0.17180238784970464,
+          "probing": 0.4823681047639331,
+          "focus": 0.18806684520599004,
+          "telling": 0.15776265991499294
+        },
+        "maximum_single_class_share": 86.48648648648648
+      },
+      "md7": {
+        "counts": {
+          "generic": 18,
+          "probing": 6,
+          "focus": 7,
+          "telling": 6
+        },
+        "percentages": {
+          "generic": 48.648648648648646,
+          "probing": 16.216216216216218,
+          "focus": 18.91891891891892,
+          "telling": 16.216216216216218
+        },
+        "probing_rate": 16.216216216216218,
+        "focus_rate": 18.91891891891892,
+        "telling_rate": 16.216216216216218,
+        "mean_probabilities": {
+          "generic": 0.49459723714893256,
+          "probing": 0.1844962474817687,
+          "focus": 0.15546784693425572,
+          "telling": 0.1654386553713561
+        },
+        "maximum_single_class_share": 48.648648648648646
+      },
+      "argmax_changed_count": 26,
+      "argmax_changed_percentage": 70.27027027027027,
+      "probing_rate_change_percentage_points": -70.27027027027026,
+      "transition_matrix": {
+        "generic": {
+          "generic": 3,
+          "probing": 0,
+          "focus": 0,
+          "telling": 0
+        },
+        "probing": {
+          "generic": 15,
+          "probing": 6,
+          "focus": 5,
+          "telling": 6
+        },
+        "focus": {
+          "generic": 0,
+          "probing": 0,
+          "focus": 2,
+          "telling": 0
+        },
+        "telling": {
+          "generic": 0,
+          "probing": 0,
+          "focus": 0,
+          "telling": 0
+        }
+      }
+    }
+  },
+  "critical_case_review": [
+    {
+      "semantic_case": "opening state",
+      "case_id": "live_9ab73ef2_turn_01",
+      "description": "Opening state of the continued manual push-up retest.",
+      "available": true,
+      "latest_student_text": "",
+      "md6_probabilities": {
+        "generic": 0.78445965051651,
+        "probing": 0.12424448877573013,
+        "focus": 0.06304766982793808,
+        "telling": 0.02824820950627327
+      },
+      "md6_move": "generic",
+      "md7_probabilities": {
+        "generic": 0.8705593347549438,
+        "probing": 0.06422409415245056,
+        "focus": 0.046029653400182724,
+        "telling": 0.019186917692422867
+      },
+      "md7_move": "generic",
+      "transition": "generic -> generic",
+      "interpretation": "UNCHANGED",
+      "interpretation_boundary": "Qualitative diagnostic interpretation only; not a gold label."
+    },
+    {
+      "semantic_case": "short unexplained answer",
+      "case_id": "live_9ab73ef2_turn_05",
+      "description": "The student gives the short answer '15 days'.",
+      "available": true,
+      "latest_student_text": "15 days",
+      "md6_probabilities": {
+        "generic": 0.1914985626935959,
+        "probing": 0.30033427476882935,
+        "focus": 0.26849478483200073,
+        "telling": 0.23967240750789642
+      },
+      "md6_move": "probing",
+      "md7_probabilities": {
+        "generic": 0.18451082706451416,
+        "probing": 0.21039645373821259,
+        "focus": 0.5360720157623291,
+        "telling": 0.06902064383029938
+      },
+      "md7_move": "focus",
+      "transition": "probing -> focus",
+      "interpretation": "QUESTIONABLE",
+      "interpretation_boundary": "Qualitative diagnostic interpretation only; not a gold label."
+    },
+    {
+      "semantic_case": "fully correct reasoning",
+      "case_id": "demo_10",
+      "description": "The student states the correct divide-then-multiply reasoning for two thirds of 18.",
+      "available": true,
+      "latest_student_text": "I think I should divide 18 by 3 first and then multiply by 2.",
+      "md6_probabilities": {
+        "generic": 0.08180072158575058,
+        "probing": 0.593141496181488,
+        "focus": 0.16548484563827515,
+        "telling": 0.15957291424274445
+      },
+      "md6_move": "probing",
+      "md7_probabilities": {
+        "generic": 0.9976542592048645,
+        "probing": 0.0007972625317052007,
+        "focus": 0.0008733490249142051,
+        "telling": 0.0006751334294676781
+      },
+      "md7_move": "generic",
+      "transition": "probing -> generic",
+      "interpretation": "PLAUSIBLY IMPROVED",
+      "interpretation_boundary": "Qualitative diagnostic interpretation only; not a gold label."
+    },
+    {
+      "semantic_case": "specific arithmetic error",
+      "case_id": "demo_17",
+      "description": "The student answers 125 for 144 minus 18.",
+      "available": true,
+      "latest_student_text": "The answer is 125.",
+      "md6_probabilities": {
+        "generic": 0.13477298617362976,
+        "probing": 0.5697033405303955,
+        "focus": 0.1524621546268463,
+        "telling": 0.1430615335702896
+      },
+      "md6_move": "probing",
+      "md7_probabilities": {
+        "generic": 0.9980545043945312,
+        "probing": 0.00047508213901892304,
+        "focus": 0.0006451763911172748,
+        "telling": 0.00082524394383654
+      },
+      "md7_move": "generic",
+      "transition": "probing -> generic",
+      "interpretation": "QUESTIONABLE",
+      "interpretation_boundary": "Qualitative diagnostic interpretation only; not a gold label."
+    },
+    {
+      "semantic_case": "clear misconception",
+      "case_id": "demo_13",
+      "description": "The student adds rectangle side lengths and calls the result area.",
+      "available": true,
+      "latest_student_text": "8 + 5 = 13, so the area is 13 square centimeters.",
+      "md6_probabilities": {
+        "generic": 0.07691045850515366,
+        "probing": 0.5454317331314087,
+        "focus": 0.19132183492183685,
+        "telling": 0.1863359659910202
+      },
+      "md6_move": "probing",
+      "md7_probabilities": {
+        "generic": 0.9985080361366272,
+        "probing": 0.00026435087784193456,
+        "focus": 0.0005780102801509202,
+        "telling": 0.0006495237466879189
+      },
+      "md7_move": "generic",
+      "transition": "probing -> generic",
+      "interpretation": "QUESTIONABLE",
+      "interpretation_boundary": "Qualitative diagnostic interpretation only; not a gold label."
+    },
+    {
+      "semantic_case": "repeated failure after hints",
+      "case_id": "demo_22",
+      "description": "The student still does not understand rectangle area after two hints.",
+      "available": true,
+      "latest_student_text": "I still don't understand.",
+      "md6_probabilities": {
+        "generic": 0.11542324721813202,
+        "probing": 0.48986104130744934,
+        "focus": 0.13949796557426453,
+        "telling": 0.25521770119667053
+      },
+      "md6_move": "probing",
+      "md7_probabilities": {
+        "generic": 0.000626852794084698,
+        "probing": 0.0005601178272627294,
+        "focus": 0.00040537863969802856,
+        "telling": 0.9984076619148254
+      },
+      "md7_move": "telling",
+      "transition": "probing -> telling",
+      "interpretation": "PLAUSIBLY IMPROVED",
+      "interpretation_boundary": "Qualitative diagnostic interpretation only; not a gold label."
+    },
+    {
+      "semantic_case": "explicit request for direct help",
+      "case_id": "demo_24",
+      "description": "After repeated scaffolding, the student says 'Just tell me what to do.'",
+      "available": true,
+      "latest_student_text": "Just tell me what to do.",
+      "md6_probabilities": {
+        "generic": 0.06796914339065552,
+        "probing": 0.5667038559913635,
+        "focus": 0.1887074112892151,
+        "telling": 0.17661957442760468
+      },
+      "md6_move": "probing",
+      "md7_probabilities": {
+        "generic": 0.011266829445958138,
+        "probing": 0.004914829041808844,
+        "focus": 0.12183922529220581,
+        "telling": 0.861979067325592
+      },
+      "md7_move": "telling",
+      "transition": "probing -> telling",
+      "interpretation": "PLAUSIBLY IMPROVED",
+      "interpretation_boundary": "Qualitative diagnostic interpretation only; not a gold label."
+    },
+    {
+      "semantic_case": "I don't know after early prompt",
+      "case_id": "demo_05",
+      "description": "The first and only student reply is 'I don't know.'",
+      "available": true,
+      "latest_student_text": "I don't know.",
+      "md6_probabilities": {
+        "generic": 0.08911710232496262,
+        "probing": 0.5901502966880798,
+        "focus": 0.17909172177314758,
+        "telling": 0.1416408270597458
+      },
+      "md6_move": "probing",
+      "md7_probabilities": {
+        "generic": 0.9796760082244873,
+        "probing": 0.016439029946923256,
+        "focus": 0.00271712732501328,
+        "telling": 0.0011679172748699784
+      },
+      "md7_move": "generic",
+      "transition": "probing -> generic",
+      "interpretation": "QUESTIONABLE",
+      "interpretation_boundary": "Qualitative diagnostic interpretation only; not a gold label."
+    },
+    {
+      "semantic_case": "I don't know after repeated scaffolding",
+      "case_id": null,
+      "description": "UNAVAILABLE: no recovered inference case ends with that exact semantic state.",
+      "available": false
+    }
+  ],
+  "collapse_check": {
+    "maximum_single_class_share_percent": {
+      "controlled_20": null,
+      "handwritten_24": 58.333333333333336,
+      "genuine_live_turns": 46.15384615384615,
+      "combined_available": 48.648648648648646
+    },
+    "md7_focus_share_percent": {
+      "controlled_20": null,
+      "handwritten_24": 4.166666666666667,
+      "genuine_live_turns": 46.15384615384615,
+      "combined_available": 18.91891891891892
+    },
+    "new_class_collapse": false,
+    "collapse_threshold_percent": 80.0,
+    "collapse_trigger_sets": [
+      "controlled_20",
+      "handwritten_24",
+      "combined_available"
+    ],
+    "focus_collapse_risk": "LOW",
+    "semantic_possible_new_focus_bias_count": 0,
+    "risk_basis": "Observed MD7 focus shares plus focus transitions classified as possible new bias in the existing critical semantic cases."
+  },
+  "overlay_opportunity": {
+    "controlled_20": {
+      "available": false,
+      "n": 0
+    },
+    "handwritten_24": {
+      "available": true,
+      "n": 24,
+      "baseline_only_percentage": 100.0,
+      "alternative_available_percentage": 0.0,
+      "mean_number_of_eligible_moves": 1.0,
+      "by_md7_base_move": {
+        "generic": {
+          "n": 14,
+          "alternative_available_count": 0,
+          "alternative_available_percentage": 0.0
+        },
+        "probing": {
+          "n": 3,
+          "alternative_available_count": 0,
+          "alternative_available_percentage": 0.0
+        },
+        "focus": {
+          "n": 1,
+          "alternative_available_count": 0,
+          "alternative_available_percentage": 0.0
+        },
+        "telling": {
+          "n": 6,
+          "alternative_available_count": 0,
+          "alternative_available_percentage": 0.0
+        }
+      }
+    },
+    "genuine_live_turns": {
+      "available": true,
+      "n": 13,
+      "baseline_only_percentage": 100.0,
+      "alternative_available_percentage": 0.0,
+      "mean_number_of_eligible_moves": 1.0,
+      "by_md7_base_move": {
+        "generic": {
+          "n": 4,
+          "alternative_available_count": 0,
+          "alternative_available_percentage": 0.0
+        },
+        "probing": {
+          "n": 3,
+          "alternative_available_count": 0,
+          "alternative_available_percentage": 0.0
+        },
+        "focus": {
+          "n": 6,
+          "alternative_available_count": 0,
+          "alternative_available_percentage": 0.0
+        },
+        "telling": {
+          "n": 0,
+          "alternative_available_count": 0,
+          "alternative_available_percentage": null
+        }
+      }
+    },
+    "combined_available": {
+      "available": true,
+      "n": 37,
+      "baseline_only_percentage": 100.0,
+      "alternative_available_percentage": 0.0,
+      "mean_number_of_eligible_moves": 1.0,
+      "by_md7_base_move": {
+        "generic": {
+          "n": 18,
+          "alternative_available_count": 0,
+          "alternative_available_percentage": 0.0
+        },
+        "probing": {
+          "n": 6,
+          "alternative_available_count": 0,
+          "alternative_available_percentage": 0.0
+        },
+        "focus": {
+          "n": 7,
+          "alternative_available_count": 0,
+          "alternative_available_percentage": 0.0
+        },
+        "telling": {
+          "n": 6,
+          "alternative_available_count": 0,
+          "alternative_available_percentage": 0.0
+        }
+      }
+    }
+  },
+  "external_effects": {
+    "LinTS updates": 0,
+    "real policy state writes": 0,
+    "real experience log writes": 0,
+    "BKT writes": 0,
+    "Tutor Agent calls": 0,
+    "Gemini/API calls": 0,
+    "held-out MathDial test inference/data use": 0,
+    "MRBench V3 test inference/data use": 0,
+    "training": 0,
+    "GPU required": "NO",
+    "checkpoint database mode": "read-only",
+    "pre-audit discovery caveat": "One broad path-only rg scan touched the held-out MathDial and MRBench V3 test files during source discovery. No test record content was printed, extracted, selected, or used in this diagnostic."
+  },
+  "output_files": [
+    "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\pedagogical-move-selection\\results\\md7r1_real_diagnostic_v1\\md6_vs_md7r1_case_level.csv",
+    "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\pedagogical-move-selection\\results\\md7r1_real_diagnostic_v1\\md6_vs_md7r1_summary.json",
+    "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\pedagogical-move-selection\\results\\md7r1_real_diagnostic_v1\\md6_vs_md7r1_transition_matrix.csv",
+    "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\pedagogical-move-selection\\results\\md7r1_real_diagnostic_v1\\md7r1_overlay_opportunity.csv",
+    "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\pedagogical-move-selection\\results\\md7r1_real_diagnostic_v1\\critical_case_review.json",
+    "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\pedagogical-move-selection\\results\\md7r1_real_diagnostic_v1\\md6_vs_md7r1_report.txt"
+  ],
+  "final_diagnostic_verdict": "A. MD7-R1 SHOWS HEALTHIER ADAPTMATH MOVE DIVERSITY — READY FOR CONTROLLED LIVE TEST",
+  "interpretation_boundary": "Raw classifier behavior and qualitative semantic review only; no human gold labels were added and no accuracy claim is made."
+}

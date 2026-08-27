@@ -1,0 +1,115 @@
+{
+  "experiment": "SI5-B_realized_policy_effect_simulation",
+  "simulation_only": true,
+  "real_training_data_used": false,
+  "algorithm": "disjoint_LinUCB",
+  "num_attempts": 4500,
+  "alpha": 0.8,
+  "max_probability_gap": 0.15,
+  "primary_reward": "evaluator_score / 3",
+  "mastery_in_reward": false,
+  "outcome_depends_on_selected_arm_directly": false,
+  "update_timing": "after_attempt_only",
+  "policy_fixed_within_attempt": true,
+  "timing_validation_passed": true,
+  "policy_freeze_errors": 0,
+  "zero_override_nonzero_lift": 0,
+  "total_turns": 27081,
+  "total_overrides": 6057,
+  "override_rate": 0.22366234629444998,
+  "early_summary": {
+    "mean_reward": 0.5744444444444444,
+    "success_3_of_3_rate": 0.20833333333333334,
+    "mean_mastery_delta": 0.033538395821814754,
+    "mean_realized_policy_lift": 0.016835602435785985
+  },
+  "late_summary": {
+    "mean_reward": 0.6366666666666667,
+    "success_3_of_3_rate": 0.265,
+    "mean_mastery_delta": 0.043900492473396016,
+    "mean_realized_policy_lift": 0.09197562023742596
+  },
+  "context_sensitivity": {
+    "fraction_multiplication__low": {
+      "n": 200,
+      "expected_arm": "probing_bias",
+      "most_selected_arm": "probing_bias",
+      "passed": true,
+      "counts": {
+        "baseline": 2,
+        "probing_bias": 198,
+        "focus_bias": 0,
+        "telling_bias": 0,
+        "generic_bias": 0
+      }
+    },
+    "fraction_multiplication__high": {
+      "n": 200,
+      "expected_arm": "focus_bias",
+      "most_selected_arm": "focus_bias",
+      "passed": true,
+      "counts": {
+        "baseline": 6,
+        "probing_bias": 0,
+        "focus_bias": 194,
+        "telling_bias": 0,
+        "generic_bias": 0
+      }
+    },
+    "word_problem_reasoning__low": {
+      "n": 200,
+      "expected_arm": "focus_bias",
+      "most_selected_arm": "focus_bias",
+      "passed": true,
+      "counts": {
+        "baseline": 4,
+        "probing_bias": 1,
+        "focus_bias": 191,
+        "telling_bias": 1,
+        "generic_bias": 3
+      }
+    },
+    "word_problem_reasoning__high": {
+      "n": 200,
+      "expected_arm": "probing_bias",
+      "most_selected_arm": "probing_bias",
+      "passed": true,
+      "counts": {
+        "baseline": 31,
+        "probing_bias": 157,
+        "focus_bias": 6,
+        "telling_bias": 5,
+        "generic_bias": 1
+      }
+    },
+    "basic_division__low": {
+      "n": 200,
+      "expected_arm": "telling_bias",
+      "most_selected_arm": "telling_bias",
+      "passed": true,
+      "counts": {
+        "baseline": 42,
+        "probing_bias": 6,
+        "focus_bias": 15,
+        "telling_bias": 134,
+        "generic_bias": 3
+      }
+    },
+    "basic_division__high": {
+      "n": 200,
+      "expected_arm": "probing_bias",
+      "most_selected_arm": "probing_bias",
+      "passed": true,
+      "counts": {
+        "baseline": 5,
+        "probing_bias": 194,
+        "focus_bias": 0,
+        "telling_bias": 0,
+        "generic_bias": 1
+      }
+    }
+  },
+  "context_checks_passed": true,
+  "overall_validation_passed": true,
+  "research_warning": "All outcomes and hidden utilities are synthetic and are used only for algorithm validation. Reset all bandit state before real integration."
+}

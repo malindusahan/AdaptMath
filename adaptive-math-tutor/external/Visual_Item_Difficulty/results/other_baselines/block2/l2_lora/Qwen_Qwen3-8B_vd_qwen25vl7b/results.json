@@ -1,0 +1,59 @@
+{
+  "model": "Qwen/Qwen3-8B",
+  "input_mode": "text_vd_src",
+  "val_method": "stratified_holdout_20pct",
+  "best_config": {
+    "lora_r": 8,
+    "lr": 0.0002
+  },
+  "best_val_rmse": 0.6513937919149171,
+  "final_train_frac": 0.9,
+  "search_results": [
+    {
+      "lora_r": 8,
+      "lr": 0.0002,
+      "val_metrics": {
+        "rmse": 0.6513937919149171,
+        "mae": 0.49196170308980447,
+        "pearson": 0.6115972302146538,
+        "spearman": 0.5915503786568255
+      }
+    },
+    {
+      "lora_r": 8,
+      "lr": 5e-05,
+      "val_metrics": {
+        "rmse": 0.7021652307616533,
+        "mae": 0.5316784089784427,
+        "pearson": 0.5410875565808847,
+        "spearman": 0.5077384384730712
+      }
+    },
+    {
+      "lora_r": 16,
+      "lr": 0.0002,
+      "val_metrics": {
+        "rmse": 0.6534095733080404,
+        "mae": 0.4973065179997477,
+        "pearson": 0.6143459538303206,
+        "spearman": 0.5806635143966478
+      }
+    },
+    {
+      "lora_r": 16,
+      "lr": 5e-05,
+      "val_metrics": {
+        "rmse": 0.6960549984990402,
+        "mae": 0.5243846535329418,
+        "pearson": 0.5784142894827417,
+        "spearman": 0.5132895090916081
+      }
+    }
+  ],
+  "test_metrics": {
+    "rmse": 0.5487606409819884,
+    "mae": 0.41932257581181054,
+    "pearson": 0.7521748051419469,
+    "spearman": 0.7356282475200755
+  }
+}

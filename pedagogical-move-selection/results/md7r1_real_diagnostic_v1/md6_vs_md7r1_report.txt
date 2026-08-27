@@ -1,0 +1,181 @@
+1. MODEL PATHS
+MD6: C:\Users\Lenovo\Documents\Research\Tutor Max\pedagogical-move-selection\models\frozen\md6
+MD7-R1 epoch 3: C:\Users\Lenovo\Documents\Research\Tutor Max\pedagogical-move-selection\models\candidates\md7r1_epoch3
+
+2. MODEL HASHES
+md6
+  config.json: 9877dd11007c8af1d2841a2c1bb470023ef2ceeb748b47c24686ea82479e9127
+  model.safetensors: 674f1abbaf8c6c23d4b736a80f40b3532e4681c125695ebbe3863e404acb56e7
+  tokenizer.json: 80d0fb9a6bbc3ab2b24ec149d6b47981036a5f96c753667be38709975753550b
+md7r1_epoch3
+  config.json: 9877dd11007c8af1d2841a2c1bb470023ef2ceeb748b47c24686ea82479e9127
+  model.safetensors: d32d37f7f664d038f80fefb92f874804b49e5ac3d848985636ae64e6a2a60a13
+  tokenizer.json: 80d0fb9a6bbc3ab2b24ec149d6b47981036a5f96c753667be38709975753550b
+
+3. CASE SOURCES
+controlled_20: {"status": "UNAVAILABLE", "exact_source": null, "reason": "No exact artifact for the historical 20-state, 2-generic/18-probing audit was found. The repository's 24-case MD6 behavior audit was not substituted.", "nonmatching_artifact_checked": "results/self_improvement/md6_move_behavior_v1/raw_cases.csv"}
+handwritten_24: {"definition_source": "experiments/audit_md6_move_behavior_v1.py", "exact_serialized_case_and_saved_output_source": "results/self_improvement/md6_validation_vs_demo_v1/handwritten_demo_predictions.csv"}
+genuine_live_turns: {"exact_checkpoint_source_read_only": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\adaptive-math-tutor\\backend\\runtime\\adaptive_demo\\checkpoints.sqlite3", "completed_attempt_md6_corroboration": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\adaptive-math-tutor\\backend\\runtime\\adaptive_demo\\attempts.jsonl", "runtime_log_corroboration": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\_local_runtime_logs\\tutor.stderr.log", "history_projection_contract": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\adaptive-math-tutor\\backend\\app\\integrations\\tutor_state_memory_adapter.py", "preserved_pre_fix_inspector": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\_forensics\\20260826_same_attempt_failure_pre_fix\\inspect_checkpoint_snapshot.py", "post_fix_inspector": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\_forensics\\20260826_same_attempt_failure_pre_fix\\inspect_live_retest.py", "recovery": {"checkpoint_db_sha256": "3112553ac0559faffbc445fc1fc3e8c8673412c997963e8884aa49d1e7943664", "checkpoint_wal_sha256": "0f1bbc280bfddb212c23529f78b25cdd0fd4539ab6d6e702ac5aac06bc052272", "manual_thread_ids": ["4e578ab1-225b-4251-9f67-b837f0b3c7a8", "9c909170-00a6-4a33-8ad8-9ef003c2102e", "9ab73ef2-3342-4141-b5ef-1c8c57736883"], "recovered_case_count": 13, "saved_md6_probability_count": 12}}
+
+4. CASE AVAILABILITY
+controlled_20: expected=20, recovered=0, status=UNAVAILABLE
+handwritten_24: expected=24, recovered=24, status=AVAILABLE
+genuine_live_turns: expected=all exact preserved manual move-selection states, recovered=13, status=AVAILABLE
+combined_available: expected=all available cases, recovered=37, status=AVAILABLE
+
+5. MD6 REPRODUCTION
+PASS
+Controlled 20: UNAVAILABLE; expected generic=2, probing=18, focus=0, telling=0.
+Handwritten 24 observed: generic=0, probing=24, focus=0, telling=0
+Saved-probability parity: n=36, max_abs_difference=1.1920928955078125e-07, all_match_at_1e-6=True
+
+6. CONTROLLED 20 COMPARISON
+N: 0
+MD6 distribution: UNAVAILABLE
+MD7 distribution: UNAVAILABLE
+Transition matrix:
+  UNAVAILABLE
+
+7. HANDWRITTEN 24 COMPARISON
+N: 24
+MD6 distribution: generic=0, probing=24, focus=0, telling=0
+MD7 distribution: generic=14, probing=3, focus=1, telling=6
+Probing-rate change: -87.500000 percentage points
+MD6 rates: probing=100.000000%, focus=0.000000%, telling=0.000000%
+MD6 mean probabilities: P(probing)=0.559945001, P(focus)=0.167133185, P(telling)=0.162310544
+MD7 rates: probing=12.500000%, focus=4.166667%, telling=25.000000%
+MD7 mean probabilities: P(probing)=0.115550895, P(focus)=0.060246911, P(telling)=0.237402921
+Argmax changed: 21 (87.500000%)
+Transition matrix:
+  generic->generic: 0
+  generic->probing: 0
+  generic->focus: 0
+  generic->telling: 0
+  probing->generic: 14
+  probing->probing: 3
+  probing->focus: 1
+  probing->telling: 6
+  focus->generic: 0
+  focus->probing: 0
+  focus->focus: 0
+  focus->telling: 0
+  telling->generic: 0
+  telling->probing: 0
+  telling->focus: 0
+  telling->telling: 0
+
+8. GENUINE LIVE TURN COMPARISON
+N: 13
+MD6 distribution: generic=3, probing=8, focus=2, telling=0
+MD7 distribution: generic=4, probing=3, focus=6, telling=0
+Probing-rate change: -38.461538 percentage points
+MD6 rates: probing=61.538462%, focus=15.384615%, telling=0.000000%
+MD6 mean probabilities: P(probing)=0.339149219, P(focus)=0.226713603, P(telling)=0.149366566
+MD7 rates: probing=23.076923%, focus=46.153846%, telling=0.000000%
+MD7 mean probabilities: P(probing)=0.311779976, P(focus)=0.331260343, P(telling)=0.032581549
+Argmax changed: 5 (38.461538%)
+Transition matrix:
+  generic->generic: 3
+  generic->probing: 0
+  generic->focus: 0
+  generic->telling: 0
+  probing->generic: 1
+  probing->probing: 3
+  probing->focus: 4
+  probing->telling: 0
+  focus->generic: 0
+  focus->probing: 0
+  focus->focus: 2
+  focus->telling: 0
+  telling->generic: 0
+  telling->probing: 0
+  telling->focus: 0
+  telling->telling: 0
+
+9. CRITICAL CASE REVIEW
+opening state | live_9ab73ef2_turn_01 | Opening state of the continued manual push-up retest.
+  latest student: 
+  MD6: generic=0.784460, probing=0.124244, focus=0.063048, telling=0.028248 | move=generic
+  MD7: generic=0.870559, probing=0.064224, focus=0.046030, telling=0.019187 | move=generic
+  generic -> generic | UNCHANGED
+short unexplained answer | live_9ab73ef2_turn_05 | The student gives the short answer '15 days'.
+  latest student: 15 days
+  MD6: generic=0.191499, probing=0.300334, focus=0.268495, telling=0.239672 | move=probing
+  MD7: generic=0.184511, probing=0.210396, focus=0.536072, telling=0.069021 | move=focus
+  probing -> focus | QUESTIONABLE
+fully correct reasoning | demo_10 | The student states the correct divide-then-multiply reasoning for two thirds of 18.
+  latest student: I think I should divide 18 by 3 first and then multiply by 2.
+  MD6: generic=0.081801, probing=0.593141, focus=0.165485, telling=0.159573 | move=probing
+  MD7: generic=0.997654, probing=0.000797, focus=0.000873, telling=0.000675 | move=generic
+  probing -> generic | PLAUSIBLY IMPROVED
+specific arithmetic error | demo_17 | The student answers 125 for 144 minus 18.
+  latest student: The answer is 125.
+  MD6: generic=0.134773, probing=0.569703, focus=0.152462, telling=0.143062 | move=probing
+  MD7: generic=0.998055, probing=0.000475, focus=0.000645, telling=0.000825 | move=generic
+  probing -> generic | QUESTIONABLE
+clear misconception | demo_13 | The student adds rectangle side lengths and calls the result area.
+  latest student: 8 + 5 = 13, so the area is 13 square centimeters.
+  MD6: generic=0.076910, probing=0.545432, focus=0.191322, telling=0.186336 | move=probing
+  MD7: generic=0.998508, probing=0.000264, focus=0.000578, telling=0.000650 | move=generic
+  probing -> generic | QUESTIONABLE
+repeated failure after hints | demo_22 | The student still does not understand rectangle area after two hints.
+  latest student: I still don't understand.
+  MD6: generic=0.115423, probing=0.489861, focus=0.139498, telling=0.255218 | move=probing
+  MD7: generic=0.000627, probing=0.000560, focus=0.000405, telling=0.998408 | move=telling
+  probing -> telling | PLAUSIBLY IMPROVED
+explicit request for direct help | demo_24 | After repeated scaffolding, the student says 'Just tell me what to do.'
+  latest student: Just tell me what to do.
+  MD6: generic=0.067969, probing=0.566704, focus=0.188707, telling=0.176620 | move=probing
+  MD7: generic=0.011267, probing=0.004915, focus=0.121839, telling=0.861979 | move=telling
+  probing -> telling | PLAUSIBLY IMPROVED
+I don't know after early prompt | demo_05 | The first and only student reply is 'I don't know.'
+  latest student: I don't know.
+  MD6: generic=0.089117, probing=0.590150, focus=0.179092, telling=0.141641 | move=probing
+  MD7: generic=0.979676, probing=0.016439, focus=0.002717, telling=0.001168 | move=generic
+  probing -> generic | QUESTIONABLE
+I don't know after repeated scaffolding: UNAVAILABLE
+
+10. NEW CLASS COLLAPSE CHECK
+Controlled max-class share: None
+Handwritten max-class share: 58.333333333333336
+Live max-class share: 46.15384615384615
+Combined max-class share: 48.648648648648646
+NEW_CLASS_COLLAPSE: FALSE
+FOCUS_COLLAPSE_RISK: LOW
+
+11. MD7 .10 OVERLAY OPPORTUNITY
+Baseline-only %: 100.000000
+Alternative-available %: 0.000000
+Mean eligible moves: 1.000000
+By MD7 base move:
+  generic: n=18, alternative_available_percentage=0.0
+  probing: n=6, alternative_available_percentage=0.0
+  focus: n=7, alternative_available_percentage=0.0
+  telling: n=6, alternative_available_percentage=0.0
+
+12. OUTPUT FILES
+C:\Users\Lenovo\Documents\Research\Tutor Max\pedagogical-move-selection\results\md7r1_real_diagnostic_v1\md6_vs_md7r1_case_level.csv
+C:\Users\Lenovo\Documents\Research\Tutor Max\pedagogical-move-selection\results\md7r1_real_diagnostic_v1\md6_vs_md7r1_summary.json
+C:\Users\Lenovo\Documents\Research\Tutor Max\pedagogical-move-selection\results\md7r1_real_diagnostic_v1\md6_vs_md7r1_transition_matrix.csv
+C:\Users\Lenovo\Documents\Research\Tutor Max\pedagogical-move-selection\results\md7r1_real_diagnostic_v1\md7r1_overlay_opportunity.csv
+C:\Users\Lenovo\Documents\Research\Tutor Max\pedagogical-move-selection\results\md7r1_real_diagnostic_v1\critical_case_review.json
+C:\Users\Lenovo\Documents\Research\Tutor Max\pedagogical-move-selection\results\md7r1_real_diagnostic_v1\md6_vs_md7r1_report.txt
+
+13. EXTERNAL EFFECTS
+LinTS updates: 0
+real policy state writes: 0
+real experience log writes: 0
+BKT writes: 0
+Tutor Agent calls: 0
+Gemini/API calls: 0
+held-out MathDial test inference/data use: 0
+MRBench V3 test inference/data use: 0
+training: 0
+GPU required: NO
+checkpoint database mode: read-only
+pre-audit discovery caveat: One broad path-only rg scan touched the held-out MathDial and MRBench V3 test files during source discovery. No test record content was printed, extracted, selected, or used in this diagnostic.
+
+14. FINAL DIAGNOSTIC VERDICT
+A. MD7-R1 SHOWS HEALTHIER ADAPTMATH MOVE DIVERSITY — READY FOR CONTROLLED LIVE TEST
+
+Interpretation boundary: qualitative behavior diagnostic only; no gold-label accuracy claim.

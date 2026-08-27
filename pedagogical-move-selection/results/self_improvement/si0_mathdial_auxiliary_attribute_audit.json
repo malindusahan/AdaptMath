@@ -1,0 +1,423 @@
+{
+  "scope": "custom_train_only",
+  "train_dialogues": 2295,
+  "train_supervised_turns": 14905,
+  "missingness": {
+    "scenario": {
+      "present": 2295,
+      "missing": 0,
+      "missing_percentage": 0.0
+    },
+    "question": {
+      "present": 2295,
+      "missing": 0,
+      "missing_percentage": 0.0
+    },
+    "ground_truth": {
+      "present": 2295,
+      "missing": 0,
+      "missing_percentage": 0.0
+    },
+    "student_incorrect_solution": {
+      "present": 2295,
+      "missing": 0,
+      "missing_percentage": 0.0
+    },
+    "student_profile": {
+      "present": 2295,
+      "missing": 0,
+      "missing_percentage": 0.0
+    },
+    "teacher_described_confusion": {
+      "present": 2285,
+      "missing": 10,
+      "missing_percentage": 0.4357298474945534
+    },
+    "self-correctness": {
+      "present": 2285,
+      "missing": 10,
+      "missing_percentage": 0.4357298474945534
+    },
+    "self-typical-confusion": {
+      "present": 2285,
+      "missing": 10,
+      "missing_percentage": 0.4357298474945534
+    },
+    "self-typical-interactions": {
+      "present": 2285,
+      "missing": 10,
+      "missing_percentage": 0.4357298474945534
+    },
+    "conversation": {
+      "present": 2295,
+      "missing": 0,
+      "missing_percentage": 0.0
+    }
+  },
+  "self_correctness": {
+    "Yes": 1695,
+    "Yes, but I had to reveal the answer": 330,
+    "No": 260,
+    "MISSING": 10
+  },
+  "likert_summary": {
+    "self-typical-confusion": {
+      "valid": 2285,
+      "missing": 10,
+      "distribution": {
+        "1": 150,
+        "2": 337,
+        "3": 624,
+        "4": 668,
+        "5": 506
+      },
+      "mean": 3.4564551422319476,
+      "median": 4.0
+    },
+    "self-typical-interactions": {
+      "valid": 2285,
+      "missing": 10,
+      "distribution": {
+        "1": 172,
+        "2": 298,
+        "3": 654,
+        "4": 667,
+        "5": 494
+      },
+      "mean": 3.4433260393873084,
+      "median": 4.0
+    }
+  },
+  "outcome_move_summary": {
+    "Yes": {
+      "dialogues": 1695,
+      "teacher_moves": 9798,
+      "mean_moves_per_dialogue": 5.780530973451327,
+      "dialogues_with_telling": 774,
+      "dialogues_with_telling_rate": 0.45663716814159294,
+      "move_distribution": {
+        "generic": {
+          "count": 2749,
+          "proportion": 0.2805674627474995
+        },
+        "probing": {
+          "count": 2274,
+          "proportion": 0.23208818126148192
+        },
+        "focus": {
+          "count": 3567,
+          "proportion": 0.3640538885486834
+        },
+        "telling": {
+          "count": 1208,
+          "proportion": 0.12329046744233517
+        }
+      }
+    },
+    "Yes, but I had to reveal the answer": {
+      "dialogues": 330,
+      "teacher_moves": 2692,
+      "mean_moves_per_dialogue": 8.157575757575758,
+      "dialogues_with_telling": 320,
+      "dialogues_with_telling_rate": 0.9696969696969697,
+      "move_distribution": {
+        "generic": {
+          "count": 495,
+          "proportion": 0.18387815750371472
+        },
+        "probing": {
+          "count": 514,
+          "proportion": 0.19093610698365526
+        },
+        "focus": {
+          "count": 974,
+          "proportion": 0.36181277860326894
+        },
+        "telling": {
+          "count": 709,
+          "proportion": 0.2633729569093611
+        }
+      }
+    },
+    "No": {
+      "dialogues": 260,
+      "teacher_moves": 2353,
+      "mean_moves_per_dialogue": 9.05,
+      "dialogues_with_telling": 203,
+      "dialogues_with_telling_rate": 0.7807692307692308,
+      "move_distribution": {
+        "generic": {
+          "count": 324,
+          "proportion": 0.13769655758606034
+        },
+        "probing": {
+          "count": 616,
+          "proportion": 0.2617934551636209
+        },
+        "focus": {
+          "count": 877,
+          "proportion": 0.3727156821079473
+        },
+        "telling": {
+          "count": 536,
+          "proportion": 0.22779430514237145
+        }
+      }
+    },
+    "MISSING": {
+      "dialogues": 10,
+      "teacher_moves": 62,
+      "mean_moves_per_dialogue": 6.2,
+      "dialogues_with_telling": 8,
+      "dialogues_with_telling_rate": 0.8,
+      "move_distribution": {
+        "generic": {
+          "count": 11,
+          "proportion": 0.1774193548387097
+        },
+        "probing": {
+          "count": 9,
+          "proportion": 0.14516129032258066
+        },
+        "focus": {
+          "count": 25,
+          "proportion": 0.4032258064516129
+        },
+        "telling": {
+          "count": 17,
+          "proportion": 0.27419354838709675
+        }
+      }
+    }
+  },
+  "typicality_by_outcome": {
+    "Yes": {
+      "self-typical-confusion": {
+        "n": 1695,
+        "mean": 3.6194690265486726,
+        "median": 4.0
+      },
+      "self-typical-interactions": {
+        "n": 1695,
+        "mean": 3.702064896755162,
+        "median": 4.0
+      }
+    },
+    "Yes, but I had to reveal the answer": {
+      "self-typical-confusion": {
+        "n": 330,
+        "mean": 3.1818181818181817,
+        "median": 3.0
+      },
+      "self-typical-interactions": {
+        "n": 330,
+        "mean": 2.9545454545454546,
+        "median": 3.0
+      }
+    },
+    "No": {
+      "self-typical-confusion": {
+        "n": 260,
+        "mean": 2.7423076923076923,
+        "median": 3.0
+      },
+      "self-typical-interactions": {
+        "n": 260,
+        "mean": 2.376923076923077,
+        "median": 2.0
+      }
+    },
+    "MISSING": {
+      "self-typical-confusion": {
+        "n": 0,
+        "mean": null,
+        "median": null
+      },
+      "self-typical-interactions": {
+        "n": 0,
+        "mean": null,
+        "median": null
+      }
+    }
+  },
+  "scenario_vs_outcome": {
+    "1": {
+      "Yes": {
+        "count": 344,
+        "rate": 0.7196652719665272
+      },
+      "Yes, but I had to reveal the answer": {
+        "count": 68,
+        "rate": 0.14225941422594143
+      },
+      "No": {
+        "count": 63,
+        "rate": 0.13179916317991633
+      },
+      "MISSING": {
+        "count": 3,
+        "rate": 0.006276150627615063
+      }
+    },
+    "2": {
+      "Yes": {
+        "count": 356,
+        "rate": 0.7558386411889597
+      },
+      "Yes, but I had to reveal the answer": {
+        "count": 60,
+        "rate": 0.12738853503184713
+      },
+      "No": {
+        "count": 50,
+        "rate": 0.10615711252653928
+      },
+      "MISSING": {
+        "count": 5,
+        "rate": 0.010615711252653927
+      }
+    },
+    "3": {
+      "Yes": {
+        "count": 323,
+        "rate": 0.7177777777777777
+      },
+      "Yes, but I had to reveal the answer": {
+        "count": 69,
+        "rate": 0.15333333333333332
+      },
+      "No": {
+        "count": 58,
+        "rate": 0.1288888888888889
+      },
+      "MISSING": {
+        "count": 0,
+        "rate": 0.0
+      }
+    },
+    "4": {
+      "Yes": {
+        "count": 340,
+        "rate": 0.7505518763796909
+      },
+      "Yes, but I had to reveal the answer": {
+        "count": 64,
+        "rate": 0.141280353200883
+      },
+      "No": {
+        "count": 47,
+        "rate": 0.10375275938189846
+      },
+      "MISSING": {
+        "count": 2,
+        "rate": 0.004415011037527594
+      }
+    },
+    "5": {
+      "Yes": {
+        "count": 332,
+        "rate": 0.7494356659142212
+      },
+      "Yes, but I had to reveal the answer": {
+        "count": 69,
+        "rate": 0.15575620767494355
+      },
+      "No": {
+        "count": 42,
+        "rate": 0.09480812641083522
+      },
+      "MISSING": {
+        "count": 0,
+        "rate": 0.0
+      }
+    }
+  },
+  "student_profile": {
+    "unique_profiles": 144,
+    "top_15": [
+      {
+        "profile": "Brenda is a 7th grade student. She struggle to put the numbers in the correct order in the equation or determine the correct operation to use.",
+        "count": 28
+      },
+      {
+        "profile": "Ayisha is a 7th grade student. She has problem with understanding of underlying ideas and principles and a recognition of when to apply them.",
+        "count": 27
+      },
+      {
+        "profile": "Alejandra is a 7th grade student. She struggle most with understanding what the problem is asking them to do.",
+        "count": 27
+      },
+      {
+        "profile": "Ronny is a 7th grade student. He struggle to put the numbers in the correct order in the equation or determine the correct operation to use.",
+        "count": 26
+      },
+      {
+        "profile": "Mariana is a 7th grade student. She struggle most with understanding what the problem is asking them to do.",
+        "count": 25
+      },
+      {
+        "profile": "Steven is a 7th grade student. He struggle most with understanding what the problem is asking them to do.",
+        "count": 25
+      },
+      {
+        "profile": "Rishi is a 7th grade student. He has problem with understanding of what steps or procedures are required to solve a problem.",
+        "count": 23
+      },
+      {
+        "profile": "Winnie is a 7th grade student. She has problem with understanding of underlying ideas and principles and a recognition of when to apply them.",
+        "count": 23
+      },
+      {
+        "profile": "DeAndre is a 7th grade student. He has problem with understanding of underlying ideas and principles and a recognition of when to apply them.",
+        "count": 23
+      },
+      {
+        "profile": "Alejandra is a 7th grade student. She has difficulty determining which pieces of information are relevant and which are irrelevant to solving the problem.",
+        "count": 23
+      },
+      {
+        "profile": "Mariana is a 7th grade student. She has difficulty determining which pieces of information are relevant and which are irrelevant to solving the problem.",
+        "count": 22
+      },
+      {
+        "profile": "Jordy is a 7th grade student. He struggle to put the numbers in the correct order in the equation or determine the correct operation to use.",
+        "count": 22
+      },
+      {
+        "profile": "Stephanie is a 7th grade student. She struggle most with understanding what the problem is asking them to do.",
+        "count": 22
+      },
+      {
+        "profile": "Jia is a 7th grade student. She has problem with understanding of what steps or procedures are required to solve a problem.",
+        "count": 22
+      },
+      {
+        "profile": "Alejandra is a 7th grade student. She has problem with understanding of underlying ideas and principles and a recognition of when to apply them.",
+        "count": 22
+      }
+    ]
+  },
+  "text_length_summary": {
+    "ground_truth": {
+      "minimum_words": 8,
+      "median_words": 50.0,
+      "p90_words": 79.0,
+      "p95_words": 88.0,
+      "maximum_words": 153
+    },
+    "student_incorrect_solution": {
+      "minimum_words": 46,
+      "median_words": 72.0,
+      "p90_words": 85.0,
+      "p95_words": 90.0,
+      "maximum_words": 108
+    },
+    "teacher_described_confusion": {
+      "minimum_words": 1,
+      "median_words": 12.0,
+      "p90_words": 26.0,
+      "p95_words": 32.0,
+      "maximum_words": 64
+    }
+  }
+}

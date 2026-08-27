@@ -1,0 +1,80 @@
+{
+  "experiment": "personalized_behavior_context_v1",
+  "purpose": "Synthetic capacity/robustness test of adding four dynamic behavior/history features to the frozen 9-D C3 LinTS context.",
+  "claim_boundary": "This synthetic experiment does not establish real educational benefit. It tests whether the bandit can exploit planted student-state signal and whether irrelevant added dimensions materially harm learning.",
+  "contexts": {
+    "C3_9D": [
+      "md6_p_generic",
+      "md6_p_probing",
+      "md6_p_focus",
+      "md6_p_telling",
+      "running_mistake_identification",
+      "running_mistake_location",
+      "running_providing_guidance",
+      "running_actionability",
+      "has_within_attempt_quality"
+    ],
+    "P13_13D": [
+      "md6_p_generic",
+      "md6_p_probing",
+      "md6_p_focus",
+      "md6_p_telling",
+      "running_mistake_identification",
+      "running_mistake_location",
+      "running_providing_guidance",
+      "running_actionability",
+      "has_within_attempt_quality",
+      "reasoning",
+      "uncertainty",
+      "clarification",
+      "repeated_misunderstanding"
+    ]
+  },
+  "malindu_outputs_used_for_personalization": [
+    "reasoning",
+    "uncertainty",
+    "clarification",
+    "repeated_misunderstanding"
+  ],
+  "explicitly_not_used_as_context": [
+    "skill raw string",
+    "mastery_before",
+    "mastery_after",
+    "delta_mastery",
+    "evaluator_result"
+  ],
+  "environments": {
+    "E0_NO_PERSONAL_SIGNAL": "Expected reward depends on C3 only; personalized block is irrelevant.",
+    "E1_PERSONAL_SIGNAL": "Expected reward depends on personalized block only.",
+    "E2_MIXED": "Expected reward receives equal planted contribution from C3 and personalized blocks."
+  },
+  "n_seeds": 50,
+  "attempts_per_seed": 500,
+  "turns_per_attempt": 3,
+  "gap_threshold": 0.1,
+  "ridge_lambda": 1.0,
+  "exploration_scale": 0.2,
+  "reward": "Binary terminal attempt-success proxy; unchanged 0/1 form.",
+  "credit": "Equal normalized delayed credit 1/T.",
+  "within_attempt_policy_updates": false,
+  "environment_coefficient_seed": 2026082600,
+  "world_seed_base": 2026082400,
+  "policy_seed_base": 2026082500,
+  "coefficient_block_l1": 0.6,
+  "source_sha256": {
+    "experiment_script": "4bd6da9884aec1bc5ec076278dc72315e0666d7f0dae11d3388945c194aa5695",
+    "lints_policy": "c5583a545768ac8fdba410eaec7295fbefd953d0461bb907b951bb75e1e8e06e",
+    "conservative_overlay": "a920b73460890bc143d9482ce5d03d898114e875ef8dc69520f7dfc7692329d6",
+    "turn_context_builder": "1c85a4574dfc023cf2f9daa1f1489f9e891adcff878101ff6121dc84ec46554e"
+  },
+  "result_files": {
+    "raw_attempt_results": "results\\self_improvement\\personalized_behavior_context_v1\\raw_attempt_results.csv.gz",
+    "raw_turn_results": "results\\self_improvement\\personalized_behavior_context_v1\\raw_turn_results.csv.gz",
+    "seed_summary": "results\\self_improvement\\personalized_behavior_context_v1\\seed_summary.csv",
+    "paired_statistics": "results\\self_improvement\\personalized_behavior_context_v1\\paired_statistics.csv",
+    "figures": [
+      "results\\self_improvement\\personalized_behavior_context_v1\\figures\\cumulative_regret.png",
+      "results\\self_improvement\\personalized_behavior_context_v1\\figures\\mean_reward.png"
+    ]
+  }
+}

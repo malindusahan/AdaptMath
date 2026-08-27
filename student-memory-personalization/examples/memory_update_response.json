@@ -1,0 +1,23 @@
+{
+  "student_id": "s1",
+  "topic": "Linear Equations",
+  "subtopic": null,
+  "assessment_id": 42,
+  "snapshot_id": 108,
+  "learning_state": "DEVELOPING",
+  "evidence_level": "FULL_SKILL",
+  "evidence_strength": "MEDIUM",
+  "behavioural_coverage": "FULL_BEHAVIOURAL_COVERAGE",
+  "model_used": true,
+  "previous_interaction_count": 8,
+  "previous_skill_interaction_count": 4,
+  "recent_interaction_count": 2,
+  "attempt_observation_count": 2,
+  "hint_observation_count": 2,
+  "response_time_observation_count": 2,
+  "misconception_count": 1,
+  "misconceptions": [
+    "addition sign error"
+  ],
+  "memory_updated": true
+}

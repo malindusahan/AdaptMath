@@ -1,0 +1,111 @@
+{
+  "audit_name": "md6_dialogue_trajectory_v1",
+  "timestamp_utc": "2026-08-25T06:29:04.583014+00:00",
+  "purpose": "Describe how frozen MD6 probabilities evolve across one cumulative tutoring dialogue and four matched preceding-teacher-message variants.",
+  "interpretation_boundary": "Descriptive model-behavior evidence only; no accuracy evaluation, causal domain-shift claim, or educational-efficacy claim.",
+  "frozen_md6_model_path": "models/frozen/md6",
+  "cpu_only_diagnostic": true,
+  "training_performed": false,
+  "lints_loaded": false,
+  "lints_update_performed": false,
+  "mrb1_loaded": false,
+  "held_out_test_untouched": true,
+  "mrbench_test_untouched": true,
+  "dataset_files_opened": [],
+  "gap_threshold": 0.1,
+  "problem": "Solve 4x + 8 = 32.",
+  "trajectory_checkpoints": 6,
+  "matched_control_variants": [
+    "GENERIC",
+    "PROBING",
+    "FOCUS",
+    "TELLING"
+  ],
+  "source_file_sha256": {
+    "experiments/audit_md6_dialogue_trajectory_v1.py": "e75af390d7cac2ee6167457ac2b87c9ba2f03eb08e1ad16be36ec40d1f27ef77",
+    "src/self_improvement/md6_inference.py": "dff49117eec0dc53b2ce06fb98df7ecc7de1712931f3e31cbf0e097e5b4df429",
+    "src/self_improvement/conservative_overlay.py": "a920b73460890bc143d9482ce5d03d898114e875ef8dc69520f7dfc7692329d6",
+    "src/self_improvement/context_builder.py": "1fc38b5c146b8d90fe35aeb78d50dba31ca26df4a05a8b473ff071b56d4ea58f"
+  },
+  "frozen_model_file_sha256": {
+    "config.json": "9877dd11007c8af1d2841a2c1bb470023ef2ceeb748b47c24686ea82479e9127",
+    "model.safetensors": "674f1abbaf8c6c23d4b736a80f40b3532e4681c125695ebbe3863e404acb56e7",
+    "tokenizer.json": "80d0fb9a6bbc3ab2b24ec149d6b47981036a5f96c753667be38709975753550b",
+    "tokenizer_config.json": "4903bcd294e8ff8b840eb9c21909d2f910b466d250ac6e298a7438a7da63ef0d"
+  },
+  "validation_assertions": [
+    {
+      "assertion": "exactly 6 trajectory checkpoints",
+      "status": "PASS"
+    },
+    {
+      "assertion": "trajectory histories are cumulative",
+      "status": "PASS"
+    },
+    {
+      "assertion": "trajectory history length strictly increases",
+      "status": "PASS"
+    },
+    {
+      "assertion": "each checkpoint ends with the specified Student turn",
+      "status": "PASS"
+    },
+    {
+      "assertion": "exactly 4 matched teacher-history variants",
+      "status": "PASS"
+    },
+    {
+      "assertion": "problem is identical in all control variants",
+      "status": "PASS"
+    },
+    {
+      "assertion": "control common prefix is identical",
+      "status": "PASS"
+    },
+    {
+      "assertion": "final student text is exactly identical across controls",
+      "status": "PASS"
+    },
+    {
+      "assertion": "only the manipulated Teacher utterance differs after the prefix",
+      "status": "PASS"
+    },
+    {
+      "assertion": "6 trajectory and 4 control predictions produced",
+      "status": "PASS"
+    },
+    {
+      "assertion": "canonical move order unchanged",
+      "status": "PASS"
+    },
+    {
+      "assertion": "gap threshold equals 0.10",
+      "status": "PASS"
+    },
+    {
+      "assertion": "all probabilities are finite and within [0,1]",
+      "status": "PASS"
+    },
+    {
+      "assertion": "all probability vectors sum approximately to 1",
+      "status": "PASS"
+    },
+    {
+      "assertion": "baseline is always eligible",
+      "status": "PASS"
+    }
+  ],
+  "output_files": [
+    "results/self_improvement/md6_dialogue_trajectory_v1/trajectory_predictions.csv",
+    "results/self_improvement/md6_dialogue_trajectory_v1/teacher_history_control.csv",
+    "results/self_improvement/md6_dialogue_trajectory_v1/summary.json",
+    "results/self_improvement/md6_dialogue_trajectory_v1/figures/trajectory_move_probabilities.png",
+    "results/self_improvement/md6_dialogue_trajectory_v1/figures/trajectory_top1_gap.png",
+    "results/self_improvement/md6_dialogue_trajectory_v1/figures/teacher_history_control_probabilities.png",
+    "results/self_improvement/md6_dialogue_trajectory_v1/manifest.json"
+  ],
+  "runtime_seconds": 21.95042489998741,
+  "python_version": "3.12.7",
+  "numpy_version": "2.1.3",
+  "matplotlib_version": "3.10.5"
+}

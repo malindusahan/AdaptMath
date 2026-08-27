@@ -1,0 +1,177 @@
+{
+  "audit_name": "md6_validation_vs_demo_v1",
+  "purpose": "Compare frozen MD6 prediction and conservative-eligibility distributions between actual MathDial validation inputs and 24 fixed hand-written cases.",
+  "interpretation_boundary": "Descriptive evidence only. Hand-written cases are not gold-labeled, and distribution differences alone are not claimed to establish domain shift.",
+  "gap_threshold": 0.1,
+  "move_order": [
+    "generic",
+    "probing",
+    "focus",
+    "telling"
+  ],
+  "groups": {
+    "mathdial_validation": {
+      "n": 1850,
+      "argmax_counts": {
+        "generic": 358,
+        "probing": 349,
+        "focus": 681,
+        "telling": 462
+      },
+      "argmax_percentages": {
+        "generic": 19.35135135135135,
+        "probing": 18.864864864864863,
+        "focus": 36.810810810810814,
+        "telling": 24.972972972972972
+      },
+      "probability_summaries": {
+        "generic": {
+          "mean": 0.23520115632161095,
+          "median": 0.1475341022014618
+        },
+        "probing": {
+          "mean": 0.25409540054765906,
+          "median": 0.2044614776968956
+        },
+        "focus": {
+          "mean": 0.3032103268198065,
+          "median": 0.28314444422721863
+        },
+        "telling": {
+          "mean": 0.2074931155306262,
+          "median": 0.1818145141005516
+        }
+      },
+      "top1_confidence": {
+        "mean": 0.5183781581472706,
+        "median": 0.48290950059890747
+      },
+      "top1_top2_gap": {
+        "mean": 0.26890798423741313,
+        "median": 0.2057381272315979,
+        "quantiles": {
+          "0.00": 0.00030606985092163086,
+          "0.10": 0.030476853251457214,
+          "0.25": 0.08470950275659561,
+          "0.50": 0.2057381272315979,
+          "0.75": 0.40644780918955803,
+          "0.90": 0.668101692199707,
+          "1.00": 0.7561100497841835
+        }
+      },
+      "mean_entropy": 1.104889971506642,
+      "eligibility_at_0_10": {
+        "baseline_only_count": 1318,
+        "baseline_only_percentage": 71.24324324324324,
+        "alternative_available_count": 532,
+        "alternative_available_percentage": 28.756756756756758,
+        "mean_eligible_arm_count": 1.3908108108108108
+      }
+    },
+    "handwritten_demo": {
+      "n": 24,
+      "argmax_counts": {
+        "generic": 0,
+        "probing": 24,
+        "focus": 0,
+        "telling": 0
+      },
+      "argmax_percentages": {
+        "generic": 0.0,
+        "probing": 100.0,
+        "focus": 0.0,
+        "telling": 0.0
+      },
+      "probability_summaries": {
+        "generic": {
+          "mean": 0.11061126583566268,
+          "median": 0.0979168638586998
+        },
+        "probing": {
+          "mean": 0.559945018341144,
+          "median": 0.566671222448349
+        },
+        "focus": {
+          "mean": 0.16713318911691508,
+          "median": 0.165826216340065
+        },
+        "telling": {
+          "mean": 0.1623105431596438,
+          "median": 0.16016845405101776
+        }
+      },
+      "top1_confidence": {
+        "mean": 0.559945018341144,
+        "median": 0.566671222448349
+      },
+      "top1_top2_gap": {
+        "mean": 0.3731090681006511,
+        "median": 0.37927526235580444,
+        "quantiles": {
+          "0.00": 0.2186790406703949,
+          "0.10": 0.26115402579307556,
+          "0.25": 0.36051129177212715,
+          "0.50": 0.37927526235580444,
+          "0.75": 0.41520488634705544,
+          "0.90": 0.43060278743505476,
+          "1.00": 0.4740063101053238
+        }
+      },
+      "mean_entropy": 1.146348627814812,
+      "eligibility_at_0_10": {
+        "baseline_only_count": 24,
+        "baseline_only_percentage": 100.0,
+        "alternative_available_count": 0,
+        "alternative_available_percentage": 0.0,
+        "mean_eligible_arm_count": 1.0
+      }
+    }
+  },
+  "comparison_table": [
+    {
+      "metric": "probing argmax %",
+      "mathdial_validation": 18.864864864864863,
+      "handwritten_demo": 100.0
+    },
+    {
+      "metric": "generic argmax %",
+      "mathdial_validation": 19.35135135135135,
+      "handwritten_demo": 0.0
+    },
+    {
+      "metric": "focus argmax %",
+      "mathdial_validation": 36.810810810810814,
+      "handwritten_demo": 0.0
+    },
+    {
+      "metric": "telling argmax %",
+      "mathdial_validation": 24.972972972972972,
+      "handwritten_demo": 0.0
+    },
+    {
+      "metric": "mean probing probability",
+      "mathdial_validation": 0.25409540054765906,
+      "handwritten_demo": 0.559945018341144
+    },
+    {
+      "metric": "mean top1-top2 gap",
+      "mathdial_validation": 0.26890798423741313,
+      "handwritten_demo": 0.3731090681006511
+    },
+    {
+      "metric": "baseline-only %",
+      "mathdial_validation": 71.24324324324324,
+      "handwritten_demo": 100.0
+    },
+    {
+      "metric": "alternative available %",
+      "mathdial_validation": 28.756756756756758,
+      "handwritten_demo": 0.0
+    },
+    {
+      "metric": "mean entropy",
+      "mathdial_validation": 1.104889971506642,
+      "handwritten_demo": 1.146348627814812
+    }
+  ]
+}

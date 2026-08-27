@@ -1,0 +1,83 @@
+{
+  "mode": "final",
+  "model": "Qwen/Qwen3-VL-8B-Instruct",
+  "family": "qwen-vl",
+  "route": "I+Q+D",
+  "config_id": "r8_lr5e-05_mse",
+  "seed": 42,
+  "epochs": 8,
+  "provenance": {
+    "timestamp": "2026-07-25T02:44:04.949198",
+    "git_commit": "e5fb54478dd1b5e943e31182b8cedb48a44087f2",
+    "split_sha256": "5308b5da23248bab12ef6b0698d2445faba296a9c44abdf9ea0889ce260eca79",
+    "hostname": "internal-cluster-node",
+    "cuda_visible": "1",
+    "versions": {
+      "torch": "2.6.0+cu124",
+      "transformers": "5.12.1",
+      "peft": "0.19.1"
+    },
+    "args": {
+      "model_name": "Qwen/Qwen3-VL-8B-Instruct",
+      "input_mode": "image_text",
+      "lora_rs": "8,16,32",
+      "lrs": "2e-4,5e-5",
+      "losses": "mse,huber",
+      "batch_size": 1,
+      "grad_accum": 4,
+      "max_epochs": 10,
+      "patience": 3,
+      "val_frac": 0.2,
+      "seed": 42,
+      "smoke": false,
+      "out_suffix": "",
+      "text_field": "text_vd",
+      "run_mode": "final",
+      "folds": "0,1,2,3,4",
+      "lora_r": 8,
+      "lr": 5e-05,
+      "loss": "mse",
+      "epochs": 8
+    }
+  },
+  "epoch_history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.6069378730341316
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.48492276024174097
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.3679685777520884
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.281161276031419
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.21292240288452488
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.16700017822178312
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.13056737899696785
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.11857580043955268
+    }
+  ],
+  "test_metrics": {
+    "rmse": 0.5294379927964729,
+    "mae": 0.4204807250808076,
+    "pearson": 0.7652120111762659,
+    "spearman": 0.767450007872776
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "experiment": "SI1-V1_tfidf_outcome_value",
+  "value_definition": "P(clean_success | problem, observable_history)",
+  "train_unique_states": 11849,
+  "validation_unique_states": 2972,
+  "majority_baseline": {
+    "accuracy": 0.6463660834454913,
+    "macro_f1": 0.2617344505756523
+  },
+  "value_model": {
+    "accuracy": 0.6440107671601615,
+    "macro_f1": 0.26510597781089584,
+    "log_loss": 0.9128281796409851,
+    "multiclass_brier": 0.5248808557808687,
+    "clean_success_auc": 0.6192084977941734,
+    "per_class_f1": {
+      "clean_success": 0.7831967213114754,
+      "revealed_success": 0.0,
+      "failure": 0.012121212121212121
+    }
+  },
+  "delta_by_outcome": {
+    "clean_success": {
+      "n": 1578,
+      "mean": -0.013529889819797272,
+      "median": -0.011035804499607671,
+      "positive_fraction": 0.33713561470215464
+    },
+    "revealed_success": {
+      "n": 490,
+      "mean": -0.016700879472076994,
+      "median": -0.014683299631155777,
+      "positive_fraction": 0.23877551020408164
+    },
+    "failure": {
+      "n": 441,
+      "mean": -0.01405828185471936,
+      "median": -0.010728398189074562,
+      "positive_fraction": 0.2675736961451247
+    }
+  },
+  "delta_by_move": {
+    "generic": {
+      "n": 472,
+      "mean": -0.01575736335157027,
+      "median": -0.009396442625996926,
+      "positive_fraction": 0.3898305084745763
+    },
+    "probing": {
+      "n": 601,
+      "mean": -0.010269390518225244,
+      "median": -0.008640420218191003,
+      "positive_fraction": 0.3544093178036606
+    },
+    "focus": {
+      "n": 997,
+      "mean": -0.013014862708861551,
+      "median": -0.011120096593758011,
+      "positive_fraction": 0.29889669007021064
+    },
+    "telling": {
+      "n": 439,
+      "mean": -0.02083850125457758,
+      "median": -0.019460718387001807,
+      "positive_fraction": 0.16400911161731208
+    }
+  }
+}

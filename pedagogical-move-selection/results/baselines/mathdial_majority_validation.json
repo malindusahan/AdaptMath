@@ -1,0 +1,38 @@
+{
+  "accuracy": 0.36648648648648646,
+  "macro_f1": 0.13409810126582278,
+  "per_class_f1": {
+    "generic": 0.0,
+    "probing": 0.0,
+    "focus": 0.5363924050632911,
+    "telling": 0.0
+  },
+  "confusion_matrix": [
+    [
+      0,
+      0,
+      442,
+      0
+    ],
+    [
+      0,
+      0,
+      412,
+      0
+    ],
+    [
+      0,
+      0,
+      678,
+      0
+    ],
+    [
+      0,
+      0,
+      318,
+      0
+    ]
+  ],
+  "experiment": "MD0_mathdial_majority",
+  "majority_class": "focus"
+}

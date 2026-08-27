@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+backend/.venv/
+.venv-integration/
+.venv/
+
+# Environment variables / secrets
+.env
+backend/.env
+backend/.env.integration-demo.local
+
+# Testing
+.pytest_cache/
+backend/runtime/adaptive_demo/
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Frontend
+frontend/node_modules/
+frontend/.next/

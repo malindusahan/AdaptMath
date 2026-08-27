@@ -1,0 +1,54 @@
+{
+  "experiment": "reward_function_comparison_v3_signed",
+  "scientific_question": "With the current 9-D C3 context and frozen LinTS settings, can the policy learn effectively from a small signed continuous mastery-gain reward compared with the current binary reward?",
+  "claim_boundary": "This is a pre-integration synthetic signed-reward capacity test. It does not establish the empirical distribution or educational validity of Malindu delta_mastery.",
+  "context": {
+    "name": "C3_9D",
+    "features": [
+      "md6_p_generic",
+      "md6_p_probing",
+      "md6_p_focus",
+      "md6_p_telling",
+      "running_mistake_identification",
+      "running_mistake_location",
+      "running_providing_guidance",
+      "running_actionability",
+      "has_within_attempt_quality"
+    ]
+  },
+  "reward_modes": {
+    "R0_BINARY_SUCCESS": "Bernoulli terminal success with probability equal to the attempt's mean selected expected-success value.",
+    "R1_RAW_DELTA_MASTERY": "Signed continuous proxy: 0.14*(p-0.5) + Normal(0,0.012); only the theoretical mastery-difference bound [-1,+1] is enforced."
+  },
+  "important_equivalence": "Both rewards are generated from the same latent expected-success probability, so their expected arm ordering is identical. The experiment isolates the effect of reward representation/scale under the frozen LinTS hyperparameters.",
+  "signed_reward_implementation": "R0 uses canonical TrueDisjointLinTS. R1 uses an experiment-only subclass that overrides only _validate_reward to permit finite rewards in [-1,1]. The inherited posterior update remains A <- A + w*x*x^T and b <- b + w*r*x.",
+  "n_seeds": 50,
+  "attempts_per_seed": 500,
+  "turns_per_attempt": 3,
+  "late_window_attempts": 100,
+  "gap_threshold": 0.1,
+  "ridge_lambda": 1.0,
+  "exploration_scale": 0.2,
+  "delayed_credit": "Equal normalized 1/T; no within-attempt updates.",
+  "environment_coefficient_seed": 2026090200,
+  "world_seed_base": 2026083100,
+  "policy_seed_base": 2026090100,
+  "coefficient_block_l1": 0.6,
+  "source_sha256": {
+    "experiment_script": "4d253a64ba47a182c19a3471692d0bda8ed7b9c18913c87ee42ebdad3d4e00c2",
+    "lints_policy": "c5583a545768ac8fdba410eaec7295fbefd953d0461bb907b951bb75e1e8e06e",
+    "conservative_overlay": "a920b73460890bc143d9482ce5d03d898114e875ef8dc69520f7dfc7692329d6",
+    "turn_context_builder": "1c85a4574dfc023cf2f9daa1f1489f9e891adcff878101ff6121dc84ec46554e"
+  },
+  "result_files": {
+    "raw_attempt_results": "results\\self_improvement\\reward_function_comparison_v3_signed\\raw_attempt_results.csv.gz",
+    "raw_turn_results": "results\\self_improvement\\reward_function_comparison_v3_signed\\raw_turn_results.csv.gz",
+    "seed_summary": "results\\self_improvement\\reward_function_comparison_v3_signed\\seed_summary.csv",
+    "paired_statistics": "results\\self_improvement\\reward_function_comparison_v3_signed\\paired_statistics.csv",
+    "figures": [
+      "results\\self_improvement\\reward_function_comparison_v3_signed\\figures\\cumulative_regret_trajectory.png",
+      "results\\self_improvement\\reward_function_comparison_v3_signed\\figures\\r0_binary_success_reward_distribution.png",
+      "results\\self_improvement\\reward_function_comparison_v3_signed\\figures\\r1_raw_delta_mastery_reward_distribution.png"
+    ]
+  }
+}

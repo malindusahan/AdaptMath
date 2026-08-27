@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Eedi question images — not redistributed, see data/README.md
+data/images/
+
+# Checkpoints and caches produced by training runs
+*.pt
+*.pth
+*.safetensors
+logs/

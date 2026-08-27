@@ -1,0 +1,23 @@
+{
+  "experiment": "SI5-C2_persistence_logging_validation",
+  "simulation_only": true,
+  "algorithms": [
+    {
+      "algorithm": "linucb",
+      "persistence_passed": true,
+      "synthetic_to_real_state_blocked": true,
+      "attempt_logging_passed": true,
+      "synthetic_to_real_log_blocked": true
+    },
+    {
+      "algorithm": "lints",
+      "persistence_passed": true,
+      "synthetic_to_real_state_blocked": true,
+      "attempt_logging_passed": true,
+      "synthetic_to_real_log_blocked": true
+    }
+  ],
+  "synthetic_real_state_separation": true,
+  "synthetic_real_log_separation": true,
+  "overall_validation_passed": true
+}

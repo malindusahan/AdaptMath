@@ -1,0 +1,200 @@
+[
+  {
+    "semantic_case": "opening state",
+    "case_id": "live_9ab73ef2_turn_01",
+    "description": "Opening state of the continued manual push-up retest.",
+    "available": true,
+    "latest_student_text": "",
+    "md6_probabilities": {
+      "generic": 0.78445965051651,
+      "probing": 0.12424448877573013,
+      "focus": 0.06304766982793808,
+      "telling": 0.02824820950627327
+    },
+    "md6_move": "generic",
+    "md7_probabilities": {
+      "generic": 0.8705593347549438,
+      "probing": 0.06422409415245056,
+      "focus": 0.046029653400182724,
+      "telling": 0.019186917692422867
+    },
+    "md7_move": "generic",
+    "transition": "generic -> generic",
+    "interpretation": "UNCHANGED",
+    "interpretation_boundary": "Qualitative diagnostic interpretation only; not a gold label."
+  },
+  {
+    "semantic_case": "short unexplained answer",
+    "case_id": "live_9ab73ef2_turn_05",
+    "description": "The student gives the short answer '15 days'.",
+    "available": true,
+    "latest_student_text": "15 days",
+    "md6_probabilities": {
+      "generic": 0.1914985626935959,
+      "probing": 0.30033427476882935,
+      "focus": 0.26849478483200073,
+      "telling": 0.23967240750789642
+    },
+    "md6_move": "probing",
+    "md7_probabilities": {
+      "generic": 0.18451082706451416,
+      "probing": 0.21039645373821259,
+      "focus": 0.5360720157623291,
+      "telling": 0.06902064383029938
+    },
+    "md7_move": "focus",
+    "transition": "probing -> focus",
+    "interpretation": "QUESTIONABLE",
+    "interpretation_boundary": "Qualitative diagnostic interpretation only; not a gold label."
+  },
+  {
+    "semantic_case": "fully correct reasoning",
+    "case_id": "demo_10",
+    "description": "The student states the correct divide-then-multiply reasoning for two thirds of 18.",
+    "available": true,
+    "latest_student_text": "I think I should divide 18 by 3 first and then multiply by 2.",
+    "md6_probabilities": {
+      "generic": 0.08180072158575058,
+      "probing": 0.593141496181488,
+      "focus": 0.16548484563827515,
+      "telling": 0.15957291424274445
+    },
+    "md6_move": "probing",
+    "md7_probabilities": {
+      "generic": 0.9976542592048645,
+      "probing": 0.0007972625317052007,
+      "focus": 0.0008733490249142051,
+      "telling": 0.0006751334294676781
+    },
+    "md7_move": "generic",
+    "transition": "probing -> generic",
+    "interpretation": "PLAUSIBLY IMPROVED",
+    "interpretation_boundary": "Qualitative diagnostic interpretation only; not a gold label."
+  },
+  {
+    "semantic_case": "specific arithmetic error",
+    "case_id": "demo_17",
+    "description": "The student answers 125 for 144 minus 18.",
+    "available": true,
+    "latest_student_text": "The answer is 125.",
+    "md6_probabilities": {
+      "generic": 0.13477298617362976,
+      "probing": 0.5697033405303955,
+      "focus": 0.1524621546268463,
+      "telling": 0.1430615335702896
+    },
+    "md6_move": "probing",
+    "md7_probabilities": {
+      "generic": 0.9980545043945312,
+      "probing": 0.00047508213901892304,
+      "focus": 0.0006451763911172748,
+      "telling": 0.00082524394383654
+    },
+    "md7_move": "generic",
+    "transition": "probing -> generic",
+    "interpretation": "QUESTIONABLE",
+    "interpretation_boundary": "Qualitative diagnostic interpretation only; not a gold label."
+  },
+  {
+    "semantic_case": "clear misconception",
+    "case_id": "demo_13",
+    "description": "The student adds rectangle side lengths and calls the result area.",
+    "available": true,
+    "latest_student_text": "8 + 5 = 13, so the area is 13 square centimeters.",
+    "md6_probabilities": {
+      "generic": 0.07691045850515366,
+      "probing": 0.5454317331314087,
+      "focus": 0.19132183492183685,
+      "telling": 0.1863359659910202
+    },
+    "md6_move": "probing",
+    "md7_probabilities": {
+      "generic": 0.9985080361366272,
+      "probing": 0.00026435087784193456,
+      "focus": 0.0005780102801509202,
+      "telling": 0.0006495237466879189
+    },
+    "md7_move": "generic",
+    "transition": "probing -> generic",
+    "interpretation": "QUESTIONABLE",
+    "interpretation_boundary": "Qualitative diagnostic interpretation only; not a gold label."
+  },
+  {
+    "semantic_case": "repeated failure after hints",
+    "case_id": "demo_22",
+    "description": "The student still does not understand rectangle area after two hints.",
+    "available": true,
+    "latest_student_text": "I still don't understand.",
+    "md6_probabilities": {
+      "generic": 0.11542324721813202,
+      "probing": 0.48986104130744934,
+      "focus": 0.13949796557426453,
+      "telling": 0.25521770119667053
+    },
+    "md6_move": "probing",
+    "md7_probabilities": {
+      "generic": 0.000626852794084698,
+      "probing": 0.0005601178272627294,
+      "focus": 0.00040537863969802856,
+      "telling": 0.9984076619148254
+    },
+    "md7_move": "telling",
+    "transition": "probing -> telling",
+    "interpretation": "PLAUSIBLY IMPROVED",
+    "interpretation_boundary": "Qualitative diagnostic interpretation only; not a gold label."
+  },
+  {
+    "semantic_case": "explicit request for direct help",
+    "case_id": "demo_24",
+    "description": "After repeated scaffolding, the student says 'Just tell me what to do.'",
+    "available": true,
+    "latest_student_text": "Just tell me what to do.",
+    "md6_probabilities": {
+      "generic": 0.06796914339065552,
+      "probing": 0.5667038559913635,
+      "focus": 0.1887074112892151,
+      "telling": 0.17661957442760468
+    },
+    "md6_move": "probing",
+    "md7_probabilities": {
+      "generic": 0.011266829445958138,
+      "probing": 0.004914829041808844,
+      "focus": 0.12183922529220581,
+      "telling": 0.861979067325592
+    },
+    "md7_move": "telling",
+    "transition": "probing -> telling",
+    "interpretation": "PLAUSIBLY IMPROVED",
+    "interpretation_boundary": "Qualitative diagnostic interpretation only; not a gold label."
+  },
+  {
+    "semantic_case": "I don't know after early prompt",
+    "case_id": "demo_05",
+    "description": "The first and only student reply is 'I don't know.'",
+    "available": true,
+    "latest_student_text": "I don't know.",
+    "md6_probabilities": {
+      "generic": 0.08911710232496262,
+      "probing": 0.5901502966880798,
+      "focus": 0.17909172177314758,
+      "telling": 0.1416408270597458
+    },
+    "md6_move": "probing",
+    "md7_probabilities": {
+      "generic": 0.9796760082244873,
+      "probing": 0.016439029946923256,
+      "focus": 0.00271712732501328,
+      "telling": 0.0011679172748699784
+    },
+    "md7_move": "generic",
+    "transition": "probing -> generic",
+    "interpretation": "QUESTIONABLE",
+    "interpretation_boundary": "Qualitative diagnostic interpretation only; not a gold label."
+  },
+  {
+    "semantic_case": "I don't know after repeated scaffolding",
+    "case_id": null,
+    "description": "UNAVAILABLE: no recovered inference case ends with that exact semantic state.",
+    "available": false
+  }
+]

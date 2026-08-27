@@ -1,0 +1,135 @@
+{
+  "bootstrap_iterations": 5000,
+  "seed": 42,
+  "routing_rule": "MD4 if DistilRoBERTa original token length <=512; MD3 otherwise",
+  "short_examples": 1507,
+  "long_examples": 343,
+  "point_results": {
+    "MD2": {
+      "accuracy": 0.5081081081081081,
+      "macro_f1": 0.46697582018279554,
+      "per_class_f1": {
+        "generic": 0.5925,
+        "probing": 0.37538461538461537,
+        "focus": 0.5912938331318017,
+        "telling": 0.3087248322147651
+      }
+    },
+    "MD3": {
+      "accuracy": 0.4843243243243243,
+      "macro_f1": 0.4560921970871581,
+      "per_class_f1": {
+        "generic": 0.5991471215351812,
+        "probing": 0.33468286099865047,
+        "focus": 0.5490753911806543,
+        "telling": 0.34146341463414637
+      }
+    },
+    "MD4": {
+      "accuracy": 0.4772972972972973,
+      "macro_f1": 0.4720959134970202,
+      "per_class_f1": {
+        "generic": 0.587360594795539,
+        "probing": 0.4053691275167785,
+        "focus": 0.5176470588235295,
+        "telling": 0.37800687285223367
+      }
+    },
+    "MD2_MD4_ensemble": {
+      "accuracy": 0.49675675675675673,
+      "macro_f1": 0.4839466756755154,
+      "per_class_f1": {
+        "generic": 0.5915841584158416,
+        "probing": 0.40782122905027934,
+        "focus": 0.5580029368575624,
+        "telling": 0.3783783783783784
+      }
+    },
+    "three_model_ensemble": {
+      "accuracy": 0.514054054054054,
+      "macro_f1": 0.48591615826237927,
+      "per_class_f1": {
+        "generic": 0.5992601726263872,
+        "probing": 0.39824304538799415,
+        "focus": 0.5900783289817232,
+        "telling": 0.3560830860534125
+      }
+    },
+    "context_hybrid": {
+      "accuracy": 0.5005405405405405,
+      "macro_f1": 0.48676777751987244,
+      "per_class_f1": {
+        "generic": 0.5997638724911453,
+        "probing": 0.41644562334217505,
+        "focus": 0.5528455284552846,
+        "telling": 0.3780160857908847
+      }
+    }
+  },
+  "score_intervals": {
+    "MD2": {
+      "lower_95": 0.443857768306311,
+      "median": 0.4668505461529904,
+      "upper_95": 0.48990157935151035
+    },
+    "MD3": {
+      "lower_95": 0.4339504501113718,
+      "median": 0.4558457077140776,
+      "upper_95": 0.4781043005555088
+    },
+    "MD4": {
+      "lower_95": 0.4497952225188767,
+      "median": 0.47208232834611685,
+      "upper_95": 0.49472207143807756
+    },
+    "MD2_MD4_ensemble": {
+      "lower_95": 0.46160763990639225,
+      "median": 0.4838938486886202,
+      "upper_95": 0.5073508875002688
+    },
+    "three_model_ensemble": {
+      "lower_95": 0.4637644103555473,
+      "median": 0.48589408144342133,
+      "upper_95": 0.5087157156479144
+    },
+    "context_hybrid": {
+      "lower_95": 0.46480475917855696,
+      "median": 0.48664878366304365,
+      "upper_95": 0.5100497526083535
+    }
+  },
+  "paired_differences": {
+    "context_hybrid_minus_MD2": {
+      "point_difference": 0.019791957337076893,
+      "lower_95": 7.996021459685418e-05,
+      "median": 0.019894758683010327,
+      "upper_95": 0.03941305161964574,
+      "bootstrap_fraction_positive": 0.9754,
+      "bootstrap_fraction_nonpositive": 0.0246
+    },
+    "context_hybrid_minus_MD4": {
+      "point_difference": 0.014671864022852255,
+      "lower_95": 0.0036070292992053652,
+      "median": 0.014779797950538215,
+      "upper_95": 0.02581151064312216,
+      "bootstrap_fraction_positive": 0.9952,
+      "bootstrap_fraction_nonpositive": 0.0048
+    },
+    "context_hybrid_minus_MD2_MD4_ensemble": {
+      "point_difference": 0.0028211018443570213,
+      "lower_95": -0.01021196052452791,
+      "median": 0.002827271796061237,
+      "upper_95": 0.01566671235438776,
+      "bootstrap_fraction_positive": 0.6662,
+      "bootstrap_fraction_nonpositive": 0.3338
+    },
+    "context_hybrid_minus_three_model_ensemble": {
+      "point_difference": 0.0008516192574931636,
+      "lower_95": -0.01643852143743701,
+      "median": 0.0009971753800973038,
+      "upper_95": 0.018027202871813884,
+      "bootstrap_fraction_positive": 0.5442,
+      "bootstrap_fraction_nonpositive": 0.4558
+    }
+  }
+}

@@ -1,0 +1,131 @@
+{
+  "audit_name": "md6_move_behavior_v1",
+  "disclaimer": "Diagnostic behavior audit only. Scenario groups are descriptive, not gold pedagogical-move labels; no accuracy or correctness metric is defined.",
+  "model_path": "D:\\Research\\pedagogical-move-selection\\models\\frozen\\md6",
+  "number_of_cases": 24,
+  "gap_threshold": 0.1,
+  "move_order": [
+    "generic",
+    "probing",
+    "focus",
+    "telling"
+  ],
+  "counts": {
+    "generic": 0,
+    "probing": 24,
+    "focus": 0,
+    "telling": 0
+  },
+  "percentages": {
+    "generic": 0.0,
+    "probing": 100.0,
+    "focus": 0.0,
+    "telling": 0.0
+  },
+  "argmax_by_scenario": {
+    "START_UNCERTAINTY": {
+      "number_of_cases": 6,
+      "counts": {
+        "generic": 0,
+        "probing": 6,
+        "focus": 0,
+        "telling": 0
+      },
+      "percentages": {
+        "generic": 0.0,
+        "probing": 100.0,
+        "focus": 0.0,
+        "telling": 0.0
+      }
+    },
+    "REASONING_AVAILABLE": {
+      "number_of_cases": 6,
+      "counts": {
+        "generic": 0,
+        "probing": 6,
+        "focus": 0,
+        "telling": 0
+      },
+      "percentages": {
+        "generic": 0.0,
+        "probing": 100.0,
+        "focus": 0.0,
+        "telling": 0.0
+      }
+    },
+    "CLEAR_ERROR": {
+      "number_of_cases": 6,
+      "counts": {
+        "generic": 0,
+        "probing": 6,
+        "focus": 0,
+        "telling": 0
+      },
+      "percentages": {
+        "generic": 0.0,
+        "probing": 100.0,
+        "focus": 0.0,
+        "telling": 0.0
+      }
+    },
+    "REPEATED_DIFFICULTY": {
+      "number_of_cases": 6,
+      "counts": {
+        "generic": 0,
+        "probing": 6,
+        "focus": 0,
+        "telling": 0
+      },
+      "percentages": {
+        "generic": 0.0,
+        "probing": 100.0,
+        "focus": 0.0,
+        "telling": 0.0
+      }
+    }
+  },
+  "probability_summaries": {
+    "generic": {
+      "mean": 0.11061126583566268,
+      "median": 0.0979168638586998
+    },
+    "probing": {
+      "mean": 0.559945018341144,
+      "median": 0.566671222448349
+    },
+    "focus": {
+      "mean": 0.16713318911691508,
+      "median": 0.165826216340065
+    },
+    "telling": {
+      "mean": 0.1623105431596438,
+      "median": 0.16016845405101776
+    }
+  },
+  "top1_confidence_summary": {
+    "mean": 0.559945018341144,
+    "median": 0.566671222448349
+  },
+  "gap_summaries": {
+    "mean": 0.3731090681006511,
+    "median": 0.37927526235580444,
+    "quantiles": {
+      "0.00": 0.2186790406703949,
+      "0.10": 0.26115402579307556,
+      "0.25": 0.36051129177212715,
+      "0.50": 0.37927526235580444,
+      "0.75": 0.41520488634705544,
+      "0.90": 0.43060278743505476,
+      "1.00": 0.4740063101053238
+    },
+    "gap_le_0_10_count": 0,
+    "gap_le_0_10_percentage": 0.0
+  },
+  "eligibility_summaries": {
+    "baseline_only_count": 24,
+    "baseline_only_percentage": 100.0,
+    "alternative_available_count": 0,
+    "alternative_available_percentage": 0.0,
+    "mean_eligible_arm_count": 1.0
+  }
+}

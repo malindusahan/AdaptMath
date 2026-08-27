@@ -1,0 +1,89 @@
+{
+  "manifest_name": "final_candidate_policy_v1",
+  "timestamp": "2026-08-24T01:19:41.8350166+00:00",
+  "timestamp_timezone": "UTC",
+  "git_commit": null,
+  "git_status_note": "Project root is not a Git worktree; no commit identifier is available.",
+  "context": {
+    "name": "C3",
+    "dimension": 9,
+    "feature_order": [
+      "md6_p_generic",
+      "md6_p_probing",
+      "md6_p_focus",
+      "md6_p_telling",
+      "running_mistake_identification",
+      "running_mistake_location",
+      "running_providing_guidance",
+      "running_actionability",
+      "has_within_attempt_quality"
+    ],
+    "mastery_before_in_numerical_context": false,
+    "mastery_tracking_fields": [
+      "mastery_before",
+      "mastery_after",
+      "mastery_delta"
+    ],
+    "turn_1_quality_state": "four MRB1 features are zero and has_within_attempt_quality is 0",
+    "later_turn_quality_state": "running arithmetic means of completed earlier tutor-response MRB1 scores; has_within_attempt_quality is 1"
+  },
+  "threshold": {
+    "gap_threshold": 0.1
+  },
+  "reward": {
+    "name": "success_only",
+    "evaluator_score_mapping": {
+      "0": 0.0,
+      "1": 0.0,
+      "2": 0.0,
+      "3": 1.0
+    },
+    "accepted_input": "built-in int only in {0,1,2,3}"
+  },
+  "credit": {
+    "name": "equal_normalized",
+    "sample_weight_per_completed_turn": "1/T",
+    "total_attempt_weight": 1.0
+  },
+  "ridge_lambda": 1.0,
+  "exploration_scale": 0.2,
+  "selection": "fresh Thompson sample per tutor turn",
+  "update_timing": "after attempt completion only",
+  "schemas": {
+    "experience_log": "turn_lints_v2",
+    "policy_state_envelope": "turn_lints_state_v2",
+    "lints_state_payload": "true_disjoint_lints_v2",
+    "incompatible_v1_behavior": "fail clearly; no migration"
+  },
+  "canonical_file_sha256": {
+    "src/self_improvement/turn_context_builder.py": "1c85a4574dfc023cf2f9daa1f1489f9e891adcff878101ff6121dc84ec46554e",
+    "src/self_improvement/turn_level_controller.py": "34e5da9a9d515320638e8b9f2b18c662d315df6486bc5e9a84b6518632a98f78",
+    "src/self_improvement/lints_policy.py": "c5583a545768ac8fdba410eaec7295fbefd953d0461bb907b951bb75e1e8e06e",
+    "src/self_improvement/conservative_overlay.py": "a920b73460890bc143d9482ce5d03d898114e875ef8dc69520f7dfc7692329d6",
+    "src/self_improvement/reward.py": "fdf7ad326a97295777e658b55e5bc273b61a25fd20643f1a5b93fcce785dafcc",
+    "src/self_improvement/experience_logger.py": "408b642ea529ea9ceb1ec79a8340b0849d0023e674f9342c9b5e4d6a8734f621",
+    "src/self_improvement/state_io.py": "ef6e9ad53249a6e22979679437c16197ecb4bb09f43d7c2a6d913448fc89504d"
+  },
+  "evidence_references": [
+    {
+      "directory": "results/self_improvement/context_ablation_v1/",
+      "manifest": "results/self_improvement/context_ablation_v1/experiment_manifest.json",
+      "manifest_sha256": "509193f02a815dfa658b0ccd13e8a03324733ab8827fdb379170229785065886"
+    },
+    {
+      "directory": "results/self_improvement/md6_gap_threshold_audit/",
+      "manifest": "results/self_improvement/md6_gap_threshold_audit/audit_manifest.json",
+      "manifest_sha256": "0a6c162c069fc36789598f383d76563966a00af1900c27db9a2f428dfd9477c0"
+    },
+    {
+      "directory": "results/self_improvement/threshold_sensitivity_v1/",
+      "manifest": "results/self_improvement/threshold_sensitivity_v1/experiment_manifest.json",
+      "manifest_sha256": "633630bbbd96634acf8cb4aaaae21b687688c17fba86a6818e7dcb28162c8769"
+    },
+    {
+      "directory": "results/self_improvement/final_sensitivity_suite_v1/",
+      "manifest": "results/self_improvement/final_sensitivity_suite_v1/experiment_manifest.json",
+      "manifest_sha256": "86ccf84955982b87c32ef4dab1f436620699084c2938598acdeab04509778ccf"
+    }
+  ]
+}

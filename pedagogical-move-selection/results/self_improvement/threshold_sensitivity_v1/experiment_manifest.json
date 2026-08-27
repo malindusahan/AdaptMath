@@ -1,0 +1,216 @@
+{
+  "attempts_per_seed": 500,
+  "base_seed": 20260823,
+  "bootstrap_method": "Nonparametric percentile bootstrap across the 50 paired seed units; attempts and turns are never resampled as independent units. For override-gap summaries, seeds with no observed override have an unavailable value and the bootstrap uses the reported metric-specific number of valid seed units; unavailable values are never replaced by zero.",
+  "bootstrap_resamples": 2000,
+  "bootstrap_seed": 482711,
+  "canonical_source_sha256": {
+    "conservative_overlay.py": "a920b73460890bc143d9482ce5d03d898114e875ef8dc69520f7dfc7692329d6",
+    "lints_policy.py": "c2914ded0b164c55572b22165a73170b479bb38f2045ea5897fe786076aca699",
+    "reward.py": "92b91769e558bc3178e5aca23af4fbddc28762eb93b9e9fc40eff96d178c07fc",
+    "turn_context_builder.py": "d752a62c0f1fe94217c41cdff3fecd4ad02f93f1953d221ebc1624f2fb961de8",
+    "turn_level_controller.py": "078190cecaf9e05dfac383ad4fd6e7d7208d56a881d407852b25902bcfecd009"
+  },
+  "checkpoints": [
+    25,
+    50,
+    100,
+    250,
+    500
+  ],
+  "completion_mode": "resumed_statistics_from_complete_staged_raw_outputs",
+  "context_ablation_script_sha256": "b04bc922e6f5a728547f5ec22a698c1e8c3d0f794f5217acdd7d31ead40a01c5",
+  "elapsed_seconds": 0.0935208797454834,
+  "eligibility_definition": "baseline plus each non-base target with P(base)-P(target) <= threshold; a bias targeting the current base move is excluded.",
+  "environments": {
+    "E0_NO_CONTEXT": "Arm identity only; all observed state is irrelevant.",
+    "E3_QUALITY": "Arm identity, current MD6 state, and prior-turn running MRB1 quality.",
+    "E4_MIXED": "Arm identity, current MD6 state, mastery_before, and prior-turn running MRB1 quality, with weak sparse interactions."
+  },
+  "experiment_name": "threshold_sensitivity_v1",
+  "fixed_delayed_credit_scheme": "All three selected turns update only after attempt completion, each with sample_weight=1/3; total attempt weight=1.",
+  "fixed_exploration_scale": 0.1,
+  "fixed_reward_definition": "evaluator_score / 3.0; evaluator_score in {0,1,2,3}",
+  "fixed_ridge_lambda": 1.0,
+  "git_commit": null,
+  "holm_correction_scope": "The five explicit reference comparisons within each environment, checkpoint, and metric family.",
+  "intervention_metric_definitions": {
+    "actual_override_rate": "Fraction of turns where the selected overlay changes MD6's base move.",
+    "at_least_one_alternative_rate": "Fraction of turns with at least two eligible arms.",
+    "at_least_two_alternatives_rate": "Fraction of turns with at least three eligible arms.",
+    "baseline_only_rate": "Fraction of turns with exactly one eligible arm.",
+    "bias_arm_selection_rate": "Fraction of turns selecting a non-baseline LinTS arm.",
+    "override_gap": "P(base)-P(selected bias target), only on actual override turns; unavailable otherwise."
+  },
+  "numpy_version": "2.5.2",
+  "oracle_definition": "Canonical-order argmax hidden utility over the current threshold-specific eligible-arm set only.",
+  "paired_difference_sign_convention": "metric_at_threshold_a - metric_at_threshold_b for every metric. For cumulative regret, a positive value means threshold_b has lower regret.",
+  "pandas_version": "3.0.5",
+  "permutation_method": "Two-sided Monte Carlo paired sign-flip test of seed-level mean differences with +1 correction.",
+  "permutation_resamples": 50000,
+  "permutation_seed": 931027,
+  "python_version": "3.12.7",
+  "raw_row_validation": {
+    "attempt_rows": 450000,
+    "checkpoint_rows": 4500,
+    "expected_attempt_rows": 450000,
+    "expected_checkpoint_rows": 4500,
+    "expected_turn_rows": 1350000,
+    "turn_rows": 1350000
+  },
+  "reference_threshold_for_explicit_comparisons": 0.1,
+  "result_file_sha256": {
+    "checkpoint_metrics.csv": "b42e089f8d09e31340858473d5ea37156241deaf2f5e97d9ae55e47d81bd7769",
+    "eligible_arm_count_distribution.csv": "19bbf9036d8c6be41fe8c18b1df8f40cb40eff87179314afdcea5865464535ae",
+    "paired_threshold_comparisons.csv": "15f6487b2a240a29a91ba1b1dc2bd6908298d9ef5627c2b928903def0298f6f0",
+    "raw_attempt_metrics.csv": "98ffc75a78bff72a27aa504fc68d4330af2fdb9ec1e1018b9adde62a5d77851f",
+    "raw_turn_metrics.csv.gz": "6466f8cfd685ffe90d3b9ccff010f019105896b9cebbec0d4f685c20a120f233",
+    "selected_arm_distribution.csv": "1825e5911aac242b7f3e10309e19a7b548063df5acd04c846dbe7c0d057aa30a",
+    "summary_statistics.csv": "9ff96cfc311819b540551962177503d3005514ce573f43065a4fb6a84a3cb350",
+    "tradeoff_summary.csv": "18e4756c7815fecf8cdd82601751c9e98e7032f1db50648f32af1d530e88d75c"
+  },
+  "rng_strategy": {
+    "environment_and_world_streams": "Original environment indices and SeedSequence logic are retained; each environment/seed hidden coefficients, MD6, mastery, MRB1, and evaluator uniforms are generated once and shared across thresholds.",
+    "policy_streams": "The deterministic C3 LinTS seed is identical across thresholds within an environment/seed pair. LinTS samples all five canonical arms every turn, providing common random numbers while posterior and decision trajectories may diverge.",
+    "synthetic_framework": "Exact generators imported from context_ablation.py."
+  },
+  "sanity_checks": [
+    {
+      "check": "selected context dimension equals 9",
+      "status": "PASS"
+    },
+    {
+      "check": "mastery is absent from the threshold experiment context",
+      "status": "PASS"
+    },
+    {
+      "check": "increasing threshold never reduces fixed-state eligible-arm count",
+      "status": "PASS"
+    },
+    {
+      "check": "threshold zero is a near-baseline-only control",
+      "status": "PASS"
+    },
+    {
+      "check": "oracle arm always eligible",
+      "status": "PASS"
+    },
+    {
+      "check": "policy selected arm always eligible",
+      "status": "PASS"
+    },
+    {
+      "check": "regret is nonnegative within tolerance",
+      "status": "PASS"
+    },
+    {
+      "check": "evaluator reward has the prescribed support",
+      "status": "PASS"
+    },
+    {
+      "check": "no within-attempt posterior update",
+      "status": "PASS"
+    },
+    {
+      "check": "delayed total turn weight per attempt equals one",
+      "status": "PASS"
+    },
+    {
+      "check": "current-turn MRB1 is unavailable before action selection",
+      "status": "PASS"
+    },
+    {
+      "check": "deterministic rerun reproduces results",
+      "status": "PASS"
+    }
+  ],
+  "seed_list": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49
+  ],
+  "selected_context": {
+    "dimension": 9,
+    "features": [
+      "md6_p_generic",
+      "md6_p_probing",
+      "md6_p_focus",
+      "md6_p_telling",
+      "running_mistake_identification",
+      "running_mistake_location",
+      "running_providing_guidance",
+      "running_actionability",
+      "has_within_attempt_quality"
+    ],
+    "mastery_before_observed_by_policy": false,
+    "name": "C3"
+  },
+  "stage": "B_gap_threshold_performance_sensitivity",
+  "stage_a_audit_manifest": "results/self_improvement/md6_gap_threshold_audit/audit_manifest.json",
+  "stage_a_audit_manifest_sha256": "0a6c162c069fc36789598f383d76563966a00af1900c27db9a2f428dfd9477c0",
+  "threshold_grid": [
+    0.0,
+    0.05,
+    0.1,
+    0.15,
+    0.2,
+    0.3
+  ],
+  "threshold_sensitivity_script_sha256": "a368a30e42c2dda4e76d82ff1392e087a2019b9f1c17005b522e374b4dc4e424",
+  "timestamp": "2026-08-23T16:57:01.220917+00:00",
+  "timestamp_timezone": "UTC",
+  "tradeoff_delta_definition": "threshold metric minus the corresponding 0.10-reference mean.",
+  "tradeoff_ratio_definitions": {
+    "regret_change_per_additional_override": "delta cumulative regret / delta actual override rate",
+    "regret_change_per_additional_override_opportunity": "delta cumulative regret / delta at-least-one-alternative rate",
+    "reward_change_per_additional_override": "delta mean reward / delta actual override rate"
+  },
+  "turns_per_attempt": 3
+}

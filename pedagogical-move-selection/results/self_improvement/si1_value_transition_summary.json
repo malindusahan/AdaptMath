@@ -1,0 +1,44 @@
+{
+  "scope": "frozen_mathdial_train_only",
+  "usable_transitions": 12498,
+  "skipped_missing_outcome_dialogues": 10,
+  "skipped_teacher_moves_without_student_reply": 2345,
+  "global_outcomes": {
+    "clean_success": 7889,
+    "revealed_success": 2438,
+    "failure": 2171
+  },
+  "global_moves": {
+    "probing": 3129,
+    "generic": 2352,
+    "focus": 4928,
+    "telling": 2089
+  },
+  "si_internal_split": {
+    "random_state": 174,
+    "balance_score": 0.005322449041029381,
+    "train_transitions": 9989,
+    "validation_transitions": 2509,
+    "train_groups": 700,
+    "validation_groups": 175,
+    "group_overlap": 0,
+    "qid_overlap": 0,
+    "source_overlap": 0,
+    "train_outcomes": {
+      "clean_success": 6311,
+      "revealed_success": 1948,
+      "failure": 1730
+    },
+    "validation_outcomes": {
+      "revealed_success": 490,
+      "clean_success": 1578,
+      "failure": 441
+    }
+  },
+  "distance_to_terminal": {
+    "minimum": 0,
+    "median": 3.0,
+    "p90": 8.0,
+    "maximum": 22
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "experiment": "SI3-B_contrastive_dataset_construction",
+  "train": {
+    "contexts": 9989,
+    "strict": 9988,
+    "fallback": 1,
+    "failed": 0
+  },
+  "validation": {
+    "contexts": 2509,
+    "strict": 2507,
+    "fallback": 2,
+    "failed": 0
+  },
+  "integrity_errors": 0,
+  "group_overlap": 0,
+  "qid_overlap": 0,
+  "validation_passed": true
+}
