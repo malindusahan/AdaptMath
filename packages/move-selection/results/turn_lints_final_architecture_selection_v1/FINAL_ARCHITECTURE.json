@@ -1,0 +1,75 @@
+{
+  "architecture_version": "adaptmath_turn_lints_v1_final",
+  "freeze_status": "qualified_limited",
+  "algorithm": "direct_disjoint_linear_thompson_sampling",
+  "arms": [
+    "generic",
+    "probing",
+    "focus",
+    "telling"
+  ],
+  "context_preset": "S",
+  "ordered_context_features": [
+    "selector_p_generic",
+    "selector_p_probing",
+    "selector_p_focus",
+    "selector_p_telling"
+  ],
+  "context_dimension": 4,
+  "context_schema_id": "turn_lints_context_v1:S:e59e0e51ea8d",
+  "reward_mode": "headroom_normalized",
+  "reward_decision_label": "HEADROOM_NORMALIZED",
+  "selector_name": "MD7-R2-TELL-C1 Epoch 2",
+  "selector_sha256": "ad770256a71efcce7485705099511494e41806b2e29bc3829f9ba8aeaf731cd5",
+  "cold_start_behavior_policy": "md7_r2_probability_proportional_v1",
+  "known_behavior_propensity_logging": true,
+  "mrb1_role": "previous-turn four-head auxiliary context only if selected; never scalar reward",
+  "mrb1_selected_in_context": false,
+  "student_model_role": "pre-action BKT state and prior valid learner-signal probabilities per selected blocks; linked valid BKT posterior update supplies reward",
+  "formal_assessment_role": "separate external policy-health signal; never Tutor-action reward",
+  "learner_agency_semantics": "explicit interaction requests are handled above the policy, logged non-randomized when overriding; inferred learner state never maps to handwritten actions",
+  "turn_update_timing": "immediate after valid linked BKT evidence in future LIVE mode",
+  "tau_gate": "none",
+  "action_eligibility_threshold": "none",
+  "p1_anchor": "inactive",
+  "p2": "not_used",
+  "handwritten_pedagogical_action_rules": "none",
+  "tutor_realization": "existing generic/probing/focus/telling contract",
+  "experiment_artifact_path": "pedagogical-move-selection/results/turn_lints_final_architecture_selection_v1",
+  "analysis_script_sha256": "586ba4ff25ba4462eca712320753a07dc88a884e0de16f9d93bc005e29ab53e5",
+  "derived_dataset_sha256": "d8f219b7e0cf351fb0bc2fc460f5183ff057a87a8fdce8d372ff2ae27dd67786",
+  "architecture_manifest_sha256": null,
+  "architecture_manifest_hash_note": "Self-hash is stored in FINAL_ARCHITECTURE.sha256 after this JSON is finalized.",
+  "selection_metrics": {
+    "grouped_MAE_mean": 0.16490832093301827,
+    "grouped_MAE_SE": 0.02794739222434752,
+    "grouped_RMSE_mean": 0.20959047733336078,
+    "grouped_RMSE_SE": 0.03053246980326138,
+    "grouped_R2_mean": -0.2517050416959512,
+    "grouped_R2_SE": 0.04721745522025084,
+    "delta_MAE_vs_S": 0.0,
+    "delta_RMSE_vs_S": 0.0,
+    "delta_MAE_vs_full": -0.0030974612538147983,
+    "delta_RMSE_vs_full": 0.0005459056238667492
+  },
+  "current_runtime_at_analysis": {
+    "mode": "SHADOW",
+    "context_blocks": "S+K+L+H+Q",
+    "reward_mode": "raw_delta",
+    "live_update_count_across_direct_states": 0
+  },
+  "randomized_warmstart": {
+    "treatment_count": 8,
+    "scientifically_valid_observation_count": 3,
+    "attempt_count": 1,
+    "standalone_context_selection": "insufficient"
+  },
+  "limitations": [
+    "Only 3/84 included rows contain real non-missing L signals; missing-indicator representation permits evaluation but does not establish substantive L value.",
+    "Telling has 0 included observations, so telling-specific reward interactions are not empirically established.",
+    "Only 3 scientifically valid randomized observations from 1 attempt(s) exist; insufficient for standalone context selection.",
+    "The primary context evidence is observational and policy-bound; no causal action-effect claim is made.",
+    "Grouped R2 is sensitive to small heterogeneous held-out attempt groups and is interpreted with MAE/RMSE and fold stability."
+  ],
+  "decision_label": "B. FINAL ARCHITECTURE FROZEN WITH QUALIFIED / LIMITED SUPPORT"
+}
