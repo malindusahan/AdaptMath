@@ -1,0 +1,48 @@
+metric,category,value,denominator,note
+candidate_turns,all,109,,
+valid_linked_bkt_outcomes,all,106,109,before scientific integrity exclusions
+valid_pre_action_contexts,runtime_representable,109,109,
+included_reward_experiment,all,84,109,
+included_context_experiment,all,84,109,
+attempt_count,all,18,,
+learner_count,all,3,,
+skill_count,all,14,,
+assessment_rows_separate,all,14,,never credited to Tutor actions
+attempt_summary_rows,all,14,,
+move_count,generic,34,109,
+move_count,probing,38,109,
+move_count,focus,37,109,
+move_count,telling,0,109,
+runtime_mode_count,LEGACY_POLICY_BOUND,96,109,
+runtime_mode_count,RANDOMIZED_WARMSTART,8,109,
+runtime_mode_count,SHADOW,5,109,
+assignment_count,non_randomized,101,109,
+assignment_count,randomized,8,109,
+resolution_count,resolved_reward,106,109,
+resolution_count,censored,3,109,
+exclusion_count,included,84,109,
+exclusion_count,downstream_mastery_state_contaminated_by:4220e000-557f-487a-949f-a6b3662998ac:1:action:1,6,109,
+exclusion_count,downstream_mastery_state_contaminated_by:a6d964ef-ca38-47e1-a1f5-6009be1aa0b5:1:action:3,4,109,
+exclusion_count,downstream_mastery_state_contaminated_by:00efa9aa-9749-4384-bc1c-a5c7d17012c8:1:action:4,3,109,
+exclusion_count,no_scientifically_resolved_reward:censored,3,109,
+exclusion_count,downstream_mastery_state_contaminated_by:44442f3f-ef9b-4c06-8cd8-0c1eba70feef:1:action:1,2,109,
+exclusion_count,downstream_mastery_state_contaminated_by:eef1d04e-fe55-4457-9edf-f1c05786fd69:1:action:4,2,109,
+exclusion_count,interaction_management_request,1,109,
+exclusion_count,no_knowledge_evidence_problem_repetition,1,109,
+exclusion_count,interaction_management_acknowledgement,1,109,
+exclusion_count,no_knowledge_evidence_metacognitive_or_social,1,109,
+exclusion_count,no_knowledge_evidence_transcript_echo,1,109,
+local_runtime_event_rows,turn_lints_shadow_full_raw_v1,5,,audited; collector remains canonical analysis source
+local_runtime_event_rows,turn_lints_randomized_warmstart_v1,7,,audited; collector remains canonical analysis source
+local_runtime_event_rows,legacy_direct_fixture,1,,audited; collector remains canonical analysis source
+context_block_completeness,S,84,84,real substantive observations; runtime representation is complete via explicit indicators
+context_block_completeness,K,70,84,real substantive observations; runtime representation is complete via explicit indicators
+context_block_completeness,L,3,84,real substantive observations; runtime representation is complete via explicit indicators
+context_block_completeness,H,70,84,real substantive observations; runtime representation is complete via explicit indicators
+context_block_completeness,Q,70,84,real substantive observations; runtime representation is complete via explicit indicators
+context_block_completeness,S+K,70,84,real substantive observations; runtime representation is complete via explicit indicators
+context_block_completeness,S+L,3,84,real substantive observations; runtime representation is complete via explicit indicators
+context_block_completeness,S+K+L,3,84,real substantive observations; runtime representation is complete via explicit indicators
+context_block_completeness,S+K+L+H,3,84,real substantive observations; runtime representation is complete via explicit indicators
+context_block_completeness,S+K+L+H+Q,3,84,real substantive observations; runtime representation is complete via explicit indicators
+context_block_completeness,K+L+H+Q,3,84,real substantive observations; runtime representation is complete via explicit indicators
