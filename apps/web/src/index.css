@@ -1,0 +1,452 @@
+@import "tailwindcss";
+@import "katex/dist/katex.min.css";
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  color: #0f172a;
+  background: #f8faff;
+  --page: #f8faff;
+  --surface: #ffffff;
+  --surface-soft: #f8fafc;
+  --surface-muted: #f1f5f9;
+  --border: #e2e8f0;
+  --text: #0f172a;
+  --text-soft: #334155;
+  --muted: #64748b;
+  --accent: #4f46e5;
+  --accent-soft: #eef2ff;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+:root.dark {
+  color: #f1f5f9;
+  background: #020617;
+  --page: #020617;
+  --surface: #0f172a;
+  --surface-soft: #111c30;
+  --surface-muted: #1e293b;
+  --border: #26344a;
+  --text: #f1f5f9;
+  --text-soft: #cbd5e1;
+  --muted: #94a3b8;
+  --accent: #818cf8;
+  --accent-soft: rgba(99, 102, 241, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100%;
+  height: 100%;
+}
+
+body {
+  overflow: hidden;
+  background: var(--page);
+  color: var(--text);
+  transition: background-color 180ms ease, color 180ms ease;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid rgba(79, 70, 229, 0.35);
+  outline-offset: 2px;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  flex: none;
+  border-radius: 9999px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.theme-toggle-track {
+  position: relative;
+  display: flex;
+  width: 4.35rem;
+  height: 2.25rem;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #dbe3ef;
+  border-radius: 9999px;
+  background: #eef2ff;
+  padding: 0 0.58rem;
+  color: #64748b;
+  box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.06);
+  transition: 180ms ease;
+}
+
+.dark .theme-toggle-track {
+  border-color: #334155;
+  background: #1e293b;
+  color: #94a3b8;
+}
+
+.theme-toggle-sun,
+.theme-toggle-moon {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
+.theme-toggle-sun {
+  color: #f59e0b;
+}
+
+.theme-toggle-moon {
+  color: #818cf8;
+}
+
+.theme-toggle-thumb {
+  position: absolute;
+  left: 0.18rem;
+  top: 0.18rem;
+  display: flex;
+  width: 1.87rem;
+  height: 1.87rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: #ffffff;
+  color: #f59e0b;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.2);
+  transition: transform 200ms ease, background-color 180ms ease, color 180ms ease;
+}
+
+.dark .theme-toggle-thumb {
+  transform: translateX(2.08rem);
+  background: #0f172a;
+  color: #a5b4fc;
+}
+
+.confirmation-backdrop {
+  animation: confirmation-fade-in 160ms ease-out both;
+}
+
+.confirmation-card {
+  animation: confirmation-pop-in 190ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes confirmation-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes confirmation-pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.chat-field {
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  padding: 0.7rem 0.8rem;
+  color: var(--text);
+  outline: none;
+  transition: 140ms ease;
+}
+
+.chat-field:focus {
+  border-color: #818cf8;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.12);
+}
+
+.chat-row {
+  display: flex;
+  width: 100%;
+  padding: 0.8rem 1rem;
+}
+
+.user-row {
+  justify-content: flex-end;
+  padding-top: 1.2rem;
+  padding-bottom: 1.2rem;
+}
+
+.user-bubble {
+  max-width: min(78%, 38rem);
+  border-radius: 1.5rem;
+  border-bottom-right-radius: 0.45rem;
+  border: 1px solid rgba(99, 102, 241, 0.12);
+  background: var(--accent-soft);
+  padding: 0.72rem 1rem;
+  font-size: 0.94rem;
+  line-height: 1.65;
+  color: var(--text-soft);
+  overflow-wrap: anywhere;
+}
+
+.assistant-row {
+  align-items: flex-start;
+  gap: 0.85rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.assistant-avatar {
+  display: flex;
+  height: 1.9rem;
+  width: 1.9rem;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  color: white;
+  font-size: 0.72rem;
+  font-weight: 800;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+  margin-top: 0.1rem;
+}
+
+.chat-composer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 1.65rem;
+  background: var(--surface);
+  padding: 0.35rem 0.42rem 0.35rem 0.75rem;
+  box-shadow:
+    0 0 0 1px rgba(79, 70, 229, 0.02),
+    0 10px 35px rgba(30, 41, 59, 0.1);
+}
+
+.chat-composer:focus-within {
+  border-color: #818cf8;
+  box-shadow:
+    0 0 0 4px rgba(99, 102, 241, 0.1),
+    0 12px 38px rgba(30, 41, 59, 0.12);
+}
+
+.assessment-card {
+  max-width: 42rem;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: var(--surface-soft);
+  padding: 1rem;
+}
+
+.assessment-input {
+  min-height: 4.5rem;
+  resize: vertical;
+  border-radius: 0.8rem;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  padding: 0.7rem 0.8rem;
+  color: var(--text);
+  outline: none;
+  transition: 140ms ease;
+}
+
+.assessment-input:focus {
+  border-color: #818cf8;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.12);
+}
+
+.assessment-input:disabled {
+  background: var(--surface-muted);
+  color: var(--muted);
+}
+
+.feedback-card {
+  max-width: 42rem;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: var(--surface-soft);
+  padding: 0.95rem 1rem;
+}
+
+.prose-adaptmath {
+  color: var(--text-soft);
+  font-size: 0.955rem;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+
+.prose-adaptmath > :first-child {
+  margin-top: 0;
+}
+
+.prose-adaptmath > :last-child {
+  margin-bottom: 0;
+}
+
+.prose-adaptmath h1,
+.prose-adaptmath h2,
+.prose-adaptmath h3,
+.prose-adaptmath h4 {
+  margin-top: 1.4rem;
+  margin-bottom: 0.55rem;
+  color: var(--text);
+  font-weight: 650;
+  line-height: 1.4;
+}
+
+.prose-adaptmath h1 {
+  font-size: 1.25rem;
+}
+
+.prose-adaptmath h2 {
+  font-size: 1.13rem;
+}
+
+.prose-adaptmath h3,
+.prose-adaptmath h4 {
+  font-size: 1rem;
+}
+
+.prose-adaptmath p,
+.prose-adaptmath ul,
+.prose-adaptmath ol,
+.prose-adaptmath blockquote,
+.prose-adaptmath table {
+  margin: 0.75rem 0;
+}
+
+.prose-adaptmath ul,
+.prose-adaptmath ol {
+  padding-left: 1.35rem;
+}
+
+.prose-adaptmath ul {
+  list-style: disc;
+}
+
+.prose-adaptmath ol {
+  list-style: decimal;
+}
+
+.prose-adaptmath li {
+  margin: 0.25rem 0;
+}
+
+.prose-adaptmath strong {
+  color: var(--text);
+  font-weight: 650;
+}
+
+.prose-adaptmath hr {
+  margin: 1.25rem 0;
+  border: 0;
+  border-top: 1px solid var(--border);
+}
+
+.prose-adaptmath table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.prose-adaptmath th,
+.prose-adaptmath td {
+  border: 1px solid var(--border);
+  padding: 0.6rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.prose-adaptmath th {
+  background: var(--surface-soft);
+}
+
+.prose-adaptmath code {
+  border-radius: 0.35rem;
+  background: var(--surface-muted);
+  padding: 0.1rem 0.3rem;
+  font-size: 0.9em;
+}
+
+.prose-adaptmath .katex-display {
+  margin: 1rem 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.15rem 0;
+}
+
+.thinking-dot {
+  display: inline-block;
+  width: 0.35rem;
+  height: 0.35rem;
+  border-radius: 9999px;
+  background: #a1a1aa;
+  animation: pulse-dot 1s ease-in-out infinite;
+}
+
+.animation-delay-150 {
+  animation-delay: 150ms;
+}
+
+.animation-delay-300 {
+  animation-delay: 300ms;
+}
+
+@keyframes pulse-dot {
+  0%,
+  70%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+  35% {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+}
+
+@media (max-width: 640px) {
+  .chat-row {
+    padding-left: 0.85rem;
+    padding-right: 0.85rem;
+  }
+
+  .user-bubble {
+    max-width: 88%;
+  }
+
+  .assistant-row {
+    gap: 0.65rem;
+  }
+
+  .assistant-avatar {
+    height: 1.75rem;
+    width: 1.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
