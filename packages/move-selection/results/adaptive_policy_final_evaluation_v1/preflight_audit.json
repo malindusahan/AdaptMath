@@ -1,0 +1,148 @@
+{
+  "L_coverage": {
+    "fraction": 0.9186535764375876,
+    "missing": 58,
+    "observed": 655,
+    "percent": 91.86535764375876,
+    "total": 713
+  },
+  "canonical_path": "pedagogical-move-selection/results/turn_lints_final_architecture_selection_v1/derived_analysis_dataset.csv",
+  "canonical_sha256": "da6ee0dde545be3d5bff28f179751bc041061defa5381e2d809e18f926713914",
+  "checks": {
+    "L_coverage_approximately_92_percent": true,
+    "all_rows_scientifically_included": true,
+    "attempt_count_92": true,
+    "binary_missingness_indicators": true,
+    "exact_67_column_schema_and_order": true,
+    "exact_action_domain": true,
+    "expected_action_counts": true,
+    "finite_complete_context": true,
+    "finite_reward_inputs": true,
+    "headroom_reward_equation": true,
+    "learner_count_31": true,
+    "mastery_values_in_unit_interval": true,
+    "missing_values_are_zero_filled": true,
+    "no_duplicate_ids_or_rows": true,
+    "no_null_core_ids": true,
+    "no_post_action_or_current_action_context_features": true,
+    "previous_mastery_delta_in_signed_unit_interval": true,
+    "raw_reward_alias": true,
+    "raw_reward_equation": true,
+    "selector_probabilities_in_unit_interval": true,
+    "selector_probabilities_sum_to_one": true,
+    "skill_count_22": true,
+    "temporally_ordered_context": true,
+    "turn_count_713": true,
+    "unit_interval_mastery_before": true,
+    "unit_interval_previous_actionability": true,
+    "unit_interval_previous_clarification_probability": true,
+    "unit_interval_previous_mistake_identification": true,
+    "unit_interval_previous_mistake_location": true,
+    "unit_interval_previous_providing_guidance": true,
+    "unit_interval_previous_reasoning_probability": true,
+    "unit_interval_previous_uncertainty_probability": true
+  },
+  "duplicates": {
+    "action_event_id": 0,
+    "attempt_id_plus_turn_index": 0,
+    "exact_rows": 0,
+    "resolver_event_id_nonnull": 0
+  },
+  "failures": [],
+  "false_required_flag_counts": {
+    "include_in_context_experiment": 0,
+    "include_in_reward_experiment": 0,
+    "pre_action_context_representable": 0,
+    "valid_linked_bkt_outcome": 0
+  },
+  "inventory": {
+    "action_counts": {
+      "focus": 212,
+      "generic": 168,
+      "probing": 185,
+      "telling": 148
+    },
+    "attempts": 92,
+    "learners": 31,
+    "skills": 22,
+    "turns": 713
+  },
+  "leakage_or_post_action_context_features": [],
+  "nonfinite_context": {
+    "mastery_before": 0,
+    "previous_actionability": 0,
+    "previous_clarification_probability": 0,
+    "previous_learner_signals_missing": 0,
+    "previous_mastery_delta": 0,
+    "previous_mastery_delta_missing": 0,
+    "previous_mistake_identification": 0,
+    "previous_mistake_location": 0,
+    "previous_move_focus": 0,
+    "previous_move_generic": 0,
+    "previous_move_missing": 0,
+    "previous_move_probing": 0,
+    "previous_move_telling": 0,
+    "previous_mrb1_missing": 0,
+    "previous_providing_guidance": 0,
+    "previous_reasoning_probability": 0,
+    "previous_uncertainty_probability": 0,
+    "prior_tutor_turn_count": 0,
+    "selector_p_focus": 0,
+    "selector_p_generic": 0,
+    "selector_p_probing": 0,
+    "selector_p_telling": 0
+  },
+  "null_core_ids": {
+    "action_event_id": 0,
+    "attempt_id": 0,
+    "learner_id": 0,
+    "skill_id": 0
+  },
+  "reward_equation_max_absolute_error": {
+    "headroom": 7.896461262646426e-15,
+    "raw": 3.0184188481996443e-16,
+    "raw_alias": 0.0
+  },
+  "semantic_missingness": {
+    "previous_learner_signals_missing": {
+      "invalid_other": 0,
+      "missing_1": 58,
+      "observed_0": 655
+    },
+    "previous_mastery_delta_missing": {
+      "invalid_other": 0,
+      "missing_1": 92,
+      "observed_0": 621
+    },
+    "previous_move_missing": {
+      "invalid_other": 0,
+      "missing_1": 92,
+      "observed_0": 621
+    },
+    "previous_mrb1_missing": {
+      "invalid_other": 0,
+      "missing_1": 209,
+      "observed_0": 504
+    }
+  },
+  "status": "PASS",
+  "temporal_checks": {
+    "attempt_learner_mismatches": 0,
+    "attempt_skill_mismatches": 0,
+    "previous_Q_mismatches": 0,
+    "previous_delta_mismatches": 0,
+    "previous_move_mismatches": 0,
+    "prior_tutor_turn_count_mismatches": 0,
+    "reconstructed_context_rows": 0,
+    "relative_position_mismatches": 0,
+    "stored_runtime_context_rows": 713,
+    "turn_contiguity_mismatches": 0,
+    "turn_start_mismatches": 0
+  },
+  "zero_fill_violations": {
+    "previous_learner_signals_missing": 0,
+    "previous_mastery_delta_missing": 0,
+    "previous_move_missing": 0,
+    "previous_mrb1_missing": 0
+  }
+}

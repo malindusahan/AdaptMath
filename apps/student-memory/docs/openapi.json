@@ -1,0 +1,5348 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Student Personalization Memory Service",
+    "description": "Learning-state memory service for assessment updates, current-state retrieval, and state-history retrieval.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/auth/signup": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Student Signup & Identity Provisioning",
+        "description": "Register a new student with username, exact birth date, and password.\nAutomatically provisions internal student identity and calculates age.",
+        "operationId": "signup_student_auth_signup_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignupRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignupResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "User Login",
+        "description": "Authenticate a student and issue a session token.",
+        "operationId": "login_user_auth_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "tags": ["auth"],
+        "summary": "Get Current User Profile & Identity",
+        "description": "Return profile of currently authenticated user.",
+        "operationId": "get_current_user_profile_auth_me_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserMeResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Log Out User",
+        "description": "Invalidate active session token.",
+        "operationId": "logout_user_auth_logout_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "title": "Response Logout User Auth Logout Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/topic/classify": {
+      "post": {
+        "tags": ["Topic Classification"],
+        "summary": "Classify Math Question to Canonical Topic",
+        "description": "Classify a natural-language student question into one of the 111 Canonical Math Topics using the pure fine-tuned Sentence Transformer neural model. Returns topic=null and is_math=false for off-topic greetings or non-math input.",
+        "operationId": "classify_topic_topic_classify_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TopicClassifyRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TopicClassifyResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ]
+      }
+    },
+    "/memory/update": {
+      "post": {
+        "tags": ["memory"],
+        "summary": "Process Assessment & Update Memory State",
+        "description": "Process one completed assessment and update the student's memory in PostgreSQL.\n\nThe resulting learning state includes the completed assessment\nand is intended to be carried forward to the student's next\nlearning activity.",
+        "operationId": "process_memory_update",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssessmentMemoryUpdateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Assessment processed and dynamic learning state updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemoryUpdateResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid X-Service-Key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request body exceeds maximum size limit.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request validation failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal memory update error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ]
+      }
+    },
+    "/memory/{student_id}/current": {
+      "get": {
+        "tags": ["memory"],
+        "summary": "Retrieve Current Learning-State Memory",
+        "description": "Retrieve the latest persisted learning-state memory for one\nstudent/topic/subtopic context from PostgreSQL.\n\nThis endpoint is read-only and does not rerun the model, rebuild\nhistorical features, or modify database state.",
+        "operationId": "get_current_memory_state",
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "student_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Student Id"
+            }
+          },
+          {
+            "name": "topic",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Topic"
+            }
+          },
+          {
+            "name": "subtopic",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Subtopic"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Current learning state memory record.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrentStudentMemory"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid X-Service-Key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Student memory record not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request validation failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to retrieve student memory.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/memory/{student_id}/history": {
+      "get": {
+        "tags": ["memory"],
+        "summary": "Retrieve Learning-State History",
+        "description": "Retrieve the student's persisted learning-state history for one\ntopic/subtopic context from PostgreSQL with limit/offset pagination.\n\nThis endpoint is read-only and does not rerun the model, rebuild\nfeatures, or modify memory.",
+        "operationId": "get_state_history_snapshots",
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "student_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Student Id"
+            }
+          },
+          {
+            "name": "topic",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Topic"
+            }
+          },
+          {
+            "name": "subtopic",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Subtopic"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "description": "Max history snapshots returned.",
+              "default": 20,
+              "title": "Limit"
+            },
+            "description": "Max history snapshots returned."
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Number of history snapshots to skip.",
+              "default": 0,
+              "title": "Offset"
+            },
+            "description": "Number of history snapshots to skip."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of historical learning state snapshots.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LearningStateHistoryItem"
+                  },
+                  "title": "Response Get State History Snapshots"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid X-Service-Key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request validation failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to retrieve learning-state history.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/memory/question-context": {
+      "post": {
+        "tags": ["memory"],
+        "summary": "Extract Topic & Retrieve Question Context",
+        "description": "Extract canonical skill from student free-text question, persist extraction audit log,\nand return current personalized memory context for tutoring adaptation.",
+        "operationId": "extract_question_context",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuestionContextRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Resolved canonical skill and personalized memory context.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuestionContextResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid X-Service-Key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request body exceeds maximum size limit.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request validation failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to resolve question context.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ]
+      }
+    },
+    "/memory/{student_id}/context": {
+      "get": {
+        "tags": ["memory"],
+        "summary": "Retrieve Unified Full Student Memory Context",
+        "description": "Retrieve unified full student memory context combining STM, LTM, Concept Memory,\nLearning State, Misconceptions, Recent Interactions, and Repair Outcomes.",
+        "operationId": "get_full_student_context",
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "student_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Student Id"
+            }
+          },
+          {
+            "name": "session_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Optional session scope for STM.",
+              "title": "Session Id"
+            },
+            "description": "Optional session scope for STM."
+          },
+          {
+            "name": "skill_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Optional canonical skill scope.",
+              "title": "Skill Id"
+            },
+            "description": "Optional canonical skill scope."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "description": "Max recent interactions / repairs.",
+              "default": 20,
+              "title": "Limit"
+            },
+            "description": "Max recent interactions / repairs."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Unified full student memory context.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentContextResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid X-Service-Key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request validation failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to retrieve student context.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/memory/{student_id}/tutor-context": {
+      "get": {
+        "tags": ["memory"],
+        "summary": "Retrieve Tutor Agent Personalization Context",
+        "description": "Retrieve focused tutor personalization context:\n- Current learning state and evidence strength\n- Recent accuracy, correct count, incorrect count\n- Structured behavioral evidence (attempts, hints, response times)\n- Active misconceptions and past repair outcomes",
+        "operationId": "get_tutor_personalization_context",
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "student_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Student Id"
+            }
+          },
+          {
+            "name": "session_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Optional session scope for STM.",
+              "title": "Session Id"
+            },
+            "description": "Optional session scope for STM."
+          },
+          {
+            "name": "skill_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Optional canonical skill scope.",
+              "title": "Skill Id"
+            },
+            "description": "Optional canonical skill scope."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "description": "Max recent interactions / repairs.",
+              "default": 20,
+              "title": "Limit"
+            },
+            "description": "Max recent interactions / repairs."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Focused tutor personalization context.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TutorContextResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid X-Service-Key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request validation failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to retrieve tutor context.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/memory/{student_id}/planner-context": {
+      "get": {
+        "tags": ["memory"],
+        "summary": "Retrieve Planner Agent Memory Context",
+        "description": "Retrieve focused planner context containing session performance, concept mastery metrics,\nlongitudinal learning evidence, behavioral patterns, and active misconceptions.",
+        "operationId": "get_planner_memory_context",
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "student_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Student Id"
+            }
+          },
+          {
+            "name": "session_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Optional session scope.",
+              "title": "Session Id"
+            },
+            "description": "Optional session scope."
+          },
+          {
+            "name": "skill_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Optional canonical skill scope.",
+              "title": "Skill Id"
+            },
+            "description": "Optional canonical skill scope."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "description": "Max recent interactions.",
+              "default": 20,
+              "title": "Limit"
+            },
+            "description": "Max recent interactions."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Focused planner memory context.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlannerContextResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid X-Service-Key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request validation failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to retrieve planner context.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/memory/{student_id}/fapr-context": {
+      "get": {
+        "tags": ["memory"],
+        "summary": "Retrieve FAPR-LB Pedagogical Repair Context",
+        "description": "Retrieve focused FAPR-LB context containing recent error counts, behavioral latency patterns,\nactive misconceptions, previous repair outcomes, and latest student utterance.",
+        "operationId": "get_fapr_repair_context",
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "student_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Student Id"
+            }
+          },
+          {
+            "name": "session_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Optional session scope.",
+              "title": "Session Id"
+            },
+            "description": "Optional session scope."
+          },
+          {
+            "name": "skill_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Optional canonical skill scope.",
+              "title": "Skill Id"
+            },
+            "description": "Optional canonical skill scope."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "description": "Max recent interactions / repairs.",
+              "default": 20,
+              "title": "Limit"
+            },
+            "description": "Max recent interactions / repairs."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Focused FAPR-LB pedagogical repair context.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FAPRContextResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid X-Service-Key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request validation failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to retrieve FAPR context.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/memory/repair-outcome": {
+      "post": {
+        "tags": ["memory"],
+        "summary": "Record FAPR Pedagogical Repair Outcome",
+        "description": "Store an append-only pedagogical repair outcome event from FAPR-LB:\n- Validates student, session, and skill existence & ownership\n- Optionally links to a specific interaction\n- Prevents duplicate writes on retry\n- Memory stores evidence objectively without judging pedagogical strategy",
+        "operationId": "record_repair_outcome",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RepairOutcomeCreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Pedagogical repair outcome logged successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RepairOutcomeResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Foreign key constraint or validation failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid X-Service-Key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Referenced student, session, or skill not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request body exceeds maximum size limit.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request validation failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to record repair outcome.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ]
+      }
+    },
+    "/memory/{student_id}/support-preference": {
+      "get": {
+        "tags": ["memory"],
+        "summary": "Evaluate Empirical Support Style Preference",
+        "description": "Evaluate empirical repair outcome history to estimate which pedagogical support style\nhas proven most effective for this student (and optionally skill).\nRequires >= 3 observations to assert a preferred strategy.",
+        "operationId": "evaluate_support_preference",
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "student_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Student Id"
+            }
+          },
+          {
+            "name": "skill_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Optional canonical skill scope.",
+              "title": "Skill Id"
+            },
+            "description": "Optional canonical skill scope."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Evaluated empirical support preference evidence.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SupportPreferenceResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid X-Service-Key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Student or skill not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request validation failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to evaluate support preference.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/memory/{student_id}/meta-signals": {
+      "get": {
+        "tags": ["memory"],
+        "summary": "Generate Meta-Agent Learning Evidence Signals",
+        "description": "Generate transparent, chronological evidence signals for the Meta-Agent:\n- correct_answer: empirical success marker\n- incorrect_answer: empirical failure marker\n- confusion: transparent linguistic indicator from utterance\n- clarification_request: explicit student question or request for elaboration\n- repeated_misunderstanding: persistent misconception with >= 2 occurrences",
+        "operationId": "get_meta_agent_signals",
+        "security": [
+          {
+            "APIKeyHeader": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "student_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Student Id"
+            }
+          },
+          {
+            "name": "session_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Optional session scope.",
+              "title": "Session Id"
+            },
+            "description": "Optional session scope."
+          },
+          {
+            "name": "skill_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Optional canonical skill scope.",
+              "title": "Skill Id"
+            },
+            "description": "Optional canonical skill scope."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "description": "Max evidence signals returned.",
+              "default": 20,
+              "title": "Limit"
+            },
+            "description": "Max evidence signals returned."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Chronological learning evidence signals generated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MetaSignalsResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid X-Service-Key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request validation failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to generate meta signals.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ui/sessions": {
+      "post": {
+        "tags": ["ui"],
+        "summary": "Create a new learning session for the logged-in student",
+        "description": "Automatically create an active learning session for the authenticated student.",
+        "operationId": "create_session_ui_sessions_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionItemResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["ui"],
+        "summary": "List recent learning sessions for the logged-in student",
+        "description": "List historical learning sessions scoped strictly to the authenticated student, excluding background assessment logs.",
+        "operationId": "list_sessions_ui_sessions_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 30,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SessionItemResponse"
+                  },
+                  "title": "Response List Sessions Ui Sessions Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ui/sessions/{session_id}": {
+      "patch": {
+        "tags": ["ui"],
+        "summary": "Rename / update learning session title",
+        "description": "Update a learning session's display title / topic name.",
+        "operationId": "update_session_ui_sessions__session_id__patch",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Session Id"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SessionUpdateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionItemResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ui/question-context": {
+      "post": {
+        "tags": ["ui"],
+        "summary": "UI Question Context Probe",
+        "description": "Frontend/UI safe endpoint for interactive question analysis and memory retrieval.",
+        "operationId": "ui_post_question_context",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UIQuestionContextRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Extracted topic and student personalized memory context.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuestionContextResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Session does not belong to logged-in student.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request body exceeds maximum size limit.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request validation failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to resolve question context.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ui/memory-update": {
+      "post": {
+        "tags": ["ui"],
+        "summary": "UI Assessment Memory Update",
+        "description": "Frontend/UI safe endpoint for submitting completed assessments and updating cognitive memory.",
+        "operationId": "ui_post_memory_update",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssessmentMemoryUpdateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Assessment processed and dynamic learning state updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemoryUpdateResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request body exceeds maximum size limit.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request validation failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal memory update error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ui/repair-outcome": {
+      "post": {
+        "tags": ["ui"],
+        "summary": "UI Record FAPR Pedagogical Repair Outcome",
+        "description": "Frontend/UI safe endpoint for logging pedagogical repair outcomes without requiring service key.",
+        "operationId": "ui_post_repair_outcome",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RepairOutcomeCreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Pedagogical repair outcome logged successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RepairOutcomeResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Foreign key constraint or validation failure.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Referenced student, session, or skill not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Request body exceeds maximum size limit.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request validation failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to record repair outcome.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ui/{student_id}/context": {
+      "get": {
+        "tags": ["ui"],
+        "summary": "UI Unified Full Student Memory Context",
+        "operationId": "ui_get_full_student_context",
+        "parameters": [
+          {
+            "name": "student_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Student Id"
+            }
+          },
+          {
+            "name": "session_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Optional session scope.",
+              "title": "Session Id"
+            },
+            "description": "Optional session scope."
+          },
+          {
+            "name": "skill_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Optional canonical skill scope.",
+              "title": "Skill Id"
+            },
+            "description": "Optional canonical skill scope."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "description": "Max recent interactions / repairs.",
+              "default": 20,
+              "title": "Limit"
+            },
+            "description": "Max recent interactions / repairs."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Unified full student memory context.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentContextResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request validation failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to retrieve student context.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ui/{student_id}/tutor-context": {
+      "get": {
+        "tags": ["ui"],
+        "summary": "UI Tutor Context",
+        "operationId": "ui_get_tutor_context",
+        "parameters": [
+          {
+            "name": "student_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Student Id"
+            }
+          },
+          {
+            "name": "session_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Optional session scope.",
+              "title": "Session Id"
+            },
+            "description": "Optional session scope."
+          },
+          {
+            "name": "skill_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Optional canonical skill scope.",
+              "title": "Skill Id"
+            },
+            "description": "Optional canonical skill scope."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 50,
+              "minimum": 1,
+              "description": "Max recent interactions / repairs.",
+              "default": 10,
+              "title": "Limit"
+            },
+            "description": "Max recent interactions / repairs."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Focused Tutor teaching context.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TutorContextResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request validation failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to retrieve tutor context.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ui/{student_id}/planner-context": {
+      "get": {
+        "tags": ["ui"],
+        "summary": "UI Planner Context",
+        "operationId": "ui_get_planner_context",
+        "parameters": [
+          {
+            "name": "student_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Student Id"
+            }
+          },
+          {
+            "name": "session_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Optional session scope.",
+              "title": "Session Id"
+            },
+            "description": "Optional session scope."
+          },
+          {
+            "name": "skill_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Optional canonical skill scope.",
+              "title": "Skill Id"
+            },
+            "description": "Optional canonical skill scope."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "description": "Max recent interactions.",
+              "default": 20,
+              "title": "Limit"
+            },
+            "description": "Max recent interactions."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Focused Planner curriculum context.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlannerContextResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request validation failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to retrieve planner context.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ui/{student_id}/fapr-context": {
+      "get": {
+        "tags": ["ui"],
+        "summary": "UI FAPR-LB Context",
+        "operationId": "ui_get_fapr_context",
+        "parameters": [
+          {
+            "name": "student_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Student Id"
+            }
+          },
+          {
+            "name": "session_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Optional session scope.",
+              "title": "Session Id"
+            },
+            "description": "Optional session scope."
+          },
+          {
+            "name": "skill_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Optional canonical skill scope.",
+              "title": "Skill Id"
+            },
+            "description": "Optional canonical skill scope."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 50,
+              "minimum": 1,
+              "description": "Max recent interactions / repairs.",
+              "default": 10,
+              "title": "Limit"
+            },
+            "description": "Max recent interactions / repairs."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Focused FAPR-LB diagnostic repair context.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FAPRContextResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request validation failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to retrieve FAPR context.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ui/{student_id}/support-preference": {
+      "get": {
+        "tags": ["ui"],
+        "summary": "UI Support Preference Analysis",
+        "operationId": "ui_get_support_preference",
+        "parameters": [
+          {
+            "name": "student_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Student Id"
+            }
+          },
+          {
+            "name": "skill_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Optional canonical skill scope.",
+              "title": "Skill Id"
+            },
+            "description": "Optional canonical skill scope."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ranked support style preference.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SupportPreferenceResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request validation failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to calculate support preference.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ui/{student_id}/meta-signals": {
+      "get": {
+        "tags": ["ui"],
+        "summary": "UI Meta-Agent Cognitive Signals",
+        "operationId": "ui_get_meta_signals",
+        "parameters": [
+          {
+            "name": "student_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Student Id"
+            }
+          },
+          {
+            "name": "session_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Optional session scope.",
+              "title": "Session Id"
+            },
+            "description": "Optional session scope."
+          },
+          {
+            "name": "skill_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Optional canonical skill scope.",
+              "title": "Skill Id"
+            },
+            "description": "Optional canonical skill scope."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cognitive and behavioral reliability signals.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MetaSignalsResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Request validation failed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to compute meta signals.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ui/skills": {
+      "get": {
+        "tags": ["ui"],
+        "summary": "List all canonical math skills and topics",
+        "description": "Return all available canonical math skills for dropdown and search selectors.",
+        "operationId": "ui_list_skills",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "additionalProperties": true,
+                    "type": "object"
+                  },
+                  "type": "array",
+                  "title": "Response Ui List Skills"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "tags": ["system"],
+        "summary": "Service Liveness Probe",
+        "description": "Lightweight service liveness probe.\nDoes not depend on external databases or model assets.",
+        "operationId": "check_service_health",
+        "responses": {
+          "200": {
+            "description": "Service process is alive and healthy.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ready": {
+      "get": {
+        "tags": ["system"],
+        "summary": "Service Readiness & Dependency Check",
+        "description": "Deep service readiness probe checking:\n- PostgreSQL database connection\n- Migration / schema health\n- Topic extractor model artifacts\n- Learning state classification model artifacts",
+        "operationId": "check_service_readiness",
+        "responses": {
+          "200": {
+            "description": "All dependencies and ML model artifacts are ready.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReadinessResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "One or more core dependencies (PostgreSQL, models) are unavailable."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AssessmentMemoryUpdateRequest": {
+        "properties": {
+          "student_id": {
+            "type": "string",
+            "title": "Student Id"
+          },
+          "topic": {
+            "type": "string",
+            "title": "Topic"
+          },
+          "subtopic": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Subtopic"
+          },
+          "assessment_questions": {
+            "items": {
+              "$ref": "#/components/schemas/AssessmentQuestionResult"
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Assessment Questions"
+          },
+          "identified_errors": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Identified Errors"
+          },
+          "overall_feedback": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Overall Feedback"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": ["student_id", "topic", "assessment_questions"],
+        "title": "AssessmentMemoryUpdateRequest",
+        "description": "Normalized assessment payload accepted by the memory layer.",
+        "example": {
+          "assessment_questions": [
+            {
+              "attempt_count": 1,
+              "expected_answer": "x = 3",
+              "hint_count": 0,
+              "hint_total": 2,
+              "is_correct": true,
+              "question": "Solve for x: 2x + 4 = 10",
+              "question_id": "q_math_001",
+              "response_time_ms": 4200.0,
+              "student_answer": "x = 3"
+            }
+          ],
+          "identified_errors": [],
+          "overall_feedback": "Great job solving single-variable linear equations.",
+          "student_id": "student_101",
+          "subtopic": "Linear equations",
+          "topic": "Algebra"
+        }
+      },
+      "AssessmentQuestionResult": {
+        "properties": {
+          "question_id": {
+            "type": "string",
+            "title": "Question Id"
+          },
+          "question": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Question"
+          },
+          "student_answer": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Student Answer"
+          },
+          "expected_answer": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expected Answer"
+          },
+          "is_correct": {
+            "type": "boolean",
+            "title": "Is Correct"
+          },
+          "identified_error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Identified Error"
+          },
+          "attempt_count": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Attempt Count"
+          },
+          "hint_count": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hint Count"
+          },
+          "hint_total": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hint Total"
+          },
+          "response_time_ms": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Response Time Ms"
+          }
+        },
+        "type": "object",
+        "required": ["question_id", "is_correct"],
+        "title": "AssessmentQuestionResult",
+        "description": "One evaluated question from an assessment."
+      },
+      "BehaviouralEvidenceSummary": {
+        "properties": {
+          "observation_count": {
+            "type": "integer",
+            "title": "Observation Count",
+            "default": 0
+          },
+          "total_value": {
+            "type": "number",
+            "title": "Total Value",
+            "default": 0.0
+          },
+          "average_value": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Average Value"
+          }
+        },
+        "type": "object",
+        "title": "BehaviouralEvidenceSummary",
+        "description": "Aggregated behavioral observation counts and averages."
+      },
+      "CurrentStudentMemory": {
+        "properties": {
+          "student_id": {
+            "type": "string",
+            "title": "Student Id"
+          },
+          "topic": {
+            "type": "string",
+            "title": "Topic"
+          },
+          "subtopic": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Subtopic"
+          },
+          "learning_state": {
+            "type": "string",
+            "enum": ["NEEDS_SUPPORT", "DEVELOPING", "STRONG", "UNAVAILABLE"],
+            "title": "Learning State"
+          },
+          "evidence_level": {
+            "type": "string",
+            "enum": [
+              "COLD_START",
+              "OVERALL_ONLY",
+              "PARTIAL_SKILL",
+              "FULL_SKILL"
+            ],
+            "title": "Evidence Level"
+          },
+          "evidence_strength": {
+            "type": "string",
+            "enum": ["NONE", "LOW", "MEDIUM", "HIGH"],
+            "title": "Evidence Strength"
+          },
+          "behavioural_coverage": {
+            "type": "string",
+            "enum": [
+              "FULL_BEHAVIOURAL_COVERAGE",
+              "PARTIAL_BEHAVIOURAL_COVERAGE",
+              "CORRECTNESS_ONLY_COVERAGE"
+            ],
+            "title": "Behavioural Coverage"
+          },
+          "model_used": {
+            "type": "boolean",
+            "title": "Model Used"
+          },
+          "recent_interaction_count": {
+            "type": "integer",
+            "title": "Recent Interaction Count"
+          },
+          "attempt_observation_count": {
+            "type": "integer",
+            "title": "Attempt Observation Count"
+          },
+          "hint_observation_count": {
+            "type": "integer",
+            "title": "Hint Observation Count"
+          },
+          "response_time_observation_count": {
+            "type": "integer",
+            "title": "Response Time Observation Count"
+          },
+          "last_assessment_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Assessment Id"
+          },
+          "last_snapshot_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Snapshot Id"
+          },
+          "updated_at": {
+            "type": "string",
+            "title": "Updated At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "student_id",
+          "topic",
+          "learning_state",
+          "evidence_level",
+          "evidence_strength",
+          "behavioural_coverage",
+          "model_used",
+          "recent_interaction_count",
+          "attempt_observation_count",
+          "hint_observation_count",
+          "response_time_observation_count",
+          "updated_at"
+        ],
+        "title": "CurrentStudentMemory",
+        "description": "Latest persisted state for one student learning-area context."
+      },
+      "ErrorDetail": {
+        "properties": {
+          "field": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Field",
+            "description": "Path to invalid field e.g. body.student_id."
+          },
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Human-readable error description."
+          },
+          "error_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error Type",
+            "description": "Error classification string."
+          }
+        },
+        "type": "object",
+        "required": ["message"],
+        "title": "ErrorDetail",
+        "description": "Specific field-level or contextual error detail."
+      },
+      "ErrorResponse": {
+        "properties": {
+          "error_code": {
+            "type": "string",
+            "title": "Error Code",
+            "description": "High-level error code e.g. VALIDATION_ERROR, NOT_FOUND, BAD_REQUEST, INTERNAL_ERROR."
+          },
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "description": "Primary human-readable error summary."
+          },
+          "detail": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Detail",
+            "description": "Backward-compatible detail string mirroring primary error message."
+          },
+          "details": {
+            "items": {
+              "$ref": "#/components/schemas/ErrorDetail"
+            },
+            "type": "array",
+            "title": "Details",
+            "description": "Optional list of granular field or validation error details."
+          },
+          "request_id": {
+            "type": "string",
+            "title": "Request Id",
+            "description": "Unique request tracing ID."
+          },
+          "timestamp": {
+            "type": "string",
+            "title": "Timestamp",
+            "description": "ISO 8601 UTC timestamp of the error event."
+          }
+        },
+        "type": "object",
+        "required": ["error_code", "message", "request_id"],
+        "title": "ErrorResponse",
+        "description": "Standardized error envelope returned across all 4xx and 5xx API responses."
+      },
+      "FAPRContextResponse": {
+        "properties": {
+          "student_id": {
+            "type": "string",
+            "title": "Student Id"
+          },
+          "session_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Session Id"
+          },
+          "skill_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Skill Id"
+          },
+          "current_learning_state": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Current Learning State"
+          },
+          "evidence_strength": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evidence Strength"
+          },
+          "behavioural_coverage": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Behavioural Coverage"
+          },
+          "recent_accuracy": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Recent Accuracy"
+          },
+          "recent_incorrect_count": {
+            "type": "integer",
+            "title": "Recent Incorrect Count",
+            "default": 0
+          },
+          "attempt_evidence": {
+            "$ref": "#/components/schemas/BehaviouralEvidenceSummary"
+          },
+          "hint_evidence": {
+            "$ref": "#/components/schemas/BehaviouralEvidenceSummary"
+          },
+          "response_time_evidence": {
+            "$ref": "#/components/schemas/BehaviouralEvidenceSummary"
+          },
+          "misconceptions": {
+            "items": {
+              "$ref": "#/components/schemas/FAPRMisconceptionSummary"
+            },
+            "type": "array",
+            "title": "Misconceptions"
+          },
+          "recent_interactions": {
+            "items": {
+              "$ref": "#/components/schemas/FAPRInteractionSummary"
+            },
+            "type": "array",
+            "title": "Recent Interactions"
+          },
+          "previous_repairs": {
+            "items": {
+              "$ref": "#/components/schemas/FAPRRepairSummary"
+            },
+            "type": "array",
+            "title": "Previous Repairs"
+          },
+          "latest_student_utterance": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latest Student Utterance"
+          }
+        },
+        "type": "object",
+        "required": ["student_id"],
+        "title": "FAPRContextResponse",
+        "description": "Focused student repair evidence tailored specifically for the FAPR-LB repair selector."
+      },
+      "FAPRInteractionSummary": {
+        "properties": {
+          "interaction_id": {
+            "type": "string",
+            "title": "Interaction Id"
+          },
+          "session_id": {
+            "type": "string",
+            "title": "Session Id"
+          },
+          "canonical_skill_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Canonical Skill Id"
+          },
+          "student_utterance": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Student Utterance"
+          },
+          "identified_error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Identified Error"
+          },
+          "is_correct": {
+            "type": "boolean",
+            "title": "Is Correct"
+          },
+          "attempt_count": {
+            "type": "integer",
+            "title": "Attempt Count"
+          },
+          "hint_count": {
+            "type": "integer",
+            "title": "Hint Count"
+          },
+          "response_time_ms": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Response Time Ms"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "interaction_id",
+          "session_id",
+          "is_correct",
+          "attempt_count",
+          "hint_count",
+          "created_at"
+        ],
+        "title": "FAPRInteractionSummary",
+        "description": "Recent interaction evidence item including student utterance and detected error."
+      },
+      "FAPRMisconceptionSummary": {
+        "properties": {
+          "misconception_id": {
+            "type": "string",
+            "title": "Misconception Id"
+          },
+          "normalized_error": {
+            "type": "string",
+            "title": "Normalized Error"
+          },
+          "display_error": {
+            "type": "string",
+            "title": "Display Error"
+          },
+          "occurrence_count": {
+            "type": "integer",
+            "title": "Occurrence Count"
+          },
+          "last_seen_at": {
+            "type": "string",
+            "title": "Last Seen At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "misconception_id",
+          "normalized_error",
+          "display_error",
+          "occurrence_count",
+          "last_seen_at"
+        ],
+        "title": "FAPRMisconceptionSummary",
+        "description": "Active student misconception evidence for repair selection."
+      },
+      "FAPRRepairSummary": {
+        "properties": {
+          "repair_outcome_id": {
+            "type": "string",
+            "title": "Repair Outcome Id"
+          },
+          "session_id": {
+            "type": "string",
+            "title": "Session Id"
+          },
+          "canonical_skill_id": {
+            "type": "string",
+            "title": "Canonical Skill Id"
+          },
+          "repair_action": {
+            "type": "string",
+            "title": "Repair Action"
+          },
+          "outcome": {
+            "type": "string",
+            "title": "Outcome"
+          },
+          "score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Score"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "repair_outcome_id",
+          "session_id",
+          "canonical_skill_id",
+          "repair_action",
+          "outcome",
+          "created_at"
+        ],
+        "title": "FAPRRepairSummary",
+        "description": "Past pedagogical repair history and outcomes."
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "HealthResponse": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "description": "Service liveness state.",
+            "default": "ok"
+          },
+          "service": {
+            "type": "string",
+            "title": "Service",
+            "description": "Canonical service identifier.",
+            "default": "student-personalization-memory"
+          }
+        },
+        "type": "object",
+        "title": "HealthResponse",
+        "description": "Lightweight liveness probe response."
+      },
+      "LearningStateHistoryItem": {
+        "properties": {
+          "snapshot_id": {
+            "type": "integer",
+            "title": "Snapshot Id"
+          },
+          "assessment_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Assessment Id"
+          },
+          "student_id": {
+            "type": "string",
+            "title": "Student Id"
+          },
+          "topic": {
+            "type": "string",
+            "title": "Topic"
+          },
+          "subtopic": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Subtopic"
+          },
+          "learning_state": {
+            "type": "string",
+            "enum": ["NEEDS_SUPPORT", "DEVELOPING", "STRONG", "UNAVAILABLE"],
+            "title": "Learning State"
+          },
+          "evidence_level": {
+            "type": "string",
+            "enum": [
+              "COLD_START",
+              "OVERALL_ONLY",
+              "PARTIAL_SKILL",
+              "FULL_SKILL"
+            ],
+            "title": "Evidence Level"
+          },
+          "evidence_strength": {
+            "type": "string",
+            "enum": ["NONE", "LOW", "MEDIUM", "HIGH"],
+            "title": "Evidence Strength"
+          },
+          "behavioural_coverage": {
+            "type": "string",
+            "enum": [
+              "FULL_BEHAVIOURAL_COVERAGE",
+              "PARTIAL_BEHAVIOURAL_COVERAGE",
+              "CORRECTNESS_ONLY_COVERAGE"
+            ],
+            "title": "Behavioural Coverage"
+          },
+          "model_used": {
+            "type": "boolean",
+            "title": "Model Used"
+          },
+          "previous_interaction_count": {
+            "type": "integer",
+            "title": "Previous Interaction Count"
+          },
+          "previous_skill_interaction_count": {
+            "type": "integer",
+            "title": "Previous Skill Interaction Count"
+          },
+          "recent_interaction_count": {
+            "type": "integer",
+            "title": "Recent Interaction Count"
+          },
+          "attempt_observation_count": {
+            "type": "integer",
+            "title": "Attempt Observation Count"
+          },
+          "hint_observation_count": {
+            "type": "integer",
+            "title": "Hint Observation Count"
+          },
+          "response_time_observation_count": {
+            "type": "integer",
+            "title": "Response Time Observation Count"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "snapshot_id",
+          "student_id",
+          "topic",
+          "learning_state",
+          "evidence_level",
+          "evidence_strength",
+          "behavioural_coverage",
+          "model_used",
+          "previous_interaction_count",
+          "previous_skill_interaction_count",
+          "recent_interaction_count",
+          "attempt_observation_count",
+          "hint_observation_count",
+          "response_time_observation_count",
+          "created_at"
+        ],
+        "title": "LearningStateHistoryItem",
+        "description": "One immutable historical learning-state snapshot."
+      },
+      "LearningStateItem": {
+        "properties": {
+          "learning_state": {
+            "type": "string",
+            "title": "Learning State"
+          },
+          "evidence_level": {
+            "type": "string",
+            "title": "Evidence Level"
+          },
+          "evidence_strength": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "title": "Evidence Strength"
+          },
+          "behavioural_coverage": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "title": "Behavioural Coverage"
+          },
+          "model_used": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Model Used"
+          },
+          "recent_interaction_count": {
+            "type": "integer",
+            "title": "Recent Interaction Count"
+          },
+          "attempt_observation_count": {
+            "type": "integer",
+            "title": "Attempt Observation Count"
+          },
+          "hint_observation_count": {
+            "type": "integer",
+            "title": "Hint Observation Count"
+          },
+          "response_time_observation_count": {
+            "type": "integer",
+            "title": "Response Time Observation Count"
+          },
+          "updated_at": {
+            "type": "string",
+            "title": "Updated At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "learning_state",
+          "evidence_level",
+          "evidence_strength",
+          "behavioural_coverage",
+          "recent_interaction_count",
+          "attempt_observation_count",
+          "hint_observation_count",
+          "response_time_observation_count",
+          "updated_at"
+        ],
+        "title": "LearningStateItem",
+        "description": "Current dynamic learning state for the student on the resolved canonical skill."
+      },
+      "LoginRequest": {
+        "properties": {
+          "username": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Username"
+          },
+          "password": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Password"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": ["username", "password"],
+        "title": "LoginRequest",
+        "description": "Payload for user login."
+      },
+      "LoginResponse": {
+        "properties": {
+          "token": {
+            "type": "string",
+            "title": "Token"
+          },
+          "username": {
+            "type": "string",
+            "title": "Username"
+          },
+          "role": {
+            "type": "string",
+            "title": "Role"
+          },
+          "student_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Student Id"
+          },
+          "age": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Age"
+          }
+        },
+        "type": "object",
+        "required": ["token", "username", "role"],
+        "title": "LoginResponse",
+        "description": "Authentication token and logged-in user profile."
+      },
+      "MemoryUpdateResponse": {
+        "properties": {
+          "student_id": {
+            "type": "string",
+            "title": "Student Id"
+          },
+          "topic": {
+            "type": "string",
+            "title": "Topic"
+          },
+          "subtopic": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Subtopic"
+          },
+          "assessment_id": {
+            "type": "integer",
+            "title": "Assessment Id"
+          },
+          "snapshot_id": {
+            "type": "integer",
+            "title": "Snapshot Id"
+          },
+          "learning_state": {
+            "type": "string",
+            "enum": ["NEEDS_SUPPORT", "DEVELOPING", "STRONG", "UNAVAILABLE"],
+            "title": "Learning State"
+          },
+          "evidence_level": {
+            "type": "string",
+            "enum": [
+              "COLD_START",
+              "OVERALL_ONLY",
+              "PARTIAL_SKILL",
+              "FULL_SKILL"
+            ],
+            "title": "Evidence Level"
+          },
+          "evidence_strength": {
+            "type": "string",
+            "enum": ["NONE", "LOW", "MEDIUM", "HIGH"],
+            "title": "Evidence Strength"
+          },
+          "behavioural_coverage": {
+            "type": "string",
+            "enum": [
+              "FULL_BEHAVIOURAL_COVERAGE",
+              "PARTIAL_BEHAVIOURAL_COVERAGE",
+              "CORRECTNESS_ONLY_COVERAGE"
+            ],
+            "title": "Behavioural Coverage"
+          },
+          "model_used": {
+            "type": "boolean",
+            "title": "Model Used"
+          },
+          "previous_interaction_count": {
+            "type": "integer",
+            "title": "Previous Interaction Count"
+          },
+          "previous_skill_interaction_count": {
+            "type": "integer",
+            "title": "Previous Skill Interaction Count"
+          },
+          "recent_interaction_count": {
+            "type": "integer",
+            "title": "Recent Interaction Count"
+          },
+          "attempt_observation_count": {
+            "type": "integer",
+            "title": "Attempt Observation Count"
+          },
+          "hint_observation_count": {
+            "type": "integer",
+            "title": "Hint Observation Count"
+          },
+          "response_time_observation_count": {
+            "type": "integer",
+            "title": "Response Time Observation Count"
+          },
+          "misconception_count": {
+            "type": "integer",
+            "title": "Misconception Count"
+          },
+          "misconceptions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Misconceptions"
+          },
+          "memory_updated": {
+            "type": "boolean",
+            "const": true,
+            "title": "Memory Updated",
+            "default": true
+          }
+        },
+        "type": "object",
+        "required": [
+          "student_id",
+          "topic",
+          "assessment_id",
+          "snapshot_id",
+          "learning_state",
+          "evidence_level",
+          "evidence_strength",
+          "behavioural_coverage",
+          "model_used",
+          "previous_interaction_count",
+          "previous_skill_interaction_count",
+          "recent_interaction_count",
+          "attempt_observation_count",
+          "hint_observation_count",
+          "response_time_observation_count",
+          "misconception_count"
+        ],
+        "title": "MemoryUpdateResponse",
+        "description": "Complete result of processing one finished assessment."
+      },
+      "MetaSignalItem": {
+        "properties": {
+          "signal_type": {
+            "type": "string",
+            "title": "Signal Type",
+            "description": "Signal type: 'correct_answer', 'incorrect_answer', 'confusion', 'clarification_request', 'repeated_misunderstanding'"
+          },
+          "student_id": {
+            "type": "string",
+            "title": "Student Id"
+          },
+          "session_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Session Id"
+          },
+          "skill_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Skill Id"
+          },
+          "interaction_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Interaction Id"
+          },
+          "timestamp": {
+            "type": "string",
+            "title": "Timestamp"
+          },
+          "confidence": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Confidence",
+            "default": 1.0
+          },
+          "evidence": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Evidence"
+          }
+        },
+        "type": "object",
+        "required": ["signal_type", "student_id", "timestamp"],
+        "title": "MetaSignalItem",
+        "description": "An individual auditable evidence signal emitted for the Meta-Agent."
+      },
+      "MetaSignalsResponse": {
+        "properties": {
+          "student_id": {
+            "type": "string",
+            "title": "Student Id"
+          },
+          "session_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Session Id"
+          },
+          "skill_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Skill Id"
+          },
+          "total_signals": {
+            "type": "integer",
+            "title": "Total Signals"
+          },
+          "signals": {
+            "items": {
+              "$ref": "#/components/schemas/MetaSignalItem"
+            },
+            "type": "array",
+            "title": "Signals"
+          }
+        },
+        "type": "object",
+        "required": ["student_id", "total_signals"],
+        "title": "MetaSignalsResponse",
+        "description": "Collection of evidence signals generated for Meta-Agent analysis."
+      },
+      "MisconceptionItem": {
+        "properties": {
+          "misconception_id": {
+            "type": "string",
+            "title": "Misconception Id"
+          },
+          "normalized_error": {
+            "type": "string",
+            "title": "Normalized Error"
+          },
+          "display_error": {
+            "type": "string",
+            "title": "Display Error"
+          },
+          "occurrence_count": {
+            "type": "integer",
+            "title": "Occurrence Count"
+          },
+          "last_seen_at": {
+            "type": "string",
+            "title": "Last Seen At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "misconception_id",
+          "normalized_error",
+          "display_error",
+          "occurrence_count",
+          "last_seen_at"
+        ],
+        "title": "MisconceptionItem",
+        "description": "Recorded student misconception on the resolved canonical skill."
+      },
+      "PlannerContextResponse": {
+        "properties": {
+          "student_id": {
+            "type": "string",
+            "title": "Student Id"
+          },
+          "session_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Session Id"
+          },
+          "skill_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Skill Id"
+          },
+          "session_interaction_count": {
+            "type": "integer",
+            "title": "Session Interaction Count",
+            "default": 0
+          },
+          "session_accuracy": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Session Accuracy"
+          },
+          "session_correct_count": {
+            "type": "integer",
+            "title": "Session Correct Count",
+            "default": 0
+          },
+          "session_incorrect_count": {
+            "type": "integer",
+            "title": "Session Incorrect Count",
+            "default": 0
+          },
+          "attempt_evidence": {
+            "$ref": "#/components/schemas/BehaviouralEvidenceSummary"
+          },
+          "hint_evidence": {
+            "$ref": "#/components/schemas/BehaviouralEvidenceSummary"
+          },
+          "response_time_evidence": {
+            "$ref": "#/components/schemas/BehaviouralEvidenceSummary"
+          },
+          "current_learning_state": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Current Learning State"
+          },
+          "evidence_strength": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evidence Strength"
+          },
+          "behavioural_coverage": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Behavioural Coverage"
+          },
+          "concept_interaction_count": {
+            "type": "integer",
+            "title": "Concept Interaction Count",
+            "default": 0
+          },
+          "concept_accuracy": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Concept Accuracy"
+          },
+          "concept_correct_count": {
+            "type": "integer",
+            "title": "Concept Correct Count",
+            "default": 0
+          },
+          "concept_incorrect_count": {
+            "type": "integer",
+            "title": "Concept Incorrect Count",
+            "default": 0
+          },
+          "long_term_interaction_count": {
+            "type": "integer",
+            "title": "Long Term Interaction Count",
+            "default": 0
+          },
+          "overall_accuracy": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Overall Accuracy"
+          },
+          "total_sessions": {
+            "type": "integer",
+            "title": "Total Sessions",
+            "default": 0
+          },
+          "concept_count": {
+            "type": "integer",
+            "title": "Concept Count",
+            "default": 0
+          },
+          "misconceptions": {
+            "items": {
+              "$ref": "#/components/schemas/PlannerMisconceptionSummary"
+            },
+            "type": "array",
+            "title": "Misconceptions"
+          },
+          "recent_interactions": {
+            "items": {
+              "$ref": "#/components/schemas/PlannerInteractionSummary"
+            },
+            "type": "array",
+            "title": "Recent Interactions"
+          }
+        },
+        "type": "object",
+        "required": ["student_id"],
+        "title": "PlannerContextResponse",
+        "description": "Focused student performance and longitudinal evidence tailored specifically for the Planner agent."
+      },
+      "PlannerInteractionSummary": {
+        "properties": {
+          "interaction_id": {
+            "type": "string",
+            "title": "Interaction Id"
+          },
+          "session_id": {
+            "type": "string",
+            "title": "Session Id"
+          },
+          "canonical_skill_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Canonical Skill Id"
+          },
+          "is_correct": {
+            "type": "boolean",
+            "title": "Is Correct"
+          },
+          "attempt_count": {
+            "type": "integer",
+            "title": "Attempt Count"
+          },
+          "hint_count": {
+            "type": "integer",
+            "title": "Hint Count"
+          },
+          "response_time_ms": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Response Time Ms"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "interaction_id",
+          "session_id",
+          "is_correct",
+          "attempt_count",
+          "hint_count",
+          "created_at"
+        ],
+        "title": "PlannerInteractionSummary",
+        "description": "Recent interaction evidence item."
+      },
+      "PlannerMisconceptionSummary": {
+        "properties": {
+          "misconception_id": {
+            "type": "string",
+            "title": "Misconception Id"
+          },
+          "normalized_error": {
+            "type": "string",
+            "title": "Normalized Error"
+          },
+          "display_error": {
+            "type": "string",
+            "title": "Display Error"
+          },
+          "occurrence_count": {
+            "type": "integer",
+            "title": "Occurrence Count"
+          },
+          "last_seen_at": {
+            "type": "string",
+            "title": "Last Seen At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "misconception_id",
+          "normalized_error",
+          "display_error",
+          "occurrence_count",
+          "last_seen_at"
+        ],
+        "title": "PlannerMisconceptionSummary",
+        "description": "Active misconception summary relevant for curriculum progression and remediation planning."
+      },
+      "QuestionContextRequest": {
+        "properties": {
+          "student_id": {
+            "type": "string",
+            "title": "Student Id",
+            "description": "Unique student identifier (external or UUID)."
+          },
+          "session_id": {
+            "type": "string",
+            "title": "Session Id",
+            "description": "Learning session identifier."
+          },
+          "question": {
+            "type": "string",
+            "title": "Question",
+            "description": "Raw natural language question text from the student."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": ["student_id", "session_id", "question"],
+        "title": "QuestionContextRequest",
+        "description": "Request payload for resolving free-text student question to canonical skill and memory context.",
+        "example": {
+          "question": "How do I solve 3x + 5 = 20?",
+          "session_id": "session_303",
+          "student_id": "student_101"
+        }
+      },
+      "QuestionContextResponse": {
+        "properties": {
+          "student_id": {
+            "type": "string",
+            "title": "Student Id"
+          },
+          "session_id": {
+            "type": "string",
+            "title": "Session Id"
+          },
+          "question": {
+            "type": "string",
+            "title": "Question"
+          },
+          "topic": {
+            "$ref": "#/components/schemas/TopicContextItem"
+          },
+          "short_term_memory": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Short Term Memory"
+          },
+          "long_term_memory": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Long Term Memory"
+          },
+          "concept_memory": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Concept Memory"
+          },
+          "learning_state": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/LearningStateItem"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "misconceptions": {
+            "items": {
+              "$ref": "#/components/schemas/MisconceptionItem"
+            },
+            "type": "array",
+            "title": "Misconceptions"
+          }
+        },
+        "type": "object",
+        "required": ["student_id", "session_id", "question", "topic"],
+        "title": "QuestionContextResponse",
+        "description": "Full question context response combining topic extraction and personalized memory."
+      },
+      "ReadinessResponse": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "description": "Overall service readiness state.",
+            "default": "ready"
+          },
+          "service": {
+            "type": "string",
+            "title": "Service",
+            "description": "Canonical service identifier.",
+            "default": "student-personalization-memory"
+          },
+          "database": {
+            "type": "string",
+            "title": "Database",
+            "description": "Database connection health.",
+            "default": "ready"
+          },
+          "migrations": {
+            "type": "string",
+            "title": "Migrations",
+            "description": "Database schema migration status.",
+            "default": "ready"
+          },
+          "topic_extractor": {
+            "type": "string",
+            "title": "Topic Extractor",
+            "description": "Topic extraction model artifact status.",
+            "default": "ready"
+          },
+          "learning_state_model": {
+            "type": "string",
+            "title": "Learning State Model",
+            "description": "Learning state classification model artifact status.",
+            "default": "ready"
+          }
+        },
+        "type": "object",
+        "title": "ReadinessResponse",
+        "description": "Deep readiness probe response reporting core dependency statuses."
+      },
+      "RecentInteractionItem": {
+        "properties": {
+          "interaction_id": {
+            "type": "string",
+            "title": "Interaction Id"
+          },
+          "session_id": {
+            "type": "string",
+            "title": "Session Id"
+          },
+          "canonical_skill_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Canonical Skill Id"
+          },
+          "student_utterance": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Student Utterance"
+          },
+          "identified_error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Identified Error"
+          },
+          "is_correct": {
+            "type": "boolean",
+            "title": "Is Correct"
+          },
+          "attempt_count": {
+            "type": "integer",
+            "title": "Attempt Count"
+          },
+          "hint_count": {
+            "type": "integer",
+            "title": "Hint Count"
+          },
+          "response_time_ms": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Response Time Ms"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "interaction_id",
+          "session_id",
+          "is_correct",
+          "attempt_count",
+          "hint_count",
+          "created_at"
+        ],
+        "title": "RecentInteractionItem",
+        "description": "Summarized raw interaction log record."
+      },
+      "RepairOutcomeCreateRequest": {
+        "properties": {
+          "student_id": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Student Id",
+            "description": "Student external identifier or UUID."
+          },
+          "session_id": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Session Id",
+            "description": "Session external identifier or UUID."
+          },
+          "skill_id": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Skill Id",
+            "description": "Canonical skill identifier or UUID."
+          },
+          "interaction_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Interaction Id",
+            "description": "Optional interaction UUID tied to repair."
+          },
+          "repair_action": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Repair Action",
+            "description": "The pedagogical repair action applied."
+          },
+          "outcome": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Outcome",
+            "description": "Result outcome e.g. RESOLVED, PARTIALLY_RESOLVED, UNRESOLVED."
+          },
+          "score": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 1.0,
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Score",
+            "description": "Normalized score [0.0, 1.0]."
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes",
+            "description": "Optional diagnostic notes or observations."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "student_id",
+          "session_id",
+          "skill_id",
+          "repair_action",
+          "outcome"
+        ],
+        "title": "RepairOutcomeCreateRequest",
+        "description": "Request payload from FAPR-LB reporting a pedagogical repair intervention result.",
+        "example": {
+          "interaction_id": "2f63827b-5cf0-4a31-8ae7-8560eac6fe9a",
+          "notes": "Student applied inverse operations correctly after prompt.",
+          "outcome": "RESOLVED",
+          "repair_action": "inverse_operation_prompt",
+          "score": 1.0,
+          "session_id": "session_303",
+          "skill_id": "14ff089f-5134-4dc5-a624-6a20125a6b1f",
+          "student_id": "student_101"
+        }
+      },
+      "RepairOutcomeItem": {
+        "properties": {
+          "repair_outcome_id": {
+            "type": "string",
+            "title": "Repair Outcome Id"
+          },
+          "session_id": {
+            "type": "string",
+            "title": "Session Id"
+          },
+          "canonical_skill_id": {
+            "type": "string",
+            "title": "Canonical Skill Id"
+          },
+          "interaction_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Interaction Id"
+          },
+          "repair_action": {
+            "type": "string",
+            "title": "Repair Action"
+          },
+          "outcome": {
+            "type": "string",
+            "title": "Outcome"
+          },
+          "score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Score"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "repair_outcome_id",
+          "session_id",
+          "canonical_skill_id",
+          "repair_action",
+          "outcome",
+          "created_at"
+        ],
+        "title": "RepairOutcomeItem",
+        "description": "Recorded pedagogical repair outcome."
+      },
+      "RepairOutcomeResponse": {
+        "properties": {
+          "repair_outcome_id": {
+            "type": "string",
+            "title": "Repair Outcome Id"
+          },
+          "student_id": {
+            "type": "string",
+            "title": "Student Id"
+          },
+          "session_id": {
+            "type": "string",
+            "title": "Session Id"
+          },
+          "canonical_skill_id": {
+            "type": "string",
+            "title": "Canonical Skill Id"
+          },
+          "interaction_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Interaction Id"
+          },
+          "repair_action": {
+            "type": "string",
+            "title": "Repair Action"
+          },
+          "outcome": {
+            "type": "string",
+            "title": "Outcome"
+          },
+          "score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Score"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "repair_outcome_id",
+          "student_id",
+          "session_id",
+          "canonical_skill_id",
+          "repair_action",
+          "outcome",
+          "created_at"
+        ],
+        "title": "RepairOutcomeResponse",
+        "description": "Stored repair outcome record returned to client."
+      },
+      "SessionItemResponse": {
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "title": "Session Id"
+          },
+          "external_session_id": {
+            "type": "string",
+            "title": "External Session Id"
+          },
+          "student_id": {
+            "type": "string",
+            "title": "Student Id"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "started_at": {
+            "type": "string",
+            "title": "Started At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "session_id",
+          "external_session_id",
+          "student_id",
+          "status",
+          "started_at"
+        ],
+        "title": "SessionItemResponse",
+        "description": "Session item summary returned to chat sidebar."
+      },
+      "SessionUpdateRequest": {
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Title"
+          }
+        },
+        "type": "object",
+        "required": ["title"],
+        "title": "SessionUpdateRequest"
+      },
+      "SignupRequest": {
+        "properties": {
+          "username": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Username",
+            "description": "Unique username."
+          },
+          "date_of_birth": {
+            "type": "string",
+            "title": "Date Of Birth",
+            "description": "Date of birth in YYYY-MM-DD format."
+          },
+          "password": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Password",
+            "description": "Account password."
+          },
+          "confirm_password": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Confirm Password",
+            "description": "Confirm password matching password."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "username",
+          "date_of_birth",
+          "password",
+          "confirm_password"
+        ],
+        "title": "SignupRequest",
+        "description": "Payload for student self-registration."
+      },
+      "SignupResponse": {
+        "properties": {
+          "username": {
+            "type": "string",
+            "title": "Username"
+          },
+          "student_id": {
+            "type": "string",
+            "title": "Student Id"
+          },
+          "age": {
+            "type": "integer",
+            "title": "Age"
+          },
+          "role": {
+            "type": "string",
+            "title": "Role",
+            "default": "STUDENT"
+          }
+        },
+        "type": "object",
+        "required": ["username", "student_id", "age"],
+        "title": "SignupResponse",
+        "description": "Sanitized registration response."
+      },
+      "StudentContextResponse": {
+        "properties": {
+          "student_id": {
+            "type": "string",
+            "title": "Student Id"
+          },
+          "session_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Session Id"
+          },
+          "skill_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Skill Id"
+          },
+          "short_term_memory": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Short Term Memory"
+          },
+          "long_term_memory": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Long Term Memory"
+          },
+          "concept_memory": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Concept Memory"
+          },
+          "learning_state": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Learning State"
+          },
+          "misconceptions": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Misconceptions"
+          },
+          "recent_interactions": {
+            "items": {
+              "$ref": "#/components/schemas/RecentInteractionItem"
+            },
+            "type": "array",
+            "title": "Recent Interactions"
+          },
+          "recent_repairs": {
+            "items": {
+              "$ref": "#/components/schemas/RepairOutcomeItem"
+            },
+            "type": "array",
+            "title": "Recent Repairs"
+          }
+        },
+        "type": "object",
+        "required": ["student_id"],
+        "title": "StudentContextResponse",
+        "description": "Unified full student memory context response."
+      },
+      "SupportPreferenceResponse": {
+        "properties": {
+          "student_id": {
+            "type": "string",
+            "title": "Student Id"
+          },
+          "skill_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Skill Id"
+          },
+          "preferred_support_style": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Preferred Support Style"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "description": "Evidence status: 'SUPPORTED_BY_HISTORY' or 'INSUFFICIENT_EVIDENCE'"
+          },
+          "evidence_count": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evidence Count"
+          },
+          "success_rate": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Success Rate"
+          },
+          "strategies": {
+            "items": {
+              "$ref": "#/components/schemas/SupportStrategySummary"
+            },
+            "type": "array",
+            "title": "Strategies"
+          }
+        },
+        "type": "object",
+        "required": ["student_id", "status"],
+        "title": "SupportPreferenceResponse",
+        "description": "Estimated support style preference based purely on historical repair efficacy."
+      },
+      "SupportStrategySummary": {
+        "properties": {
+          "repair_action": {
+            "type": "string",
+            "title": "Repair Action"
+          },
+          "observation_count": {
+            "type": "integer",
+            "title": "Observation Count"
+          },
+          "successful_count": {
+            "type": "integer",
+            "title": "Successful Count"
+          },
+          "partial_count": {
+            "type": "integer",
+            "title": "Partial Count",
+            "default": 0
+          },
+          "failed_count": {
+            "type": "integer",
+            "title": "Failed Count",
+            "default": 0
+          },
+          "success_rate": {
+            "type": "number",
+            "title": "Success Rate"
+          },
+          "average_score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Average Score"
+          }
+        },
+        "type": "object",
+        "required": [
+          "repair_action",
+          "observation_count",
+          "successful_count",
+          "success_rate"
+        ],
+        "title": "SupportStrategySummary",
+        "description": "Aggregated empirical evidence for a single repair action strategy."
+      },
+      "TopicClassifyRequest": {
+        "properties": {
+          "question": {
+            "type": "string",
+            "maxLength": 4000,
+            "minLength": 1,
+            "title": "Question",
+            "description": "Natural language math question or conversational student input.",
+            "examples": ["Solve 3x + 5 = 20."]
+          }
+        },
+        "type": "object",
+        "required": ["question"],
+        "title": "TopicClassifyRequest",
+        "description": "Request payload for topic classification."
+      },
+      "TopicClassifyResponse": {
+        "properties": {
+          "topic": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Topic",
+            "description": "Canonical display name of the extracted topic (1 of 111 canonical values), or null if non-math.",
+            "examples": ["Linear Equations"]
+          },
+          "skill_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Skill Id",
+            "description": "Canonical skill identifier code (e.g., SKILL_193), or null if non-math.",
+            "examples": ["SKILL_193"]
+          },
+          "confidence": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Confidence",
+            "description": "Neural cosine similarity confidence score (0.0 to 1.0).",
+            "examples": [0.94]
+          },
+          "is_math": {
+            "type": "boolean",
+            "title": "Is Math",
+            "description": "Whether the input question was classified as a valid mathematical topic (confidence >= threshold).",
+            "examples": [true]
+          },
+          "model_version": {
+            "type": "string",
+            "title": "Model Version",
+            "description": "Version string of the active topic extractor model.",
+            "examples": ["phase16-minilm-ft-v2"]
+          }
+        },
+        "type": "object",
+        "required": ["confidence", "is_math", "model_version"],
+        "title": "TopicClassifyResponse",
+        "description": "Response payload for topic classification."
+      },
+      "TopicContextItem": {
+        "properties": {
+          "skill_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Skill Id"
+          },
+          "skill_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Skill Code"
+          },
+          "canonical_skill_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Canonical Skill Name"
+          },
+          "display_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Display Name"
+          },
+          "confidence": {
+            "type": "number",
+            "title": "Confidence",
+            "default": 0.0
+          },
+          "method": {
+            "type": "string",
+            "title": "Method"
+          },
+          "needs_review": {
+            "type": "boolean",
+            "title": "Needs Review"
+          },
+          "top_candidates": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Top Candidates"
+          },
+          "model_version": {
+            "type": "string",
+            "title": "Model Version",
+            "default": "phase14-minilm-ft-epoch4"
+          }
+        },
+        "type": "object",
+        "required": ["method", "needs_review"],
+        "title": "TopicContextItem",
+        "description": "Extracted canonical topic details and confidence metadata."
+      },
+      "TutorContextResponse": {
+        "properties": {
+          "student_id": {
+            "type": "string",
+            "title": "Student Id"
+          },
+          "session_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Session Id"
+          },
+          "skill_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Skill Id"
+          },
+          "current_learning_state": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Current Learning State"
+          },
+          "evidence_strength": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evidence Strength"
+          },
+          "behavioural_coverage": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Behavioural Coverage"
+          },
+          "recent_accuracy": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Recent Accuracy"
+          },
+          "recent_correct_count": {
+            "type": "integer",
+            "title": "Recent Correct Count",
+            "default": 0
+          },
+          "recent_incorrect_count": {
+            "type": "integer",
+            "title": "Recent Incorrect Count",
+            "default": 0
+          },
+          "attempt_evidence": {
+            "$ref": "#/components/schemas/BehaviouralEvidenceSummary"
+          },
+          "hint_evidence": {
+            "$ref": "#/components/schemas/BehaviouralEvidenceSummary"
+          },
+          "response_time_evidence": {
+            "$ref": "#/components/schemas/BehaviouralEvidenceSummary"
+          },
+          "misconceptions": {
+            "items": {
+              "$ref": "#/components/schemas/TutorMisconceptionSummary"
+            },
+            "type": "array",
+            "title": "Misconceptions"
+          },
+          "recent_interactions": {
+            "items": {
+              "$ref": "#/components/schemas/TutorInteractionSummary"
+            },
+            "type": "array",
+            "title": "Recent Interactions"
+          },
+          "recent_repairs": {
+            "items": {
+              "$ref": "#/components/schemas/TutorRepairSummary"
+            },
+            "type": "array",
+            "title": "Recent Repairs"
+          }
+        },
+        "type": "object",
+        "required": ["student_id"],
+        "title": "TutorContextResponse",
+        "description": "Focused student personalization context tailored specifically for the Tutor agent."
+      },
+      "TutorInteractionSummary": {
+        "properties": {
+          "interaction_id": {
+            "type": "string",
+            "title": "Interaction Id"
+          },
+          "session_id": {
+            "type": "string",
+            "title": "Session Id"
+          },
+          "canonical_skill_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Canonical Skill Id"
+          },
+          "is_correct": {
+            "type": "boolean",
+            "title": "Is Correct"
+          },
+          "attempt_count": {
+            "type": "integer",
+            "title": "Attempt Count"
+          },
+          "hint_count": {
+            "type": "integer",
+            "title": "Hint Count"
+          },
+          "response_time_ms": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Response Time Ms"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "interaction_id",
+          "session_id",
+          "is_correct",
+          "attempt_count",
+          "hint_count",
+          "created_at"
+        ],
+        "title": "TutorInteractionSummary",
+        "description": "Recent interaction evidence item."
+      },
+      "TutorMisconceptionSummary": {
+        "properties": {
+          "misconception_id": {
+            "type": "string",
+            "title": "Misconception Id"
+          },
+          "normalized_error": {
+            "type": "string",
+            "title": "Normalized Error"
+          },
+          "display_error": {
+            "type": "string",
+            "title": "Display Error"
+          },
+          "occurrence_count": {
+            "type": "integer",
+            "title": "Occurrence Count"
+          },
+          "last_seen_at": {
+            "type": "string",
+            "title": "Last Seen At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "misconception_id",
+          "normalized_error",
+          "display_error",
+          "occurrence_count",
+          "last_seen_at"
+        ],
+        "title": "TutorMisconceptionSummary",
+        "description": "Active or repeated misconception context for the tutor."
+      },
+      "TutorRepairSummary": {
+        "properties": {
+          "repair_outcome_id": {
+            "type": "string",
+            "title": "Repair Outcome Id"
+          },
+          "session_id": {
+            "type": "string",
+            "title": "Session Id"
+          },
+          "canonical_skill_id": {
+            "type": "string",
+            "title": "Canonical Skill Id"
+          },
+          "repair_action": {
+            "type": "string",
+            "title": "Repair Action"
+          },
+          "outcome": {
+            "type": "string",
+            "title": "Outcome"
+          },
+          "score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Score"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "repair_outcome_id",
+          "session_id",
+          "canonical_skill_id",
+          "repair_action",
+          "outcome",
+          "created_at"
+        ],
+        "title": "TutorRepairSummary",
+        "description": "Past pedagogical repair history for the tutor to adapt future interventions."
+      },
+      "UIQuestionContextRequest": {
+        "properties": {
+          "student_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Student Id",
+            "description": "Optional student ID; auto-resolved from auth."
+          },
+          "session_id": {
+            "type": "string",
+            "title": "Session Id",
+            "description": "Learning session identifier."
+          },
+          "question": {
+            "type": "string",
+            "title": "Question",
+            "description": "Raw natural language question text."
+          }
+        },
+        "type": "object",
+        "required": ["session_id", "question"],
+        "title": "UIQuestionContextRequest",
+        "description": "Frontend request payload where student_id is optional and auto-populated from authentication."
+      },
+      "UserMeResponse": {
+        "properties": {
+          "username": {
+            "type": "string",
+            "title": "Username"
+          },
+          "role": {
+            "type": "string",
+            "title": "Role"
+          },
+          "student_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Student Id"
+          },
+          "age": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Age"
+          }
+        },
+        "type": "object",
+        "required": ["username", "role"],
+        "title": "UserMeResponse",
+        "description": "Currently authenticated user identity."
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": ["loc", "msg", "type"],
+        "title": "ValidationError"
+      }
+    },
+    "securitySchemes": {
+      "HTTPBearer": {
+        "type": "http",
+        "scheme": "bearer"
+      },
+      "APIKeyHeader": {
+        "type": "apiKey",
+        "description": "Agent-to-agent shared service secret key.",
+        "in": "header",
+        "name": "X-Service-Key"
+      }
+    }
+  }
+}

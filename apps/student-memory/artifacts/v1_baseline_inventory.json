@@ -1,0 +1,438 @@
+{
+    "schema_version":  1,
+    "baseline_id":  "v1-validated-learning-state-memory-core",
+    "captured_date":  "2026-08-17",
+    "project":  "student_personalization_memory",
+    "status":  "complete_and_frozen",
+    "python_version":  "3.11.0",
+    "validation":  {
+                       "full_test_suite_passed":  234,
+                       "api_tests_passed":  61,
+                       "pip_check":  "passed",
+                       "artifact_hashes_verified":  true,
+                       "clean_state_smoke_test":  "passed",
+                       "runtime_database_present":  false,
+                       "port_8001_listening":  false
+                   },
+    "api":  {
+                "base_url":  "http://127.0.0.1:8001",
+                "entry_point":  "src.api.app:app",
+                "endpoints":  [
+                                  "GET /health",
+                                  "POST /memory/update",
+                                  "GET /memory/{student_id}/current",
+                                  "GET /memory/{student_id}/history"
+                              ]
+            },
+    "frozen_model":  {
+                         "model_type":  "DecisionTreeClassifier",
+                         "predictor_count":  12,
+                         "held_out_macro_f1":  0.8717,
+                         "runtime_manifest":  "artifacts/runtime_manifest.json"
+                     },
+    "file_count":  66,
+    "files":  [
+                  {
+                      "path":  ".env.example",
+                      "size_bytes":  89,
+                      "sha256":  "aff6fb2b697ad26233733e9cede1ebca128f9678053ff03f061942370b6eb496",
+                      "category":  "configuration"
+                  },
+                  {
+                      "path":  ".gitignore",
+                      "size_bytes":  448,
+                      "sha256":  "73f0d2d208e3fea465a884e08c999b28103df64a4bb7d06ca166470a4c082018",
+                      "category":  "configuration"
+                  },
+                  {
+                      "path":  ".python-version",
+                      "size_bytes":  7,
+                      "sha256":  "d30f1520c6b70aa635e37a22df030c16723c65eb74814c5e751fe40eeed95b7a",
+                      "category":  "configuration"
+                  },
+                  {
+                      "path":  "artifacts/learning_state_imputer.joblib",
+                      "size_bytes":  1223,
+                      "sha256":  "fc88fd4625a573182f533896107e929782321ac3bb80bda23626beda1ed9de62",
+                      "category":  "artifact"
+                  },
+                  {
+                      "path":  "artifacts/learning_state_model.joblib",
+                      "size_bytes":  143953,
+                      "sha256":  "77a54e638bae449b8878e5957b6eeb007a43137ae1d2f7b6cd613532d7dcf3f9",
+                      "category":  "artifact"
+                  },
+                  {
+                      "path":  "artifacts/learning_state_model_metadata.json",
+                      "size_bytes":  2858,
+                      "sha256":  "2462536e06dbe386fa45412cbe2dcae9f3cd4ce3077d919131ff08ac1822931b",
+                      "category":  "artifact"
+                  },
+                  {
+                      "path":  "artifacts/runtime_manifest.json",
+                      "size_bytes":  3847,
+                      "sha256":  "53c9ef65e65a3bef1a1ab40fe9a33faec2c380d5ef86a8399fae92d4e17b0ccc",
+                      "category":  "artifact"
+                  },
+                  {
+                      "path":  "data/processed/base_interactions.csv",
+                      "size_bytes":  36203120,
+                      "sha256":  "68eb98aafe4b2f38dee8fed709b696e1d57646f5f64f2371a569e96094503366",
+                      "category":  "research_evidence"
+                  },
+                  {
+                      "path":  "data/processed/concept_interactions.csv",
+                      "size_bytes":  46634054,
+                      "sha256":  "145195d1f7253eb5e04d00b3b53e085806ee7b4cad02cbcad19dd96a77be4b27",
+                      "category":  "research_evidence"
+                  },
+                  {
+                      "path":  "data/processed/learning_state_features.csv",
+                      "size_bytes":  55133690,
+                      "sha256":  "d6be6c9665ab194349398d6c5d9a211d6385bc8ed4b1ff6b4c6f9c650968bd8d",
+                      "category":  "research_evidence"
+                  },
+                  {
+                      "path":  "data/processed/learning_state_labelled.csv",
+                      "size_bytes":  79806339,
+                      "sha256":  "d2e7b7d73b37bc461c9c5dbe7f2613864afe50eb7148f7d9efcf70056b4790a6",
+                      "category":  "research_evidence"
+                  },
+                  {
+                      "path":  "data/raw/skill_builder_data.csv",
+                      "size_bytes":  83201940,
+                      "sha256":  "f22e3fb7872c1784ce93b0f9ebabbe0cbcac4f896fd8b4a11667b9715d77dbdc",
+                      "category":  "research_evidence"
+                  },
+                  {
+                      "path":  "database/schema.sql",
+                      "size_bytes":  6908,
+                      "sha256":  "f1e8373c4951d537d329c139283ccd11887486095273ba94b568d445bff2c429",
+                      "category":  "configuration"
+                  },
+                  {
+                      "path":  "docs/PROJECT_DEVELOPMENT_LOG.md",
+                      "size_bytes":  144944,
+                      "sha256":  "8141c38db2fdf8b086f221e80dcc6f5c093c18c82bc9e1e4092cbafddd791881",
+                      "category":  "documentation"
+                  },
+                  {
+                      "path":  "notebooks/01_dataset_exploration.ipynb",
+                      "size_bytes":  536064,
+                      "sha256":  "cb30b1214401d86c323fa7fdc663634833e9012f5e4df575cdecc0a1babfd122",
+                      "category":  "research_evidence"
+                  },
+                  {
+                      "path":  "notebooks/02_data_preprocessing.ipynb",
+                      "size_bytes":  155926,
+                      "sha256":  "dc9373e2b93e256df33498a28a1deec01408bd7e771a9ac2914596b48d0092be",
+                      "category":  "research_evidence"
+                  },
+                  {
+                      "path":  "notebooks/02_model_development.ipynb",
+                      "size_bytes":  47629,
+                      "sha256":  "fb8265da005f49e6222a1b8071c3a84ac9404b889a436b6e9f56a38e8cf6b9d6",
+                      "category":  "research_evidence"
+                  },
+                  {
+                      "path":  "notebooks/03_feature_engineering.ipynb",
+                      "size_bytes":  489367,
+                      "sha256":  "c2f45e66604c9a505ee3da4f8cfe7c85edaaf6201be229def1ede99b0bb4ffc0",
+                      "category":  "research_evidence"
+                  },
+                  {
+                      "path":  "README.md",
+                      "size_bytes":  12898,
+                      "sha256":  "1b3182fbaf9d0b769e9c7f02372e7ce2325fb38ed938dc5d31a559e4b2e0b59e",
+                      "category":  "documentation"
+                  },
+                  {
+                      "path":  "requirements.txt",
+                      "size_bytes":  111,
+                      "sha256":  "63a42ab6f64290fc4b57e0790955e43e556c8d094edc50d17b98d6894d0c4d78",
+                      "category":  "configuration"
+                  },
+                  {
+                      "path":  "requirements-dev.txt",
+                      "size_bytes":  171,
+                      "sha256":  "1e7c2c36d8681b3f08e9995717a6ffb4008a289b3e6be3d358521ec6b5111a65",
+                      "category":  "configuration"
+                  },
+                  {
+                      "path":  "requirements-lock.txt",
+                      "size_bytes":  2532,
+                      "sha256":  "16308153035bcf4ef8eca8b13faa8bd9206e889ca4b3760a62d566f03652c5d7",
+                      "category":  "configuration"
+                  },
+                  {
+                      "path":  "src/__init__.py",
+                      "size_bytes":  0,
+                      "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                      "category":  "source"
+                  },
+                  {
+                      "path":  "src/api/__init__.py",
+                      "size_bytes":  21,
+                      "sha256":  "ff0153c777766c7bc0249a831ca34f5a8cb8f0d7eb01b792f45657c9092a3ef7",
+                      "category":  "source"
+                  },
+                  {
+                      "path":  "src/api/app.py",
+                      "size_bytes":  663,
+                      "sha256":  "2b1391bb485608c6d37b293e6ce05e0f9127ec82faba4502ea3732d4c6531a24",
+                      "category":  "source"
+                  },
+                  {
+                      "path":  "src/api/memory_routes.py",
+                      "size_bytes":  4402,
+                      "sha256":  "35a5e4f1655e1107e65d113f02fe69d594d8d131c4bbacaae0fd97e44d0e9fa7",
+                      "category":  "source"
+                  },
+                  {
+                      "path":  "src/core/__init__.py",
+                      "size_bytes":  0,
+                      "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                      "category":  "source"
+                  },
+                  {
+                      "path":  "src/database/__init__.py",
+                      "size_bytes":  52,
+                      "sha256":  "b3629b9770fdf82e07d2cb4a5d39a55f25be205517e887a88abf3967e4e25800",
+                      "category":  "source"
+                  },
+                  {
+                      "path":  "src/database/assessment_repository.py",
+                      "size_bytes":  5414,
+                      "sha256":  "97e3d76536ade3149e493652ee72f2cdab9b663da260516771d8eebccc37a5b1",
+                      "category":  "source"
+                  },
+                  {
+                      "path":  "src/database/connection.py",
+                      "size_bytes":  7769,
+                      "sha256":  "a0701e4e3dd640b93196a34edb903af2a1513ec1af007383ed07e8e5e53b9e18",
+                      "category":  "source"
+                  },
+                  {
+                      "path":  "src/database/history_repository.py",
+                      "size_bytes":  5047,
+                      "sha256":  "a6efef5f989140f6a764dbd5fa7a7688fc794773329da84560408d10547acc23",
+                      "category":  "source"
+                  },
+                  {
+                      "path":  "src/database/misconception_repository.py",
+                      "size_bytes":  6336,
+                      "sha256":  "e3a1cf67d9021db27cb669d98f0f22352c863aa7c3556e75f7940ffaee07a3ba",
+                      "category":  "source"
+                  },
+                  {
+                      "path":  "src/database/state_repository.py",
+                      "size_bytes":  13207,
+                      "sha256":  "a81880fe4cb5980310d4ab4006187dcee27886dbcf615f09cb4b1aa18ff3c70f",
+                      "category":  "source"
+                  },
+                  {
+                      "path":  "src/features/__init__.py",
+                      "size_bytes":  48,
+                      "sha256":  "93b5465d741f8f1d552b83ea51f6dcf719396296f5df150a51626140a75a9a17",
+                      "category":  "source"
+                  },
+                  {
+                      "path":  "src/features/behavioural_coverage.py",
+                      "size_bytes":  2066,
+                      "sha256":  "b79ff59bbe1383122b2d47d0b421265d7c481754724d61ce3e44fd596f41a6f1",
+                      "category":  "source"
+                  },
+                  {
+                      "path":  "src/features/production_feature_builder.py",
+                      "size_bytes":  4939,
+                      "sha256":  "9fee08109df1468a6000280bf64479583e62dd9b48610759450a9444df6c7f67",
+                      "category":  "source"
+                  },
+                  {
+                      "path":  "src/models/__init__.py",
+                      "size_bytes":  0,
+                      "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                      "category":  "source"
+                  },
+                  {
+                      "path":  "src/models/learning_state_model.py",
+                      "size_bytes":  15497,
+                      "sha256":  "8c7f556727cbb68444cfbb2ad3ec58a4b96d7a64cfa0dac5814559a5f453293e",
+                      "category":  "source"
+                  },
+                  {
+                      "path":  "src/schemas/__init__.py",
+                      "size_bytes":  0,
+                      "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                      "category":  "source"
+                  },
+                  {
+                      "path":  "src/schemas/interaction.py",
+                      "size_bytes":  8271,
+                      "sha256":  "cd455a894ef6e4172aa976af40047d369f467a884c97a83877d38a319125d710",
+                      "category":  "source"
+                  },
+                  {
+                      "path":  "src/services/__init__.py",
+                      "size_bytes":  0,
+                      "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                      "category":  "source"
+                  },
+                  {
+                      "path":  "src/services/memory_update_service.py",
+                      "size_bytes":  5475,
+                      "sha256":  "ea4e4fdead1083025ce2928758edf1e13033c3005139e4ae5831b6b9305d67f1",
+                      "category":  "source"
+                  },
+                  {
+                      "path":  "src/services/student_state_service.py",
+                      "size_bytes":  7360,
+                      "sha256":  "dc41797b1839eb3582e979f27903cfd9c055da7aea7f1088b36da230c2f18a76",
+                      "category":  "source"
+                  },
+                  {
+                      "path":  "src/utils/__init__.py",
+                      "size_bytes":  0,
+                      "sha256":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                      "category":  "source"
+                  },
+                  {
+                      "path":  "src/utils/preprocessing.py",
+                      "size_bytes":  22570,
+                      "sha256":  "15fc65a17ee819682a998ab5df7d570b10a334185c73ae4dfc38cde17844dae2",
+                      "category":  "source"
+                  },
+                  {
+                      "path":  "tests/test_api_app.py",
+                      "size_bytes":  919,
+                      "sha256":  "f2761aa9b9d6417c664d68407915cc94ea51f73c96a71bb86457bbbc038491be",
+                      "category":  "test"
+                  },
+                  {
+                      "path":  "tests/test_api_end_to_end.py",
+                      "size_bytes":  8342,
+                      "sha256":  "57f66b0155611c0a099856e62c45361f9f5bc7ad55fcffd15fe3c163f6c44d5e",
+                      "category":  "test"
+                  },
+                  {
+                      "path":  "tests/test_api_validation_hardening.py",
+                      "size_bytes":  5311,
+                      "sha256":  "4a90c9d03eda1d79ef1414b099aad6616c9e5c09595c475efb0e1f59b28b8dfc",
+                      "category":  "test"
+                  },
+                  {
+                      "path":  "tests/test_assessment_repository.py",
+                      "size_bytes":  7765,
+                      "sha256":  "2b7c8bf82ff5438ed372fad7e1866202822f74740e40ec4104a80ae4bd24d2c4",
+                      "category":  "test"
+                  },
+                  {
+                      "path":  "tests/test_behavioural_coverage.py",
+                      "size_bytes":  6277,
+                      "sha256":  "6a6edcf969eaa102d15af26b24e9ebfa2f64109b42957b2c7af021935ecc3d9b",
+                      "category":  "test"
+                  },
+                  {
+                      "path":  "tests/test_current_memory_api.py",
+                      "size_bytes":  4978,
+                      "sha256":  "16d02a5ef431ca8911701d23696fffb0f90ae34872775a7d87636794609e5502",
+                      "category":  "test"
+                  },
+                  {
+                      "path":  "tests/test_database_initialization.py",
+                      "size_bytes":  5723,
+                      "sha256":  "06a114f262eb90a130fc8e7fb0d454d265dfe8a2fef874a3ce9303367aed2b4f",
+                      "category":  "test"
+                  },
+                  {
+                      "path":  "tests/test_history_prediction_integration.py",
+                      "size_bytes":  8551,
+                      "sha256":  "258a59a34ce798288d892574979de906af2f60798cda5109f9b8d8430157a309",
+                      "category":  "test"
+                  },
+                  {
+                      "path":  "tests/test_history_repository.py",
+                      "size_bytes":  6768,
+                      "sha256":  "5c653d7deccd4fea976a4dc41ca963c46c647a1a86f625f772f5a5a5a263c611",
+                      "category":  "test"
+                  },
+                  {
+                      "path":  "tests/test_learning_state_model.py",
+                      "size_bytes":  5687,
+                      "sha256":  "214b09a86a5540f7babb694ccedad0d24d0c0ef662937cda182329d34867681c",
+                      "category":  "test"
+                  },
+                  {
+                      "path":  "tests/test_memory_update_api.py",
+                      "size_bytes":  6113,
+                      "sha256":  "196824404737f9f7d226d681621b29bdd1c6169f4bc1b5323e5566caa9ca8135",
+                      "category":  "test"
+                  },
+                  {
+                      "path":  "tests/test_memory_update_atomicity.py",
+                      "size_bytes":  3865,
+                      "sha256":  "7f1d5334d2334693d31b0e9ead660d74e925a9636b795bcf13af958d7b707b54",
+                      "category":  "test"
+                  },
+                  {
+                      "path":  "tests/test_memory_update_service.py",
+                      "size_bytes":  10596,
+                      "sha256":  "0ec22deb350a0c85cd6a40131206c316b3a11765f114dcb200de8807e1ffd097",
+                      "category":  "test"
+                  },
+                  {
+                      "path":  "tests/test_misconception_repository.py",
+                      "size_bytes":  6274,
+                      "sha256":  "e0728feb206de583a0c1faed5c333eec9af1b846fac70567ea934c33e3d7b1dc",
+                      "category":  "test"
+                  },
+                  {
+                      "path":  "tests/test_prediction_end_to_end.py",
+                      "size_bytes":  7485,
+                      "sha256":  "c396eda0024305120a3a7ede1f122df29a6e01f87819f8b4c574fd52ec2e51b5",
+                      "category":  "test"
+                  },
+                  {
+                      "path":  "tests/test_production_feature_builder.py",
+                      "size_bytes":  6697,
+                      "sha256":  "208d8cbf9f5f840c007bcbb6db4306e651972cd9380383e1411aae91cf7e7166",
+                      "category":  "test"
+                  },
+                  {
+                      "path":  "tests/test_production_model_compatibility.py",
+                      "size_bytes":  3417,
+                      "sha256":  "7cd7f5fdd0a09edea649959f835a8760884d05747b9c0d458bc57a0bba690f99",
+                      "category":  "test"
+                  },
+                  {
+                      "path":  "tests/test_state_history_api.py",
+                      "size_bytes":  6761,
+                      "sha256":  "ca50931763e38e308b4c0d3fc4970f2c8ef60ec58127133411d6360e977ffdd2",
+                      "category":  "test"
+                  },
+                  {
+                      "path":  "tests/test_state_repository.py",
+                      "size_bytes":  9935,
+                      "sha256":  "9241e9945d96c927fd2fbb32c2606ff5a87e6de44c5cd6cf7a635c8da10db27b",
+                      "category":  "test"
+                  },
+                  {
+                      "path":  "tests/test_state_retrieval.py",
+                      "size_bytes":  7790,
+                      "sha256":  "f8996b60de051c6940234f6eb2e99993e58ca3cececc6b424c6a3abac64a0e78",
+                      "category":  "test"
+                  },
+                  {
+                      "path":  "tests/test_student_state_service.py",
+                      "size_bytes":  3951,
+                      "sha256":  "db0b312272d6379df8471ad0f1223b061beb4349b4b5bc05d85e7f8a40d0559d",
+                      "category":  "test"
+                  }
+              ],
+    "notes":  [
+                  "Runtime database database/student_memory.db is intentionally absent and generated on demand.",
+                  "Cache files and virtual environment contents are excluded.",
+                  "This inventory and its companion Markdown report are generated evidence and are not included in their own checksum set.",
+                  "V2 changes must not overwrite the frozen V1 artifacts or reinterpret V1 test results."
+              ]
+}

@@ -1,0 +1,86 @@
+{
+  "mode": "final",
+  "model": "Qwen/Qwen2.5-VL-7B-Instruct",
+  "family": "qwen-vl",
+  "route": "I+Q",
+  "config_id": "r8_lr5e-05_mse",
+  "seed": 42,
+  "epochs": 8,
+  "provenance": {
+    "timestamp": "2026-07-26T04:12:43.598340",
+    "git_commit": "e7b0623989e528689dd2806d3bf9855515008a82",
+    "split_sha256": "5308b5da23248bab12ef6b0698d2445faba296a9c44abdf9ea0889ce260eca79",
+    "hostname": "internal-cluster-node",
+    "cuda_visible": "1",
+    "versions": {
+      "torch": "2.6.0+cu124",
+      "transformers": "5.12.1",
+      "peft": "0.19.1"
+    },
+    "args": {
+      "model_name": "Qwen/Qwen2.5-VL-7B-Instruct",
+      "input_mode": "image_text",
+      "lora_rs": "8,16,32",
+      "lrs": "2e-4,5e-5",
+      "losses": "mse,huber",
+      "batch_size": 1,
+      "grad_accum": 4,
+      "max_epochs": 10,
+      "patience": 3,
+      "val_frac": 0.2,
+      "seed": 42,
+      "smoke": false,
+      "out_suffix": "_ablMlp",
+      "text_field": "text",
+      "run_mode": "final",
+      "folds": "0,1,2,3,4",
+      "lora_r": 8,
+      "lr": 5e-05,
+      "loss": "mse",
+      "epochs": 8,
+      "lora_scope": "llm",
+      "lora_targets": "attn_mlp",
+      "pool": "all"
+    }
+  },
+  "epoch_history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.5796471990240482
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.42638383482314923
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.28037872710247136
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.19376642349132156
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.13147378976265536
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.09518397397895129
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.0707580380507126
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.05871001306999331
+    }
+  ],
+  "test_metrics": {
+    "rmse": 0.48986424254596395,
+    "mae": 0.38634211903064003,
+    "pearson": 0.8030006822837098,
+    "spearman": 0.7951661155723507
+  }
+}

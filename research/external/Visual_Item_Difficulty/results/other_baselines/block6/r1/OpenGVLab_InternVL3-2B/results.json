@@ -1,0 +1,34 @@
+{
+  "model": "OpenGVLab/InternVL3-2B",
+  "family": "internvl",
+  "input_mode": "image_only",
+  "mode_tag": "R1",
+  "val_method": "stratified_holdout_20pct",
+  "best_config": {
+    "lora_r": 16,
+    "lr": 0.0002,
+    "loss": "mse"
+  },
+  "best_val_rmse": 0.6221927339009438,
+  "search_results": [
+    {
+      "lora_r": 16,
+      "lr": 0.0002,
+      "loss": "mse",
+      "val_metrics": {
+        "rmse": 0.6221927339009438,
+        "mae": 0.4942264595497218,
+        "pearson": 0.6745331427570564,
+        "spearman": 0.6294929458347749
+      },
+      "val_rmse": 0.6221927339009438,
+      "status": "ok"
+    }
+  ],
+  "test_metrics": {
+    "rmse": 0.5154704406745596,
+    "mae": 0.40189020797811037,
+    "pearson": 0.7795382102242607,
+    "spearman": 0.7698787592505116
+  }
+}

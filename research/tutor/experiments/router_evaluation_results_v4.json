@@ -1,0 +1,814 @@
+{
+  "experiment": "AdaptMath GenAI Router targeted evaluation",
+  "timestamp_utc": "2026-08-22T07:05:46.340111+00:00",
+  "model": "openai/gpt-oss-120b",
+  "methodology": {
+    "description": "Controlled behavioral evaluation of the GenAI workflow Router.",
+    "gold_route_labels_used": false,
+    "why_no_accuracy_metric": "The three AdaptMath workflows do not have independently established ground-truth route labels. Assigning labels ourselves would create circular evidence.",
+    "evaluated_properties": [
+      "structured route validity",
+      "repeated-run stability",
+      "problem-complexity sensitivity under controlled learner context",
+      "learner-context sensitivity while holding the mathematical problem and complexity score constant",
+      "latency"
+    ],
+    "workflow_depth_definition": {
+      "direct_tutor": 1,
+      "planned_tutor": 2,
+      "planned_tutor_evaluate": 3
+    },
+    "workflow_depth_note": "Workflow depth is used only for directional sensitivity analysis. It does not imply that a deeper route is universally more correct.",
+    "limitations": [
+      "This is a small targeted behavioral benchmark rather than a population-level routing benchmark.",
+      "No independent expert-labelled optimal workflow dataset currently exists for these custom workflows.",
+      "Hosted-model behavior may vary across provider/model versions.",
+      "Router reasons are preserved for manual qualitative grounding review."
+    ]
+  },
+  "summary": {
+    "number_of_cases": 12,
+    "repeats_per_case": 3,
+    "total_router_calls": 36,
+    "call_success_rate": 1.0,
+    "valid_route_rate": 1.0,
+    "mean_repeat_stability": 1.0,
+    "unanimous_case_rate": 1.0,
+    "unique_modal_route_case_rate": 1.0,
+    "route_distribution": {
+      "direct_tutor": 21,
+      "planned_tutor_evaluate": 15
+    },
+    "mean_latency_seconds": 9.890281319466238,
+    "median_latency_seconds": 14.38108339998871,
+    "maximum_latency_seconds": 16.72670860006474
+  },
+  "problem_sensitivity": {
+    "number_of_problem_cases": 6,
+    "usable_unique_modal_cases": 6,
+    "distinct_modal_routes": [
+      "direct_tutor",
+      "planned_tutor_evaluate"
+    ],
+    "number_of_distinct_modal_routes": 2,
+    "complexity_score_to_workflow_depth_spearman": 0.8280786712108251,
+    "pairwise_nondecreasing_depth_rate": 1.0,
+    "pairwise_strict_increase_rate": 0.5333333333333333,
+    "ordered_by_complexity_score": [
+      {
+        "case_id": "problem_arithmetic",
+        "complexity_score": 0.035709478123344796,
+        "modal_route": "direct_tutor",
+        "workflow_depth": 1
+      },
+      {
+        "case_id": "problem_fraction",
+        "complexity_score": 0.03575107269815923,
+        "modal_route": "direct_tutor",
+        "workflow_depth": 1
+      },
+      {
+        "case_id": "problem_compound_interest",
+        "complexity_score": 0.24002885163557194,
+        "modal_route": "direct_tutor",
+        "workflow_depth": 1
+      },
+      {
+        "case_id": "problem_linear_equation",
+        "complexity_score": 0.2654488171963191,
+        "modal_route": "direct_tutor",
+        "workflow_depth": 1
+      },
+      {
+        "case_id": "problem_geometry",
+        "complexity_score": 0.39340180082650994,
+        "modal_route": "planned_tutor_evaluate",
+        "workflow_depth": 3
+      },
+      {
+        "case_id": "problem_complex_polynomial",
+        "complexity_score": 0.7840889896408233,
+        "modal_route": "planned_tutor_evaluate",
+        "workflow_depth": 3
+      }
+    ],
+    "interpretation_note": "These are sensitivity metrics, not routing accuracy. No gold workflow labels were assigned."
+  },
+  "learner_context_summary": {
+    "number_of_pairs": 3,
+    "comparable_pairs": 3,
+    "route_change_rate": 1.0,
+    "struggling_more_support_rate": 1.0,
+    "struggling_same_or_more_support_rate": 1.0,
+    "interpretation_note": "These controlled pairs measure whether learner evidence affects workflow depth. They are directional behavioral tests, not gold-label routing accuracy."
+  },
+  "learner_context_pairs": [
+    {
+      "strong_case": "linear_strong",
+      "struggling_case": "linear_struggling",
+      "same_question": true,
+      "same_complexity_score": true,
+      "strong_modal_route": "direct_tutor",
+      "struggling_modal_route": "planned_tutor_evaluate",
+      "strong_workflow_depth": 1,
+      "struggling_workflow_depth": 3,
+      "workflow_depth_difference": 2,
+      "route_changed": true,
+      "struggling_received_more_support": true,
+      "struggling_received_same_or_more_support": true,
+      "comparable": true
+    },
+    {
+      "strong_case": "fraction_strong",
+      "struggling_case": "fraction_struggling",
+      "same_question": true,
+      "same_complexity_score": true,
+      "strong_modal_route": "direct_tutor",
+      "struggling_modal_route": "planned_tutor_evaluate",
+      "strong_workflow_depth": 1,
+      "struggling_workflow_depth": 3,
+      "workflow_depth_difference": 2,
+      "route_changed": true,
+      "struggling_received_more_support": true,
+      "struggling_received_same_or_more_support": true,
+      "comparable": true
+    },
+    {
+      "strong_case": "percentage_strong",
+      "struggling_case": "percentage_struggling",
+      "same_question": true,
+      "same_complexity_score": true,
+      "strong_modal_route": "direct_tutor",
+      "struggling_modal_route": "planned_tutor_evaluate",
+      "strong_workflow_depth": 1,
+      "struggling_workflow_depth": 3,
+      "workflow_depth_difference": 2,
+      "route_changed": true,
+      "struggling_received_more_support": true,
+      "struggling_received_same_or_more_support": true,
+      "comparable": true
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "problem_arithmetic",
+      "group": "problem_sensitivity",
+      "learner_condition": null,
+      "question": "What is 7 + 5?",
+      "age": 16,
+      "topic": "arithmetic",
+      "subtopic": "addition",
+      "complexity_score": 0.035709478123344796,
+      "runs": [
+        {
+          "repeat": 1,
+          "route": "direct_tutor",
+          "reason": "The problem is a basic addition (7 + 5) with a very low complexity score and no supplied learner history or evidence of difficulty. Explicit pedagogical planning would not add value, and a follow‑up assessment is unnecessary for such a straightforward task. direct_tutor is therefore appropriate.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 1.2047934998990968
+        },
+        {
+          "repeat": 2,
+          "route": "direct_tutor",
+          "reason": "The task is a basic addition problem (7 + 5) with a very low complexity score and no evidence of learner difficulty or misconceptions. Planning or post‑tutoring assessment would not add meaningful value, so a direct tutoring interaction is sufficient.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 1.0118759999750182
+        },
+        {
+          "repeat": 3,
+          "route": "direct_tutor",
+          "reason": "The task is a basic addition problem (7 + 5) with a very low complexity score and no evidence of learner difficulty; there is no learner history indicating a need for extra scaffolding or assessment. Planning and post‑tutoring verification would add little value, so direct tutoring is appropriate.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 0.9337128000333905
+        }
+      ],
+      "routes": [
+        "direct_tutor",
+        "direct_tutor",
+        "direct_tutor"
+      ],
+      "reasons": [
+        "The problem is a basic addition (7 + 5) with a very low complexity score and no supplied learner history or evidence of difficulty. Explicit pedagogical planning would not add value, and a follow‑up assessment is unnecessary for such a straightforward task. direct_tutor is therefore appropriate.",
+        "The task is a basic addition problem (7 + 5) with a very low complexity score and no evidence of learner difficulty or misconceptions. Planning or post‑tutoring assessment would not add meaningful value, so a direct tutoring interaction is sufficient.",
+        "The task is a basic addition problem (7 + 5) with a very low complexity score and no evidence of learner difficulty; there is no learner history indicating a need for extra scaffolding or assessment. Planning and post‑tutoring verification would add little value, so direct tutoring is appropriate."
+      ],
+      "modal_route": "direct_tutor",
+      "tied_modal_routes": [
+        "direct_tutor"
+      ],
+      "has_unique_modal_route": true,
+      "modal_workflow_depth": 1,
+      "valid_output_rate": 1.0,
+      "repeat_stability": 1.0,
+      "unanimous": true
+    },
+    {
+      "case_id": "problem_fraction",
+      "group": "problem_sensitivity",
+      "learner_condition": null,
+      "question": "What is 3/4 + 1/2?",
+      "age": 16,
+      "topic": "fractions",
+      "subtopic": "fraction addition",
+      "complexity_score": 0.03575107269815923,
+      "runs": [
+        {
+          "repeat": 1,
+          "route": "direct_tutor",
+          "reason": "The problem is a straightforward single-step fraction addition with a very low complexity score, requiring no explicit pedagogical sequencing. No learner history is available, but the task itself does not merit additional planning or a follow‑up assessment to gain meaningful insight.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 1.1644494000356644
+        },
+        {
+          "repeat": 2,
+          "route": "direct_tutor",
+          "reason": "The problem is a single-step fraction addition with a very low complexity score, requiring only a straightforward explanation. No learner history or prior errors are available, and there is no clear pedagogical benefit from planning or from a post‑tutoring assessment for such a basic task.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 9.26953729998786
+        },
+        {
+          "repeat": 3,
+          "route": "direct_tutor",
+          "reason": "The problem is a single-step fraction addition with a very low complexity score, requiring only a straightforward explanation. No learner history or prior errors are available, providing no evidence of difficulty that would necessitate planning or assessment. A post‑tutoring check would add little value for such a simple task. Therefore, direct_tutor is appropriate.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 3.3018595000030473
+        }
+      ],
+      "routes": [
+        "direct_tutor",
+        "direct_tutor",
+        "direct_tutor"
+      ],
+      "reasons": [
+        "The problem is a straightforward single-step fraction addition with a very low complexity score, requiring no explicit pedagogical sequencing. No learner history is available, but the task itself does not merit additional planning or a follow‑up assessment to gain meaningful insight.",
+        "The problem is a single-step fraction addition with a very low complexity score, requiring only a straightforward explanation. No learner history or prior errors are available, and there is no clear pedagogical benefit from planning or from a post‑tutoring assessment for such a basic task.",
+        "The problem is a single-step fraction addition with a very low complexity score, requiring only a straightforward explanation. No learner history or prior errors are available, providing no evidence of difficulty that would necessitate planning or assessment. A post‑tutoring check would add little value for such a simple task. Therefore, direct_tutor is appropriate."
+      ],
+      "modal_route": "direct_tutor",
+      "tied_modal_routes": [
+        "direct_tutor"
+      ],
+      "has_unique_modal_route": true,
+      "modal_workflow_depth": 1,
+      "valid_output_rate": 1.0,
+      "repeat_stability": 1.0,
+      "unanimous": true
+    },
+    {
+      "case_id": "problem_linear_equation",
+      "group": "problem_sensitivity",
+      "learner_condition": null,
+      "question": "Solve 3x + 5 = 20.",
+      "age": 16,
+      "topic": "algebra",
+      "subtopic": "linear equations",
+      "complexity_score": 0.2654488171963191,
+      "runs": [
+        {
+          "repeat": 1,
+          "route": "direct_tutor",
+          "reason": "The problem is a single-step linear equation with modest complexity and no known learner difficulties; there is no evidence that explicit planning or a follow‑up assessment would add significant value, so a direct tutoring interaction is appropriate.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 15.325779999955557
+        },
+        {
+          "repeat": 2,
+          "route": "direct_tutor",
+          "reason": "The problem is a single-step linear equation with low inherent complexity; no learner history indicates difficulty, and a post‑tutoring check would add little new evidence. Direct tutoring suffices.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 15.327692799968645
+        },
+        {
+          "repeat": 3,
+          "route": "direct_tutor",
+          "reason": "The problem is a single-step linear equation (3x+5=20) with modest complexity; it can be taught effectively in one coherent interaction. Learner history is unavailable, but there is no evidence of prior difficulty or misconceptions. Adding a planning stage or a post‑tutoring assessment would not provide clear additional pedagogical benefit for this straightforward task.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 14.299542799941264
+        }
+      ],
+      "routes": [
+        "direct_tutor",
+        "direct_tutor",
+        "direct_tutor"
+      ],
+      "reasons": [
+        "The problem is a single-step linear equation with modest complexity and no known learner difficulties; there is no evidence that explicit planning or a follow‑up assessment would add significant value, so a direct tutoring interaction is appropriate.",
+        "The problem is a single-step linear equation with low inherent complexity; no learner history indicates difficulty, and a post‑tutoring check would add little new evidence. Direct tutoring suffices.",
+        "The problem is a single-step linear equation (3x+5=20) with modest complexity; it can be taught effectively in one coherent interaction. Learner history is unavailable, but there is no evidence of prior difficulty or misconceptions. Adding a planning stage or a post‑tutoring assessment would not provide clear additional pedagogical benefit for this straightforward task."
+      ],
+      "modal_route": "direct_tutor",
+      "tied_modal_routes": [
+        "direct_tutor"
+      ],
+      "has_unique_modal_route": true,
+      "modal_workflow_depth": 1,
+      "valid_output_rate": 1.0,
+      "repeat_stability": 1.0,
+      "unanimous": true
+    },
+    {
+      "case_id": "problem_geometry",
+      "group": "problem_sensitivity",
+      "learner_condition": null,
+      "question": "An isosceles triangle has equal sides of 5 cm and a base of 6 cm. Find its area.",
+      "age": 16,
+      "topic": "geometry",
+      "subtopic": "triangle area",
+      "complexity_score": 0.39340180082650994,
+      "runs": [
+        {
+          "repeat": 1,
+          "route": "planned_tutor_evaluate",
+          "reason": "The problem requires a multi-step geometric reasoning (half-base, Pythagorean theorem, area formula) and the learner's prior knowledge is unknown. Planning can structure the sequence and anticipate misconceptions, and a follow‑up assessment would give meaningful evidence of whether the learner has mastered each step.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 15.54866700002458
+        },
+        {
+          "repeat": 2,
+          "route": "planned_tutor_evaluate",
+          "reason": "The problem requires a multi-step geometric solution (finding the height via the Pythagorean theorem then computing area), so a pedagogical plan would help organize the concepts and sequence. Because the reasoning involves several linked steps, a short follow‑up assessment could reveal hidden misconceptions (e.g., about halving the base or applying the theorem), providing valuable evidence of the learner’s understanding. Learner history is unavailable, so we cannot assume mastery. Therefore, a planned tutoring session with post‑tutoring verification is appropriate.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 16.72670860006474
+        },
+        {
+          "repeat": 3,
+          "route": "planned_tutor_evaluate",
+          "reason": "The problem requires a multi-step geometric reasoning (splitting the isosceles triangle, applying the Pythagorean theorem, then using the area formula), which benefits from explicit pedagogical sequencing. Learner history is unavailable, so we cannot assume mastery. Because the solution involves several linked transformations, a short post‑tutoring assessment would provide valuable evidence of the learner’s independent understanding and reveal any hidden misconceptions. Therefore, a planned tutoring flow with subsequent evaluation is appropriate.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 1.6881427000043914
+        }
+      ],
+      "routes": [
+        "planned_tutor_evaluate",
+        "planned_tutor_evaluate",
+        "planned_tutor_evaluate"
+      ],
+      "reasons": [
+        "The problem requires a multi-step geometric reasoning (half-base, Pythagorean theorem, area formula) and the learner's prior knowledge is unknown. Planning can structure the sequence and anticipate misconceptions, and a follow‑up assessment would give meaningful evidence of whether the learner has mastered each step.",
+        "The problem requires a multi-step geometric solution (finding the height via the Pythagorean theorem then computing area), so a pedagogical plan would help organize the concepts and sequence. Because the reasoning involves several linked steps, a short follow‑up assessment could reveal hidden misconceptions (e.g., about halving the base or applying the theorem), providing valuable evidence of the learner’s understanding. Learner history is unavailable, so we cannot assume mastery. Therefore, a planned tutoring session with post‑tutoring verification is appropriate.",
+        "The problem requires a multi-step geometric reasoning (splitting the isosceles triangle, applying the Pythagorean theorem, then using the area formula), which benefits from explicit pedagogical sequencing. Learner history is unavailable, so we cannot assume mastery. Because the solution involves several linked transformations, a short post‑tutoring assessment would provide valuable evidence of the learner’s independent understanding and reveal any hidden misconceptions. Therefore, a planned tutoring flow with subsequent evaluation is appropriate."
+      ],
+      "modal_route": "planned_tutor_evaluate",
+      "tied_modal_routes": [
+        "planned_tutor_evaluate"
+      ],
+      "has_unique_modal_route": true,
+      "modal_workflow_depth": 3,
+      "valid_output_rate": 1.0,
+      "repeat_stability": 1.0,
+      "unanimous": true
+    },
+    {
+      "case_id": "problem_compound_interest",
+      "group": "problem_sensitivity",
+      "learner_condition": null,
+      "question": "A bank offers 3.2% compound interest per year. Sarah invests GBP 4,500 for 6 years. Calculate the total interest earned.",
+      "age": 16,
+      "topic": "percentage",
+      "subtopic": "compound interest",
+      "complexity_score": 0.24002885163557194,
+      "runs": [
+        {
+          "repeat": 1,
+          "route": "direct_tutor",
+          "reason": "The problem is a straightforward compound‑interest calculation requiring a single formula application; its low complexity and simple step sequence do not demand explicit pedagogical planning. Learner history is unavailable, providing no evidence that additional assessment would be essential. Consequently, a direct tutoring interaction is sufficient.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 4.786515500047244
+        },
+        {
+          "repeat": 2,
+          "route": "direct_tutor",
+          "reason": "The compound‑interest calculation is a single‑formula numeric task with modest conceptual demand and a low complexity score. No learner history indicates difficulty, and the learner’s age provides no evidence of a need for extra support. A post‑tutoring assessment would not yield significant additional insight for such a straightforward problem. Therefore direct tutoring is sufficient.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 15.785207600099966
+        },
+        {
+          "repeat": 3,
+          "route": "direct_tutor",
+          "reason": "The problem is a straightforward compound‑interest calculation requiring a single formula application; its low complexity and lack of multi‑step reasoning mean a planner would add little. Learner history is unavailable, providing no evidence of prior difficulty, and a post‑tutoring assessment would not yield significant additional insight for such a simple task. Hence direct_tutor is appropriate.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 13.528437500004657
+        }
+      ],
+      "routes": [
+        "direct_tutor",
+        "direct_tutor",
+        "direct_tutor"
+      ],
+      "reasons": [
+        "The problem is a straightforward compound‑interest calculation requiring a single formula application; its low complexity and simple step sequence do not demand explicit pedagogical planning. Learner history is unavailable, providing no evidence that additional assessment would be essential. Consequently, a direct tutoring interaction is sufficient.",
+        "The compound‑interest calculation is a single‑formula numeric task with modest conceptual demand and a low complexity score. No learner history indicates difficulty, and the learner’s age provides no evidence of a need for extra support. A post‑tutoring assessment would not yield significant additional insight for such a straightforward problem. Therefore direct tutoring is sufficient.",
+        "The problem is a straightforward compound‑interest calculation requiring a single formula application; its low complexity and lack of multi‑step reasoning mean a planner would add little. Learner history is unavailable, providing no evidence of prior difficulty, and a post‑tutoring assessment would not yield significant additional insight for such a simple task. Hence direct_tutor is appropriate."
+      ],
+      "modal_route": "direct_tutor",
+      "tied_modal_routes": [
+        "direct_tutor"
+      ],
+      "has_unique_modal_route": true,
+      "modal_workflow_depth": 1,
+      "valid_output_rate": 1.0,
+      "repeat_stability": 1.0,
+      "unanimous": true
+    },
+    {
+      "case_id": "problem_complex_polynomial",
+      "group": "problem_sensitivity",
+      "learner_condition": null,
+      "question": "Let p(x) and q(x) be two cubic polynomials such that p(0) = -24, q(0) = 30, and p(q(x)) = q(p(x)) for all real x. Find (p(3), q(6)).",
+      "age": 16,
+      "topic": "algebra",
+      "subtopic": "polynomials",
+      "complexity_score": 0.7840889896408233,
+      "runs": [
+        {
+          "repeat": 1,
+          "route": "planned_tutor_evaluate",
+          "reason": "The problem involves commuting cubic polynomials, requiring multi‑step algebraic reasoning (degree analysis, coefficient matching, using given values) that benefits from explicit pedagogical sequencing; the learner’s prior history is unavailable, so we cannot assume readiness for a direct explanation; after tutoring, a short assessment would meaningfully reveal whether the learner has internalized the composition concepts and can reproduce the reasoning, making post‑tutoring verification valuable. Hence, a planned tutor with evaluation is appropriate.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 14.678293699980713
+        },
+        {
+          "repeat": 2,
+          "route": "planned_tutor_evaluate",
+          "reason": "The problem involves a non‑trivial functional equation with cubic polynomials, requiring coefficient comparison, algebraic manipulation, and careful sequencing of multiple reasoning steps; the high complexity score reinforces that explicit pedagogical structuring would aid clarity. Learner history is unavailable, so no evidence of prior mastery or difficulty can be used. Because the solution hinges on several linked transformations, a short post‑tutoring assessment would meaningfully reveal whether the learner has internalized the composition and coefficient‑matching concepts, making verification valuable. Hence the planned_tutor_evaluate workflow is appropriate.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 15.862824899959378
+        },
+        {
+          "repeat": 3,
+          "route": "planned_tutor_evaluate",
+          "reason": "The problem involves commuting cubic polynomials, requiring multi-step algebraic reasoning (degree analysis, coefficient constraints, and use of given values) that would benefit from explicit pedagogical sequencing. Learner history is unavailable, so we cannot assume the student can handle the reasoning without guidance. Additionally, because the solution hinges on several linked deductions, a short post‑tutoring assessment would provide valuable evidence of the learner’s grasp and allow remediation if misconceptions remain. Hence a planned tutoring session followed by evaluation is appropriate.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 16.535749100032263
+        }
+      ],
+      "routes": [
+        "planned_tutor_evaluate",
+        "planned_tutor_evaluate",
+        "planned_tutor_evaluate"
+      ],
+      "reasons": [
+        "The problem involves commuting cubic polynomials, requiring multi‑step algebraic reasoning (degree analysis, coefficient matching, using given values) that benefits from explicit pedagogical sequencing; the learner’s prior history is unavailable, so we cannot assume readiness for a direct explanation; after tutoring, a short assessment would meaningfully reveal whether the learner has internalized the composition concepts and can reproduce the reasoning, making post‑tutoring verification valuable. Hence, a planned tutor with evaluation is appropriate.",
+        "The problem involves a non‑trivial functional equation with cubic polynomials, requiring coefficient comparison, algebraic manipulation, and careful sequencing of multiple reasoning steps; the high complexity score reinforces that explicit pedagogical structuring would aid clarity. Learner history is unavailable, so no evidence of prior mastery or difficulty can be used. Because the solution hinges on several linked transformations, a short post‑tutoring assessment would meaningfully reveal whether the learner has internalized the composition and coefficient‑matching concepts, making verification valuable. Hence the planned_tutor_evaluate workflow is appropriate.",
+        "The problem involves commuting cubic polynomials, requiring multi-step algebraic reasoning (degree analysis, coefficient constraints, and use of given values) that would benefit from explicit pedagogical sequencing. Learner history is unavailable, so we cannot assume the student can handle the reasoning without guidance. Additionally, because the solution hinges on several linked deductions, a short post‑tutoring assessment would provide valuable evidence of the learner’s grasp and allow remediation if misconceptions remain. Hence a planned tutoring session followed by evaluation is appropriate."
+      ],
+      "modal_route": "planned_tutor_evaluate",
+      "tied_modal_routes": [
+        "planned_tutor_evaluate"
+      ],
+      "has_unique_modal_route": true,
+      "modal_workflow_depth": 3,
+      "valid_output_rate": 1.0,
+      "repeat_stability": 1.0,
+      "unanimous": true
+    },
+    {
+      "case_id": "linear_strong",
+      "group": "learner_context_linear",
+      "learner_condition": "strong",
+      "question": "Solve 3x + 5 = 20.",
+      "age": 15,
+      "topic": "algebra",
+      "subtopic": "linear equations",
+      "complexity_score": 0.2654488171963191,
+      "runs": [
+        {
+          "repeat": 1,
+          "route": "direct_tutor",
+          "reason": "The problem is a single-step linear equation with a low complexity score and no inherent need for extensive sequencing. The learner, age 15, has a record of successfully solving similar equations without difficulty. Given this evidence, a planner would add little value and a post‑tutoring assessment is unlikely to provide meaningful new insight. direct_tutor is therefore appropriate.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 14.48821790004149
+        },
+        {
+          "repeat": 2,
+          "route": "direct_tutor",
+          "reason": "The problem is a single-step linear equation with a low complexity score and no inherent need for extensive sequencing. The learner, age 15, has a record of successfully solving similar equations without difficulty. Given this evidence, a planner would add little value and a post‑tutoring assessment is unlikely to provide meaningful new insight. direct_tutor is therefore appropriate.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 15.471736100036651
+        },
+        {
+          "repeat": 3,
+          "route": "direct_tutor",
+          "reason": "The problem is a single-step linear equation with a low complexity score and no inherent need for extensive sequencing. The learner, age 15, has a record of successfully solving similar equations without difficulty. Given this evidence, a planner would add little value and a post‑tutoring assessment is unlikely to provide meaningful new insight. direct_tutor is therefore appropriate.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 16.636844500084408
+        }
+      ],
+      "routes": [
+        "direct_tutor",
+        "direct_tutor",
+        "direct_tutor"
+      ],
+      "reasons": [
+        "The problem is a single-step linear equation with a low complexity score and no inherent need for extensive sequencing. The learner, age 15, has a record of successfully solving similar equations without difficulty. Given this evidence, a planner would add little value and a post‑tutoring assessment is unlikely to provide meaningful new insight. direct_tutor is therefore appropriate.",
+        "The problem is a single-step linear equation with a low complexity score and no inherent need for extensive sequencing. The learner, age 15, has a record of successfully solving similar equations without difficulty. Given this evidence, a planner would add little value and a post‑tutoring assessment is unlikely to provide meaningful new insight. direct_tutor is therefore appropriate.",
+        "The problem is a single-step linear equation with a low complexity score and no inherent need for extensive sequencing. The learner, age 15, has a record of successfully solving similar equations without difficulty. Given this evidence, a planner would add little value and a post‑tutoring assessment is unlikely to provide meaningful new insight. direct_tutor is therefore appropriate."
+      ],
+      "modal_route": "direct_tutor",
+      "tied_modal_routes": [
+        "direct_tutor"
+      ],
+      "has_unique_modal_route": true,
+      "modal_workflow_depth": 1,
+      "valid_output_rate": 1.0,
+      "repeat_stability": 1.0,
+      "unanimous": true
+    },
+    {
+      "case_id": "linear_struggling",
+      "group": "learner_context_linear",
+      "learner_condition": "struggling",
+      "question": "Solve 3x + 5 = 20.",
+      "age": 15,
+      "topic": "algebra",
+      "subtopic": "linear equations",
+      "complexity_score": 0.2654488171963191,
+      "runs": [
+        {
+          "repeat": 1,
+          "route": "planned_tutor_evaluate",
+          "reason": "Problem is a simple linear equation (low conceptual demand). Learner history shows repeated difficulty with similar equations and specific misconceptions about inverse operations. Post‑tutoring assessment would give meaningful evidence of whether the learner has mastered isolating the variable, enabling remediation if needed. Therefore a planner to structure targeted instruction plus an evaluator to check understanding is appropriate.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 1.3294841001043096
+        },
+        {
+          "repeat": 2,
+          "route": "planned_tutor_evaluate",
+          "reason": "The problem is a straightforward linear equation with low inherent complexity, so a planner is not required for the math itself. However, the learner has a documented history of difficulty with similar equations, repeated errors in inverse operations, and prior need for re‑explanation. Given this evidence, explicit pedagogical planning can target those misconceptions, and a follow‑up assessment would provide valuable confirmation of whether the learner has truly mastered the isolation process. Therefore, a planned tutor with post‑tutoring evaluation is appropriate.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 14.770170700037852
+        },
+        {
+          "repeat": 3,
+          "route": "planned_tutor_evaluate",
+          "reason": "Problem is a simple linear equation (single‑step isolation) with a low complexity score, so the math itself does not demand extensive planning. However, the learner history shows repeated difficulty with linear equations, specific errors in inverse operations, and prior need for re‑explanation. This indicates that a targeted pedagogical plan would be beneficial, and a follow‑up assessment is valuable to confirm the learner has mastered the isolation process and to detect any lingering misconceptions.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 16.028919300064445
+        }
+      ],
+      "routes": [
+        "planned_tutor_evaluate",
+        "planned_tutor_evaluate",
+        "planned_tutor_evaluate"
+      ],
+      "reasons": [
+        "Problem is a simple linear equation (low conceptual demand). Learner history shows repeated difficulty with similar equations and specific misconceptions about inverse operations. Post‑tutoring assessment would give meaningful evidence of whether the learner has mastered isolating the variable, enabling remediation if needed. Therefore a planner to structure targeted instruction plus an evaluator to check understanding is appropriate.",
+        "The problem is a straightforward linear equation with low inherent complexity, so a planner is not required for the math itself. However, the learner has a documented history of difficulty with similar equations, repeated errors in inverse operations, and prior need for re‑explanation. Given this evidence, explicit pedagogical planning can target those misconceptions, and a follow‑up assessment would provide valuable confirmation of whether the learner has truly mastered the isolation process. Therefore, a planned tutor with post‑tutoring evaluation is appropriate.",
+        "Problem is a simple linear equation (single‑step isolation) with a low complexity score, so the math itself does not demand extensive planning. However, the learner history shows repeated difficulty with linear equations, specific errors in inverse operations, and prior need for re‑explanation. This indicates that a targeted pedagogical plan would be beneficial, and a follow‑up assessment is valuable to confirm the learner has mastered the isolation process and to detect any lingering misconceptions."
+      ],
+      "modal_route": "planned_tutor_evaluate",
+      "tied_modal_routes": [
+        "planned_tutor_evaluate"
+      ],
+      "has_unique_modal_route": true,
+      "modal_workflow_depth": 3,
+      "valid_output_rate": 1.0,
+      "repeat_stability": 1.0,
+      "unanimous": true
+    },
+    {
+      "case_id": "fraction_strong",
+      "group": "learner_context_fraction",
+      "learner_condition": "strong",
+      "question": "What is 3/4 + 1/2?",
+      "age": 13,
+      "topic": "fractions",
+      "subtopic": "fraction addition",
+      "complexity_score": 0.03575107269815923,
+      "runs": [
+        {
+          "repeat": 1,
+          "route": "direct_tutor",
+          "reason": "The problem is a basic fraction addition with a very low complexity score and requires only a single straightforward step. The learner’s history shows consistent successful performance on similar tasks, and no prior errors are recorded. Consequently, a planner would add little value, and a post‑tutoring assessment is unlikely to provide meaningful new evidence. Direct tutoring is sufficient.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 16.309842300019227
+        },
+        {
+          "repeat": 2,
+          "route": "direct_tutor",
+          "reason": "The problem is a basic fraction addition with a very low complexity score and no hidden multi-step reasoning. The learner’s history shows consistent success with similar tasks and no recorded errors. Consequently, explicit planning and post‑tutoring assessment would add little value, so direct_tutor is appropriate.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 1.0947228000732139
+        },
+        {
+          "repeat": 3,
+          "route": "direct_tutor",
+          "reason": "The problem is a basic fraction addition with a very low complexity score, and the learner has a history of successfully adding fractions with unlike denominators. No prior errors are noted. Because the task is straightforward and the learner has demonstrated competence, a planner would add little value and a post‑tutoring assessment would not provide meaningful new evidence.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 14.462624000036158
+        }
+      ],
+      "routes": [
+        "direct_tutor",
+        "direct_tutor",
+        "direct_tutor"
+      ],
+      "reasons": [
+        "The problem is a basic fraction addition with a very low complexity score and requires only a single straightforward step. The learner’s history shows consistent successful performance on similar tasks, and no prior errors are recorded. Consequently, a planner would add little value, and a post‑tutoring assessment is unlikely to provide meaningful new evidence. Direct tutoring is sufficient.",
+        "The problem is a basic fraction addition with a very low complexity score and no hidden multi-step reasoning. The learner’s history shows consistent success with similar tasks and no recorded errors. Consequently, explicit planning and post‑tutoring assessment would add little value, so direct_tutor is appropriate.",
+        "The problem is a basic fraction addition with a very low complexity score, and the learner has a history of successfully adding fractions with unlike denominators. No prior errors are noted. Because the task is straightforward and the learner has demonstrated competence, a planner would add little value and a post‑tutoring assessment would not provide meaningful new evidence."
+      ],
+      "modal_route": "direct_tutor",
+      "tied_modal_routes": [
+        "direct_tutor"
+      ],
+      "has_unique_modal_route": true,
+      "modal_workflow_depth": 1,
+      "valid_output_rate": 1.0,
+      "repeat_stability": 1.0,
+      "unanimous": true
+    },
+    {
+      "case_id": "fraction_struggling",
+      "group": "learner_context_fraction",
+      "learner_condition": "struggling",
+      "question": "What is 3/4 + 1/2?",
+      "age": 13,
+      "topic": "fractions",
+      "subtopic": "fraction addition",
+      "complexity_score": 0.03575107269815923,
+      "runs": [
+        {
+          "repeat": 1,
+          "route": "planned_tutor_evaluate",
+          "reason": "The problem is a single-step fraction addition (very low complexity). The learner has a documented difficulty with finding common denominators and has previously added denominators directly. Planning can structure a targeted explanation, and a follow‑up assessment is valuable to verify that the misconception has been resolved and to capture new evidence of understanding.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 15.439081600052305
+        },
+        {
+          "repeat": 2,
+          "route": "planned_tutor_evaluate",
+          "reason": "Problem is a basic fraction addition (low complexity), but learner history shows a persistent misconception about finding common denominators. Planning can structure a targeted lesson, and a follow‑up assessment is valuable to confirm the learner has corrected the specific error.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 14.480826499988325
+        },
+        {
+          "repeat": 3,
+          "route": "planned_tutor_evaluate",
+          "reason": "The problem itself is simple (fraction addition) with a very low complexity score, but the learner has a documented difficulty finding common denominators and has previously added denominators directly. Planning can structure a targeted lesson to address this misconception, and a follow‑up assessment would provide useful evidence of whether the learner has corrected the error.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 2.2867843999993056
+        }
+      ],
+      "routes": [
+        "planned_tutor_evaluate",
+        "planned_tutor_evaluate",
+        "planned_tutor_evaluate"
+      ],
+      "reasons": [
+        "The problem is a single-step fraction addition (very low complexity). The learner has a documented difficulty with finding common denominators and has previously added denominators directly. Planning can structure a targeted explanation, and a follow‑up assessment is valuable to verify that the misconception has been resolved and to capture new evidence of understanding.",
+        "Problem is a basic fraction addition (low complexity), but learner history shows a persistent misconception about finding common denominators. Planning can structure a targeted lesson, and a follow‑up assessment is valuable to confirm the learner has corrected the specific error.",
+        "The problem itself is simple (fraction addition) with a very low complexity score, but the learner has a documented difficulty finding common denominators and has previously added denominators directly. Planning can structure a targeted lesson to address this misconception, and a follow‑up assessment would provide useful evidence of whether the learner has corrected the error."
+      ],
+      "modal_route": "planned_tutor_evaluate",
+      "tied_modal_routes": [
+        "planned_tutor_evaluate"
+      ],
+      "has_unique_modal_route": true,
+      "modal_workflow_depth": 3,
+      "valid_output_rate": 1.0,
+      "repeat_stability": 1.0,
+      "unanimous": true
+    },
+    {
+      "case_id": "percentage_strong",
+      "group": "learner_context_percentage",
+      "learner_condition": "strong",
+      "question": "A bank offers 3.2% compound interest per year. Sarah invests GBP 4,500 for 6 years. Calculate the total interest earned.",
+      "age": 16,
+      "topic": "percentage",
+      "subtopic": "compound interest",
+      "complexity_score": 0.24002885163557194,
+      "runs": [
+        {
+          "repeat": 1,
+          "route": "direct_tutor",
+          "reason": "The problem is a straightforward compound‑interest calculation that can be explained in a single tutoring interaction; its low complexity and the learner’s documented prior success with similar percentage/compound‑interest tasks indicate no need for additional planning or post‑tutoring assessment.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 1.2282060000579804
+        },
+        {
+          "repeat": 2,
+          "route": "direct_tutor",
+          "reason": "The problem involves a single, standard compound‑interest calculation (apply P(1+r)^t and subtract P). It requires only one formula and basic arithmetic, and the complexity score is low. The learner, a 16‑year‑old, has a recorded successful history with percentage and compound‑interest problems and no noted errors, indicating competence with this type of task. Because the mathematical demands are modest and the learner has demonstrated prior mastery, a planner would add little benefit, and a post‑tutoring assessment is unlikely to provide meaningful new evidence of understanding. Therefore, direct_tutor is appropriate.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 13.641670800046995
+        },
+        {
+          "repeat": 3,
+          "route": "direct_tutor",
+          "reason": "The problem is a straightforward compound‑interest calculation with a low complexity score and requires only a single formula application. The learner (age 16) has a recorded history of successfully solving percentage and compound‑interest problems and has no noted errors. Because the mathematical demands are modest and the learner has already demonstrated competence, neither a detailed pedagogical plan nor a post‑tutoring assessment is expected to add meaningful value.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 16.49667220003903
+        }
+      ],
+      "routes": [
+        "direct_tutor",
+        "direct_tutor",
+        "direct_tutor"
+      ],
+      "reasons": [
+        "The problem is a straightforward compound‑interest calculation that can be explained in a single tutoring interaction; its low complexity and the learner’s documented prior success with similar percentage/compound‑interest tasks indicate no need for additional planning or post‑tutoring assessment.",
+        "The problem involves a single, standard compound‑interest calculation (apply P(1+r)^t and subtract P). It requires only one formula and basic arithmetic, and the complexity score is low. The learner, a 16‑year‑old, has a recorded successful history with percentage and compound‑interest problems and no noted errors, indicating competence with this type of task. Because the mathematical demands are modest and the learner has demonstrated prior mastery, a planner would add little benefit, and a post‑tutoring assessment is unlikely to provide meaningful new evidence of understanding. Therefore, direct_tutor is appropriate.",
+        "The problem is a straightforward compound‑interest calculation with a low complexity score and requires only a single formula application. The learner (age 16) has a recorded history of successfully solving percentage and compound‑interest problems and has no noted errors. Because the mathematical demands are modest and the learner has already demonstrated competence, neither a detailed pedagogical plan nor a post‑tutoring assessment is expected to add meaningful value."
+      ],
+      "modal_route": "direct_tutor",
+      "tied_modal_routes": [
+        "direct_tutor"
+      ],
+      "has_unique_modal_route": true,
+      "modal_workflow_depth": 1,
+      "valid_output_rate": 1.0,
+      "repeat_stability": 1.0,
+      "unanimous": true
+    },
+    {
+      "case_id": "percentage_struggling",
+      "group": "learner_context_percentage",
+      "learner_condition": "struggling",
+      "question": "A bank offers 3.2% compound interest per year. Sarah invests GBP 4,500 for 6 years. Calculate the total interest earned.",
+      "age": 16,
+      "topic": "percentage",
+      "subtopic": "compound interest",
+      "complexity_score": 0.24002885163557194,
+      "runs": [
+        {
+          "repeat": 1,
+          "route": "planned_tutor_evaluate",
+          "reason": "The problem is a straightforward compound‑interest calculation (low complexity) but it hinges on correctly distinguishing compound from simple interest. The learner has a documented difficulty with this distinction and previously applied a simple‑interest formula. Planning can structure a targeted explanation, and a follow‑up assessment would meaningfully verify that the misconception has been resolved and provide evidence for any needed remediation.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 1.3144213000778109
+        },
+        {
+          "repeat": 2,
+          "route": "planned_tutor_evaluate",
+          "reason": "The problem is a straightforward compound‑interest calculation (modest complexity), but the learner has a documented difficulty distinguishing simple from compound interest and previously applied the wrong formula. A pedagogical plan can explicitly address this misconception, and a follow‑up assessment would provide valuable evidence that the learner can now apply the correct compound‑interest reasoning.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 2.3925041999900714
+        },
+        {
+          "repeat": 3,
+          "route": "planned_tutor_evaluate",
+          "reason": "The problem is a straightforward compound‑interest calculation, but it hinges on correctly distinguishing compound from simple interest. The learner has a documented difficulty with this distinction and previously applied a simple‑interest formula. Planning can structure a targeted explanation, and a follow‑up assessment is valuable to verify that the misconception has been resolved.",
+          "valid_route": true,
+          "error": null,
+          "latency_seconds": 1.1976081000175327
+        }
+      ],
+      "routes": [
+        "planned_tutor_evaluate",
+        "planned_tutor_evaluate",
+        "planned_tutor_evaluate"
+      ],
+      "reasons": [
+        "The problem is a straightforward compound‑interest calculation (low complexity) but it hinges on correctly distinguishing compound from simple interest. The learner has a documented difficulty with this distinction and previously applied a simple‑interest formula. Planning can structure a targeted explanation, and a follow‑up assessment would meaningfully verify that the misconception has been resolved and provide evidence for any needed remediation.",
+        "The problem is a straightforward compound‑interest calculation (modest complexity), but the learner has a documented difficulty distinguishing simple from compound interest and previously applied the wrong formula. A pedagogical plan can explicitly address this misconception, and a follow‑up assessment would provide valuable evidence that the learner can now apply the correct compound‑interest reasoning.",
+        "The problem is a straightforward compound‑interest calculation, but it hinges on correctly distinguishing compound from simple interest. The learner has a documented difficulty with this distinction and previously applied a simple‑interest formula. Planning can structure a targeted explanation, and a follow‑up assessment is valuable to verify that the misconception has been resolved."
+      ],
+      "modal_route": "planned_tutor_evaluate",
+      "tied_modal_routes": [
+        "planned_tutor_evaluate"
+      ],
+      "has_unique_modal_route": true,
+      "modal_workflow_depth": 3,
+      "valid_output_rate": 1.0,
+      "repeat_stability": 1.0,
+      "unanimous": true
+    }
+  ]
+}

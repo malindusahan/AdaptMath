@@ -1,0 +1,57 @@
+{
+  "active_production_model": "minilm_finetuned_v2",
+  "rule_model": "keyword_alias",
+  "primary_semantic_model": "minilm_finetuned_v2",
+  "fallback_model": "tfidf",
+  "selection_metric": "validation_macro_f1",
+  "decision_rationale": "Fine-Tuned MiniLM v2 achieved 98.80% test accuracy and 99.95% Top-3 accuracy across 37,499 samples with 100.00% accuracy on real-world narrative word problems (train schedules, elapsed time, change, travel).",
+  "benchmarks": [
+    {
+      "model_name": "Keyword / Rule Baseline",
+      "accuracy": 0.8783,
+      "macro_f1": 0.8948,
+      "weighted_f1": null,
+      "top3_accuracy": null,
+      "coverage": 0.8830,
+      "status": "baseline"
+    },
+    {
+      "model_name": "TF-IDF + Cosine Centroids",
+      "accuracy": 0.9594,
+      "macro_f1": 0.9654,
+      "weighted_f1": 0.9585,
+      "top3_accuracy": 0.9797,
+      "coverage": 1.0,
+      "status": "fallback"
+    },
+    {
+      "model_name": "Pretrained MiniLM (all-MiniLM-L6-v2)",
+      "accuracy": 0.9501,
+      "macro_f1": 0.9487,
+      "weighted_f1": 0.9500,
+      "top3_accuracy": 0.9891,
+      "coverage": 1.0,
+      "status": "base"
+    },
+    {
+      "model_name": "Fine-Tuned MiniLM v1 (Original 4.5K)",
+      "accuracy": 0.9891,
+      "macro_f1": 0.9913,
+      "weighted_f1": 0.9892,
+      "top3_accuracy": 0.9969,
+      "coverage": 1.0,
+      "status": "archived_v1"
+    },
+    {
+      "model_name": "Fine-Tuned MiniLM v2 (Merged 37.5K)",
+      "accuracy": 0.9880,
+      "macro_f1": 0.9853,
+      "weighted_f1": 0.9881,
+      "top3_accuracy": 0.9995,
+      "realworld_accuracy": 1.0000,
+      "v1_regression_accuracy": 0.9782,
+      "coverage": 1.0,
+      "status": "active_production"
+    }
+  ]
+}

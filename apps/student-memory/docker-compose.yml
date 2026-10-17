@@ -1,0 +1,85 @@
+name: student-memory-personalization
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: adaptmath_memory_integration_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: memory_app
+      POSTGRES_PASSWORD: ${MEMORY_POSTGRES_PASSWORD:-memory-local-dev-only}
+      POSTGRES_DB: adaptmath_memory_integration
+    ports:
+      - "5433:5432"
+    volumes:
+      - adaptmath_memory_integration_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U memory_app -d adaptmath_memory_integration"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  memory_provision:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: base
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      MEMORY_DATABASE_URL: postgresql+psycopg://memory_app:${MEMORY_POSTGRES_PASSWORD:-memory-local-dev-only}@postgres:5432/adaptmath_memory_integration
+      MEMORY_DATABASE_SCHEMA: student_memory
+    command: ["python", "scripts/provision_local_database.py"]
+
+  memory_service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: base
+    container_name: adaptmath_memory_integration_backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      memory_provision:
+        condition: service_completed_successfully
+    environment:
+      MEMORY_DATABASE_URL: postgresql+psycopg://memory_app:${MEMORY_POSTGRES_PASSWORD:-memory-local-dev-only}@postgres:5432/adaptmath_memory_integration
+      MEMORY_DATABASE_SCHEMA: student_memory
+      MEMORY_AUTH_ENABLED: "true"
+      AUTH_SESSION_PERSISTENCE: ${AUTH_SESSION_PERSISTENCE:-postgres}
+      AUTH_SESSION_TTL_SECONDS: ${AUTH_SESSION_TTL_SECONDS:-43200}
+      AUTH_DATABASE_SCHEMA: ${AUTH_DATABASE_SCHEMA:-auth}
+      MEMORY_SERVICE_API_KEY: ${MEMORY_SERVICE_API_KEY:-replace-for-local-integration}
+      PORT: 8000
+    ports:
+      - "${ADAPTMATH_MEMORY_HOST_PORT:-8000}:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=4).close()"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+
+  memory_test:
+    profiles: ["test"]
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: test
+    depends_on:
+      postgres:
+        condition: service_healthy
+      memory_provision:
+        condition: service_completed_successfully
+    environment:
+      MEMORY_DATABASE_URL: postgresql+psycopg://memory_app:${MEMORY_POSTGRES_PASSWORD:-memory-local-dev-only}@postgres:5432/adaptmath_memory_integration
+      MEMORY_DATABASE_SCHEMA: student_memory
+      MEMORY_AUTH_ENABLED: "false"
+      AUTH_DATABASE_SCHEMA: ${AUTH_DATABASE_SCHEMA:-auth}
+      BKT_SKILLS_PATH: /integration-fixtures/bkt_params.json
+    volumes:
+      - ../../packages/student-modeling/models/bkt_params.json:/integration-fixtures/bkt_params.json:ro
+
+volumes:
+  adaptmath_memory_integration_pgdata:

@@ -1,0 +1,37 @@
+{
+  "artifacts": {
+    "assessment_outcomes": "assessment_outcomes.jsonl",
+    "attempt_summaries": "attempt_summaries.jsonl",
+    "bkt_activity": "bkt_activity.jsonl",
+    "turn_outcomes": "turn_outcomes.jsonl"
+  },
+  "dataset_directory": "md_self_improvement_turn_data_v1",
+  "format": "JSONL authoritative; one final row per action_event_id",
+  "observation_statuses": [
+    "censored_no_response",
+    "observed_update",
+    "processing_failed",
+    "resolved_no_update"
+  ],
+  "privacy": {
+    "excluded_fields": [
+      "names/account identifiers",
+      "authentication secrets",
+      "API keys",
+      "age/profile fields not consumed by move selection"
+    ],
+    "retained_potentially_identifying_fields": [
+      "problem text",
+      "mathematical dialogue needed by the selector",
+      "tutor response",
+      "thread and attempt runtime identifiers"
+    ],
+    "student_identifier": "deterministic dataset-scoped SHA-256 pseudonym; raw id omitted"
+  },
+  "schema_version": "adaptmath_turn_outcome_v1",
+  "semantics": {
+    "collector_execution": "copy-only; no model or evaluator execution",
+    "delta_mastery": "confidence-weighted BKT posterior belief update after resolved evidence; not a reward or causal effect",
+    "formal_assessment": "stored separately and never joined to the last Tutor action"
+  }
+}

@@ -1,0 +1,4 @@
+# Optional dependencies for reproducing archived/frozen Groq router snapshots.
+# The active AdaptMath runtime does not import or call Groq.
+groq==0.37.1
+langchain-groq==1.1.3

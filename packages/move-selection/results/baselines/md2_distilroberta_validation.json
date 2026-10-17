@@ -1,0 +1,175 @@
+{
+  "experiment": "MD2_distilroberta_plain_ce",
+  "model": "distilbert/distilroberta-base",
+  "epochs": 3,
+  "max_length": 512,
+  "truncation": "problem_preserved_recent_conversation",
+  "loss": "ordinary_cross_entropy",
+  "train_examples": 14905,
+  "validation_examples": 1850,
+  "validation_original_over_512": 343,
+  "overall": {
+    "examples": 1850,
+    "accuracy": 0.5081081081081081,
+    "macro_f1": 0.46697582018279554,
+    "per_class_f1": {
+      "generic": 0.5925,
+      "probing": 0.37538461538461537,
+      "focus": 0.5912938331318017,
+      "telling": 0.3087248322147651
+    },
+    "class_support": {
+      "generic": 442,
+      "probing": 412,
+      "focus": 678,
+      "telling": 318
+    },
+    "confusion_matrix": [
+      [
+        237,
+        23,
+        121,
+        61
+      ],
+      [
+        49,
+        122,
+        193,
+        48
+      ],
+      [
+        49,
+        63,
+        489,
+        77
+      ],
+      [
+        23,
+        30,
+        173,
+        92
+      ]
+    ]
+  },
+  "non_truncated": {
+    "examples": 1507,
+    "accuracy": 0.5301924353019244,
+    "macro_f1": 0.46442353969169436,
+    "per_class_f1": {
+      "generic": 0.6482758620689655,
+      "probing": 0.40066225165562913,
+      "focus": 0.6063750926612306,
+      "telling": 0.20238095238095238
+    },
+    "class_support": {
+      "generic": 371,
+      "probing": 368,
+      "focus": 554,
+      "telling": 214
+    },
+    "confusion_matrix": [
+      [
+        235,
+        22,
+        86,
+        28
+      ],
+      [
+        49,
+        121,
+        172,
+        26
+      ],
+      [
+        48,
+        63,
+        409,
+        34
+      ],
+      [
+        22,
+        30,
+        128,
+        34
+      ]
+    ]
+  },
+  "truncated": {
+    "examples": 343,
+    "accuracy": 0.4110787172011662,
+    "macro_f1": 0.26688890107279273,
+    "per_class_f1": {
+      "generic": 0.05333333333333334,
+      "probing": 0.043478260869565216,
+      "focus": 0.5245901639344263,
+      "telling": 0.4461538461538462
+    },
+    "class_support": {
+      "generic": 71,
+      "probing": 44,
+      "focus": 124,
+      "telling": 104
+    },
+    "confusion_matrix": [
+      [
+        2,
+        1,
+        35,
+        33
+      ],
+      [
+        0,
+        1,
+        21,
+        22
+      ],
+      [
+        1,
+        0,
+        80,
+        43
+      ],
+      [
+        1,
+        0,
+        45,
+        58
+      ]
+    ]
+  },
+  "short_minus_long_macro_f1": 0.19753463861890164,
+  "tfidf_macro_f1": 0.405754,
+  "improvement_over_tfidf": 0.06122182018279554,
+  "epoch_history": [
+    {
+      "eval_loss": 2.368241548538208,
+      "eval_accuracy": 0.4827027027027027,
+      "eval_macro_f1": 0.4355020443154127,
+      "eval_runtime": 15.8057,
+      "eval_samples_per_second": 117.046,
+      "eval_steps_per_second": 3.67,
+      "epoch": 1.0,
+      "step": 932
+    },
+    {
+      "eval_loss": 2.3274166584014893,
+      "eval_accuracy": 0.5043243243243243,
+      "eval_macro_f1": 0.45939147139783826,
+      "eval_runtime": 15.8305,
+      "eval_samples_per_second": 116.863,
+      "eval_steps_per_second": 3.664,
+      "epoch": 2.0,
+      "step": 1864
+    },
+    {
+      "eval_loss": 2.3534209728240967,
+      "eval_accuracy": 0.5081081081081081,
+      "eval_macro_f1": 0.46697582018279554,
+      "eval_runtime": 15.8296,
+      "eval_samples_per_second": 116.869,
+      "eval_steps_per_second": 3.664,
+      "epoch": 3.0,
+      "step": 2796
+    }
+  ]
+}

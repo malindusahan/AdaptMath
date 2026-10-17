@@ -1,0 +1,79 @@
+{
+  "train": {
+    "examples": 14905,
+    "dialogues": 2295,
+    "unique_qids": 888,
+    "history_length": {
+      "min": 0,
+      "max": 44,
+      "mean": 6.658369674605837,
+      "median": 6
+    },
+    "examples_per_dialogue": {
+      "min": 3,
+      "max": 23,
+      "mean": 6.494553376906318,
+      "median": 6
+    },
+    "label_counts": {
+      "probing": 3413,
+      "generic": 3579,
+      "focus": 5443,
+      "telling": 2470
+    }
+  },
+  "validation": {
+    "examples": 1850,
+    "dialogues": 278,
+    "unique_qids": 111,
+    "history_length": {
+      "min": 0,
+      "max": 53,
+      "mean": 6.9724324324324325,
+      "median": 6.0
+    },
+    "examples_per_dialogue": {
+      "min": 3,
+      "max": 28,
+      "mean": 6.654676258992806,
+      "median": 6.0
+    },
+    "label_counts": {
+      "generic": 442,
+      "probing": 412,
+      "focus": 678,
+      "telling": 318
+    }
+  },
+  "train_imbalance_ratio": 2.2036437246963563,
+  "history_by_target_move": {
+    "generic": {
+      "count": 3579,
+      "mean": 4.348700754400671,
+      "median": 1,
+      "min": 0,
+      "max": 36
+    },
+    "probing": {
+      "count": 3413,
+      "mean": 5.884852036331673,
+      "median": 4,
+      "min": 0,
+      "max": 44
+    },
+    "focus": {
+      "count": 5443,
+      "mean": 7.048135219548043,
+      "median": 6,
+      "min": 0,
+      "max": 40
+    },
+    "telling": {
+      "count": 2470,
+      "mean": 10.21497975708502,
+      "median": 10.0,
+      "min": 0,
+      "max": 42
+    }
+  }
+}

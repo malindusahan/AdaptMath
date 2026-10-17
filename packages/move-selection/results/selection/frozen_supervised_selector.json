@@ -1,0 +1,62 @@
+{
+  "status": "FROZEN",
+  "stage": "supervised_move_selector",
+  "selection_metric": "macro_f1",
+  "architecture": "context_routed_hybrid",
+  "routing": {
+    "tokenizer": "distilbert/distilroberta-base",
+    "measurement": "original input token length before truncation",
+    "threshold": 512,
+    "short_condition": "<=512",
+    "short_model": "MD4",
+    "short_model_description": "DistilRoBERTa with inverse-frequency weighted cross-entropy",
+    "long_condition": ">512",
+    "long_model": "MD3",
+    "long_model_description": "ModernBERT-base long-context classifier"
+  },
+  "validation": {
+    "examples": 1850,
+    "qids": 111,
+    "accuracy": 0.5005405405405405,
+    "macro_f1": 0.48676777751987244,
+    "per_class_f1": {
+      "generic": 0.599764,
+      "probing": 0.416446,
+      "focus": 0.552846,
+      "telling": 0.378016
+    },
+    "short_examples": 1507,
+    "long_examples": 343
+  },
+  "comparison_to_md2": {
+    "md2_macro_f1": 0.466976,
+    "point_difference": 0.019791957337076893,
+    "cluster_bootstrap_95_ci": [
+      -0.0017831199613279655,
+      0.041170432694991724
+    ],
+    "fraction_positive": 0.965,
+    "interpretation": "Hybrid has higher validation Macro-F1, but the qid-clustered 95% paired interval includes zero."
+  },
+  "comparison_to_md4": {
+    "md4_macro_f1": 0.472096,
+    "point_difference": 0.014671864022852255,
+    "cluster_bootstrap_95_ci": [
+      0.004576362985370298,
+      0.025027465902737422
+    ],
+    "fraction_positive": 0.9964,
+    "interpretation": "Hybrid improvement over MD4 remains positive under qid-clustered paired bootstrap."
+  },
+  "test_policy": {
+    "status": "UNTOUCHED",
+    "rule": "Do not inspect or evaluate on the frozen MathDial test split until final system evaluation."
+  },
+  "future_supervised_tuning": "STOPPED",
+  "next_stage": "self_improvement",
+  "notes": [
+    "Primary metric was fixed as Macro-F1 before model selection.",
+    "Routing threshold 512 follows DistilRoBERTa's context limitation rather than validation threshold search.",
+    "Validation-tuned probability ensembles were not selected despite similar performance because the context router is simpler and more interpretable."
+  ]
+}

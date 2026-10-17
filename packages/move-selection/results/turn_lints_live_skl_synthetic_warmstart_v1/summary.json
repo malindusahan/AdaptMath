@@ -1,0 +1,58 @@
+{
+  "activation_decision": "A",
+  "activation_decision_meaning": "synthetic initialization accepted; activate isolated LIVE lineage",
+  "architecture_manifest_sha256": "a860d385797eaaced4788463fb789197c614bef7d7934f8006705276fdb57dfa",
+  "effective_sample_size": 10.0,
+  "generated_at": "2026-08-29T04:00:19.765192Z",
+  "heldout_real_context_count": 84,
+  "historical_input_hashes": {
+    "context_ablation_results.csv": "c411e48c6b9983ba36c0944f4157abd9d058f7a462d74d345583588727b1a7b0",
+    "context_bootstrap_comparisons.csv": "cd5007259ea88b5d6c10c08ddd4a85debd14230e7da9feabf2383c5737ce0b87",
+    "context_feature_coverage.csv": "7f3a51ea0fd239d16dbd14dffd5dcebb26623a20b66e714dea730bd753773e52",
+    "derived_analysis_dataset.csv": "d8f219b7e0cf351fb0bc2fc460f5183ff057a87a8fdce8d372ff2ae27dd67786"
+  },
+  "limitations": [
+    "All initialization rewards are synthetic and down-weighted.",
+    "Held-out audit contexts are historical pre-action contexts, not a prospective trial.",
+    "Retrospective L values use frozen local detectors on t-1 text; they do not prove L usefulness.",
+    "Activation does not convert synthetic evidence into real evidence."
+  ],
+  "maximum_matrix_condition_number": 7.511336880978409,
+  "minimum_matrix_eigenvalue": 0.9999999999999999,
+  "monte_carlo_draws_per_context": 400,
+  "per_observation_weight": 0.02,
+  "predeclared_sanity_checks": {
+    "all_four_arms_observed_at_least_10": true,
+    "all_matrices_positive_definite": true,
+    "exactly_500_records": true,
+    "matrix_condition_number_below_1e6": true,
+    "no_unavailable_action_selections": true,
+    "one_real_update_changes_each_arm_posterior": true,
+    "psynth_all_arm_rates_at_least_0_01": true,
+    "psynth_mean_context_entropy_at_least_0_20": true,
+    "psynth_mean_tv_from_md7_below_0_60": true,
+    "psynth_nontop1_telling_rate_below_0_40": true,
+    "psynth_not_p0_like_entropy_reduction_at_least_0_03": true,
+    "psynth_not_p0_like_top1_agreement_margin_at_least_0_20": true,
+    "reward_bounds_valid": true,
+    "reward_mean_within_0_02_of_target": true,
+    "reward_sd_within_0_02_of_target": true
+  },
+  "real_live_observation_weight": 1.0,
+  "reward": {
+    "max": 0.7086684063412776,
+    "mean": 0.14744802180779334,
+    "min": -0.431254310019937,
+    "negative_fraction": 0.232,
+    "positive_fraction": 0.768,
+    "sd": 0.20819256625143093
+  },
+  "synthetic_arm_counts": {
+    "focus": 174,
+    "generic": 123,
+    "probing": 175,
+    "telling": 28
+  },
+  "synthetic_observation_count": 500,
+  "uncertainty_note": "Monte Carlo policy sampling variability; no outcome labels used"
+}

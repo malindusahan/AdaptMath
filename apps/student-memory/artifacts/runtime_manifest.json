@@ -1,0 +1,126 @@
+{
+  "project": {
+    "name": "student_personalization_memory",
+    "component": "Student Personalization Memory",
+    "status": "Phase 9 frozen; Phase 10 readiness",
+    "python_version": "3.11.0"
+  },
+  "api": {
+    "host": "127.0.0.1",
+    "port": 8001,
+    "base_url": "http://127.0.0.1:8001",
+    "entry_point": "src.api.app:app",
+    "startup_command": "python -m uvicorn src.api.app:app --host 127.0.0.1 --port 8001",
+    "endpoints": {
+      "health": "GET /health",
+      "memory_update": "POST /memory/update",
+      "current_memory": "GET /memory/{student_id}/current",
+      "state_history": "GET /memory/{student_id}/history"
+    }
+  },
+  "database": {
+    "runtime_path": "database/student_memory.db",
+    "schema_reference": "database/schema.sql",
+    "runtime_schema_source": "src/database/connection.py",
+    "engine": "SQLite",
+    "foreign_keys_enabled": true
+  },
+  "artifacts": {
+    "model": {
+      "path": "artifacts/learning_state_model.joblib",
+      "sha256": "77a54e638bae449b8878e5957b6eeb007a43137ae1d2f7b6cd613532d7dcf3f9"
+    },
+    "imputer": {
+      "path": "artifacts/learning_state_imputer.joblib",
+      "sha256": "fc88fd4625a573182f533896107e929782321ac3bb80bda23626beda1ed9de62"
+    },
+    "metadata": {
+      "path": "artifacts/learning_state_model_metadata.json",
+      "sha256": "2462536e06dbe386fa45412cbe2dcae9f3cd4ce3077d919131ff08ac1822931b"
+    }
+  },
+  "model": {
+    "type": "DecisionTreeClassifier",
+    "configured_max_depth": 15,
+    "actual_depth_after_deployment_refit": 15,
+    "min_samples_leaf": 100,
+    "class_weight": null,
+    "leaf_nodes_after_deployment_refit": 810,
+    "classes": [
+      "DEVELOPING",
+      "NEEDS_SUPPORT",
+      "STRONG"
+    ],
+    "predictor_count": 12,
+    "predictors": [
+      "previous_interaction_count",
+      "previous_skill_interaction_count",
+      "recent_accuracy_change_5_vs_10",
+      "recent_attempt_log_mean_10",
+      "recent_multi_attempt_rate_10",
+      "recent_hint_usage_rate_10",
+      "recent_hint_available_rate_10",
+      "recent_response_log_mean_10",
+      "recent_response_median_ms_10",
+      "recent_skill_accuracy_change_3_vs_previous_2",
+      "has_full_skill_window_5",
+      "has_recent_hint_usage_evidence"
+    ]
+  },
+  "held_out_test_performance": {
+    "accuracy": 0.8758,
+    "balanced_accuracy": 0.8731,
+    "macro_precision": 0.8706,
+    "macro_recall": 0.8731,
+    "macro_f1": 0.8717,
+    "weighted_f1": 0.8760,
+    "evidence_level_macro_f1": {
+      "OVERALL_ONLY": 0.8603,
+      "PARTIAL_SKILL": 0.7058,
+      "FULL_SKILL": 0.9715
+    }
+  },
+  "production_context": {
+    "learning_states": [
+      "NEEDS_SUPPORT",
+      "DEVELOPING",
+      "STRONG",
+      "UNAVAILABLE"
+    ],
+    "evidence_levels": [
+      "COLD_START",
+      "OVERALL_ONLY",
+      "PARTIAL_SKILL",
+      "FULL_SKILL"
+    ],
+    "behavioural_coverage_levels": [
+      "FULL_BEHAVIOURAL_COVERAGE",
+      "PARTIAL_BEHAVIOURAL_COVERAGE",
+      "CORRECTNESS_ONLY_COVERAGE"
+    ],
+    "missing_behaviour_policy": "Unavailable attempt, hint, and response-time measurements remain null and are never fabricated as observed zero values."
+  },
+  "validation": {
+    "full_test_suite": {
+      "passed": 234
+    },
+    "api_tests": {
+      "passed": 61
+    },
+    "pip_check": "passed",
+    "real_local_integration": {
+      "health_check": "passed",
+      "memory_update": "passed",
+      "current_memory_retrieval": "passed",
+      "history_retrieval": "passed",
+      "restart_persistence": "passed"
+    }
+  },
+  "runtime_data_policy": {
+    "database_is_mutable_runtime_state": true,
+    "database_required_for_fresh_install": false,
+    "fresh_database_initializes_from_schema": true,
+    "controlled_integration_record": "integration_test_s1",
+    "controlled_integration_record_cleanup_status": "removed with runtime database during final cleanup"
+  }
+}

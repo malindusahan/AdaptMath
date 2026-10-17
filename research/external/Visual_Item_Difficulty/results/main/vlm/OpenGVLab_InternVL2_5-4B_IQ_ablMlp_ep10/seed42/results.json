@@ -1,0 +1,94 @@
+{
+  "mode": "final",
+  "model": "OpenGVLab/InternVL2_5-4B",
+  "family": "internvl",
+  "route": "I+Q",
+  "config_id": "r8_lr5e-05_mse",
+  "seed": 42,
+  "epochs": 10,
+  "provenance": {
+    "timestamp": "2026-07-26T15:28:18.725476",
+    "git_commit": "bc3199114ffe32a798108a9569fcf891ebff7c3b",
+    "split_sha256": "5308b5da23248bab12ef6b0698d2445faba296a9c44abdf9ea0889ce260eca79",
+    "hostname": "internal-cluster-node",
+    "cuda_visible": "1",
+    "versions": {
+      "torch": "2.6.0+cu124",
+      "transformers": "5.12.1",
+      "peft": "0.19.1"
+    },
+    "args": {
+      "model_name": "OpenGVLab/InternVL2_5-4B",
+      "input_mode": "image_text",
+      "lora_rs": "8,16,32",
+      "lrs": "2e-4,5e-5",
+      "losses": "mse,huber",
+      "batch_size": 1,
+      "grad_accum": 4,
+      "max_epochs": 10,
+      "patience": 3,
+      "val_frac": 0.2,
+      "seed": 42,
+      "smoke": false,
+      "out_suffix": "_ablMlp_ep10",
+      "text_field": "text",
+      "run_mode": "final",
+      "folds": "0,1,2,3,4",
+      "lora_r": 8,
+      "lr": 5e-05,
+      "loss": "mse",
+      "epochs": 10,
+      "lora_scope": "llm",
+      "lora_targets": "attn_mlp",
+      "pool": "all"
+    }
+  },
+  "epoch_history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.6117658568412747
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.4794436200733836
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.30168788245264966
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.2002860204037111
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.12391805992835841
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.08360507630632984
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.05231358656600652
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.03523514042378511
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.026586575754635727
+    },
+    {
+      "epoch": 10,
+      "train_loss": 0.022184952049210834
+    }
+  ],
+  "test_metrics": {
+    "rmse": 0.5129492054551976,
+    "mae": 0.4053719753393124,
+    "pearson": 0.7807717196383129,
+    "spearman": 0.7713037316957959
+  }
+}

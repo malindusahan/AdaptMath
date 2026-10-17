@@ -1,0 +1,10 @@
+baseline_top1,candidate_top1,count
+focus,focus,21
+focus,probing,13
+focus,telling,2
+generic,focus,1
+generic,generic,18
+generic,probing,2
+probing,focus,4
+probing,probing,24
+probing,telling,2

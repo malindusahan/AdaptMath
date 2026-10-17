@@ -1,0 +1,16 @@
+# Versions this code was actually run with (CUDA 12.4, A100-80GB).
+# transformers 5.x is assumed in a few places (see the all_tied_weights_keys
+# shim in vlm_loaders.py); older 4.x releases may need that shim removed.
+torch==2.6.0
+transformers==5.12.1
+peft==0.19.1
+accelerate==1.14.0
+numpy==2.4.4
+pandas==3.0.3
+scikit-learn==1.9.0
+scipy==1.18.0
+pillow==12.2.0
+
+# Optional: faster/cleaner image preprocessing for the Qwen-VL family.
+# The code falls back to plain processor calls if it is missing.
+qwen-vl-utils==0.0.14

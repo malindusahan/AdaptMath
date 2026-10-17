@@ -1,0 +1,75 @@
+{
+  "mode": "final",
+  "model": "google/paligemma2-3b-pt-224",
+  "family": "paligemma",
+  "route": "I",
+  "config_id": "r8_lr5e-05_mse",
+  "seed": 17,
+  "epochs": 6,
+  "provenance": {
+    "timestamp": "2026-07-24T19:48:41.016800",
+    "git_commit": "e5fb54478dd1b5e943e31182b8cedb48a44087f2",
+    "split_sha256": "5308b5da23248bab12ef6b0698d2445faba296a9c44abdf9ea0889ce260eca79",
+    "hostname": "internal-cluster-node",
+    "cuda_visible": "0",
+    "versions": {
+      "torch": "2.6.0+cu124",
+      "transformers": "5.12.1",
+      "peft": "0.19.1"
+    },
+    "args": {
+      "model_name": "google/paligemma2-3b-pt-224",
+      "input_mode": "image_only",
+      "lora_rs": "8,16,32",
+      "lrs": "2e-4,5e-5",
+      "losses": "mse,huber",
+      "batch_size": 1,
+      "grad_accum": 4,
+      "max_epochs": 10,
+      "patience": 3,
+      "val_frac": 0.2,
+      "seed": 17,
+      "smoke": false,
+      "out_suffix": "",
+      "text_field": "text_vd",
+      "run_mode": "final",
+      "folds": "0,1,2,3,4",
+      "lora_r": 8,
+      "lr": 5e-05,
+      "loss": "mse",
+      "epochs": 6
+    }
+  },
+  "epoch_history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.6025518637368998
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.4725079247644826
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.347564553452255
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.23227217758599322
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.16246755188425138
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.12482558455651058
+    }
+  ],
+  "test_metrics": {
+    "rmse": 0.5787895807847017,
+    "mae": 0.46003263193709004,
+    "pearson": 0.7090635645555909,
+    "spearman": 0.7057235081089591
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "assignment_rng_source": "system_entropy_secrets_systemrandom",
+  "assignment_seed": null,
+  "behavior_policy": "md7_r2_probability_proportional_v1",
+  "context_blocks": [
+    "S"
+  ],
+  "context_dimension": 4,
+  "context_schema_id": "turn_lints_context_v1:S:e59e0e51ea8d",
+  "event_schema_version": "adaptmath_turn_lints_event_v4",
+  "mode": "RANDOMIZED_WARMSTART",
+  "posterior_updates_enabled": false,
+  "reward_mode": "headroom_normalized",
+  "schema_version": "adaptmath_randomized_warmstart_lineage_v1",
+  "selector_sha256": "ad770256a71efcce7485705099511494e41806b2e29bc3829f9ba8aeaf731cd5",
+  "selector_version": "MD7-R2-TELL-C1 Epoch 2",
+  "state_path": "C:\\Users\\Lenovo\\Documents\\Research\\Tutor Max\\adaptive-math-tutor\\backend\\runtime\\turn_lints_randomized_warmstart_final_v1\\policy_state.json"
+}

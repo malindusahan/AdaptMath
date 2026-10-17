@@ -1,0 +1,15 @@
+fastapi
+uvicorn[standard]
+pyBKT
+pandas
+numpy
+scikit-learn<1.5pytest
+pytest-asyncio
+httpx
+pydantic
+google-genai
+python-dotenv
+streamlit
+sentence-transformers
+psycopg[binary]==3.3.4
+psycopg-pool==3.3.1
