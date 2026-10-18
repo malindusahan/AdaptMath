@@ -1,0 +1,36 @@
+﻿{
+    "version":  1,
+    "createdAtUtc":  "2026-08-26T13:13:27.8830658Z",
+    "ports":  {
+                  "memory":  8000,
+                  "tutor":  8002,
+                  "frontend":  5173
+              },
+    "postgres":  {
+                     "startedByLauncher":  false
+                 },
+    "memory":  {
+                   "startedByLauncher":  false
+               },
+    "memoryLog":  {
+                      "startedByLauncher":  true,
+                      "process":  {
+                                      "pid":  23696,
+                                      "startedAtUtc":  "2026-08-26T13:13:28.8914082Z"
+                                  }
+                  },
+    "tutor":  {
+                  "startedByLauncher":  true,
+                  "process":  {
+                                  "pid":  18272,
+                                  "startedAtUtc":  "2026-08-26T13:13:44.5689454Z"
+                              }
+              },
+    "frontend":  {
+                     "startedByLauncher":  true,
+                     "process":  {
+                                     "pid":  21120,
+                                     "startedAtUtc":  "2026-08-26T13:14:02.9358078Z"
+                                 }
+                 }
+}
